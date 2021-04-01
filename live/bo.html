@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui">
+    <meta name="referrer" content="no-referrer">
+    <title>7080西瓜视频-xgplayer</title>
+    <style type="text/css">
+      html, body {width:100%;height:100%;margin:auto;overflow: hidden;}
+    </style>
+  </head>
+  <body>
+    <div id="mse"></div>
+<script src="//sf1-ttcdn-tos.pstatp.com/obj/unpkg/xgplayer/2.9.6/browser/index.js" charset="utf-8"></script>
+    <script src="//sf1-ttcdn-tos.pstatp.com/obj/unpkg/xgplayer-hls.js/2.2.2/browser/index.js" charset="utf-8"></script>
+	<script>
+ let player = new HlsJsPlayer({
+		"id": "mse",
+		"url": "http://hw-m-l.cztv.com/channels/lantian/channel01/360p.m3u8",
+       poster: "//s2.pstatp.com/cdn/expire-1-M/byted-player-videos/1.0.0/poster.jpg",
+        playsinline: true,
+        thumbnail: {
+            pic_num: 44,
+            width: 160,
+            height: 90,
+            col: 10,
+            row: 10,
+            urls: ['//s3.pstatp.com/cdn/expire-1-M/byted-player-videos/1.0.0/xgplayer-demo-thumbnail.jpg'],
+        },
+		"whitelist": [""],
+		"autoplay": true,
+		"x5-video-player-type": "h5",
+		"x5-video-player-fullscreen": "true",
+		"x5-video-orientation": "landscape",
+   "height": window.innerHeight,
+ "width": window.innerWidth,
+      });
+      player.emit('resourceReady', [
+      {"name":"浙江高清","url":"http://hw-m-l.cztv.com/channels/lantian/channel01/1080p.m3u8"},
+      {"name":"CCTV1","url":"http://hw-m-l.cztv.com/channels/lantian/channel15/360p.m3u8"},
+      {"name":"数码时代","url":"http://hw-m-l.cztv.com/channels/lantian/channel12/360p.m3u8"},
+      {"name":"浙江国际","url":"http://hw-m-l.cztv.com/channels/lantian/channel10/360p.m3u8"},
+      {"name":"浙江少儿","url":"http://hw-m-l.cztv.com/channels/lantian/channel08/360p.m3u8"},
+      {"name":"浙江新闻","url":"http://hw-m-l.cztv.com/channels/lantian/channel07/360p.m3u8"},
+      {"name":"浙江6频","url":"http://hw-m-l.cztv.com/channels/lantian/channel06/360p.m3u8"},
+      {"name":"浙江影视","url":"http://hw-m-l.cztv.com/channels/lantian/channel05/360p.m3u8"},
+      {"name":"浙江科教","url":"http://hw-m-l.cztv.com/channels/lantian/channel04/360p.m3u8"},
+      {"name":"经济生活","url":"http://hw-m-l.cztv.com/channels/lantian/channel03/360p.m3u8"},
+      {"name":"钱江都市","url":"http://hw-m-l.cztv.com/channels/lantian/channel02/360p.m3u8"},
+     {"name":"浙江卫视","url":"http://hw-m-l.cztv.com/channels/lantian/channel01/360p.m3u8"}
+    ])
+          </script>
+  </body>
+</html>
