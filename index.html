@@ -51,11 +51,11 @@ overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
   <span class="input-group-addon">影视搜</span>
   <form action="./so=" method="get" target="_blank" >
   	
-  <input type="text" class="form-control" name="search" id="search" placeholder="先输入关键词，再选择下面的检索平台，即刻检索。默认回车为360影视" baiduSug="2" value="" >
+  <input type="text" class="form-control" name="search" id="search" placeholder="先输入关键词，再选择下面的检索平台，即刻检索。" baiduSug="2" value="" >
 </div>  
        
     <P><center>
-    <input type="submit" value="360影视(默认)" id="baidu" button type="button" class="btn btn-success" />
+    <input type="submit" value="资源搜(默认)" id="baidu" button type="button" class="btn btn-success" />
     <input type="submit" value="蜜蜂" id="google" button type="button" class="btn btn-success"/>
     <input type="submit" value="555" id="sougou" button type="button" class="btn btn-success"/>
     <input type="submit" value="播王" id="jd" button type="button" class="btn btn-info" />
@@ -65,7 +65,7 @@ overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
     <input type="submit" value="简影" id="weibo" button type="button" class="btn btn-info"/>
     <input type="submit" value="豆瓣" id="douban" button type="button" class="btn btn-info"/>
     <input type="submit" value="素白白" id="panci" button type="button" class="btn btn-danger"/>
-    <input type="submit" value="影视资源" id="ziyuan" button type="button" class="btn btn-danger"/>
+    <input type="submit" value="简单搜" id="ziyuan" button type="button" class="btn btn-danger"/>
     <input type="submit" value="1905影库" id="ditu" button type="button" class="btn btn-warning"/>
     </center></P>      
   </form>
@@ -241,8 +241,8 @@ M3U8播放指南：
 
     //百度换360
     sBaidu.onclick=function(){
-      sAddress.action="http://7080.wang/v/so.php";
-      sInfor.name="so";
+      sAddress.action="https://so.7080.wang";
+      sInfor.name="q";
     }
     //Google
     sGoogle.onclick=function(){
@@ -327,19 +327,19 @@ M3U8播放指南：
 $('#ziyuan').click(function() {
       var query = $('#search').val();
       if ( query ) {
-        window.open("http://7080.wang/v/soso.php?so=" + query + "", "_blank");
+        window.open("https://lujun189.gitee.io/videosearch/?q=" + query + "", "_blank");
         return false;
       
      	};
     });
 
 
-// 胖次  另一个检索入口
+// 1905  另一个检索入口
 
  $('#ditu').click(function() {
       var query = $('#search').val();
       if ( query ) {
-        window.open("http://7080.wang/1905so.php?so=" + query + "", "_blank");
+        window.open("https://lujun189.gitee.io/videosearch/?q=" + query + "", "_blank");
         return false;
       
      	};
