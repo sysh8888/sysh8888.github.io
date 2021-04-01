@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>七零八零网-跳转中</title>
+<meta name="keywords" content="7080，7080网，七零八零，七零八零网" />
+<meta name="description" content="7080网分享每天为您分享需要的资源、网络热门工具、影视资源这里有你需要的工具。" />
+<link rel="stylesheet" href="https://cdn.bootcss.com/zui/1.8.1/css/zui.min.css">
+<script src="https://cdn.bootcss.com/zui/1.8.1/lib/jquery/jquery.js"></script>
+<script src="https://cdn.bootcss.com/zui/1.8.1/js/zui.min.js"></script>
+<link rel="stylesheet" href="../css/style2.css">
+
+</head>
+<!--    -->
+<body>
+<header style="opacity: 0.7;">
+    <div class="container" style="padding-right: 0px;padding-left: 0px;">
+        <div class="main">
+            <h2 class="logo">
+                <a href="//7080.wang">
+                    <span>点击返回</span>
+                </a>
+            </h2>
+        </div>
+	</div>
+</header>
+<!--if开始-->
+<iframe id="player" src="//7080.wang" width="100%" height="100%" SCROLLING=auto security="restricted" ">
+   </iframe>
+
+
+<!-- if结束-->
+<footer class="footer text-center bg-white">
+    <div class="container">
+		<span style="float:left">Copyright &copy; http://7080.wang 所有资源均为网络抓取,<a href="http://www.miibeian.gov.cn/" target="_blank">浙ICP备2020039513号</a></span>
+<span style="float:right"><a href="http://7080.wang" target="_blank">本站不存储内容</a></span>
+    </div>
+</footer>
+<div id="get-top" title="回到顶部" style="display: none;"><i class="icon icon-arrow-up"></i></div>
+<script type="text/javascript">
+
+ function GetQueryString(name)
+   {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  decodeURIComponent(r[2]); return null;
+ 
+   }
+
+
+var lianjie = GetQueryString("url");
+document.getElementById("player").src =lianjie;
+</script>
+
+<script >
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?6b933b9e111e81dd530fcaddb9159145";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>'
+</body>
+</html>
