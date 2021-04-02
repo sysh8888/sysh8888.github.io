@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>正在播放 - 7080搜索引擎</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="keywords" content="7080,vip在线解析,易搜电影搜索,影视搜索,全能影视搜索,最新影视资源大全">
+<meta name="description" content="易搜影视是一款全能影视搜索引擎,为网友提供免费在线影视播放，给您全新的“悦享品质”在线观看体验。">
+<link rel="shortcut icon" href="/css/favicon.ico">
+<link href="css/min.css" rel="stylesheet">
+<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+
+<header class="header">
+<nav class="header-default">
+<div class="header-main">
+<div class="header-left"><a href="./" title="7080搜影视">7080搜影视</a>
+</div>
+<div class="header-right"><a href="./" target="_blank">首页</a>--<a href="#" onClick="javascript :history.back(1);">返回</a></div>
+</div>
+</nav>
+</header>
+　<script type="text/javascript">
+<!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+if (restore) selObj.selectedIndex=0;
+}
+//-->
+</script> 
+<div class="container">
+    <div class="search">
+        <form action="./so.html" method="GET">
+         <input type="hidden" name="mode" value="search">
+         <input type="text" name="q" id="wd" placeholder="输入关键词搜索" value="" autocomplete="off">
+         <button id="submit">搜索</button>
+        </form>
+     </div>
+
+<div class="content">
+<div class="item-container">
+<h1 class="item-title">正在播放:<span id="name"></span></h1>
+<div class="play-video">
+<div class="player-iframe">
+<iframe id="video" src="" width="100%" name="video" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay"></iframe>
+</div>
+<ul class="player-info">
+<li><a href="#"><span id="zhuang">无法加载？</span></a></li>
+<li><a href="#"><span id="yuyan">请刷新</span></a></li>
+<li><a href="javascript:;" onclick="window.location.reload()">刷新</a></li>
+</ul>
+</div>
+</div>
+<div class="item-container">
+<h1 class="item-title">播放器选择</h1>
+<div class="play-select">
+<span><a id="svm" onclick="xldata(this)" data-jk="bo.html?url=">线路一</a></span>
+<span><a id="svm" onclick="xldata(this)" data-jk="bo2.html?url=">线路二</a></span>
+<span><a id="svm" onclick="xldata(this)" data-jk="bo.html?url=">线路三</a></span>
+</div>
+</div>
+<div class="item-container">
+<h1 class="item-title">集数选择:<span id="lei">加载中</span></h1>
+<div class="play-number" id="neirong">
+</div>
+</div>
+<div class="item-container">
+<h1 class="item-title">影视简介</h1>
+<div class="play-des">		
+<table class="am-table am-table-bd am-table-bdrs am-table-striped" style="margin-bottom:0px">
+				<tbody>
+					<tr>
+						<td width="auto"><b>更新:</b> <span id="time"></span></td>
+						<td  rowspan="5" width="127"  align="right"><img id="tu" data-original="" alt="" src="css/load.gif" class="lazyload" width="127px"   height="179px"></td>
+					</tr>
+					<tr>
+					<td width="auto"><b>年代：</b><span id="nian"></span></td>
+					</tr>
+					<tr>
+					<td width="auto"><b>地区：</b><span id="diqu"></span></td>
+					</tr>
+					<tr>
+					<td width="auto"><b>导演：</b><span id="daoyan"></span></td>
+					</tr>
+					<td width="auto"><b>类型：</b><span id="fenlei"></span></td>
+					<tr>
+						<td colsspanan="2"><b>演员：</b><span id="yanyuan"></span></td>
+					</tr>
+					<tr>
+						<td colsspanan="2"><b>简介：</b><span id="jiesao"></span></td>
+					</tr>
+				</tbody>
+			</table> </div>
+</div>
+
+<script>
+$(document).ready(function(){
+	$(".play-number .lipbtn").click(function(){
+		$('.lipbtn').removeClass('active');
+		$(this).addClass('active');
+	});	
+	$.each($('.lipbtn'),function () {
+		$(this).attr('onclick','bofang(this)');
+    })
+	$('.play-select').children('a:eq(0)').addClass('active');
+	var autourl = $('.lipbtn:eq(0)').attr('data-href');
+	$('.lipbtn:eq(0)').attr('id','button');	
+	$('#svm:eq(0)').attr('class','active');	
+	var jiekou = $('.play-select').children('a:eq(0)').attr('data-jk');
+	if(autourl!=''||autourl!=null){
+		setTimeout(function () {
+			$('#video').attr('src', jiekou);
+		},0)
+	}
+	
+});
+function bofang(obj) {
+	 var href = $(obj).attr('data-href');
+	 $.each($('.lipbtn'), function () {
+		$(this).attr('id','');
+	});
+	$(obj).attr('id','button');
+	var jiekou = $('.active').attr('data-jk');
+	if (href != '' || href != null) {
+		setTimeout(function () {
+			$('#video').attr('src', jiekou + href);
+		},0)
+	}
+}
+function xldata(obj) {
+	var url = $(obj).attr('data-jk');
+	$.each($('.active'), function () {
+		$(this).removeClass('active');
+	});
+	$(obj).addClass('active');
+	var src = $('#button').attr('data-href');
+	$('#video').attr('src', url + src);
+}
+function plays(srcurl){
+    $('#video').attr('src',decodeURIComponent(decodeURIComponent(srcurl))).show();
+}
+</script>
+</div>
+</div>
+
+<div class="footer">
+<div class="footer-container">
+<p>
+<a href="http://www.beian.miit.gov.cn" target="_blank" rel="nofollow">7080网</a> </p>
+<span>本站所有视频和图片均来自互联网收集而来，版权归原创者所有，本网站只提供web页面服务，并不提供资源存储，也不参与录制、上传</span><br>
+<script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1258200835'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/stat.php%3Fid%3D1258200835%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+
+ function GetQueryString(name)
+   {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  decodeURIComponent(r[2]); return null;
+ 
+   }
+
+
+var lianjie = GetQueryString("q");
+var id = GetQueryString("id");
+</script>
+<script src="./css/play.js"></script>
+</body>
+</html>
