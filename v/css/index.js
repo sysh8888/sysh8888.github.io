@@ -77,7 +77,7 @@ function from(id){
     function fromall(id){
         //console.log(id);
         var url1="";
-        if (id=="0"){url1="http://v8.tiankongzy.cc/inc/feifei3/"}else if(id=="1"){url1="http://caiji.kuyun98.com/inc/s_feifei/"}
+        if (id=="0"){url1="http://v8.tiankongzy.cc/inc/feifei3/"}else if(id=="1"){url1="https://www.subo988.com/inc/feifei3.4/"}
         else if(id=="2"){url1="http://www.zdziyuan.com/inc/s_feifei3.4/"}else if(id=="3"){url1="https://www.mhapi123.com/inc/feifei3/"}
         else if(id=="4"){url1="http://cj.bajiecaiji.com/inc/feifei3bjm3u8/index.php"}else if(id=="5"){url1="https://www.123ku.com/inc/feifei/"}else if(id=="6"){url1="http://api.wokuzy.com/feifei34/json/wokuzy_s/"}else if(id=="7"){url1="https://cj.okzy.tv/inc/feifei3ckm3u8s/"};
        $("#list").hide();
