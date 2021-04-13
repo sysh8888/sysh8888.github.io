@@ -8,7 +8,7 @@ function index(index){
     dataType: 'jsonp',
     jsonp: 'callback',
     jsonpCallback: 'callbackfunction',
-    url:'https://bird.ioliu.cn/v1?url=https://api.jackeriss.com/api/v1/recommend/?subject='+index+'&page_start=0&page_limit=20',
+    url:'https://bird.ioliu.cn/v1?url=https://movie.douban.com/j/search_subjects?type='+index+'&sort=recommend&page_limit=20&page_start=0',
     data: "",
     timeout: 3000,
     contentType: "application/json;utf-8",
