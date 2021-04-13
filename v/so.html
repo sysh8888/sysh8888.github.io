@@ -68,7 +68,7 @@ success:function(data){
     Node.hide();
     var jieguo="";
    for (var i=0;i<data.data.length;i++)
-    { jieguo+='<li><a href="play.html?q='+data.data[i].vod_id+'&id=0"><img src="'+data.data[i].vod_pic+'"  width="110" height="176"><em><b>'+data.data[i].vod_continu+'</b></em><span>'+data.data[i].vod_name+'</span></a></li>';}
+    { jieguo+='<li><a href="play.html?q='+data.data[i].vod_id+'&id=0&zy=ff"><img src="'+data.data[i].vod_pic+'"  width="110" height="176"><em><b>'+data.data[i].vod_continu+'</b></em><span>'+data.data[i].vod_name+'</span></a></li>';}
                       
   $("#list").html(jieguo);
 }
