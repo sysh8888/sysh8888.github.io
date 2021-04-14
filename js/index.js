@@ -1,4 +1,4 @@
-var url1="https://bird.ioliu.cn/v1?url=https://api.jackeriss.com/api/v1/recommend/?subject=mover_%E7%83%AD%E9%97%A8&page_start=0&page_limit=21";
+var url1="https://bird.ioliu.cn/v1?url=https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=20&page_start=0";
 $(function(){
  $.ajax({
  async: true,
