@@ -37,10 +37,6 @@
 
 	<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
 	
-    <script>
-        // 网站相关信息，供页面内的 js 文件调用
-        var tySiteInfo = { siteUrl: "//www.600m.net", debug: false }
-    </script>
 <!--公共header部分开始（本header由代码动态生成）-->
 </head> 
 
@@ -62,44 +58,18 @@
 
   <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
     <ul class="am-nav am-nav-pills am-topbar-nav">
-    	<li><a href="/v">首页
+    	<li><a href="//7080.wang">首页
 </a></li>
-    	<li><a href="/m">电影
+    	<li><a href="/v/">影视搜
 </a></li>
-    	<li><a href="/tv">电视剧
+    	<li><a href="/live/">浙江卫视
 </a></li>
-    	<li><a href="/ct">动漫
-</a></li>
-    	<li><a href="/va">综艺</a></li> 
-		<li id="username" data-vip="" data-expir_time=""><a href="/v/soso.php">资源搜索</a></li>
-
-        <li class="am-dropdown" data-am-dropdown>
-            <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                更多 <span class="am-icon-caret-down"></span>
-            </a>
-            <ul class="am-dropdown-content">            
-            	<li><a href="/v/vip.php">VIP解析
-</a></li>
-            	<li><a href="/v/about.php">关于
-</a></li><li class="am-divider"></li>
-            	<li><a href="/v/share.php">解析接口分享平台</a></li><li class="am-divider"></li>            </ul>
-        </li>
     </ul>
 
-<script language="javascript">
-/*function showLogin(){}
-setInterval("showLogin()","1000");//每隔1 运行一次
-*/
-   function Checkfrom()
-   {  
-     window.location.href= '/so=' +  tyForm.so.value;
-     return false; //通知 提交 其实也没必要
-   }
-</script>
 
-    <form class="am-topbar-form am-topbar-left am-form-inline" role="search" action="/so.php" name="tyForm" onsubmit="return Checkfrom();" >
+    <form class="am-topbar-form am-topbar-left am-form-inline" role="search" action="v/so.html" name="tyForm" onsubmit="return Checkfrom();" >
         <div class="am-input-group am-input-group-primary am-input-group-sm">
-            <input name="so" type="text" class="am-form-field" placeholder="搜索..." required>
+            <input name="q" type="text" class="am-form-field" placeholder="搜索..." required>
             <span class="am-input-group-btn">
                 <button class="am-btn am-btn-primary" type="submit">
                     <span class="am-icon-search"></span>
@@ -107,19 +77,7 @@ setInterval("showLogin()","1000");//每隔1 运行一次
             </span>
         </div>
     </form>
-	
-    <div class="am-topbar-right">
-        <div id="show-history-dropdown" class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
-            <button id="show-history" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>
-                 <span class="am-icon-history"></span>观看记录 <span class="am-icon-caret-down"></span>
-            </button>
-            <ul id="history-list" class="am-dropdown-content">
-                <li><a href="javascript:;">播放记录载入中..</a></li>
-            </ul>
-        </div>
-    </div>
 
-  </div>
   </div>
 </header>
 
@@ -156,12 +114,6 @@ setInterval("showLogin()","1000");//每隔1 运行一次
 }
 </style>
 <div class="am-container">
-
-    <div class="am-alert am-alert-warning" data-am-alert style="display: block;">
-    <button type="button" class="am-close">×</button>
-	全新升级版本,欢迎大家反馈BUG!
-    <a target="_blank" href="http://7080.wang"><img border="0" src="http://pub.idqqimg.com/qconn/wpa/button/button_111.gif" alt="点击这里给我发消息~~" title="点击这里给我发消息~~"/></a>
-</div>
 <div class="am-panel am-panel-default">
     <div class="am-panel-hd">电视直播测试</div>
     
@@ -290,11 +242,10 @@ document.getElementById("demo1").innerHTML=obj.innerHTML;
     <!-- 底部栏 -->
     <footer data-am-widget="footer" class="am-footer am-footer-default am-hide-sm-only" data-am-footer="{  }">
         <div class="am-footer-miscs">
-            <p>由 <a href="http://7080.wang" title="7080网" target="_blank" class="">7080网</a>
-            提供技术支持</p>
-            <p>CopyRight © 2018 7080网</p>
-            <p>浙ICP备2020039513号</p>
-            <p>本站不提供任何资源存储服务，只提供查询服务</p>		</div>
+            <p>本网站为非赢利性站点</p>
+            <p>所有内容均来源于互联网相关站点自动搜索采集信息</p>		
+			<script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1258200835'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/stat.php%3Fid%3D1258200835%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+			</div>
     </footer>
 
     <!-- 底部导航栏 -->
@@ -302,46 +253,46 @@ document.getElementById("demo1").innerHTML=obj.innerHTML;
     <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default am-show-sm-only" id="">
         <ul class="am-navbar-nav am-cf am-avg-sm-4">		
 			<li>
-                <a href="/v" class="">
+                <a href="//7080.wang" class="">
                     <!--<span class="am-icon-home"></span>-->
-                    <img src="http://7080.wang/assets/img/home.png" alt="首页
+                    <img src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/img/home.png" alt="首页
 "/>
                     <span class="am-navbar-label">首页
 </span>
                 </a>
             </li>
 			<li>
-                <a href="/m" class="">
+                <a href="/v/" class="">
                     <!--<span class="am-icon-home"></span>-->
-                    <img src="http://7080.wang/assets/img/film.png" alt="电影
+                    <img src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/img/film.png" alt="影视搜
 "/>
-                    <span class="am-navbar-label">电影
+                    <span class="am-navbar-label">影视搜
 </span>
                 </a>
             </li>
 			<li>
-                <a href="/tv" class="">
+                <a href="/live/" class="">
                     <!--<span class="am-icon-home"></span>-->
-                    <img src="http://7080.wang/assets/img/mg.png" alt="电视剧
+                    <img src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/img/mg.png" alt="直播
 "/>
-                    <span class="am-navbar-label">电视剧
+                    <span class="am-navbar-label">直播
 </span>
                 </a>
             </li>
 			<li>
-                <a href="/ct" class="">
+                <a href="/v/" class="">
                     <!--<span class="am-icon-home"></span>-->
-                    <img src="http://7080.wang/assets/img/dm.png" alt="动漫
+                    <img src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/img/dm.png" alt="影视搜
 "/>
-                    <span class="am-navbar-label">动漫
+                    <span class="am-navbar-label">影视搜
 </span>
                 </a>
             </li>
 			<li>
-                <a href="/va" class="">
+                <a href="/v/" class="">
                     <!--<span class="am-icon-home"></span>-->
-                    <img src="http://7080.wang/assets/img/zongyi.png" alt="综艺"/>
-                    <span class="am-navbar-label">综艺</span>
+                    <img src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/img/zongyi.png" alt="影视搜"/>
+                    <span class="am-navbar-label">影视搜</span>
                 </a>
             </li> 
         </ul>
@@ -439,15 +390,6 @@ function urlEncode(String) {
 }
 </script>
 
-<script>
-		var _hmt = _hmt || [];
-		(function() {
-		  var hm = document.createElement("script");
-		  hm.src = "https://hm.baidu.com/hm.js?6b933b9e111e81dd530fcaddb9159145";
-		  var s = document.getElementsByTagName("script")[0]; 
-		  s.parentNode.insertBefore(hm, s);
-		})();
-		</script>'
 	<script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/amazeui.min.js"></script>
 </body> 
 </html> 
