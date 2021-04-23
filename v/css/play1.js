@@ -1,6 +1,5 @@
 //内容开始
-if (id=="0"){url1="https://kongbuya.com/api.php/provide/vod/"}else if (id=="1"){url1="https://www.kuaibozy.com/api.php/provide/vod/"}else if (id=="2"){url1="http://api.appearoo.top/api.php/provide/vod/"}else if (id=="3"){url1="http://98hyk.cn/api.php/provide/vod/"}else if (id=="4"){url1="http://zy.zcocc.com/api.php/provide/vod/"}
-else if (id=="5"){url1="https://www.hktvyb.com/api.php/provide/vod/"}else if (id=="6"){url1="https://www.beiwoysw.com/api.php/provide/vod/"}
+url1=pingguoz[id];
 $(function(){
  $.ajax({
  async: true,

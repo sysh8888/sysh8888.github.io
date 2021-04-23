@@ -39,10 +39,8 @@ function index(index){
         }
 
 //苹果接口
-function from(id){
- var url1="";
-        if (id=="0"){url1="https://kongbuya.com/api.php/provide/vod/"}else if(id=="1"){url1="https://www.kuaibozy.com/api.php/provide/vod/"}else if(id=="2"){url1="http://api.appearoo.top/api.php/provide/vod/"}else if(id=="3"){url1="http://98hyk.cn/api.php/provide/vod/"}else if(id=="4"){url1="http://zy.zcocc.com/api.php/provide/vod/"}
-        else if(id=="5"){url1="https://www.hktvyb.com/api.php/provide/vod/"}else if(id=="6"){url1="https://www.beiwoysw.com/api.php/provide/vod/"}
+function frompg(id){
+ var url1=pingguoz[id];
    $("#list").hide();
             $.ajax({
                 type: "get",
@@ -73,13 +71,10 @@ function from(id){
             })
         }
 
-//天空资源
-    function fromall(id){
+//飞飞资源
+    function fromff(id){
         //console.log(id);
-        var url1="";
-        if (id=="0"){url1="http://v8.tiankongzy.cc/inc/feifei3/"}else if(id=="1"){url1="https://www.subo988.com/inc/feifei3.4/"}
-        else if(id=="2"){url1="http://cj.1886zy.co/inc/feifei3/"}else if(id=="3"){url1="https://www.mhapi123.com/inc/feifei3/"}
-        else if(id=="4"){url1="http://cj.bajiecaiji.com/inc/feifei3bjm3u8/index.php"}else if(id=="5"){url1="https://www.123ku.com/inc/feifei/"}else if(id=="6"){url1="http://api.wokuzy.com/feifei34/json/wokuzy_s/"}else if(id=="7"){url1="https://cj.okzy.tv/inc/feifei3ckm3u8s/"};
+        var url1=feifeiz[id];
        $("#list").hide();
              $.ajax({
                 type: "get",
