@@ -16,7 +16,8 @@
     <link href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/style.css" rel="stylesheet">
     <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
-    <script src="./css/index.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/zy.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/index.js"></script>
 </head>
 <body>
 <div id="header">
@@ -37,14 +38,8 @@
     <div class="bd">
         <div id="title"><b>资源来源</b></div>
         <ul id="nav">
-
-            <li class="hot on"><span onclick="fromall(0)">天空</span></li>            
-<li class="hot"><span onclick="fromall(1)">速播</span></li><li class="hot"><span onclick="fromall(2)">1866</span></li><li class="hot"><span onclick="fromall(3)">麻花</span></li>
-<li class="hot"><span onclick="fromall(4)">八戒</span></li><li class="hot"><span onclick="fromall(5)">123</span></li> <li class="hot">
-    <span onclick="fromall(6)">沃酷</span></li><li class="hot">
-    <span onclick="fromall(7)">OK</span></li><li class="hot"><span onclick="from(1)">快播</span></li><li class="hot"><span onclick="from(2)">萌果</span></li><li class="hot"><span onclick="from(3)">乐喵</span></li><li class="hot"><span onclick="from(4)">明日</span></li>
-    <li class="hot"><span onclick="from(5)">TVB</span></li><li class="hot"><span onclick="from(6)">被窝</span></li>
-	<!--<li class="hot"><span onclick="fromlll(0)">2345</span></li><li class="hot"><span onclick="from2(1)">360</span></li> -->      
+<div id="ff"></div> 
+     
 	</ul>
       <div id="loading">
         <div class="k-ball7a" ></div>
@@ -55,6 +50,17 @@
 
 <ul id="list">
 </ul>
+
+    </div>
+</div>
+<div id="foot">
+   版权声明:本网站为非赢利性站点<br>
+本网站所有内容均来源于互联网相关站点自动搜索采集信息，<br>
+版权归原作者所有<br>© 2020 BY <a href="/">7080影视搜索</a> . All rights.<a href="http://beian.miit.gov.cn/" target="_black"></a>
+<br>
+<script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1258200835'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/stat.php%3Fid%3D1258200835%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</div>
 <script type="text/javascript">
 var q = $('#wd').val();
 $(document).ready(function(){ 
@@ -90,18 +96,14 @@ success:function(data){
 
 document.getElementById("wd").value =wd;
 
+ var fenff="";
+for ( j in feifeiw)
+{ fenff+='<li class="hot"><span onclick="fromff('+j+')">'+feifeiw[j]+'</span></li>';} 
+//document.getElementById("ff").innerHTML =fenff;
+for ( k in pingguow)
+{ fenff+='<li class="hot"><span onclick="frompg('+k+')">'+pingguow[k]+'</span></li>';} 
+document.getElementById("ff").innerHTML =fenff;
+//console.log(fenff); 
 </script>
-       
-        <!-- <div id="more"><a href="/">更多影视 >></a></div> -->
-    </div>
-</div>
-<div id="foot">
-   版权声明:本网站为非赢利性站点<br>
-本网站所有内容均来源于互联网相关站点自动搜索采集信息，<br>
-版权归原作者所有<br>© 2020 BY <a href="/">7080影视搜索</a> . All rights.<a href="http://beian.miit.gov.cn/" target="_black"></a>
-<br>
-<script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1258200835'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/stat.php%3Fid%3D1258200835%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
-</div>
-</div>
 </body>
 </html>
