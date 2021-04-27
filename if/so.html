@@ -17,7 +17,7 @@
 					<a href="/" class="super-search-logo-2"><div class="logo">影视搜索</div></a>
 					<div class="super-search-form super-search-form-2">
 						<div class="super-search-input-box super-search-input-box-2">
-							<form id="formsearch" action="./so.html" method="get"><input class="super-search-input super-search-input-2" type="text" name="wd" id="wd" value="" placeholder="请输入搜索关键字">
+							<form id="formsearch" action="./so.html" method="get"><input class="super-search-input super-search-input-2" type="text" name="q" id="q" value="" placeholder="请输入搜索关键字">
 							<button type="submit" class="search-btn">立即搜索</button>
 							</form>
 							<div class="super-search-hot-box super-search-source">
@@ -38,11 +38,11 @@
  
    }
 
-var wd=GetQueryString("wd");
+var wd=GetQueryString("q");
 var url=GetQueryString("url");
-document.getElementById("wd").value =wd;
+document.getElementById("q").value =q;
 document.getElementById("video").src =url;
-document.getElementById("lie").innerHTML ='<a class="super-search-source-item" href="http://7080.wang/v/so.html?q='+wd+'" target="iframe-player">简单搜</a><a class="super-search-source-item" href="https://www.ipian.net/vodsearch.html?wd='wd+'" target="iframe-player">爱片网</a><a class="super-search-source-item" href="https://www.qq8x.com/vodsearch/-------------.html?wd='+wd+'" target="iframe-player">琪琪电影</a><a class="super-search-source-item" href="https://www.555dy1.com/index.php/vod/search/wd/'+wd+'.html" target="iframe-player">555电影</a><a class="super-search-source-item" href="https://www.pianba.net/so/-------------.html?wd='+wd+'" target="iframe-player">片吧</a>';
+document.getElementById("lie").innerHTML ='<a class="super-search-source-item" href="http://7080.wang/v/so.html?q='+q+'" target="iframe-player">简单搜</a><a class="super-search-source-item" href="https://www.ipian.net/vodsearch.html?wd='+q+'" target="iframe-player">爱片网</a><a class="super-search-source-item" href="https://www.qq8x.com/vodsearch/-------------.html?wd='+q+'" target="iframe-player">琪琪电影</a><a class="super-search-source-item" href="https://www.555dy1.com/index.php/vod/search/wd/'+q+'.html" target="iframe-player">555电影</a><a class="super-search-source-item" href="https://www.pianba.net/so/-------------.html?wd='+q+'" target="iframe-player">片吧</a>';
 </script>
 <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1258200835'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/stat.php%3Fid%3D1258200835' type='text/javascript'%3E%3C/script%3E"));</script>
 </body>
