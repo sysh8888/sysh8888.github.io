@@ -137,7 +137,7 @@ M3U8播放指南：
 </footer>
 <div id="get-top" title="回到顶部" style="display: none;"><i class="icon icon-arrow-up"></i></div>
 <script charset="gbk" src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/js/baidu.js"></script>
-<script type="text/javascript">eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('b a(){0 6=1.2("9").4;0 5=1.2("3");0 3=1.2("3").c;0 8=5.e[3].4;0 7=1.2("f");7.d=8+6}',16,16,'var|document|getElementById|jk|value|jkurl|diz|cljurl|jkv|url|dihejk|function|selectedIndex|src|options|player'.split('|'),0,{}))</script>
+
 
  <script>
     var sAddress=document.getElementsByTagName("form")[0];
@@ -162,16 +162,17 @@ M3U8播放指南：
       sInfor.name="q";
     }
     //Google
-    sGoogle.onclick=function(){
-      sAddress.action="http://www.idybee.com/";
-      sInfor.name="s";
-    };
-    
+	    $('#google').click(function() {
+      var query = $('#search').val();
+      if ( query ) {        window.open("./if/so.html?wd=" + query+"&url=http://www.idybee.com/?s=" + query , "_blank");
+        return false;
+      
+      };
+    });
     //Google镜像  2017 年 2 月 11 日 更换
-   
     $('#sougou').click(function() {
       var query = $('#search').val();
-      if ( query ) {        window.open("https://www.o8tv.com/index.php/vod/search.html?wd=" + query , "_blank");
+      if ( query ) {        window.open("./if/so.html?wd=" + query+"&url=https://www.o8tv.com/index.php/vod/search.html?wd=" + query , "_blank");
         return false;
       
       };
@@ -183,7 +184,7 @@ M3U8播放指南：
     $('#jd').click(function() {
       var query = $('#search').val();
       if ( query ) {
-        window.open("https://bowang.tv/search.html?wd=" + query, "_blank");
+        window.open("./if/so.html?wd=" + query+"&url=https://bowang.tv/search.html?wd=" + query, "_blank");
         return false;
       };
     });
@@ -191,49 +192,59 @@ M3U8播放指南：
 
     
     //淘宝
-    staobao.onclick=function(){
-      sAddress.action="https://dogechan.com/search?";
-      sInfor.name="query";
-    }
+	    $('#taobao').click(function() {
+      var query = $('#search').val();
+      if ( query ) {
+        window.open("./if/so.html?wd=" + query+"&url=https://dogechan.com/search?query=" + query, "_blank");
+        return false;
+      };
+    });
+   
     
       //微信  恢复上线
      $('#weixin').click(function() {
       var query = $('#search').val();
       if ( query ) {
-        window.open("https://www.pianba.net/so/-------------.html?wd=" + query, "_blank");
+        window.open("./if/so.html?wd=" + query+"&url=https://www.pianba.net/so/-------------.html?wd=" + query, "_blank");
         return false;
       
       };
     });
 
     //知乎
-    sZhihu.onclick=function(){
-      sAddress.action="https://www.juztv.com/vodsearch/-------------/";
-      sInfor.name="wd";
-      sInfor.type="question";
-    }
+	     $('#zhihu').click(function() {
+      var query = $('#search').val();
+      if ( query ) {
+        window.open("./if/so.html?wd=" + query+"&url=https://www.juztv.com/vodsearch/-------------/?wd=" + query, "_blank");
+        return false;
+      
+      };
+    });
 
     $('#weibo').click(function() {
       var query = $('#search').val();
       if ( query ) {
-        window.open("https://tv.syrme.top/searcha?q=" + query, "_blank");
+        window.open("./if/so.html?wd=" + query+"&url=https://tv.syrme.top/searcha?q=" + query, "_blank");
         return false;
       };
     });
 
     //豆瓣
-    sdouban.onclick=function(){
-      sAddress.action="https://www.shenma4480.com/search/-------------.html";
-      sInfor.name="wd";
-      //sInfor.type="question";
-    }
+	    $('#douban').click(function() {
+      var query = $('#search').val();
+      if ( query ) {
+        window.open("./if/so.html?wd=" + query+"&url=https://www.shenma4480.com/search/-------------.html?wd=" + query, "_blank");
+        return false;
+      };
+    });
+	
         
 // 胖次  B站
 
  $('#panci').click(function() {
       var query = $('#search').val();
       if ( query ) {
-        window.open("https://www.subaibai.com/grabble?q=" + query + "", "_blank");
+        window.open("./if/so.html?wd=" + query+"&url=https://www.subaibai.com/grabble?q=" + query + "", "_blank");
         return false;
       
      	};
