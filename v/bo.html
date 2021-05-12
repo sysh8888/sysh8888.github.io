@@ -25,7 +25,7 @@ function getQueryString(name){
 
 var url = getQueryString("url");
 console.log(url);
-if(url.indexOf("share") != -1 ){document.getElementById("player").src=url;}else if(url.indexOf("m3u8") != -1 ){document.getElementById("player").src="ali.html?url="+url;}else{document.getElementById("player").src="https://api.qianqi.net/?url="+url;}
+if(url.indexOf("share") != -1 ){document.getElementById("player").src=url;}else if(url.indexOf("m3u8") != -1 ){document.getElementById("player").src="ali.html?url="+url;}else if(url.indexOf("mp4") != -1 ){document.getElementById("player").src="https://4k.1ii0.cn/player/?url="+url;}else{document.getElementById("player").src="https://api.qianqi.net/?url="+url;}
 //https://api.qianqi.net/?url=,http://jx.hao-zsj.cn/vip/?url=,https://jx.sujx.top/jiexi.php/?url=，https://jx.youyitv.com/?url=
 </script>
 </body>
