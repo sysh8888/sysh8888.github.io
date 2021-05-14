@@ -1,7 +1,7 @@
 //内容开始
 var feifeiw={"0":"天空","2":"八戒"}; 
 var feifeiz={"0":"http://v8.tiankongzy.cc/inc/feifei3/","2":"http://cj.bajiecaiji.com/inc/feifei3bjm3u8/index.php"};
-var pingguow={"0":"天空","1":"快播","2":"萌果","3":"明日","4":"宅看","5":"被窝","6":"柚子","7":"三九","8":"嘀哩","9":"影派","10":"姨妈","11":"麻瓜"}; 
+var pingguow={"0":"天空","1":"快播","2":"萌果","3":"明日","4":"宅看","5":"被窝","6":"柚子","7":"三九","8":"嘀哩","9":"影派","10":"4K","11":"麻瓜"}; 
 var pingguoz={"0":"https://www.tiankongzy.cc/api.php/provide/vod/","1":"https://www.kuaibozy.com/api.php/provide/vod/",
               "2":"http://api.appearoo.top/api.php/provide/vod/","3":"http://zy.zcocc.com/api.php/provide/vod/",
               "4":"https://www.zhaikanys.com/api.php/provide/vod/at/json/","5":"https://www.beiwoysw.com/api.php/provide/vod/",
