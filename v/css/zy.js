@@ -9,3 +9,4 @@ var pingguoz={"0":"https://www.tiankongzy.cc/api.php/provide/vod/","1":"https://
               "8":"http://diliktv.com/api.php/provide/vod/from/kbm3u8/at/json/","9":"https://v.dtjos.com/api.php/provide/vod/at/json/",
               "10":"https://4k.4kyima.com/api.php/provide/vod/at/json/","11":"http://maguays.cc/api.php/provide/vod/at/json/"}; 
 //萌果http://api.appearoo.top/api.php/provide/vod/,明日http://zy.zcocc.com/api.php/provide/vod/
+//100iphttps://www.100ip.cn/api.php/provide/vod/at/json/,木瓜https://www.gzfc.net/api.php/provide/vod/at/json/
