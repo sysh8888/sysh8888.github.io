@@ -29,12 +29,12 @@
        </form>
     </div>
     <div class="bd">
-        <div id="title"><b>热门推荐</b></div>
+        <div id="title"><b id="tibiao"></b><b>-推荐</b></div>
         <ul id="nav">
-            <li class="hot on"><span onclick="index('movie&tag=热门')">电影</span></li>
-            <li class="hot"><span onclick="index('tv&tag=热门')">电视</span></li>
-            <li class="hot"><span onclick="index('tv&tag=综艺')">综艺</span></li>
-            <li class="hot"><span onclick="index('movie&tag=动画')">动画</span></li>
+            <li class="hot"><a href="?typ=1">电影</a></li>
+            <li class="hot"><a href="?typ=2">电视</a></li>
+            <li class="hot"><a href="?typ=3">综艺</a></li>
+            <li class="hot"><a href="?typ=4">动画</a></li>
         </ul>
         <div id="loading">
             <div class="k-ball7a" ></div>
@@ -42,12 +42,37 @@
             <div class="k-ball7c" ></div>
             <div class="k-ball7d" ></div>
         </div> 
+        
         <ul id="list">
 
         </ul>
-        <!-- <div id="more"><a href="/">更多影视 >></a></div> -->
+         <ul id="nav"><div id="ye"> 
+            
+        </div>
+        </ul>
     </div>
 </div>
+<script type="text/javascript">
+    function GetQueryString(name){
+         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+         var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+         if(r!=null)return  decodeURIComponent(r[2]); return null;
+    }
+    var typ=GetQueryString("typ");
+   // console.log(typ);
+    if(typ !=null && typ.toString().length>=1){ if(typ=="1"){var ty="movie&tag=热门";var tibiao="热门电影";}
+else if(typ=="2"){var ty="tv&tag=热门";var tibiao="热门电视";}else if(typ=="3"){var ty="tv&tag=综艺";var tibiao="热门综艺";}else if(typ=="4"){var ty="movie&tag=动画";var tibiao="热门动画";}
+} 
+    else{var ty="movie&tag=热门";var tibiao="热门电影";typ="1";}
+
+    var qq=GetQueryString("pg");
+    if(qq !=null && qq.toString().length>=1){ if(qq<"0"){pg = "0";}else{var pg=qq;}
+    } else{var pg="0";} pg=Number(pg);
+    document.getElementById("tibiao").innerHTML =tibiao;
+     var pg1=pg-1;var pg2=pg+1;
+    document.getElementById("ye").innerHTML ='<li class="hot"><a href="?typ='+typ+'&pg=0">首页</a></li><li class="hot"><a href="?typ='+typ+'&pg='+pg1+'">上一页</a></li><li class="hot"><a href="?typ='+typ+'&pg='+pg2+'">下一页</a></li><li class="hot"><span >当前'+pg+'页</span></li>';
+   
+</script>
 <script type="text/javascript">
     $(document).ready(function(){ 
 
@@ -57,23 +82,20 @@
  dataType: 'jsonp',
  jsonp: 'callback',
  jsonpCallback: 'callbackfunction',
- url:'https://bird.ioliu.cn/v1?url=https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=20&page_start=0',
+ url:'https://bird.ioliu.cn/v1?url=https://movie.douban.com/j/search_subjects?type='+ty+'&sort=recommend&page_limit=20&page_start='+pg,
  data: "",
  timeout: 3000,
  contentType: "application/json;utf-8",
  success: function(data) {
     var Node = $("#loading");  
                      Node.hide();
-console.log(data);
+                     //console.log(data);
 var timu="";
 for (var i=0;i<20;i++)
 { timu+='<li><a href="so.html?q='+data.subjects[i].title+'" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rate+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
 document.getElementById("list").innerHTML =timu;
  }
  });
-
-
-
     });
     $(".bd #nav").on("click","li",function(){
         $(".bd #nav li").removeClass("on");
