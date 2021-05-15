@@ -74,7 +74,7 @@ console.log(data);
     Node.hide();
     var jieguo="";
    for (var i=0;i<data.list.length;i++)
-    { jieguo+='<li><a href="play.html?q='+data.list[i].vod_id+'&id=2&zy=pg"><img src="'+data.list[i].vod_pic+'"  width="110" height="176"><em><b>'+data.list[i].vod_continu+'</b></em><span>'+data.list[i].vod_name+'</span></a></li>';}                   
+    { jieguo+='<li><a href="play.html?q='+data.list[i].vod_id+'&id=2&zy=pg"><img src="'+data.list[i].vod_pic+'"  width="110" height="176"><em><b>'+data.list[i].vod_remarks+'</b></em><span>'+data.list[i].vod_name+'</span></a></li>';}                   
   $("#list").html(jieguo);
 }
 })
