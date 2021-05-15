@@ -36,7 +36,7 @@
        </form>
     </div>
     <div class="bd">
-	    <div id="title"><b>资源选择(默认:天空)</b></div>
+	    <div id="title"><b>资源选择(默认:木瓜)</b></div>
         <ul id="nav">
 <div id="ff"></div> 
      
@@ -66,16 +66,15 @@ var q = $('#wd').val();
 $(document).ready(function(){ 
 $.ajax({
  type:"GET",
- url:"https://bird.ioliu.cn/v1?url=http://v8.tiankongzy.cc/inc/feifei3/",
-data: "wd="+wd,
+ url:"https://bird.ioliu.cn/v1?url=https://www.gzfc.net/api.php/provide/vod/at/json/",
+data: "ac=detail&wd="+wd,
 success:function(data){
-    //console.log(data);
+console.log(data);
     var Node = $("#loading");  
     Node.hide();
     var jieguo="";
-   for (var i=0;i<data.data.length;i++)
-    { jieguo+='<li><a href="play.html?q='+data.data[i].vod_id+'&id=0&zy=ff"><img src="'+data.data[i].vod_pic+'"  width="110" height="176"><em><b>'+data.data[i].vod_continu+'</b></em><span>'+data.data[i].vod_name+'</span></a></li>';}
-                      
+   for (var i=0;i<data.list.length;i++)
+    { jieguo+='<li><a href="play.html?q='+data.list[i].vod_id+'&id=2&zy=pg"><img src="'+data.list[i].vod_pic+'"  width="110" height="176"><em><b>'+data.list[i].vod_continu+'</b></em><span>'+data.list[i].vod_name+'</span></a></li>';}                   
   $("#list").html(jieguo);
 }
 })
