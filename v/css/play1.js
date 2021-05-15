@@ -15,12 +15,12 @@ $(function(){
 //console.log(data);
 var neirong='';
 var dianbo=data.list[0].vod_play_url;
-var dianbo1=dianbo.replace(/\r\n/g,",") ;
-var dianbo2=dianbo1.replace(/\$/g,",") ;
-var dianbo3=dianbo2.replace(/#/g,",") ;
-var dianbo4=dianbo3.replace(",,,",",") ;
+var dianbo1=dianbo.replace(/\r\n/g,"#") ;
+var dianbo2=dianbo1.replace(/\$/g,"#") ;
+//var dianbo3=dianbo2.replace(/#/g,",") ;
+var dianbo4=dianbo2.replace(/###/g,"#") ;
 var strs= new Array();
-strs=dianbo4.split(","); 
+strs=dianbo4.split("#"); 
 for (i=0;i<strs.length ;i+=2)
 {
     neirong +="<button type='button' onclick='bofang(this)' class='lipbtn' data-href='"+strs[i+1]+"' title='"+strs[i]+"'>"+strs[i]+"</button>";
