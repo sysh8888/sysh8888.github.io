@@ -69,7 +69,7 @@ else if(typ=="2"){var ty="tv&tag=热门";var tibiao="热门电视";}else if(typ=
     if(qq !=null && qq.toString().length>=1){ if(qq<"0"){pg = "0";}else{var pg=qq;}
     } else{var pg="0";} pg=Number(pg);
     document.getElementById("tibiao").innerHTML =tibiao;
-     var pg1=pg-1;var pg2=pg+1;
+     var pg1=pg-20;var pg2=pg+20;
     document.getElementById("ye").innerHTML ='<li class="hot"><a href="?typ='+typ+'&pg=0">首页</a></li><li class="hot"><a href="?typ='+typ+'&pg='+pg1+'">上一页</a></li><li class="hot"><a href="?typ='+typ+'&pg='+pg2+'">下一页</a></li><li class="hot"><span >当前'+pg+'页</span></li>';
    
 </script>
