@@ -92,7 +92,7 @@ else if(typ=="2"){var ty="tv&tag=热门";var tibiao="热门电视";}else if(typ=
                      //console.log(data);
 var timu="";
 for (var i=0;i<20;i++)
-{ timu+='<li><a href="so.html?q='+data.subjects[i].title+'" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rate+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
+{ timu+='<li><a href="./so.html?q='+data.subjects[i].title+'" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rate+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
 document.getElementById("list").innerHTML =timu;
  }
  });
