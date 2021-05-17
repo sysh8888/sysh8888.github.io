@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+  <meta http-equiv="content-security-policy" content="upgrade-insecure-requests" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>7080网-推荐站点</title>
+<meta name="keywords" content="7080，7080网，七零八零，七零八零网" />
+<meta name="description" content="7080网分享每天为您分享需要的资源、网络热门工具、影视资源这里有你需要的工具。" />
+<style> 
+html{height:100%;}
+body{height:100%;margin:0px;}
+	h2{
+font-size:15px; 
+color:#930;
+text-align:center;
+}
+</style>
+</head>
+<body>
+<!--if开始-->
+	<div style="height:100%;">
+<iframe id="player" src="" width="100%" height="100%" SCROLLING=auto security="restricted" scrolling="auto" frameborder="0" allowpaymentrequest="true" allowfullscreen='true' allow="fullscreen">
+   </iframe>
+
+												       </div>
+<!-- if结束-->
+
+<script type="text/javascript">
+
+ function GetQueryString(name)
+   {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  decodeURIComponent(r[2]); return null;
+ 
+   }
+
+
+var lianjie = GetQueryString("url");
+document.getElementById("player").src ="http://cdn.7080.wang/?url="+lianjie;
+</script>
+</body>
+</html>
