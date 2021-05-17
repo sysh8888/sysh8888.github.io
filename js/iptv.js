@@ -22,7 +22,7 @@ var lian1 = data.match(lian);
 var iptv='';
 for (i=0;i<timu1.length ;i++)
 {
-   iptv +='<li class="am-btn am-btn-sm btn-play-source"><a href="/ali.html?url=http://ivi.bupt.edu.cn/'+lian1[i]+'"  target="ajax" onclick="GetHref(this);return false;">'+timu1[i]+'</a></li>';
+   iptv +='<li class="am-btn am-btn-sm btn-play-source"><a href="../ali.html?url=http://ivi.bupt.edu.cn/'+lian1[i]+'"  target="ajax" onclick="GetHref(this);return false;">'+timu1[i]+'</a></li>';
 }
 document.getElementById("iptv").innerHTML=iptv ;
 //console.log(iptv);
