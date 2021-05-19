@@ -66,8 +66,7 @@ overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
     <input type="submit" value="琪琪" id="weibo" button type="button" class="btn btn-danger"/>
     <input type="submit" value="神马" id="douban" button type="button" class="btn btn-danger"/>
     <input type="submit" value="白夜" id="panci" button type="button" class="btn btn-warning"/>
-    <input type="submit" value="简单搜" id="ziyuan" button type="button" class="btn btn-warning"/>
-    <input type="submit" value="本站搜" id="ditu" button type="button" class="btn btn-warning"/>
+    <input type="submit" value="简单搜" id="ditu" button type="button" class="btn btn-warning"/>
     </center></P>      
   </form>
    </div>
@@ -154,7 +153,6 @@ VIP播放指南：
     var sZhihu=document.getElementById("zhihu");
     var sweibo=document.getElementById("weibo");
     var sdouban=document.getElementById("douban");
-    var sziyuan=document.getElementById("ziyuan");
     var sditu=document.getElementById("ditu");
      var swangpan=document.getElementById("wangpan");
 
@@ -251,18 +249,6 @@ VIP播放指南：
       
      	};
     });
-
-    //影视搜索入口
-  
-$('#ziyuan').click(function() {
-      var query = $('#search').val();
-      if ( query ) {
-        window.open("https://lujun189.gitee.io/videosearch/so.html?mode=search&q=" + query + "", "_blank");
-        return false;
-      
-     	};
-    });
-
 
 // 1905  另一个检索入口
 
