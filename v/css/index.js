@@ -44,7 +44,7 @@ function frompg(id){
    $("#list").hide();
             $.ajax({
                 type: "get",
-                url: "https://bird.ioliu.cn/v1?url="+url1,
+                url: "http://ce.7080.wang/json/?url="+url1,
                 data: "ac=detail&wd=" + wd,
                 async: true,
                 beforeSend:function(XMLHttpRequest){ 
