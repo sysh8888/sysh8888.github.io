@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>ckplayer</title>
+		
+		<style type="text/css">
+			body {
+				margin: 0;
+				padding: 0px;
+				font-family: "Microsoft YaHei", YaHei, "微软雅黑", SimHei, "黑体";
+				font-size: 18px;
+			}
+			p{
+				padding-left: 2em;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div id="video" style="width: 100%; height: 100%;">
+		</div>
+		<script type="text/javascript">
+
+ function GetQueryString(name)
+   {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  decodeURIComponent(r[2]); return null;
+ 
+   }
+
+
+var lianjie = GetQueryString("url");
+//var lianjie ="<?php echo $_GET["q"]; ?>";
+</script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/27k8/cdn/ckplayer/ckplayer/ckplayer.js" charset="UTF-8"></script>
+		<script type="text/javascript">
+			var videoObject = {
+				container: '#video', //容器的ID或className
+				variable: 'player', //播放函数名称
+				loop: true, //播放结束是否循环播放
+				//live: true,
+				autoplay: true,//是否自动播放
+				poster: 'https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/iptv.jpg', //封面图片
+
+				//flashplayer:true,
+				//debug:true,
+				video:lianjie
+			
+			};
+			var player = new ckplayer(videoObject);
+		</script>
+	</body>
+
+</html>
