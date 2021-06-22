@@ -6,8 +6,8 @@ var pingguoz={"0":"https://www.tiankongzy.cc/api.php/provide/vod/at/json/from/tk
               "2":"https://www.huaxiab.com/api.php/provide/vod/at/json/","3":"https://www.100ip.cn/api.php/provide/vod/at/json/",
               "4":"https://tangchaozy.vip/api.php/provide/vod/","5":"https://www.rrzyw.cc/api.php/provide/vod/from/rrm3u8/at/json/",
               "6":"http://tv.aitesucai.xyz/api.php/provide/vod/","7":"https://www.39kan.com/api.php/provide/vod/",
-              "8":"https://m3u8.apibdzy.com/api.php/provide/vod/at/json/","9":"https://v.dtjos.com/api.php/provide/vod/",
+              "8":"http://ok.888hyk.com/api.php/provide/vod/at/json/","9":"https://v.dtjos.com/api.php/provide/vod/",
               "10":"https://www.awsltv.com/api.php/provide/vod/at/json/","11":"http://maguays.cc/api.php/provide/vod/"}; 
 //萌果http://api.appearoo.top/api.php/provide/vod/,明日http://zy.zcocc.com/api.php/provide/vod/
-//安逸http://dy.51isu.com:11801/api.php/provide/vod/at/json，百度http://ok.888hyk.com/api.php/provide/vod/at/json
+//安逸http://dy.51isu.com:11801/api.php/provide/vod/at/json，百度https://m3u8.apibdzy.com/api.php/provide/vod/at/json/
 //蚂蚁https://www.mayipbt.cc/api.php/provide/vod/at/json
