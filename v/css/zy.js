@@ -4,7 +4,7 @@ var feifeiz={"0":"http://v8.tiankongzy.cc/inc/feifei3/","2":"http://cj.bajiecaij
 var pingguow={"0":"天空","1":"快播","2":"追剧","3":"一百","4":"唐朝","5":"蚂蚁","6":"柚子","7":"三九","8":"百度","9":"影派","10":"爱达","11":"麻瓜"}; 
 var pingguoz={"0":"https://www.tiankongzy.cc/api.php/provide/vod/at/json/from/tkm3u8/","1":"https://www.kuaibozy.com/api.php/provide/vod/",
               "2":"https://www.huaxiab.com/api.php/provide/vod/at/json/","3":"https://www.100ip.cn/api.php/provide/vod/at/json/",
-              "4":"https://tangchaozy.vip/api.php/provide/vod/","5":"https://www.mayipbt.cc/api.php/provide/vod/at/json/",
+              "4":"https://m3u8.apibdzy.com/api.php/provide/vod/at/json/","5":"https://www.mayipbt.cc/api.php/provide/vod/at/json/",
               "6":"http://tv.aitesucai.xyz/api.php/provide/vod/","7":"https://www.39kan.com/api.php/provide/vod/",
               "8":"http://ok.888hyk.com/api.php/provide/vod/at/json/","9":"https://v.dtjos.com/api.php/provide/vod/",
               "10":"https://www.awsltv.com/api.php/provide/vod/at/json/","11":"http://maguays.cc/api.php/provide/vod/"}; 
