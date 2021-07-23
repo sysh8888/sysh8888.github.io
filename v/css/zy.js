@@ -11,3 +11,4 @@ var pingguoz={"0":"https://www.tiankongzy.cc/api.php/provide/vod/at/json/from/tk
 //萌果http://api.appearoo.top/api.php/provide/vod/,明日http://zy.zcocc.com/api.php/provide/vod/
 //安逸http://dy.51isu.com:11801/api.php/provide/vod/at/json，百度https://m3u8.apibdzy.com/api.php/provide/vod/at/json/
 //人人https://www.rrzyw.cc/api.php/provide/vod/from/rrm3u8/at/json/
+//35https://www.555dy6.com/api.php/provide/vod/at/json/
