@@ -27,9 +27,11 @@
 
 var url = GetQueryString("url");
 console.log(url);
-if(url.indexOf("share") != -1 ){document.getElementById("player").src=url;}else if(url.indexOf("m3u8") != -1 ){document.getElementById("player").src="ali.html?url="+url;}else if(url.indexOf("donggou") != -1 ){document.getElementById("player").src="ali.html?url="+url+".mp4";}else{document.getElementById("player").src="https://www.pangujiexi.com/jiexi/?url="+url;}
+if(url.indexOf("share") != -1 ){document.getElementById("player").src=url;}else if(url.indexOf("m3u8") != -1 ){document.getElementById("player").src="ali.html?url="+url;}else{document.getElementById("player").src="https://api.1dior.cn/analysis/000/index.php?uid=2195&my=8LZ5ghikl9s3uvxyzABCEJMPTWd2t4fq&url="+url;}
 //https://api.qianqi.net/?url=,http://jx.hao-zsj.cn/vip/?url=,https://jx.sujx.top/jiexi.php/?url=，https://jx.youyitv.com/?url=,http://jx.quanmingjiexi.com/?url=
-//https://yun.dandingtu.com/jiexi/?url=https://z1.m1907.cn/?eps=0&jx=
+//https://yun.dandingtu.com/jiexi/?url=https://z1.m1907.cn/?eps=0&jx= https://www.pangujiexi.com/jiexi/?url=
+	//https://api.1dior.cn/analysis/000/index.php?uid=2195&my=8LZ5ghikl9s3uvxyzABCEJMPTWd2t4fq&url=
+//else if(url.indexOf("donggou") != -1 ){document.getElementById("player").src="ali.html?url="+url+".mp4";}
 	</script>
 </body>
 </html>
