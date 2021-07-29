@@ -10,5 +10,5 @@ var pingguoz={"0":"https://www.tiankongzy.cc/api.php/provide/vod/at/json/from/tk
               "10":"http://www.zitv.cc/api.php/provide/vod/at/json/","11":"http://zy.yilans.net:8090/api.php/provide/vod/at/json/"}; 
 //萌果http://api.appearoo.top/api.php/provide/vod/,明日http://zy.zcocc.com/api.php/provide/vod/
 //蚂蚁https://www.mayipbt.cc/api.php/provide/vod/at/json/，百度https://m3u8.apibdzy.com/api.php/provide/vod/at/json/
-//人人https://www.rrzyw.cc/api.php/provide/vod/from/rrm3u8/at/json/
-//35https://www.555dy6.com/api.php/provide/vod/at/json/
+//人人https://www.rrzyw.cc/api.php/provide/vod/from/rrm3u8/at/json/零度https://zy.kuluni.cn/api.php/provide/vod/
+//35https://www.555dy6.com/api.php/provide/vod/at/json/2Ahttps://zy.zcocc.com/api.php/provide/vod/at/json/
