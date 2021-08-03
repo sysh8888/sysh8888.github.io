@@ -61,25 +61,6 @@
 </div>
 </div>
 <script type="text/javascript">
-var q = $('#wd').val();
-$(document).ready(function(){ 
-$.ajax({
- type:"GET",
- url:"https://bird.ioliu.cn/v1?url=https://www.tiankongzy.cc/api.php/provide/vod/from/tkm3u8/",
-data: "ac=detail&wd="+wd,
-success:function(data){
-console.log(data);
-    var Node = $("#loading");  
-    Node.hide();
-    var jieguo="";
-   for (var i=0;i<data.list.length;i++)
-    { jieguo+='<li><a href="play.html?q='+data.list[i].vod_id+'&id=0&zy=pg"><img src="'+data.list[i].vod_pic+'"  width="110" height="176"><em><b>'+data.list[i].vod_remarks+'</b></em><span>'+data.list[i].vod_name+'</span></a></li>';}                   
-  $("#list").html(jieguo);
-}
-})
-});
-
-
     $(".bd #nav").on("click","li",function(){
         $(".bd #nav li").removeClass("on");
         $(this).addClass("on");
@@ -102,6 +83,8 @@ for ( k in pingguow)
 { fenff+='<li class="hot"><span onclick="frompg('+k+')">'+pingguow[k]+'</span></li>';} 
 document.getElementById("ff").innerHTML =fenff;
 //console.log(fenff); 
+	
+frompg('0');
 </script>
 </body>
 </html>
