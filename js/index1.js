@@ -1,5 +1,5 @@
  function ying(ying){
-var url1="https://bird.ioliu.cn/v1?url=https://movie.douban.com/j/search_subjects?type="+ying+"&sort=recommend&page_limit=20&page_start=0";
+var url1="http://b.7080.wang/v1?url=https://movie.douban.com/j/search_subjects?type="+ying+"&sort=recommend&page_limit=20&page_start=0";
 $(function(){
  $.ajax({
  async: true,
