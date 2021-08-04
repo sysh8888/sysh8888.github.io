@@ -34,7 +34,7 @@
             <li class="hot"><a href="?typ=1">电影</a></li>
             <li class="hot"><a href="?typ=2">电视</a></li>
             <li class="hot"><a href="?typ=3">综艺</a></li>
-            <li class="hot"><a href="?typ=4">动画</a></li>
+            <li class="hot"><a href="?typ=4">动漫</a></li>
         </ul>
         <div id="loading">
             <div class="k-ball7a" ></div>
@@ -60,10 +60,10 @@
     }
     var typ=GetQueryString("typ");
    // console.log(typ);
-    if(typ !=null && typ.toString().length>=1){ if(typ=="1"){var ty="movie&tag=热门";var tibiao="热门电影";}
-else if(typ=="2"){var ty="tv&tag=热门";var tibiao="热门电视";}else if(typ=="3"){var ty="tv&tag=综艺";var tibiao="热门综艺";}else if(typ=="4"){var ty="movie&tag=动画";var tibiao="热门动画";}
+    if(typ !=null && typ.toString().length>=1){ if(typ=="1"){var ty="movie_热门";var tibiao="热门电影";}
+else if(typ=="2"){var ty="tv_热门";var tibiao="热门电视";}else if(typ=="3"){var ty="tv_综艺";var tibiao="热门综艺";}else if(typ=="4"){var ty="tv_日本动画";var tibiao="热门动漫";}
 } 
-    else{var ty="movie&tag=热门";var tibiao="热门电影";typ="1";}
+    else{var ty="movie_热门";var tibiao="热门电影";typ="1";}
 
     var qq=GetQueryString("pg");
     if(qq !=null && qq.toString().length>=1){ if(qq<"0"){pg = "0";}else{var pg=qq;}
@@ -82,7 +82,7 @@ else if(typ=="2"){var ty="tv&tag=热门";var tibiao="热门电视";}else if(typ=
  dataType: 'jsonp',
  jsonp: 'callback',
  jsonpCallback: 'callbackfunction',
- url:'https://bird.ioliu.cn/v1?url=https://movie.douban.com/j/search_subjects?type='+ty+'&sort=recommend&page_limit=20&page_start='+pg,
+ url:'https://bird.ioliu.cn/v1?url=https://api.jackeriss.com/api/v1/recommend/?subject='+ty+'&page_limit=20&page_start='+pg,
  data: "",
  timeout: 3000,
  contentType: "application/json;utf-8",
@@ -92,7 +92,7 @@ else if(typ=="2"){var ty="tv&tag=热门";var tibiao="热门电视";}else if(typ=
                      //console.log(data);
 var timu="";
 for (var i=0;i<20;i++)
-{ timu+='<li><a href="./so.html?q='+data.subjects[i].title+'" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rate+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
+{ timu+='<li><a href="./so.html?q='+data.subjects[i].title+'" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rating.value+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
 document.getElementById("list").innerHTML =timu;
  }
  });
