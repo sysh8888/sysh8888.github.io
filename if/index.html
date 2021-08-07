@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,29 +6,41 @@
 <title>7080网-推荐站点</title>
 <meta name="keywords" content="7080，7080网，七零八零，七零八零网" />
 <meta name="description" content="7080网分享每天为您分享需要的资源、网络热门工具、影视资源这里有你需要的工具。" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/css/style2.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 
-<body>
-	<!--顶部logo-->
-  <header style="opacity: 0.7;">
-    <div class="container" style="padding-right: 0px;padding-left: 0px;">
-    <div class="main">
-    <h1 class="logo">
-    <a href="../index.html">
-    <img src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/ico.png">
-    <span>7080.wang-首页</span>
-    </a>
-    </h1>
-    </div>
-    </div>
-    <div class="not_operational"></div>
-    </header>
-	<br><br>
+<body style="position:absolute;width:100%;height:100%;">  
+  <nav class = "navbar navbar-default" role = "navigation">  
+      <div class="navbar-header">  
+          <button type="button" class="navbar-toggle" data-toggle = "collapse"  data-target = "#target-menu">  
+              <span class="sr-only">7080</span>  
+              <span class="icon-bar"></span>  
+              <span class="icon-bar"></span>  
+              <span class="icon-bar"></span>  
+          </button>  
+          <a class="navbar-brand">7080</a>  
+      </div>  
+      <div class="collapse navbar-collapse" id = "target-menu">  
+          <ul class="nav navbar-nav">  
+              <li class="active"><a href="http://7080.wang">网站首页</a></li>  
+              <li><a href="http://7080.wang/v/">影视搜</a></li>  
+              <li><a href="http://7080.wang/live/">IPTV</a></li>  
+              <li><a href="http://sysh8888.aaaak.pw/">九亿网</a></li>  
+
+              <li class="dropdown">  
+                  <a href="#" class="dropdown-toggle" data-toggle = "dropdown">其他<span class="caret"></span></a>  
+                  <ul class="dropdown-menu">  
+                      <li><a href="http://7080.eu5.org/">综合影视</a></li>  
+                      <li><a href="http://sysh8888.huangenet.cn/">国语</a></li>  
+                      <li><script type="text/javascript" src="https://s4.cnzz.com/z_stat.php?id=1258200835&web_id=1258200835"></script>
+                      </li>
+                        <pre name="code" class="html">                        <li class="divider"></li> </pre></ul></nav>
 <!--if开始-->
-	<div style="height:100%;">
-<iframe id="player" src="//7080.wang" width="100%" height="100%" SCROLLING=auto security="restricted" scrolling="auto" frameborder="0" allowfullscreen="true" >
+	<div style="position:absolute;width:100%;height:90%;" >
+<iframe id="player" src="http://7080.wang" width="100%" height="100%" security="restricted" scrolling="auto" frameborder="0" allowfullscreen="true" >
    </iframe>
 </div>
 <!-- if结束-->
@@ -48,6 +59,6 @@
 var lianjie = GetQueryString("dz");
 document.getElementById("player").src =lianjie;
 </script>
-<script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1258200835'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/stat.php%3Fid%3D1258200835%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
 </body>
 </html>
