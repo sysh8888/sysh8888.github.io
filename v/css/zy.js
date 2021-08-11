@@ -6,7 +6,7 @@ var pingguoz={"0":"https://www.tiankongzy.cc/api.php/provide/vod/at/json/from/tk
               "2":"http://www.huaxiab.com/api.php/provide/vod/","3":"http://api.appearoo.top/api.php/provide/vod/",
               "4":"https://zy.zcocc.com/api.php/provide/vod/","5":"http://dy.51isu.com:11801/api.php/provide/vod/at/json/",
               "6":"http://tv.aitesucai.xyz/api.php/provide/vod/","7":"https://www.39kan.com/api.php/provide/vod/",
-              "8":"http://api.dbyunzy.com/api.php/provide/vod/at/xml/","9":"https://kongbuya.com/api.php/provide/vod/",
+              "8":"http://api.dbyunzy.com/api.php/provide/vod/at/json/","9":"https://kongbuya.com/api.php/provide/vod/",
               "10":"http://www.zitv.cc/api.php/provide/vod/at/json/","11":"https://api.bdxzyapi.com/api.php/provide/vod/"}; 
 //萌果http://api.appearoo.top/api.php/provide/vod/,明日,八零http://zy.yilans.net:8090/api.php/provide/vod/at/json/
 //蚂蚁https://www.mayipbt.cc/api.php/provide/vod/at/json/，百度https://m3u8.apibdzy.com/api.php/provide/vod/at/json/
