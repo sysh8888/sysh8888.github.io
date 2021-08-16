@@ -106,6 +106,7 @@ var ipiptv={"CCTV1":"http://shbu.live.bestvcdn.com.cn:8080/live/program/live/cct
 "CCTV2":"http://shbu.live.bestvcdn.com.cn:8080/live/program/live/cctv2/1300000/mnf.m3u8",
 "CCTV3":"http://shbu.live.bestvcdn.com.cn:8080/live/program/live/cctv3hd/4000000/mnf.m3u8",
 "CCTV4":"http://shbu.live.bestvcdn.com.cn:8080/live/program/live/cctv4/1300000/mnf.m3u8",
+"CCTV5":"http://newvideo.dangtutv.cn:8278/CCTVsports/playlist.m3u8",
 "CCTV5":"http://shbu.live.bestvcdn.com.cn:8080/live/program/live/cctv5hd/4000000/mnf.m3u8",
 "CCTV5+":"http://shbu.live.bestvcdn.com.cn:8080/live/program/live/cctv5phd/4000000/mnf.m3u8",
 "CCTV6":"http://shbu.live.bestvcdn.com.cn:8080/live/program/live/cctv6hd/4000000/mnf.m3u8",
