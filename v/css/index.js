@@ -23,7 +23,7 @@ function index(index){
                       Node.hide(); 
                       var timu="";
                       for (var i=0;i<20;i++)
-                      { timu+='<li><a href="so.html?q='+data.subjects[i].title+'" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rate+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
+                      { timu+='<li><a href="so.html?q='+data.subjects[i].title+'&html=1.html" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rate+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
                       $("#list").html(timu);
                      $("#list").slideDown();
 
@@ -57,7 +57,7 @@ function frompg(id){
                       Node.hide(); 
                       var jieguo="";
                       for (var i=0;i<data.list.length;i++)
-                       { jieguo+='<li><a href="play.html?q='+data.list[i].vod_id+'&id='+id+'&zy=pg" target="_blank"><img  src="'+data.list[i].vod_pic+'" width="120" height="176"><em><b>'+data.list[i].vod_remarks+'</b></em><span>'+data.list[i].vod_name+'</span></a></li>';}
+                       { jieguo+='<li><a href="play.html?q='+data.list[i].vod_id+'&id='+id+'&zy=pg&html=1.html" target="_blank"><img  src="'+data.list[i].vod_pic+'" width="120" height="176"><em><b>'+data.list[i].vod_remarks+'</b></em><span>'+data.list[i].vod_name+'</span></a></li>';}
                                 
                     $("#list").html(jieguo);
                      $("#list").slideDown();
@@ -91,7 +91,7 @@ function frompg(id){
                       Node.hide(); 
                       var jieguo="";
                       for (var i=0;i<data.data.length;i++)
-                       { jieguo+='<li><a href="play.html?q='+data.data[i].vod_id+'&id='+id+'&zy=ff" target="_blank"><img  src="'+data.data[i].vod_pic+'"  width="120" height="176"><em><b>'+data.data[i].vod_continu+'</b></em><span>'+data.data[i].vod_name+'</span></a></li>';}
+                       { jieguo+='<li><a href="play.html?q='+data.data[i].vod_id+'&id='+id+'&zy=ff&html=1.html" target="_blank"><img  src="'+data.data[i].vod_pic+'"  width="120" height="176"><em><b>'+data.data[i].vod_continu+'</b></em><span>'+data.data[i].vod_name+'</span></a></li>';}
                                 
                     $("#list").html(jieguo);
                      $("#list").slideDown();
