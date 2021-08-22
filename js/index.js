@@ -14,7 +14,7 @@ $(function(){
 console.log(data);
 var timu="";
 for (var i=0;i<21;i++)
-{ timu+='<dl><dt><a target="_blank" href="./v/so.html?q='+data.subjects[i].title+'"><img src="'+data.subjects[i].cover+'"></a><span>豆瓣评分:'+data.subjects[i].rate+'分</span></dt><dd>'+data.subjects[i].title+'</dd></dl>';}
+{ timu+='<dl><dt><a target="_blank" href="./v/so.html?q='+data.subjects[i].title+'&html=1.html"><img src="'+data.subjects[i].cover+'"></a><span>豆瓣评分:'+data.subjects[i].rate+'分</span></dt><dd>'+data.subjects[i].title+'</dd></dl>';}
 document.getElementById("lie").innerHTML =timu;
  }
  });
