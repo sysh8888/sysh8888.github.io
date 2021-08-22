@@ -14,4 +14,4 @@ var pingguoz={"0":"https://www.tiankongzy.cc/api.php/provide/vod/at/json/from/tk
 //35https://www.555dy6.com/api.php/provide/vod/at/json/2Ahttps://zy.zcocc.com/api.php/provide/vod/at/json/
 //唐朝http://beiyong.donggou.vip/api.php/provide/vod/快播https://www.kuaibozy.com/api.php/provide/vod/
 //影派https://v.dtjos.com/api.php/provide/vod/一百https://www.100ip.cn/api.php/provide/vod/at/json/
-//速搜http://www.susouzy.com/api.php/provide/vod/
+//速搜http://www.susouzy.com/api.php/provide/vod/,888http://ok.888hyk.com/api.php/provide/vod/at/json/
