@@ -25,6 +25,7 @@
        <form action="./so.html" method="GET">
         <input type="hidden" name="mode" value="search">
         <input type="text" name="q" id="wd" placeholder="输入关键词搜索" value="" autocomplete="off">
+            <input type="hidden" name="html" value="1.html" /> 
         <button id="submit"><i class="fas fa-search"></i></button>
        </form>
     </div>
@@ -92,7 +93,7 @@ else if(typ=="2"){var ty="tv_热门";var tibiao="热门电视";}else if(typ=="3"
                      //console.log(data);
 var timu="";
 for (var i=0;i<20;i++)
-{ timu+='<li><a href="./so.html?q='+data.subjects[i].title+'" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rating.value+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
+{ timu+='<li><a href="./so.html?q='+data.subjects[i].title+'&html=1.html" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rating.value+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
 document.getElementById("list").innerHTML =timu;
  }
  });
