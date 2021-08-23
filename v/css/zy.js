@@ -15,3 +15,4 @@ var pingguoz={"0":"https://www.tiankongzy.cc/api.php/provide/vod/at/json/from/tk
 //唐朝http://beiyong.donggou.vip/api.php/provide/vod/快播https://www.kuaibozy.com/api.php/provide/vod/
 //影派https://v.dtjos.com/api.php/provide/vod/一百https://www.100ip.cn/api.php/provide/vod/at/json/
 //速搜http://www.susouzy.com/api.php/provide/vod/,888http://ok.888hyk.com/api.php/provide/vod/at/json/
+//无尽https://api.wujinapi.com/api.php/provide/vod/from/wjm3u8/at/json/
