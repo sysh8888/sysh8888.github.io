@@ -1,6 +1,6 @@
 //内容开始
-var feifeiw={"0":"天空","2":"八戒","3":"红牛"}; 
-var feifeiz={"0":"http://v8.tiankongzy.cc/inc/feifei3/","2":"http://cj.bajiecaiji.com/inc/feifei3bjm3u8/index.php","3":"https://www.hongniuzy.com/inc/feifei/"};
+var feifeiw={"0":"天空","1":"八戒","2":"红牛"}; 
+var feifeiz={"0":"http://v8.tiankongzy.cc/inc/feifei3/","1":"http://cj.bajiecaiji.com/inc/feifei3bjm3u8/index.php","2":"https://www.hongniuzy.com/inc/feifei/"};
 var pingguow={"0":"天空","1":"快播","2":"追剧","3":"无尽","4":"二安","5":"安逸","6":"柚子","7":"三九","8":"百度","9":"一百","10":"神马","11":"北斗"}; 
 var pingguoz={"0":"https://www.tiankongzy.cc/api.php/provide/vod/at/json/from/tkm3u8/","1":"https://www.kuaibozy.com/api.php/provide/vod/from/kbm3u8/at/json/",
               "2":"http://www.huaxiab.com/api.php/provide/vod/","3":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/",
