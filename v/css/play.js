@@ -7,7 +7,7 @@ $(function(){
  dataType: 'jsonp',
  jsonp: 'callback',
  jsonpCallback: 'callbackfunction',
- url: "http://ce.7080.wang/json/?url="+url1+lianjie,
+ url: "https://bird.ioliu.cn/v1?url="+url1+lianjie,
  data: "",
  timeout: 3000,
  contentType: "application/json;utf-8",
