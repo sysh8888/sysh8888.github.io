@@ -26,7 +26,7 @@ for (i=0;i<strs.length ;i+=2)
     neirong +="<button type='button' onclick='bofang(this)' class='lipbtn' data-href='"+strs[i+1]+"' title='"+strs[i]+"'>"+strs[i]+"</button>";
 }
 var vide=strs[1];  
-document.getElementById("video").src="//lujun189.gitee.io/live/bo.html?url="+vide ;
+document.getElementById("video").src="./bo.html?url="+vide ;
 document.getElementById("neirong").innerHTML =neirong;
  document.getElementById("name").innerHTML =data.list[0].vod_name;
  document.getElementById("zhuang").innerHTML =data.list[0].vod_remarks;
