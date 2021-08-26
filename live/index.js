@@ -54,10 +54,11 @@ var zjiptv={"浙江卫视":"https://hw-m-l.cztv.com/channels/lantian/channel01/3
 "余杭未来":"https://l.cztvcloud.com/channels/lantian/SXyuhang3/720p.m3u8",
 "海盐新闻":"http://haiyan.liveyun.hoge.cn/xwpd/sd/live.m3u8"}; 
 
-var qtiptv={"CNC中文":"http://source07.v.news.cn/live/CNC_CN/playlist.m3u8",
+var qtiptv={"CNC中文":"https://source07.v.news.cn/live/CNC_CN/playlist.m3u8",
 "阳光卫视":"https://stream.chinasuntv.com/680k/mid_video_index.m3u8",
 "NHK华语":"https://nhkw-zh-hlscomp.akamaized.net/ixxemlzk1vqvy44o/playlist.m3u8",
-"TVOKISD":"https://bcsecurelivehls-i.akamaihd.net/hls/live/623607/15364602001/tvokids/master.m3u8",
+"清华大学":"https://live.cic.tsinghua.edu.cn/hls/tsinghuatv.m3u8",
+ "TVOKISD":"https://bcsecurelivehls-i.akamaihd.net/hls/live/623607/15364602001/tvokids/master.m3u8",
 "俄罗斯":"https://rt-news-gd.secure2.footprint.net/1103_2500Kb.m3u8",
 "美国蓬博":"https://ciner.daioncdn.net/bloomberght/bloomberght_720p.m3u8",
 "印度LS":"https://nicls1-lh.akamaihd.net/i/lst_1@26969/index_1_av-p.m3u8",
