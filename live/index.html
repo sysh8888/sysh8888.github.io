@@ -37,6 +37,11 @@
  
    <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
       <script src="./index.js"></script>
+  <script src="https://unpkg.com/valine/dist/Valine.min.js"></script>
+<!-- or set latest -->
+<script src="https://unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<!-- or Default value -->
+<script src="https://unpkg.com/valine"></script>
  <!--公共header部分开始（本header由代码动态生成）-->
  </head> 
  
@@ -178,13 +183,20 @@
      </div>
  </div>
  
- <div class="am-panel am-panel-default">
+  <div class="am-panel am-panel-default">
      <div class="am-panel-hd">评论搜索</div>
      <div class="am-panel-bd">
      <!--PC和WAP自适应版-->
- <div id="SOHUCS" ></div> 
- <script type="text/javascript">(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=17897063818807250327' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();</script>
- 
+  <div class="comment"></div><!--评论开始 https://console.leancloud.cn/-->
+    <script>
+      	var valine = new Valine();
+valine.init({
+    el: '.comment',
+    appId:  'P7U0TEqpkVlkwpsgmEhrH2T2-MdYXbMMI',
+    appKey:  'c7jdhAPmCnbnD4avshU86U2D',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!'
+})
+    </script> <!--评论结束-->
    </div>
  </div>
    
