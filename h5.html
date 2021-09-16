@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>HTML5</title>
+<style type="text/css">
+      html, body {width:100%;height:100%;margin:auto;overflow: hidden;background-color:#000;}
+    </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/video.js@7.11.4/dist/video-js.min.css">
+<script type="text/javascript" charset="utf-8" src="https://cdn.jsdelivr.net/npm/video.js@7.11.4/dist/video.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://cdn.jsdelivr.net/npm/video.js@7.11.4/dist/lang/zh-CN.js"></script>
+<style type="text/css">
+body{margin:0;padding:0px;}
+</style>
+</head>
+<body topmargin=0 leftmargin=0 bgcolor=#000000 scroll=no>
+<script type="text/javascript">
+var lurl=window.location.href;
+if(lurl.indexOf('h5.html?url=')>0) lurl=lurl.split('h5.html?url=')[1];
+document.write('<video style="height:100%;width:100%;" poster="" id="player" class="video-js vjs-16-9 vjs-big-play-centered my-3" controls preload="auto" poster1="" data-setup="{}" autoplay="autoplay" fluid="true"><source src="'+lurl+'" type="application/x-mpegURL"></video>');
+</script>
+</body>
+</html>
