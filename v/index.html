@@ -92,7 +92,7 @@
 //console.log(data);
 var timu="";
 for (var i=0,l=data.data.movieTopList.topListInfos[0].items.length;i<l;i++)
-{ timu+='<li><a href="./so.html?q='+data.data.movieTopList.topListInfos[0].items[i].movieInfo.movieName+'&html=1.html" target="_blank"><img  src="'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.img+'"  width="110" height="176"><em><b>演员:'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.actors+'分</b></em><span>'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.movieName+'</span></a></li>';}
+{ timu+='<li><a href="./so.html?q='+data.data.movieTopList.topListInfos[0].items[i].movieInfo.movieName+'&html=1.html" target="_blank"><img  src="'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.img+'"  width="110" height="176"><em><b>演员:'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.actors+'</b></em><span>'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.movieName+'</span></a></li>';}
 document.getElementById("list").innerHTML =timu;
  }
  });
