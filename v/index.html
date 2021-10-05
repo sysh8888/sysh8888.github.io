@@ -1,99 +1,98 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>一个简洁的影视搜索引擎</title>
-    <meta name="description" content="7080视搜索是一款全能影视搜索引擎，帮你找到最新影视资源，一站拥有无尽影视资源，下载最新影视资源，下载全集版影视资源。" />
-    <meta name="keywords" content="影视搜索，电影下载，最新视频" />
-    <meta name="referrer" content="never" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<title>一个简洁的影视搜索引擎</title>
+<meta name="description" content="7080视搜索是一款全能影视搜索引擎，帮你找到最新影视资源，一站拥有无尽影视资源，下载最新影视资源，下载全集版影视资源。" />
+<meta name="keywords" content="影视搜索，电影下载，最新视频" />
+<meta name="referrer" content="never" />
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/favicon.ico" />
-    <link href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/style.css" rel="stylesheet">
-    <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/index.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/style.css" rel="stylesheet">
+<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/index.js"></script>
 </head>
 <body>
 <div id="header">
-    <div class="logo"><a href="//7080.wang/">7080影视搜</a> </div>
+<div class="logo"><a href="//7080.wang/">7080影视搜</a> </div>
 </div>
 <ul class="bar">
-    <li><a id="backTopBtn" href="" title="回顶部"><i class="fas fa-chevron-up"></i></a></li>
+<li><a id="backTopBtn" href="" title="回顶部"><i class="fas fa-chevron-up"></i></a></li>
 </ul>
 <div id="content">
-    <div class="search">
-       <form action="./so.html" method="GET">
-        <input type="hidden" name="mode" value="search">
-        <input type="text" name="q" id="wd" placeholder="输入关键词搜索" value="" autocomplete="off">
-            <input type="hidden" name="html" value="1.html" /> 
-        <button id="submit"><i class="fas fa-search"></i></button>
-       </form>
-    </div>
-    <div class="bd">
-        <div id="title"><b id="tibiao"></b><b>-推荐</b></div>
-        <ul id="nav">
-            <li class="hot"><a href="?typ=1">电影</a></li>
-            <li class="hot"><a href="?typ=2">电视</a></li>
-            <li class="hot"><a href="?typ=3">综艺</a></li>
-            <li class="hot"><a href="?typ=4">动漫</a></li>
-        </ul>
-        <div id="loading">
-            <div class="k-ball7a" ></div>
-            <div class="k-ball7b" ></div>
-            <div class="k-ball7c" ></div>
-            <div class="k-ball7d" ></div>
-        </div> 
-        
-        <ul id="list">
+<div class="search">
+<form action="./so.html" method="GET">
+<input type="hidden" name="mode" value="search">
+<input type="text" name="q" id="wd" placeholder="输入关键词搜索" value="" autocomplete="off">
+<input type="hidden" name="html" value="1.html" />
+<button id="submit"><i class="fas fa-search"></i></button>
+</form>
+</div>
+<div class="bd">
+<div id="title"><b id="tibiao">TOP100</b><b>-排行榜</b></div>
+<!--
+<ul id="nav">
+<li class="hot"><a href="?typ=1">电影</a></li>
+<li class="hot"><a href="?typ=2">电视</a></li>
+<li class="hot"><a href="?typ=3">综艺</a></li>
+<li class="hot"><a href="?typ=4">动漫</a></li>
+</ul>
+-->
 
-        </ul>
-         <ul id="nav"><div id="ye"> 
-            
-        </div>
-        </ul>
+
+<div id="loading">
+    <div class="k-ball7a"></div>
+    <div class="k-ball7b"></div>
+    <div class="k-ball7c"></div>
+    <div class="k-ball7d"></div>
     </div>
+<ul id="list">
+</ul>
+<!--<ul id="nav"><div id="ye"></div></ul>-->
+</div>
 </div>
 <script type="text/javascript">
-    function GetQueryString(name){
-         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-         var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
-         if(r!=null)return  decodeURIComponent(r[2]); return null;
-    }
-    var typ=GetQueryString("typ");
+//    function GetQueryString(name){
+ //        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+//         var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+ //        if(r!=null)return  decodeURIComponent(r[2]); return null;
+//    }
+ //   var typ=GetQueryString("typ");
    // console.log(typ);
-    if(typ !=null && typ.toString().length>=1){ if(typ=="1"){var ty="movie_热门";var tibiao="热门电影";}
-else if(typ=="2"){var ty="tv_热门";var tibiao="热门电视";}else if(typ=="3"){var ty="tv_综艺";var tibiao="热门综艺";}else if(typ=="4"){var ty="tv_日本动画";var tibiao="热门动漫";}
-} 
-    else{var ty="movie_热门";var tibiao="热门电影";typ="1";}
+ //   if(typ !=null && typ.toString().length>=1){ if(typ=="1"){var ty="movie_热门";var tibiao="热门电影";}
+// else if(typ=="2"){var ty="tv_热门";var tibiao="热门电视";}else if(typ=="3"){var ty="tv_综艺";var tibiao="热门综艺";}else if(typ=="4"){var ty="tv_日本动画";var tibiao="热门动漫";}
+//} 
+ //   else{var ty="movie_热门";var tibiao="热门电影";typ="1";}
 
-    var qq=GetQueryString("pg");
-    if(qq !=null && qq.toString().length>=1){ if(qq<"0"){pg = "0";}else{var pg=qq;}
-    } else{var pg="0";} pg=Number(pg);
-    document.getElementById("tibiao").innerHTML =tibiao;
-     var pg1=pg-20;var pg2=pg+20;
-    document.getElementById("ye").innerHTML ='<li class="hot"><a href="?typ='+typ+'&pg=0">首页</a></li><li class="hot"><a href="?typ='+typ+'&pg='+pg1+'">上一页</a></li><li class="hot"><a href="?typ='+typ+'&pg='+pg2+'">下一页</a></li><li class="hot"><span >当前'+pg+'页</span></li>';
+ //   var qq=GetQueryString("pg");
+ //   if(qq !=null && qq.toString().length>=1){ if(qq<"0"){pg = "0";}else{var pg=qq;}
+ //   } else{var pg="0";} pg=Number(pg);
+ //   document.getElementById("tibiao").innerHTML =tibiao;
+ //    var pg1=pg-20;var pg2=pg+20;
+//    document.getElementById("ye").innerHTML ='<li class="hot"><a href="?typ='+typ+'&pg=0">首页</a></li><li class="hot"><a href="?typ='+typ+'&pg='+pg1+'">上一页</a></li><li class="hot"><a href="?typ='+typ+'&pg='+pg2+'">下一页</a></li><li class="hot"><span >当前'+pg+'页</span></li>';
    
 </script>
 <script type="text/javascript">
-    $(document).ready(function(){ 
-
-    $.ajax({
+     var url1="https://bird.ioliu.cn/v1?url=http://front-gateway.mtime.com/library/index/app/topList.api";
+ $(function(){
+ $.ajax({
  async: true,
  type: "GET",
  dataType: 'jsonp',
  jsonp: 'callback',
  jsonpCallback: 'callbackfunction',
- url:'https://bird.ioliu.cn/v1?url=https://api.jackeriss.com/api/v1/recommend/?subject='+ty+'&page_limit=20&page_start='+pg,
+ url: url1,
  data: "",
  timeout: 3000,
  contentType: "application/json;utf-8",
- success: function(data) {
+ success: function(data)  {
     var Node = $("#loading");  
                      Node.hide();
-                     //console.log(data);
+//console.log(data);
 var timu="";
-for (var i=0;i<20;i++)
-{ timu+='<li><a href="./so.html?q='+data.subjects[i].title+'&html=1.html" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rating.value+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
+for (var i=0,l=data.data.movieTopList.topListInfos[0].items.length;i<l;i++)
+{ timu+='<li><a href="./so.html?q='+data.data.movieTopList.topListInfos[0].items[i].movieInfo.movieName+'&html=1.html" target="_blank"><img  src="'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.img+'"  width="110" height="176"><em><b>演员:'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.actors+'分</b></em><span>'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.movieName+'</span></a></li>';}
 document.getElementById("list").innerHTML =timu;
  }
  });
@@ -107,7 +106,7 @@ document.getElementById("list").innerHTML =timu;
     });
 </script>
 <div id="foot">
-   版权声明:本网站为非赢利性站点<br>
+版权声明:本网站为非赢利性站点<br>
 本网站所有内容均来源于互联网相关站点自动搜索采集信息，<br>
 版权归原作者所有<br>
 <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1258200835'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/stat.php%3Fid%3D1258200835%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
