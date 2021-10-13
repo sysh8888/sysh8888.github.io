@@ -49,7 +49,7 @@
 </ul>
 </div>
 <div class="bd">
-<div id="title"><b>其他资源</b></div>
+<div id="title"><b>其他资源推荐</b></div>
 
 
 <table border="0" id="lie1">
@@ -93,7 +93,7 @@ document.getElementById("ff").innerHTML =fenff;
 frompg('0');
 </script>
 <script type="text/javascript">
-  var url1="https://bird.ioliu.cn/v1?url=https://video.isyour.love/player/getSource?name="+ wd;
+  var url1="https://bird.ioliu.cn/v1?url=http://yzapi.laohushipin.com/api/v1/get_search?word="+ wd;
  $(function (){
  $.ajax({
  async: true,
@@ -106,17 +106,17 @@ frompg('0');
  timeout: 3000,
  contentType: "application/json;utf-8",
  success: function(data)  {
- console.log(data);
+ //console.log(data);
  var timu1="";
  
-for (var i=0,l=data.length;i<l;i++){
+ for (var i=0,l=data.data.length;i<l;i++){
    var bo="";
- //console.log(data[i].data[0].n);
-for (var j=0,h=data[i].Data.length;j<h;j++){
-   bo +='<a href="http://7080.wang/if/?dz=../v/bo.html?url='+data[i].Data[j].S+'" target="_blank"><button>'+data[i].Data[j].N+'</button></a>&nbsp' ;
+// console.log(data.data[0].vod_play_list[0].urls[0].url);
+for (var j=0,h=data.data[i].vod_play_list[0].urls.length;j<h;j++){
+   bo +='<a href="http://7080.wang/if/?dz=../v/bo.html?url='+data.data[i].vod_play_list[0].urls[j].url+'" target="_blank"><button>'+data.data[i].vod_play_list[0].urls[j].name+'</button></a>&nbsp' ;
 }
 //console.log(bo);
-timu1 +=' <tr><th rowspan="2" width="127px"><img alt="" src="'+data[i].Img+'" width="127px" height="179px"></th><td ><b> '+data[i].Name+'</b><br>'+data[i].Describe+'<br>'+data[i].Actors+'</td></tr><tr><td><b>在线播放：</b>'+bo+'</td></tr><tr><td colspan="2"><hr /></td></tr>';}
+timu1 +=' <tr><th rowspan="2" width="127px"><img alt="" src="'+data.data[i].vod_pic+'" width="127px" height="179px"></th><td ><b> '+data.data[i].vod_name+'</b><br><b>主演：</b>'+data.data[i].vod_actor+'<br><b>介绍：</b>'+data.data[i].vod_blurb+'</td></tr><tr><td><b>在线播放：</b>'+bo+'</td></tr><tr><td colspan="2"><hr /></td></tr>';}
 document.getElementById("lie1").innerHTML =timu1;
    }
  });
