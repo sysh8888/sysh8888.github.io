@@ -8,7 +8,7 @@ function index(index){
     dataType: 'jsonp',
     jsonp: 'callback',
     jsonpCallback: 'callbackfunction',
-    url:'https://bird.ioliu.cn/v1?url=https://movie.douban.com/j/search_subjects?type='+index+'&sort=recommend&page_limit=20&page_start=0',
+    url:jiekou +'https://movie.douban.com/j/search_subjects?type='+index+'&sort=recommend&page_limit=20&page_start=0',
     data: "",
     timeout: 3000,
     contentType: "application/json;utf-8",
@@ -44,7 +44,7 @@ function frompg(id){
    $("#list").hide();
             $.ajax({
                 type: "get",
-                url: "https://bird.ioliu.cn/v1?url="+url1,
+                url: jiekou+url1,
                 data: "ac=detail&wd=" + wd,
                 async: true,
                 beforeSend:function(XMLHttpRequest){ 
@@ -78,7 +78,7 @@ function frompg(id){
        $("#list").hide();
              $.ajax({
                 type: "get",
-                url:"https://bird.ioliu.cn/v1?url="+url1,
+                url:jiekou+url1,
                 data: "wd=" + wd,
                 async: true,
                 beforeSend:function(XMLHttpRequest){ 
@@ -111,7 +111,7 @@ function fromlll(id){
       $("#list").hide();
                $.ajax({
                    type: "get",
-                   url: "https://bird.ioliu.cn/v1?url="+url1,
+                   url: jiekou+url1,
                    data: "q=" + wd,
                    async: true,
                    beforeSend:function(XMLHttpRequest){ 
@@ -144,7 +144,7 @@ function from2(id){
       $("#list").hide();
                $.ajax({
                    type: "get",
-                   url: "https://bird.ioliu.cn/v1?url="+url1,
+                   url: jiekou+url1,
                    data: "q=" + wd,
                    async: true,
                    beforeSend:function(XMLHttpRequest){ 
