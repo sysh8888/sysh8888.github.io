@@ -15,7 +15,7 @@
 <link rel="shortcut icon" href="css/favicon.ico" />
 <link href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/all.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/style.css" rel="stylesheet">
-	<script src="../js/gg.js"></script>
+<script src="../js/gg.js"></script>
 <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/zy.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/index.js"></script>
@@ -51,13 +51,8 @@
 </div>
 <div class="bd">
 <div id="title"><b>其他资源推荐</b></div>
-
-
 <table border="0" id="lie1">
-
 </table>
-
-
 </div>
 </div>
 <div id="foot">
@@ -112,10 +107,13 @@ frompg('0');
  
  for (var i=0,l=data.data.length;i<l;i++){
    var bo="";
-// console.log(data.data[0].vod_play_list[0].urls[0].url);
+   if(typeof(data.data[i].vod_play_list[0]) =="undefined"){bo="<span>暂无资源</span>";}else{
+   
 for (var j=0,h=data.data[i].vod_play_list[0].urls.length;j<h;j++){
    bo +='<a href="http://7080.wang/if/?dz=../v/bo.html?url='+data.data[i].vod_play_list[0].urls[j].url+'" target="_blank"><button>'+data.data[i].vod_play_list[0].urls[j].name+'</button></a>&nbsp' ;
 }
+   }
+
 //console.log(bo);
 timu1 +=' <tr><th rowspan="2" width="127px"><img alt="" src="'+data.data[i].vod_pic+'" width="127px" height="179px"></th><td ><b> '+data.data[i].vod_name+'</b><br><b>主演：</b>'+data.data[i].vod_actor+'<br><b>介绍：</b>'+data.data[i].vod_blurb+'</td></tr><tr><td><b>在线播放：</b>'+bo+'</td></tr><tr><td colspan="2"><hr /></td></tr>';}
 document.getElementById("lie1").innerHTML =timu1;
