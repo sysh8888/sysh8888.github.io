@@ -59,10 +59,10 @@ var zjiptv={"浙江卫视":"https://hw-m-l.cztv.com/channels/lantian/channel01/3
 
 var qtiptv={"CCTV1":"https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv1_2/index.m3u8",
  "CCTV2":"https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv2_2/index.m3u8",
-"CCTV3":"http://14.152.88.77/liveplay-kk.rtxapp.com/live/program/live/cctv3hd/4000000/mnf.m3u8",
+"CCTV3":"http://39.135.47.66/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225677/index.m3u8",
 "CCTV4":"https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv4_2/index.m3u8",
-"CCTV5":"http://14.152.88.77/liveplay-kk.rtxapp.com/live/program/live/cctv5hd/4000000/mnf.m3u8",
-"CCTV6":"http://14.152.88.77/liveplay-kk.rtxapp.com/live/program/live/cctv6hd/4000000/mnf.m3u8",
+"CCTV5":"http://39.135.47.66/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225801/index.m3u8",
+"CCTV6":"http://womlive.cloud.wo.cn/tvlive/100002/otpzod_otpzod,100002_hls_pull_2000K_live.m3u8",
 "CCTV7":"https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv7_2/index.m3u8",
 "CCTV8":"http://14.152.88.77/liveplay-kk.rtxapp.com/live/program/live/cctv8hd/4000000/mnf.m3u8",
 "CCTV9":"http://14.152.88.77/liveplay-kk.rtxapp.com/live/program/live/cctv9hd/4000000/mnf.m3u8",
