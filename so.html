@@ -134,6 +134,8 @@
     margin-top: 10px;
     padding: .5em 1em;
 }
+/* 加载 */
+  #loading{position:.5;width:60px;height:60px;z-index:999;margin:80px auto}.k-ball7a{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#19a68c;animation-delay:-1.5s}.k-ball7b{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#f63d3a;animation-delay:-1s}.k-ball7c{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#fda543;animation-delay:-.5s}.k-ball7d{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#193b48}@keyframes k-loadingA{0{height:15px}50%{height:35px}100%{height:15px}}@keyframes k-loadingB{0{width:15px}50%{width:35px}100%{width:15px}}@keyframes k-loadingC{0{transform:translate(0,0)}50%{transform:translate(0,15px)}100%{transform:translate(0,0)}}@keyframes k-loadingD{0{transform:rotate(0)}50%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}@keyframes k-loadingE{0{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes k-loadingF{0%{opacity:0}100%{opacity:1}}@keyframes k-loadingG{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(70px,0) rotate(360deg)}100%{transform:translate(0,0) rotate(0)}}@keyframes k-loadingGb{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(-70px,0) rotate(-360deg)}100%{transform:translate(0,0) rotate(0)}}@keyframes k-loadingH{0%{width:15px}50%{width:35px;padding:4px}100%{width:15px}}@keyframes k-loadingHb{0%{width:15px;background-color:#607d8b}50%{width:35px;padding:4px;background-color:#455a64}100%{width:15px;background-color:#263238}}@keyframes k-loadingI{100%{transform:rotate(360deg)}}@keyframes k-loadingIb{0%,100%{transform:scale(0)}50%{transform:scale(1)}}@keyframes k-loadingJ{0%,100%{transform:translate(0,0)}50%{transform:translate(80px,0);background-color:#f5634a;width:25px}}@keyframes k-loadingK{0%{left:0;transform:scale(1.1)}50%{left:100%;transform:scale(1)}100%{left:0;transform:scale(1.1)}}@keyframes k-loadingL{0%{left:100%;transform:scale(1.1)}50%{left:0;transform:scale(1)}100%{left:100%;transform:scale(1.1)}}@keyframes k-loadingM{0%{z-index:0}50%{z-index:1}100%{z-index:0}}@keyframes k-loadingN{0%{z-index:1}50%{z-index:0}100%{z-index:1}}@keyframes k-loadingO{0%,100%{transform:translate(0)}25%{transform:translate(160%)}50%{transform:translate(160%,160%)}75%{transform:translate(0,160%)}}@keyframes k-loadingP{0%{transform:translateY(0)}35%{transform:translateY(0);opacity:.3}50%{transform:translateY(-20px);opacity:.8}70%{transform:translateY(3px);opacity:.8}85%{transform:translateY(-3px)}}@keyframes k-loadingQ{33%{transform:translate(0,0);opacity:.7}66%{transform:translate(0,0);opacity:.7}}@keyframes k-loadingR{0%{opacity:.5;background:#000}30%{opacity:.5;background:#666}60%{opacity:0}75%{opacity:0}100%{opacity:.5;background:#000}}@keyframes k-loadingS{40%{transform:translateX(0);opacity:.8}100%{transform:translateX(300px);opacity:0}}
 </style>
 <div class="am-container">
 	    <div class="am-g" style="margin: 20px 0">
@@ -169,7 +171,13 @@
     <div class="am-list-news-bd">
 	    <!-- 搜索结果列表 -->
     <ul class="am-list" id="list">
-       <li><H2><i class="am-icon-spinner am-icon-spin"></i>加载中，如无数据请切换其他资源</H2></li>
+	  <div id="loading">
+<div class="k-ball7a"></div>
+<div class="k-ball7b"></div>
+<div class="k-ball7c"></div>
+<div class="k-ball7d"></div>
+</div>  
+       
      <!-- 搜索结果 结束 -->
     </ul>
     </div>
