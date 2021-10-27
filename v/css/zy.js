@@ -1,9 +1,9 @@
 //内容开始
 var feifeiw={"0":"天空","1":"八戒","2":"红牛"}; 
 var feifeiz={"0":"http://v8.tiankongzy.cc/inc/feifei3/","1":"http://cj.bajiecaiji.com/inc/feifei3bjm3u8/index.php","2":"https://www.hongniuzy.com/inc/feifei/"};
-var pingguow={"0":"初心","1":"片库","2":"追剧","3":"无尽","4":"蘑菇","5":"优酷","6":"八零","7":"三九","8":"百度","9":"八八","10":"神马","11":"北斗","12":"影牛",
+var pingguow={"0":"思古","1":"片库","2":"追剧","3":"无尽","4":"蘑菇","5":"优酷","6":"八零","7":"三九","8":"百度","9":"八八","10":"神马","11":"北斗","12":"影牛",
               "13":"瓜皮","14":"播猫","15":"飞鱼"}; 
-var pingguoz={"0":"https://18mv.club/api.php/provide/vod/at/json/","1":"https://pianku.wang/api.php/provide/vod/at/json/",
+var pingguoz={"0":"https://www.siguyy.com/api.php/provide/vod/at/json/","1":"https://pianku.wang/api.php/provide/vod/at/json/",
               "2":"http://www.huaxiab.com/api.php/provide/vod/","3":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/",
               "4":"http://www.moguzyw.com:520/moguzy.php/provide/vod/","5":"http://ukuzy.com/api.php/provide/vod/",
               "6":"http://zy.yilans.net:8090/api.php/provide/vod/at/json/","7":"https://www.39kan.com/api.php/provide/vod/",
@@ -26,3 +26,4 @@ var pingguoz={"0":"https://18mv.club/api.php/provide/vod/at/json/","1":"https://
 //987https://www.9875.xyz/api.php/provide/vod/?ac=list//淘片https://taopianzy.com/home/cjapi/c4ca4238a0b923820dcc509a6f75849b/vod/json
 //电牛https://www.dianyingn.com/api.php/provide/vod/at/xml/百度采集https://api.bdjx.vip/api.php/provide/vod/?ac=list
 //乐七一https://www.lqiyi.co/api.php/provide/vod/at/xml三零http://api.000zy.com/provide/vod/畅视http://app.reboju.net/api.php/provide/vod/
+//初心https://18mv.club/api.php/provide/vod/at/json/
