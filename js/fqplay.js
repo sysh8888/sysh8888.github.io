@@ -7,7 +7,7 @@ $(function(){
  dataType: 'jsonp',
  jsonp: 'callback',
  jsonpCallback: 'callbackfunction',
- url: "https://bird.ioliu.cn/v1?url=http://api.fqzy.cc/api.php/provide/vod/at/json/?ac=detail&ids="+lianjie,
+ url: jiekou +"http://api.fqzy.cc/api.php/provide/vod/at/json/?ac=detail&ids="+lianjie,
  data: "",
  timeout: 3000,
  contentType: "application/json;utf-8",
