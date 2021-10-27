@@ -9,18 +9,14 @@
 <title> 一个简单的影视搜索- 7080.wang！</title>
 <meta name="description" content="7080影视搜" />
 <meta name="keywords" content="7080影视搜" />
-
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/27K8/52v/assets/img/favicon.png">
-
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="icon" sizes="192x192" href="https://cdn.jsdelivr.net/gh/27K8/52v/assets/img/app-icon72x72@2x.png">
-
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Amaze UI" />
 <link rel="apple-touch-icon-precomposed" href="https://cdn.jsdelivr.net/gh/27K8/52v/assets/img/app-icon72x72@2x.png">
-
 <meta name="msapplication-TileImage" content="https://cdn.jsdelivr.net/gh/27K8/52v/assets/img/app-icon72x72@2x.png">
 <meta name="msapplication-TileColor" content="#0e90d2">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/27K8/52v/assets/css/amazeui.min.css">
@@ -41,7 +37,6 @@
         // 网站相关信息，供页面内的 js 文件调用
   
     </script>
-
 </head>
 <body>
 <header class="am-topbar">
@@ -71,7 +66,6 @@
 </form>
 </div>
 </header>
-
 <style>
 .video-score {
     position: absolute;
@@ -131,7 +125,6 @@
 <div class="am-container">
 <div class="am-g" style="margin: 20px 0">
 <div class="am-u-lg-10 am-u-sm-centered">
-
 <form action="./so.html" method="get" class="am-margin-bottom" role="search" name="SoForm" onsubmit="return Checkfrom1();">
 <div class="am-input-group am-input-group-primary">
 <input name="wd" id="wd" value="" type="text" class="am-form-field" placeholder="输入关键词搜索" required>
@@ -145,14 +138,12 @@
 </div>
 </div>
 <div data-am-widget="list_news" class="am-list-news am-list-news-default">
-
 <div>
 <h2>资源站选择(默认:初心)</h2>
 <div class="am-btn-group" id="ff"></div>
 </div>
 <p><B>资源站搜索结果:</B></p>
 <div class="am-list-news-bd">
-
 <ul class="am-list" id="list">
 <div id="loading">
 <div class="k-ball7a"></div>
@@ -160,18 +151,24 @@
 <div class="k-ball7c"></div>
 <div class="k-ball7d"></div>
 </div>
-
+<h3>资源加载中。。。</h3>
 </ul>
 </div>
 <p><B>其他推荐资源搜索:</B></p>
 <div class="am-list-news-bd">
-
 <ul class="am-list" id="qtlist">
-
+<h3>资源加载中。。。</h3>
 </ul>
 </div>
+<p><B>番茄资源推荐:</B></p>
+<div class="am-list-news-bd">
+<ul class="am-list" id="zwlist">
+<h3>资源加载中。。。</h3>
+</ul>
 </div>
-</div> 
+
+</div>
+</div>
 <script>
 $('.search-item-href').each(function(){
     var href = $(this).attr('href');
@@ -192,14 +189,11 @@ $('.search-item-btn').each(function(){
     }
 });
 </script>
-
-
 <div data-am-widget="gotop" class="am-gotop am-gotop-fixed" title="返回顶部">
 <a href="#top" title="">
 <i class="am-gotop-icon am-icon-arrow-up"></i>
 </a>
 </div>
-
 <footer data-am-widget="footer" class="am-footer am-footer-default am-hide-sm-only" data-am-footer="{  }">
 <div class="am-footer-miscs">
 <p>本网站个人测试学习使用为非赢利性站点</p>
@@ -207,13 +201,10 @@ $('.search-item-btn').each(function(){
 <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1258200835'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/stat.php%3Fid%3D1258200835%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
 </footer>
-
-
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default am-show-sm-only" id="">
 <ul class="am-navbar-nav am-cf am-avg-sm-4">
 <li>
 <a href="//7080.wang" class="">
-
 <img src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/img/film.png" alt="首页
  " />
 <span class="am-navbar-label">首页
@@ -222,7 +213,6 @@ $('.search-item-btn').each(function(){
 </li>
 <li>
 <a href="/v/" class="">
-
 <img src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/film.png" alt="影视搜
  " />
 <span class="am-navbar-label">影视搜
@@ -231,7 +221,6 @@ $('.search-item-btn').each(function(){
 </li>
 <li>
 <a href="/live/" class="">
-
 <img src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/mg.png" alt="直播
  " />
 <span class="am-navbar-label">直播
@@ -240,7 +229,6 @@ $('.search-item-btn').each(function(){
 </li>
 <li>
 <a href="/qt/fq/" class="">
-
 <img src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/2mm.png" alt="番茄搜
  " />
 <span class="am-navbar-label">番茄搜
@@ -249,16 +237,13 @@ $('.search-item-btn').each(function(){
 </li>
 <li>
 <a href="../if/?dz=http://7080.eu5.org/" class="">
-
 <img src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/zongyi.png" alt="综合电影" />
 <span class="am-navbar-label">综合电影</span>
 </a>
 </li>
 </ul>
 </div>
-
 <script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/plugns/layer/layer.js"></script>
-
 <script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/jquery.lazyload.min.js?v1.0"></script>
 <script type="text/javascript">
     
@@ -292,6 +277,7 @@ document.getElementById("ff").innerHTML =fenff;
    
 setTimeout(function(){frompg('0');},1000);
 setTimeout(function(){qitaziyuan('0');},3000);
+setTimeout(function(){zhanwai('0');},3000);
 </script>
 <script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/amazeui.min.js"></script>
 </body>
