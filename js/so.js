@@ -1,4 +1,3 @@
-
 //苹果接口
 function frompg(id){
 var url1=pingguoz[id];
@@ -91,5 +90,23 @@ function qitaziyuan(id){
     }
   });
  })
- 
-}
+ }
+ //苹果接口番茄资源
+function zhanwai(id){
+var url5="http://api.fqzy.cc/api.php/provide/vod/at/json/";
+      $.ajax({
+          type: "get",
+          url: jiekou +url5,
+          data: "ac=detail&wd=" + lianjie1,
+          async: true,
+           success: function(data) {
+    
+                var jieguo1="";
+                for (var i=0;i<data.list.length;i++)
+                 { jieguo1+=' <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left"><div class="am-u-sm-4 am-list-thumb"><a href="./play.html?q='+data.list[i].vod_id+'&id='+id+'&zy=fq" target="_blank" class="search-item-href"><img src="'+data.list[i].vod_pic+'"  alt="'+data.list[i].vod_name+'"></a></div><span class="video-score" title="国家">'+data.list[i].vod_remarks+'</span><div class="am-u-sm-8 am-list-main"><h3 class="am-list-item-hd"><a href="./play.html?q='+data.list[i].vod_id+'&id='+id+'&zy=fq" target="_blank" class="search-item-href">'+data.list[i].vod_name+'</a></h3><div class="am-list-item-text">'+data.list[i].vod_blurb+'</div><p class="am-list-item-text"><b>主演:</b><span>'+data.list[i].vod_actor+'</span></p><a href="./play.html?q='+data.list[i].vod_id+'&id='+id+'&zy=fq" target="_blank" class="am-btn am-btn-secondary am-btn-sm search-item-btn"><i class="am-icon-play"></i>在线播放  </a></div></li> ';}
+                document.getElementById("zwlist").innerHTML =jieguo1;           
+           
+           
+          }
+      })
+  }
