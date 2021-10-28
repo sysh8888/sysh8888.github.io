@@ -29,7 +29,7 @@ $("#list").hide();
               alert("失败，请检查关键字。");
           }
       })
-      document.getElementById("bolei").innerHTML =pingguo[id]; 
+      document.getElementById("bolei").innerHTML =pingguow[id]; 
   }
 
 //飞飞资源
