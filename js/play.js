@@ -37,7 +37,9 @@ neirong +='<div class="'+neinei+'" id="'+bolie[h]+'">'+neirong1+'</div>';
 var neirong1="";
 }
 //console.log(str1);
+var vide1=str1[0][0];
 var vide=str1[0][1];  
+document.getElementById("demo1").innerHTML =vide1;
 document.getElementById("bolie2").innerHTML =bolie1;
 document.getElementById("video").src="./v/bo.html?url="+vide ;
 document.getElementById("neirong").innerHTML =neirong;
