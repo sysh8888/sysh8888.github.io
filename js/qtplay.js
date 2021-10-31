@@ -22,6 +22,9 @@ $(function(){
      neirong='<div class="am-tab-panel am-fade am-in am-active" id="imgo"><li class="am-btn am-btn-sm btn-play-source"><a href="#"  target="ajax" onclick="GetHref(this);return false;">暂无资源</a>';
     }else{
       vide= data.data.vod_play_list[0].urls[0].url;
+     document.getElementById("video").src="./v/bo.html?url="+vide ;
+           vide1= data.data.vod_play_list[0].urls[0].name;
+     document.getElementById("demo1").innerHTML=vide1 ;
   for (var h=0;h<data.data.vod_play_list.length;h++){
     if(h==0){var neinei="am-tab-panel am-fade am-in am-active";var boliee='am-active';}else{var neinei="am-tab-panel am-fade tv-res"; var boliee='am';}
   bolie1 +='<li class="'+boliee+'" ><a href="#'+data.data.vod_play_list[h].from+'">'+data.data.vod_play_list[h].note+'</a></li>';
@@ -34,7 +37,6 @@ $(function(){
    }
  // console.log(vide); 
 document.getElementById("bolie2").innerHTML =bolie1;
-document.getElementById("video").src="./v/bo.html?url="+vide ;
 document.getElementById("neirong").innerHTML =neirong;
 document.getElementById("name").innerHTML =data.data.vod_name;
 document.getElementById("tu").src=data.data.vod_pic;
