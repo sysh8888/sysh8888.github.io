@@ -142,9 +142,7 @@
                          <li >
                      <a href="#iptv">IPTV</a>
                  </li>
-              				 <li >
-                     <a href="#woiptv">沃直播</a>
-                 </li>
+              				
        </ul>
              
          <div class="am-tabs-bd tv-res-lists">
@@ -155,7 +153,7 @@
            加载中
          </div>
      <div class="am-tab-panel am-fade tv-res" id="iptv">加载中</div>
-          <div class="am-tab-panel am-fade tv-res" id="woiptv">加载中</div>
+        
      </div>
          </div>    
      </div>
@@ -324,11 +322,7 @@ for (var key in ipiptv)
 }
 document.getElementById("iptv").innerHTML =ipiptv1;
   
-  var woiptv1="";
-for (var key in woiptv) 
-    { woiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+woiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
-}
-document.getElementById("woiptv").innerHTML =woiptv1;
+
 </script>
    <script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/amazeui.min.js"></script>
 
