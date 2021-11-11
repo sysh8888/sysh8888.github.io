@@ -4,7 +4,7 @@ var url1=pingguoz[id];
 $("#list").hide();
       $.ajax({
           type: "get",
-          url: jiekou +url1 +"%3Fac=detail%26wd=" + lianjie1,
+          url: jiekou +url1 +"?ac=detail&wd=" + lianjie1,//%3Fac=detail%26wd=
     error: function (XMLHttpRequest, textStatus, errorThrown) {
                  alert(textStatus);
                  alert(errorThrown);
