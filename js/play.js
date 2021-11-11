@@ -5,7 +5,7 @@ $(function(){
  $.ajax({
  async: true,
  type: "GET",
- url: jiekou +url1+"%3Fac=detail%26ids="+lianjie,
+ url: jiekou +url1+"?ac=detail&ids="+lianjie,//%3Fac=detail%26ids=
   data: "",
     error: function (XMLHttpRequest, textStatus, errorThrown) {
                  alert(textStatus);
