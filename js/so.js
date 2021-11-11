@@ -4,9 +4,12 @@ var url1=pingguoz[id];
 $("#list").hide();
       $.ajax({
           type: "get",
+	  dataType: 'jsonp',
           url: jiekou +url1,
           data: "ac=detail&wd=" + lianjie1,
           async: true,
+	       timeout: 3000,
+  contentType: "application/json;utf-8",
           beforeSend:function(XMLHttpRequest){ 
             var winNode = $("#loading");  
                 winNode.fadeIn("slow");  
@@ -97,9 +100,12 @@ function zhanwai(id){
 var url5="http://api.fqzy.cc/api.php/provide/vod/at/json/";
       $.ajax({
           type: "get",
+	   dataType: 'jsonp',
           url: jiekou +url5,
           data: "ac=detail&wd=" + lianjie1,
           async: true,
+	      timeout: 3000,
+  contentType: "application/json;utf-8",
            success: function(data) {
     
                 var jieguo1="";
