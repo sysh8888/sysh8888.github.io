@@ -5,13 +5,15 @@ $(function(){
  $.ajax({
  async: true,
  type: "GET",
- dataType: 'jsonp',
- jsonp: 'callback',
- jsonpCallback: 'callbackfunction',
  url: jiekou +url1+"?ac=detail&ids="+lianjie,
- data: "",
- timeout: 3000,
- contentType: "application/json;utf-8",
+  data: "",
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                 alert(textStatus);
+                 alert(errorThrown);
+                 this; // 调用本次AJAX请求时传递的options参数
+             },
+             dataType: "jsonp",
+			 contentType: "application/json;utf-8",
  success: function(data) {
 //console.log(data);
 var bolie=new Array();
