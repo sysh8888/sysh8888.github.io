@@ -100,7 +100,7 @@ var url5="http://api.fqzy.cc/api.php/provide/vod/at/json/";
       $.ajax({
           type: "get",
 	   dataType: 'jsonp',
-          url: jiekou +url5 +"%3Fac=detail%26wd=" + lianjie1,
+          url: jiekou +url5 +"?ac=detail&wd=" + lianjie1,
           data: "",
           async: true,
 	      timeout: 3000,
