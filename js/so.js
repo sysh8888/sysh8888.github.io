@@ -4,16 +4,15 @@ var url1=pingguoz[id];
 $("#list").hide();
       $.ajax({
           type: "get",
-	  dataType: 'jsonp',
           url: jiekou +url1 +"%3Fac=detail%26wd=" + lianjie1,
-          data: "",
-          async: true,
-	       timeout: 3000,
-  contentType: "application/json;utf-8",
-          beforeSend:function(XMLHttpRequest){ 
-            var winNode = $("#loading");  
-                winNode.fadeIn("slow");  
-      }, 
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                 alert(textStatus);
+                 alert(errorThrown);
+                 this; // 调用本次AJAX请求时传递的options参数
+             },
+	      data: "",
+             dataType: "jsonp",
+	contentType: "application/json;utf-8",
            success: function(data) {
             if(null != data && "" != data){
             var Node = $("#loading");  
