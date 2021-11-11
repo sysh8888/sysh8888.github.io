@@ -2,11 +2,10 @@
 //内容开始
 url1=pingguoz[id];
 $(function(){
- $.ajax({
- async: true,
- type: "GET",
+$.ajax({
+          type: "get",
  url: jiekou +url1+"?ac=detail&ids="+lianjie,//%3Fac=detail%26ids=
-  data: "",
+ data: "",
     error: function (XMLHttpRequest, textStatus, errorThrown) {
                  alert(textStatus);
                  alert(errorThrown);
@@ -14,7 +13,7 @@ $(function(){
              },
              dataType: "jsonp",
 			 contentType: "application/json;utf-8",
- success: function(data) {
+           success: function(data) {
 //console.log(data);
 var bolie=new Array();
 bolie=data.list["0"].vod_play_from.split("$$$");
