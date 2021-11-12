@@ -139,24 +139,39 @@
 </div>
 <div data-am-widget="list_news" class="am-list-news am-list-news-default">
 <div>
- <P style="font-size:20px;"><B style="color:#00CC33">资源站选择-当前:</B><SPAN><b style="color:#CC0033" id=bolei >默认</b></SPAN></P>
+    <P style="font-size:20px;"><B style="color:#00CC33">资源站选择-当前:</B><SPAN><b style="color:#CC0033" id=bolei >默认</b></SPAN></P>
 <div class="am-btn-group" id="ff"></div>
 </div>
 <p style="font-size:15px;color:#00CC33"><B>资源站搜索结果:</B></p>
 <div class="am-list-news-bd">
 <ul class="am-list" id="list">
+<div id="loading">
+<div class="k-ball7a"></div>
+<div class="k-ball7b"></div>
+<div class="k-ball7c"></div>
+<div class="k-ball7d"></div>
+</div>
 <h3>资源加载中。。。</h3>
 </ul>
 </div>
+<hr>
 <p style="font-size:15px;color:#00CC33"><B>其他推荐资源搜索:</B></p>
 <div class="am-list-news-bd">
 <ul class="am-list" id="qtlist">
 <h3>资源加载中。。。</h3>
 </ul>
 </div>
+<hr>
 <p style="font-size:15px;color:#00CC33"><B>番茄资源推荐:</B></p>
 <div class="am-list-news-bd">
 <ul class="am-list" id="zwlist">
+<h3>资源加载中。。。</h3>
+</ul>
+</div>
+<hr>
+<p style="font-size:15px;color:#00CC33"><B>优剧资源推荐:</B></p>
+<div class="am-list-news-bd">
+<ul class="am-list" id="zwlist1">
 <h3>资源加载中。。。</h3>
 </ul>
 </div>
@@ -270,8 +285,9 @@ document.getElementById("ff").innerHTML =fenff;
 //console.log(fenff); 
    
 setTimeout(function(){frompg('0');},1000);
-setTimeout(function(){qitaziyuan('0');},3000);
-setTimeout(function(){zhanwai('0');},3000);
+setTimeout(function(){qitaziyuan('0');},2000);
+setTimeout(function(){fqzy1('0');},3000);
+setTimeout(function(){fqzy2('1');},4000);
 </script>
 <script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/amazeui.min.js"></script>
 </body>
