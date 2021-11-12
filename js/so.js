@@ -124,7 +124,7 @@ function fqzy2(id){
 var url6=fqzy[id];
       $.ajax({
           type: "get",
-          url: jiekou +url6 +"?ac=detail&wd=" + lianjie1,
+          url: jiekou3 +url6 +"?ac=detail&wd=" + lianjie1,
   data: "",
     error: function (XMLHttpRequest, textStatus, errorThrown) {
                  alert(textStatus);
