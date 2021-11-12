@@ -1,6 +1,10 @@
 //内容开始
 var feifeiw={"0":"天空","1":"八戒","2":"红牛"}; 
 var feifeiz={"0":"http://v8.tiankongzy.cc/inc/feifei3/","1":"http://cj.bajiecaiji.com/inc/feifei3bjm3u8/index.php","2":"https://www.hongniuzy.com/inc/feifei/"};
+//其他番茄、优剧
+var fqzy={"0":"http://api.fqzy.cc/api.php/provide/vod/at/json/","1":"https://zy.ujuba.com/api.php/provide/vod/at/json/"};
+var fqplay={"0":"https://jiexi.8b5q.cn/player/jx.php?url=","1":"https://www.dmplay.xyz/j?url="};
+//苹果接口
 var pingguow={"0":"思古","1":"三零","2":"追剧","3":"无尽","4":"橘猫","5":"优酷","6":"八零","7":"三九","8":"百度","9":"八八","10":"神马","11":"北斗","12":"影牛",
               "13":"瓜皮","14":"灵芝","15":"极品"}; 
 var pingguoz={"0":"http://www.siguyy.com/api.php/provide/vod/at/json/","1":"http://api.000zy.com/provide/vod/",
