@@ -70,7 +70,7 @@ function fromff(id){
 }
 //其他资源接口
 function qitaziyuan(id){
-  var url4=jiekou +"http://yzapi.laohushipin.com/api/v1/get_search?word="+ lianjie1;
+  var url4=jiekou +"http://youziapi.ardrive.top/api/v1/get_search?word="+ lianjie1;
   $(function (){
   $.ajax({
   async: true,
