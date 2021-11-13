@@ -1,6 +1,6 @@
 
 //内容开始
-url4="http://yzapi.laohushipin.com/api/v1/vod_item_detail?vid=";
+url4="http://youziapi.ardrive.top/api/v1/vod_item_detail?vid=";
 $(function(){
  $.ajax({
  async: true,
