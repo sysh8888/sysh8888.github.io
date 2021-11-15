@@ -7,7 +7,7 @@ $(function(){
  type: "GET",
  jsonp: 'callback',
  jsonpCallback: 'callback',
- url: jiekou +url1+"?ac=detail&ids="+lianjie,
+ url: jiekou4 +url1+"?ac=detail&ids="+lianjie,
   data: "",
     error: function (XMLHttpRequest, textStatus, errorThrown) {
                  alert(textStatus);
