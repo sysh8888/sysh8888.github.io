@@ -100,7 +100,7 @@ var url5=fqzy[id];
       $.ajax({
           type: "get",
 	   dataType: 'jsonp',
-          url: jiekou +url5 +"?ac=detail&wd=" + lianjie1,
+          url: jiekou4 +url5 +"?ac=detail&wd=" + lianjie1,
           data: "",
           async: true,
 	      timeout: 3000,
@@ -124,7 +124,7 @@ function fqzy2(id){
 var url6=fqzy[id];
       $.ajax({
           type: "get",
-          url: jiekou +url6 +"?ac=detail&wd=" + lianjie1,
+          url: jiekou4 +url6 +"?ac=detail&wd=" + lianjie1,
   data: "",
     error: function (XMLHttpRequest, textStatus, errorThrown) {
                  alert(textStatus);
