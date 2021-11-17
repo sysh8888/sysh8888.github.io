@@ -1,19 +1,24 @@
 //内容开始
 var feifeiw={"0":"天空","1":"八戒","2":"红牛"}; 
 var feifeiz={"0":"http://v8.tiankongzy.cc/inc/feifei3/","1":"http://cj.bajiecaiji.com/inc/feifei3bjm3u8/index.php","2":"https://www.hongniuzy.com/inc/feifei/"};
-//其他番茄、优剧、欧乐
-var fqzy={"0":"http://api.fqzy.cc/api.php/provide/vod/at/json/","1":"https://zy.ujuba.com/api.php/provide/vod/at/json/","2":"https://www.olevod.tv/api.php/provide/vod/at/json/"};
+//其他番茄、优剧、欧乐、1080tv
+var fqzy={"0":"http://api.fqzy.cc/api.php/provide/vod/at/json/","1":"https://zy.ujuba.com/api.php/provide/vod/at/json/",
+"2":"https://www.olevod.tv/api.php/provide/vod/at/json/"};
 var fqplay={"0":"https://jiexi.8b5q.cn/player/jx.php?url=","1":"https://www.dmplay.xyz/j?url=","2":"./v/bo.html?url="};
+//其他APP
+var qtzy={"0":"https://1080p.tv/api.php/v1.vod?page=1&wd=","1":"http://cs.hgyx.vip/api.php/v1.vod?page=1&wd=",
+"2":"https://www.olevod.tv/api.php/provide/vod/at/json/"};
+var qtplay={"0":"http://1080p.tv/api.php/v1.vod/detail?vod_id=","1":"http://cs.hgyx.vip/api.php/v1.vod/detail?vod_id=","2":"./v/bo.html?url="};
 //苹果接口
 var pingguow={"0":"思古","1":"三零","2":"追剧","3":"无尽","4":"橘猫","5":"优酷","6":"八零","7":"三九","8":"百度","9":"八八","10":"神马","11":"北斗","12":"影牛",
-              "13":"瓜皮","14":"灵芝","15":"极品"}; 
+              "13":"想看","14":"灵芝","15":"极品"}; 
 var pingguoz={"0":"http://www.siguyy.com/api.php/provide/vod/at/json/","1":"http://api.000zy.com/provide/vod/",
               "2":"http://www.huaxiab.com/api.php/provide/vod/","3":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/",
               "4":"http://www.zitv.cc/api.php/provide/vod/at/json/","5":"http://ukuzy.com/api.php/provide/vod/",
               "6":"http://zy.yilans.net:8090/api.php/provide/vod/at/json/","7":"https://www.39kan.com/api.php/provide/vod/",
               "8":"http://api.dbyunzy.com/api.php/provide/vod/at/json/","9":"http://ok.888hyk.com/api.php/provide/vod/at/json/",
               "10":"http://www.zitv.cc/api.php/provide/vod/at/json/","11":"https://api.bdxzyapi.com/api.php/provide/vod/",
-              "12":"https://www.dianyingn.cc/api.php/provide/vod/at/json/","13":"http://www.dijiaxia.com/api.php/provide/vod/at/json/",
+              "12":"https://www.dianyingn.cc/api.php/provide/vod/at/json/","13":"https://m3u8.xiangkanapi.com/provide/vod/",
               "14":"https://app.linzhiyuan.xyz/api.php/provide/vod/at/json/","15":"https://www.jpysvip.net/api.php/provide/vod/at/json/"}; 
 //萌果http://api.appearoo.top/api.php/provide/vod/,明日,八零http://zy.yilans.net:8090/api.php/provide/vod/at/json/
 //蘑菇http://www.moguzyw.com:520/moguzy.php/provide/vod/，百度https://m3u8.apibdzy.com/api.php/provide/vod/at/json/
@@ -31,3 +36,4 @@ var pingguoz={"0":"http://www.siguyy.com/api.php/provide/vod/at/json/","1":"http
 //电牛https://www.dianyingn.com/api.php/provide/vod/at/xml/百度采集https://api.bdjx.vip/api.php/provide/vod/?ac=list
 //乐七一https://www.lqiyi.co/api.php/provide/vod/at/xml三零http://api.000zy.com/provide/vod/畅视http://app.reboju.net/api.php/provide/vod/
 //初心https://18mv.club/api.php/provide/vod/at/json/片库https://pianku.wang/api.php/provide/vod/at/json/
+
