@@ -1,6 +1,6 @@
 
 //内容开始
-url4="http://youziapi.ardrive.top/api/v1/vod_item_detail?vid=";
+url4=qtplay[id];
 $(function(){
  $.ajax({
  async: true,
@@ -8,45 +8,50 @@ $(function(){
  dataType: 'jsonp',
  jsonp: 'callback',
  jsonpCallback: 'callbackfunction',
- url: jiekou2+url4+lianjie,
+ url: jiekou+url4+lianjie,
  data: "",
- timeout: 3000,
+ timeout: 8000,
  contentType: "application/json;utf-8",
  success: function(data) {
   console.log(data);
-  var vide="";
+  var bolie=new Array();
+  bolie=data.data.vod_play_from.split("$$$");
   var bolie1="";
   var neirong1='';
   var neirong='';
-     if(typeof(data.data.vod_play_list[0]) =="undefined"){vide=data.data.vod_name;bolie1='<li class="am-active" id="tttest"><a href="#imgo">暂无资源</a></li>';
-     neirong='<div class="am-tab-panel am-fade am-in am-active" id="imgo"><li class="am-btn am-btn-sm btn-play-source"><a href="#"  target="ajax" onclick="GetHref(this);return false;">暂无资源</a>';
-    }else{
-      vide= data.data.vod_play_list[0].urls[0].url;
-     document.getElementById("video").src="./v/bo.html?url="+vide ;
-           vide1= data.data.vod_play_list[0].urls[0].name;
-     document.getElementById("demo1").innerHTML=vide1 ;
-  for (var h=0;h<data.data.vod_play_list.length;h++){
+  var dianbo=data.data.vod_play_url;
+  var dianbo1=dianbo.replace(/\r\n/g,"#") ;
+  var dianbo2=dianbo1.replace(/\$/g,"#") ;
+  var strs= new Array();
+  strs=dianbo2.split("###");
+ console.log(strs);
+  var str1= new Array();
+  for (h=0;h<strs.length ;h++){
+    var strr=strs[h].replace(/\#\#/g,"#") ;
+    str1[h]=strr.split("#");
     if(h==0){var neinei="am-tab-panel am-fade am-in am-active";var boliee='am-active';}else{var neinei="am-tab-panel am-fade tv-res"; var boliee='am';}
-  bolie1 +='<li class="'+boliee+'" ><a href="#'+data.data.vod_play_list[h].from+'">'+data.data.vod_play_list[h].note+'</a></li>';
-  for (var i=0;i<data.data.vod_play_list[h].urls.length;i++){
-    neirong1 +='<li class="am-btn am-btn-sm btn-play-source"><a href="./v/bo.html?url='+data.data.vod_play_list[h].urls[i].url+'"  target="ajax" onclick="GetHref(this);return false;">'+data.data.vod_play_list[h].urls[i].name+'</a>';
-  }
-  neirong +='<div class="'+neinei+'" id="'+data.data.vod_play_list[h].from+'">'+neirong1+'</div>';
+  bolie1 +='<li class="'+boliee+'" ><a href="#'+bolie[h]+'">'+bolie[h]+'</a></li>';
+    for (i=0;i<str1[h].length ;i+=2)
+    {
+        neirong1 +='<li class="am-btn am-btn-sm btn-play-source"><a href="./v/bo.html?url='+str1[h][i+1]+'"  target="ajax" onclick="GetHref(this);return false;">'+str1[h][i]+'</a>';
+    }
+  neirong +='<div class="'+neinei+'" id="'+bolie[h]+'">'+neirong1+'</div>';
   var neirong1="";
   }
+  //console.log(str1);
+  var vide=str1[0][1];  
+  document.getElementById("bolie2").innerHTML =bolie1;
+  document.getElementById("video").src="./v/bo.html?url="+vide ;
+  document.getElementById("neirong").innerHTML =neirong;
+  document.getElementById("name").innerHTML =data.data.vod_name;
+  document.getElementById("tu").src=data.data.vod_pic;
+  document.getElementById("nian").innerHTML =data.data.vod_year;
+  document.getElementById("diqu").innerHTML =data.data.vod_area;
+  document.getElementById("daoyan").innerHTML =data.data.vod_director;
+  document.getElementById("fenlei").innerText=data.data.type_name;
+  document.getElementById("yanyuan").innerText=data.data.vod_actor;
+  document.getElementById("jiesao").innerText=data.data.vod_blurb;
+  document.getElementById("jiesao1").innerText=data.data.vod_content;
    }
- // console.log(vide); 
-document.getElementById("bolie2").innerHTML =bolie1;
-document.getElementById("neirong").innerHTML =neirong;
-document.getElementById("name").innerHTML =data.data.vod_name;
-document.getElementById("tu").src=data.data.vod_pic;
-document.getElementById("nian").innerHTML =data.data.vod_year;
-document.getElementById("diqu").innerHTML =data.data.vod_area;
-document.getElementById("daoyan").innerHTML =data.data.vod_director;
-document.getElementById("fenlei").innerText=data.data.vod_class;
-document.getElementById("yanyuan").innerText=data.data.vod_actor;
-document.getElementById("jiesao").innerText=data.data.vod_blurb;
-document.getElementById("jiesao1").innerText=data.data.vod_content;
- }
- });
-})
+   });
+  })
