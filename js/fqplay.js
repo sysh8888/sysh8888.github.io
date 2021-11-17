@@ -41,12 +41,13 @@ neirong +='<div class="'+neinei+'" id="'+bolie[h]+'">'+neirong1+'</div>';
 var neirong1="";
 }
 //console.log(str1);
+var tu=data.list[0].vod_pic; var tu1=tu.replace(/img.maccms.com/, "www.olevod.tv");
 var vide=str1[0][1];  
 document.getElementById("bolie2").innerHTML =bolie1;
 document.getElementById("video").src=playy+vide ;
 document.getElementById("neirong").innerHTML =neirong;
 document.getElementById("name").innerHTML =data.list[0].vod_name;
-document.getElementById("tu").src=data.list[0].vod_pic;
+document.getElementById("tu").src=tu1;
 document.getElementById("nian").innerHTML =data.list[0].vod_year;
 document.getElementById("diqu").innerHTML =data.list[0].vod_area;
 document.getElementById("daoyan").innerHTML =data.list[0].vod_director;
