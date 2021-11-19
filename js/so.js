@@ -37,7 +37,7 @@ function frompg(id){
   
 //其他资源接口1080tv
 function zy2(id){
-  var url3=jiekou +qtzy[id]+ lianjie1;
+  var url2=jiekou +qtzy[id]+ lianjie1;
   $(function (){
   $.ajax({
   async: true,
@@ -45,7 +45,7 @@ function zy2(id){
   dataType: 'jsonp',
   jsonp: 'callback',
   jsonpCallback: 'callback',
-  url: url3,
+  url: url2,
   data: "",
   timeout: 8000,
   contentType: "application/json;utf-8",
