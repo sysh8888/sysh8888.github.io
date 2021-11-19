@@ -44,7 +44,7 @@ function zy2(id){
   type: "GET",
   dataType: 'jsonp',
   jsonp: 'callback',
-  jsonpCallback: 'callback',
+  jsonpCallback: 'callback1',
   url: url2,
   data: "",
   timeout: 8000,
