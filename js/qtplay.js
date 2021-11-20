@@ -50,7 +50,7 @@ $(function(){
   document.getElementById("nian").innerHTML =data.data.vod_year;
   document.getElementById("diqu").innerHTML =data.data.vod_area;
   document.getElementById("daoyan").innerHTML =data.data.vod_director;
-  document.getElementById("fenlei").innerText=data.data.type_name;
+  document.getElementById("fenlei").innerText=data.data.vod_class;
   document.getElementById("yanyuan").innerText=data.data.vod_actor;
   document.getElementById("jiesao").innerText=data.data.vod_blurb;
   document.getElementById("jiesao1").innerText=data.data.vod_content;
