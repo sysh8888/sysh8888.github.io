@@ -37,7 +37,7 @@ function frompg(id){
   
 //其他资源接口1080tv
 function zy2(id){
-  var url2=jiekou +qtzy[id]+ lianjie1;
+  var url2=jiekou2 +qtzy[id]+ lianjie1;
   $(function (){
   $.ajax({
   async: true,
