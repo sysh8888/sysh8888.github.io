@@ -6,9 +6,9 @@ var fqzy={"0":"http://api.fqzy.cc/api.php/provide/vod/at/json/","1":"https://zy.
 "2":"https://www.olevod.tv/api.php/provide/vod/at/json/"};
 var fqplay={"0":"https://jiexi.8b5q.cn/player/jx.php?url=","1":"https://www.dmplay.xyz/j?url=","2":"./v/bo.html?url="};
 //其他APP
-var qtzy={"0":"https://1080p.tv/api.php/v1.vod?page=1&wd=","1":"http://cs.hgyx.vip/api.php/v1.vod?page=1&wd=",
-"2":"https://www.olevod.tv/api.php/provide/vod/at/json/"};
-var qtplay={"0":"http://1080p.tv/api.php/v1.vod/detail?vod_id=","1":"http://cs.hgyx.vip/api.php/v1.vod/detail?vod_id=","2":"./v/bo.html?url="};
+var qtzy={"0":"https://1080p.tv/api.php/v1.vod?page=1&wd=","1":"https://www.fj6080.com/api.php/v1.vod?page=1&wd=",
+"2":"http://mm.tcsdchina.com:6096/mogai_api.php/v1.vod?page=1&wd="};
+var qtplay={"0":"http://1080p.tv/api.php/v1.vod/detail?vod_id=","1":"http://www.fj6080.com/api.php/v1.vod/detail?vod_id=","2":"http://mm.tcsdchina.com:6096/mogai_api.php/v1.vod/detail?vod_id="};
 //苹果接口
 var pingguow={"0":"思古","1":"三零","2":"追剧","3":"无尽","4":"橘猫","5":"优酷","6":"八零","7":"三九","8":"百度","9":"八八","10":"神马","11":"北斗","12":"影牛",
               "13":"想看","14":"灵芝","15":"极品"}; 
