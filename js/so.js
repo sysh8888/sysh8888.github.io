@@ -95,7 +95,7 @@ function zy3(id){
         $.ajax({
             type: "get",
        dataType: 'jsonp',
-            url: jiekou2 +url4 +"?ac=detail&wd=" + lianjie1,
+            url: jiekou4 +url4 +"?ac=detail&wd=" + lianjie1,
             data: "",
             async: true,
             jsonp: 'callback',
