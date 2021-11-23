@@ -1,5 +1,5 @@
 function ying(ying){
-  var url1=jiekou2+"http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId="+ying;
+  var url1=jiekou7+"http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId="+ying;
   $(function(){
    $.ajax({
    async: true,
