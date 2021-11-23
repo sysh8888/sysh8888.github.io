@@ -64,7 +64,7 @@ var zjiptv={"浙江卫视":"https://hw-m-l.cztv.com/channels/lantian/channel01/3
 
 var qtiptv={"CCTV1":"https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv1_2/index.m3u8",
  "CCTV2":"https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv2_2/index.m3u8",
-"CCTV3":"https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv3_2/index.m3u8",
+"CCTV3":"http://58.211.84.24/liveplay-kk.rtxapp.com/live/program/live/cctv3hd/2300000/mnf.m3u8",
 "CCTV4":"https://cctvtxyh5ca.liveplay.myqcloud.com/live/cctv4_2/index.m3u8",
 "CCTV5":"http://39.135.47.66/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225801/index.m3u8",
 "CCTV6":"http://cctvalih5ca.v.myalicdn.com/live/cctv6_1/index.m3u8",
