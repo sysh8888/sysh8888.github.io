@@ -14,7 +14,7 @@ var pingguow={"0":"思古","1":"三零","2":"初心","3":"无尽","4":"橘猫","
               "13":"想看","14":"灵芝","15":"飞速"}; 
 var pingguoz={"0":"http://www.siguyy.com/api.php/provide/vod/at/json/","1":"http://api.000zy.com/provide/vod/",
               "2":"https://18mv.club/api.php/provide/vod/at/json/","3":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/",
-              "4":"http://www.zitv.cc/api.php/provide/vod/at/json/","5":"https://taopianapi.com/home/cjapi/as/mc10/vod/json",
+              "4":"http://www.zitv.cc/api.php/provide/vod/at/json/","5":"https://taopianapi.com/home/cjapi/as/mc/vod/json",
               "6":"https://m3u8.xiangkanapi.com/provide/vod/","7":"https://www.39kan.com/api.php/provide/vod/",
               "8":"http://api.dbyunzy.com/api.php/provide/vod/at/json/","9":"https://api.kuapi.cc/api.php/provide/vod/at/json/",
               "10":"http://www.zitv.cc/api.php/provide/vod/at/json/","11":"https://api.bdxzyapi.com/api.php/provide/vod/",
