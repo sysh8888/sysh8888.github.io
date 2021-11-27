@@ -7,5 +7,7 @@ var jiekou5="http://so.7080.wang/index.php?url=";
 var jiekou6="http://7080w.vaiwan.com/json/huancun.php?url=";
 var jiekou7="http://7080.eu5.org/json/2.php?url=";
 var jiekou8="http://7080.unaux.com/json/1.php?url=";
-var jiekou9="http://7080w.vaiwan.com/json/2.php?url=";
+var jiekou9="http://7080w.vaiwan.com/json/huancun.php?url=";
+var appqt=jiekou9;
+var appfq=jiekou4;
 var toutou='<li><a href="//7080.wang">首页</a></li><li><a href="/v/">影视搜</a></li><li><a href="/live/">电视直播</a></li>';
