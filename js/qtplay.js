@@ -8,7 +8,7 @@ $(function(){
  dataType: 'jsonp',
  jsonp: 'callback',
  jsonpCallback: 'callbackfunction',
- url: jiekou2+url4+lianjie,
+ url: appqt+url4+lianjie,
  data: "",
  timeout: 8000,
  contentType: "application/json;utf-8",
