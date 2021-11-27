@@ -37,7 +37,7 @@ function frompg(id){
   
 //其他资源接口1080tv
 function zy2(id){
-  var url2=jiekou2 +qtzy[id]+ lianjie1;
+  var url2=appqt +qtzy[id]+ lianjie1;
   $(function (){
   $.ajax({
   async: true,
@@ -64,7 +64,7 @@ function zy2(id){
 })}
 //其他资源接口HG
 function zy3(id){
-  var url3=jiekou2 +qtzy[id]+ lianjie1;
+  var url3=appqt +qtzy[id]+ lianjie1;
   $(function (){
   $.ajax({
   async: true,
@@ -95,7 +95,7 @@ function zy3(id){
         $.ajax({
             type: "get",
        dataType: 'jsonp',
-            url: jiekou4 +url4 +"?ac=detail&wd=" + lianjie1,
+            url: appfq +url4 +"?ac=detail&wd=" + lianjie1,
             data: "",
             async: true,
             jsonp: 'callback',
