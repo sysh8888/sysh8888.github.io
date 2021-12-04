@@ -1,5 +1,5 @@
 function ying(ying){
-  var url1=jiekou4+"http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId="+ying;
+  var url1=jiekou5+"http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId="+ying;
   $(function(){
    $.ajax({
    async: true,
@@ -9,7 +9,7 @@ function ying(ying){
    jsonpCallback: 'callbackfunction',
    url: url1,
    data: "",
-   timeout: 3000,
+   timeout: 8000,
    contentType: "application/json;utf-8",
    success: function(data) {
   //console.log(data);
