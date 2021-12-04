@@ -524,6 +524,18 @@ input[type=checkbox] {
 .search #search-box {
 	display: none;
 }
+.btn-xsmall,
+.module-item-caption span,
+.module-item-style.video-tag a,
+.video-player-handle .handle-btn em,
+.tips-list span {
+    padding: 0 5px;
+    line-height: 20px;
+    font-size: 12px;
+    border-radius: 5px;
+    display: inline-block !important
+}
+
 .drop-content {
     position: absolute;
     top: 38px;
