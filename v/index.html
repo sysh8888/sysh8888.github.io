@@ -12,6 +12,7 @@
 <link href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/style.css" rel="stylesheet">
 <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/js/gg.js"></script>
 </head>
 <body>
 <div id="header">
@@ -24,7 +25,7 @@
 <div class="search">
 <form action="./so.html" method="GET">
 <input type="hidden" name="mode" value="search">
-<input type="text" name="q" id="wd" placeholder="输入关键词搜索" value="" autocomplete="off">
+<input type="text" name="wd" id="wd" placeholder="输入关键词搜索" value="" autocomplete="off">
 <input type="hidden" name="html" value="1.html" />
 <button id="submit"><i class="fas fa-search"></i></button>
 </form>
@@ -74,7 +75,7 @@
    
 </script>
 <script type="text/javascript">
-     var url1="https://bird.ioliu.cn/v1?url=http://front-gateway.mtime.com/library/index/app/topList.api";
+     var url1=jiekou+"http://front-gateway.mtime.com/library/index/app/topList.api";
  $(function(){
  $.ajax({
  async: true,
