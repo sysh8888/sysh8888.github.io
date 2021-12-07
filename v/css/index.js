@@ -23,7 +23,7 @@ function index(index){
                       Node.hide(); 
                       var timu="";
                       for (var i=0;i<20;i++)
-                      { timu+='<li><a href="so.html?q='+data.subjects[i].title+'&html=1.html" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rate+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
+                      { timu+='<li><a href="so.html?wd='+data.subjects[i].title+'&html=1.html" target="_blank"><img  src="'+data.subjects[i].cover+'"  width="110" height="176"><em><b>豆瓣评分:'+data.subjects[i].rate+'分</b></em><span>'+data.subjects[i].title+'</span></a></li>';}
                       $("#list").html(timu);
                      $("#list").slideDown();
 
