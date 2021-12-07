@@ -1,5 +1,5 @@
       var url = new URL(window.location.href);
-      var wd = url.searchParams.get("q");
+      var wd = url.searchParams.get("wd");
 function index(index){
    $("#list").hide();
    $.ajax({
