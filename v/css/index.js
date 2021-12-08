@@ -11,6 +11,7 @@ function index(index){
     url:jiekou +'https://movie.douban.com/j/search_subjects?type='+index+'&sort=recommend&page_limit=20&page_start=0',
     data: "",
     timeout: 3000,
+          dataType: "jsonp",
     contentType: "application/json;utf-8",
                 beforeSend:function(XMLHttpRequest){ 
                   var winNode = $("#loading");  
@@ -51,6 +52,8 @@ function frompg(id){
                   var winNode = $("#loading");  
                       winNode.fadeIn("slow");  
             }, 
+                  contentType: "application/json;utf-8",
+                   dataType: "jsonp",
                  success: function(data) {
                   if(null != data && "" != data){
                   var Node = $("#loading");  
@@ -85,6 +88,8 @@ function frompg(id){
                   var winNode = $("#loading");  
                       winNode.fadeIn("slow");  
             }, 
+                    dataType: "jsonp",
+                   contentType: "application/json;utf-8",
                 success: function(data) {
                   if(null != data && "" != data){
                   var Node = $("#loading");  
