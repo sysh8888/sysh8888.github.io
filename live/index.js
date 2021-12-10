@@ -237,8 +237,7 @@ var ipiptv={"CCTV1":"http://shbu.live.bestvcdn.com.cn:8080/live/program/live/cct
 "百事通体育":"http://shbu.live.bestvcdn.com.cn:8080/live/program/live/hdnba7/4000000/mnf.m3u8"};
 //放在最后，可替换地址 shbu.live.bestvcdn.com.cn:8080,keonline.shanghai.liveplay.qq.com,112.132.209.46,liveplay-kk.rtxapp.com
 //183.207.255.190,112.25.48.68
-var woiptv={
-	"一年级":"http://liveplay-kk.rtxapp.com/live/program/live/kkyinj/1300000/mnf.m3u8",
+var woiptv={"一年级":"http://liveplay-kk.rtxapp.com/live/program/live/kkyinj/1300000/mnf.m3u8",
 "二年级":"http://liveplay-kk.rtxapp.com/live/program/live/kkernj/1300000/mnf.m3u8",
 "三年级":"http://liveplay-kk.rtxapp.com/live/program/live/kksannj/1300000/mnf.m3u8",
 	"四年级":"http://liveplay-kk.rtxapp.com/live/program/live/kksinj/1300000/mnf.m3u8",
