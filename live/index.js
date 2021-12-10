@@ -248,5 +248,4 @@ var woiptv={"一年级":"http://liveplay-kk.rtxapp.com/live/program/live/kkyinj/
 	"初三":"http://liveplay-kk.rtxapp.com/live/program/live/kkjiunj/1300000/mnf.m3u8",
 	"高一":"http://liveplay-kk.rtxapp.com/live/program/live/kkgaoyinj/1300000/mnf.m3u8",
 	"高二":"http://liveplay-kk.rtxapp.com/live/program/live/kkgaoernj/1300000/mnf.m3u8",
-	"高三":"http://liveplay-kk.rtxapp.com/live/program/live/kkgaosannj/1300000/mnf.m3u8"
-};
+	"高三":"http://liveplay-kk.rtxapp.com/live/program/live/kkgaosannj/1300000/mnf.m3u8"};
