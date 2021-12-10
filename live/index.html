@@ -124,7 +124,7 @@
      <div class="am-panel-hd">电视直播测试</div>
      
  <div class="am-panel-bd player-box">
-         <iframe id="video" src="./h5.html?url=https://hw-m-l.cztv.com/channels/lantian/channel01/360p.m3u8
+         <iframe id="video" src="../h5.html?url=https://hw-m-l.cztv.com/channels/lantian/channel01/360p.m3u8
  " width="100%" height="100%" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" frameborder="0" scrolling="no"></iframe>
      </div>
  
@@ -313,25 +313,25 @@ valine.init({
 
 var zjiptv1="";
 for (var key in zjiptv) 
-    { zjiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="./h5.html?url='+zjiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
+    { zjiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+zjiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
 }
 document.getElementById("imgo").innerHTML =zjiptv1;
 
 var qtiptv1="";
 for (var key in qtiptv) 
-    { qtiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="./h5.html?url='+qtiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
+    { qtiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+qtiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
 }
 document.getElementById("cntv").innerHTML =qtiptv1;
 
 var ipiptv1="";
 for (var key in ipiptv) 
-    { ipiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="./h5.html?url='+ipiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
+    { ipiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+ipiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
 }
 document.getElementById("iptv").innerHTML =ipiptv1;
 
 var woiptv1="";
 for (var key in woiptv) 
-    { woiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="./h5.html?url='+woiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
+    { woiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+woiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
 }
 document.getElementById("woiptv").innerHTML =woiptv1;
 </script>
