@@ -1,4 +1,4 @@
- <!--www. 122411 .com-->
+<!--www. 122411 .com-->
  <!doctype html>
  <html class="no-js">
  <head>
@@ -34,10 +34,11 @@
      
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/27K8/52v/assets/css/amazeui.min.css">
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/27K8/52v/assets/css/app.css">
- <script src="../js/gg.js"></script>
    <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
       <script src="./index.js"></script>
-  <script src="https://unpkg.com/valine/dist/Valine.min.js"></script>
+
+      <!-- do not set the version number -->
+<script src="https://unpkg.com/valine/dist/Valine.min.js"></script>
 <!-- or set latest -->
 <script src="https://unpkg.com/valine@latest/dist/Valine.min.js"></script>
 <!-- or Default value -->
@@ -62,11 +63,17 @@
      </button>
  
    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-     <ul class="am-nav am-nav-pills am-topbar-nav" id="toutou">
+     <ul class="am-nav am-nav-pills am-topbar-nav">
+       <li><a href="//7080.wang">首页
+ </a></li>
+       <li><a href="//7080.wang/v/">影视搜
+ </a></li>
+       <li><a href="/live/">浙江卫视
+ </a></li>
      </ul>
  
  
-     <form class="am-topbar-form am-topbar-left am-form-inline" role="search" action="v/so.html" name="tyForm" onsubmit="return Checkfrom();" >
+     <form class="am-topbar-form am-topbar-left am-form-inline" role="search" action="//7080.wang/v/so.html" name="tyForm" onsubmit="return Checkfrom();" >
          <div class="am-input-group am-input-group-primary am-input-group-sm">
              <input name="q" type="text" class="am-form-field" placeholder="搜索..." required>
              <span class="am-input-group-btn">
@@ -117,8 +124,8 @@
      <div class="am-panel-hd">电视直播测试</div>
      
  <div class="am-panel-bd player-box">
-         <iframe id="video" src="../h5.html?url=https://hw-m-l.cztv.com/channels/lantian/channel01/360p.m3u8
- " width="100%" height="100%" allowfullscreen="true" allowtransparency="true" allow="autoplay"></iframe>
+         <iframe id="video" src="./h5.html?url=https://hw-m-l.cztv.com/channels/lantian/channel01/360p.m3u8
+ " width="100%" height="100%" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" frameborder="0" scrolling="no"></iframe>
      </div>
  
      </div>
@@ -137,13 +144,13 @@
                  </li>
                                 
                  <li >
-                     <a href="#cntv">其他</a>
+                     <a href="#cntv">其他直播</a>
                  </li>
                          <li >
                      <a href="#iptv">IPTV</a>
                  </li>
-              				 <li >
-                     <a href="#wotv">学习</a>
+				 <li >
+                     <a href="#woiptv">学习</a>
                  </li>
        </ul>
              
@@ -155,10 +162,7 @@
            加载中
          </div>
      <div class="am-tab-panel am-fade tv-res" id="iptv">加载中</div>
-        
-     </div>
-           <div class="am-tab-panel am-fade tv-res" id="wotv">加载中</div>
-        
+	  <div class="am-tab-panel am-fade tv-res" id="woiptv">加载中</div>
      </div>
          </div>    
      </div>
@@ -173,18 +177,16 @@
      <div class="am-panel-hd">相关推荐</div>
      <div class="am-panel-bd">
          
-         <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-bordered tuijian-list">
- 
-                     <div class="am-alert am-alert-secondary" data-am-alert>
-                             暂无相关推荐
-                     </div> 
+         <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-bordered tuijian-list" id="tuijian">
+
+             
                                  
          </ul>
          
      </div>
  </div>
  
-  <div class="am-panel am-panel-default">
+ <div class="am-panel am-panel-default">
      <div class="am-panel-hd">评论搜索</div>
      <div class="am-panel-bd">
      <!--PC和WAP自适应版-->
@@ -308,29 +310,56 @@ valine.init({
 
  </script>
  <script type="text/javascript">
-document.getElementById("toutou").innerHTML =toutou;
+
 var zjiptv1="";
 for (var key in zjiptv) 
-    { zjiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+zjiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
+    { zjiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="./h5.html?url='+zjiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
 }
 document.getElementById("imgo").innerHTML =zjiptv1;
 
 var qtiptv1="";
 for (var key in qtiptv) 
-    { qtiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+qtiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
+    { qtiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="./h5.html?url='+qtiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
 }
 document.getElementById("cntv").innerHTML =qtiptv1;
 
 var ipiptv1="";
 for (var key in ipiptv) 
-    { ipiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+ipiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
+    { ipiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="./h5.html?url='+ipiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
 }
 document.getElementById("iptv").innerHTML =ipiptv1;
-  var wotv1="";
+
+var woiptv1="";
 for (var key in woiptv) 
-    { wotv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+woiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
+    { woiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="./h5.html?url='+woiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
 }
-document.getElementById("wotv").innerHTML =wotv1;
+document.getElementById("woiptv").innerHTML =woiptv1;
+</script>
+
+<script type="text/javascript">
+
+//相关推荐
+
+$(function(){
+ $.ajax({
+ async: true,
+ type: "GET",
+ dataType: 'jsonp',
+ jsonp: 'callback',
+ jsonpCallback: 'callbackfunction',
+ url:"http://ce.7080.wang/json/?url=https://m.maoyan.com/ajax/movieOnInfoList",
+ data: "",
+ timeout: 3000,
+ contentType: "application/json;utf-8",
+ success: function(data) {
+console.log(data);
+var tuijian="";
+for (var i=0;i<12;i++)
+{ tuijian+=' <li><div class="am-gallery-item tuijian-item"><a href="//7080.wang/v/so.html?q='+data.movieList[i].nm+'"><img data-original="'+data.movieList[i].img+'" alt="" src="'+data.movieList[i].img+'" class="lazyload"><h3 class="am-gallery-title">'+data.movieList[i].nm+'<span class="am-gallery-desc"></span></h3></a></div></li>';}
+document.getElementById("tuijian").innerHTML =tuijian;
+ }
+ });
+})
 
 </script>
    <script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/amazeui.min.js"></script>
