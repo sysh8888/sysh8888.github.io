@@ -142,7 +142,9 @@
                          <li >
                      <a href="#iptv">IPTV</a>
                  </li>
-              				
+              				 <li >
+                     <a href="#wotv">学习</a>
+                 </li>
        </ul>
              
          <div class="am-tabs-bd tv-res-lists">
@@ -153,6 +155,9 @@
            加载中
          </div>
      <div class="am-tab-panel am-fade tv-res" id="iptv">加载中</div>
+        
+     </div>
+           <div class="am-tab-panel am-fade tv-res" id="wotv">加载中</div>
         
      </div>
          </div>    
@@ -321,7 +326,11 @@ for (var key in ipiptv)
     { ipiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+ipiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
 }
 document.getElementById("iptv").innerHTML =ipiptv1;
-  
+  var wotv1="";
+for (var key in woiptv) 
+    { wotv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="../h5.html?url='+woiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
+}
+document.getElementById("wotv").innerHTML =wotv1;
 
 </script>
    <script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/amazeui.min.js"></script>
