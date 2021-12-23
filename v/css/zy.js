@@ -10,10 +10,10 @@ var qtzy={"0":"https://1080p.tv/api.php/v1.vod?page=1&wd=","1":"https://www.fj60
 "2":"http://mm.tcsdchina.com:6096/mogai_api.php/v1.vod?page=1&wd="};
 var qtplay={"0":"http://1080p.tv/api.php/v1.vod/detail?vod_id=","1":"http://www.fj6080.com/api.php/v1.vod/detail?vod_id=","2":"http://mm.tcsdchina.com:6096/mogai_api.php/v1.vod/detail?vod_id="};
 //苹果接口
-var pingguow={"0":"天空","1":"三零","2":"初心","3":"无尽","4":"橘猫","5":"快看","6":"影牛","7":"三九","8":"百度","9":"酷点","10":"神马","11":"北斗","12":"速更",
+var pingguow={"0":"天空","1":"三零","2":"闪电","3":"无尽","4":"橘猫","5":"快看","6":"影牛","7":"三九","8":"百度","9":"酷点","10":"神马","11":"北斗","12":"速更",
               "13":"想看","14":"灵芝","15":"飞速"}; 
 var pingguoz={"0":"http://m3u8.tiankongapi.com/api.php/provide/vod/","1":"http://api.000zy.com/provide/vod/",
-              "2":"https://18mv.club/api.php/provide/vod/at/json/","3":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/",
+              "2":"https://sdzyapi.com/api.php/provide/vod/","3":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/",
               "4":"http://www.zitv.cc/api.php/provide/vod/at/json/","5":"https://www.vp1127.com/api.php/provide/vod/",
               "6":"https://www.dianyingn.cc/api.php/provide/vod/at/json/","7":"https://www.39kan.com/api.php/provide/vod/",
               "8":"http://api.dbyunzy.com/api.php/provide/vod/at/json/","9":"https://api.kuapi.cc/api.php/provide/vod/at/json/",
