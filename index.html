@@ -22,7 +22,7 @@
 <!--[if (gte IE 9)|!(IE)]>
     <!--<script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/jquery.min.js"></script>-->
 <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/js/gg.js"></script>
+<script src="./js/gg.js"></script>
 <!--<![endif]-->
 <!--[if lte IE 8 ]>
     <script src="https://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
@@ -128,45 +128,8 @@
 </div>
 </footer>
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default am-show-sm-only" id="">
-<ul class="am-navbar-nav am-cf am-avg-sm-4">
-<li>
-<a href="//7080.wang" class="">
-<img src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/film.png" alt="首页
- " />
-<span class="am-navbar-label">首页
-</span>
-</a>
-</li>
-<li>
-<a href="/v/" class="">
-<img src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/film.png" alt="影视搜
- " />
-<span class="am-navbar-label">影视搜
-</span>
-</a>
-</li>
-<li>
-<a href="/live/" class="">
-<img src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/mg.png" alt="直播
- " />
-<span class="am-navbar-label">直播
-</span>
-</a>
-</li>
-<li>
-<a href="/qt/fq/" class="">
-<img src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/2mm.png" alt="番茄搜
- " />
-<span class="am-navbar-label">番茄搜
-</span>
-</a>
-</li>
-<li>
-<a href="/live/index.html" class="">
-<img src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/zongyi.png" alt="综合电影" />
-<span class="am-navbar-label">IPTV</span>
-</a>
-</li>
+<ul class="am-navbar-nav am-cf am-avg-sm-4" id="souji">
+
 </ul>
 </div>
 <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.js"></script>
@@ -174,6 +137,7 @@
 
 <script type="text/javascript">
 document.getElementById("toutou").innerHTML =toutou;
+document.getElementById("souji").innerHTML =souji;
 </script>
 <script>
 $(function(){
@@ -183,7 +147,7 @@ $(function(){
     dataType: 'jsonp',
     jsonp: 'callback',
     jsonpCallback: 'callbackfunction',
-    url: "//5020.work/json/2.php?url=http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId=290",
+    url: "https://5020.work/json/2.php?url=http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId=290",
     data: "",
     timeout: 3000,
     contentType: "application/json;utf-8",
