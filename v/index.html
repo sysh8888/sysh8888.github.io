@@ -13,6 +13,7 @@
 <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/v/css/index.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/js/gg.js"></script>
+	<script src="./css/v.js"></script>
 </head>
 <body>
 <div id="header">
@@ -31,7 +32,7 @@
 </form>
 </div>
 <div class="bd">
-<div id="title"><b id="tibiao">TOP100</b><b>-排行榜</b></div>
+<div id="title"><b id="tibiao">最近</b><b>-更新</b></div>
 <!--
 <ul id="nav">
 <li class="hot"><a href="?typ=1">电影</a></li>
@@ -75,7 +76,7 @@
    
 </script>
 <script type="text/javascript">
-     var url1=jiekou+"http://front-gateway.mtime.com/library/index/app/topList.api?api=111";
+     var url1=jiekou+zy+"?api=111";
  $(function(){
  $.ajax({
  async: true,
@@ -92,8 +93,9 @@
                      Node.hide();
 //console.log(data);
 var timu="";
-for (var i=0,l=data.data.movieTopList.topListInfos[0].items.length;i<l;i++)
-{ timu+='<li><a href="./so.html?wd='+data.data.movieTopList.topListInfos[0].items[i].movieInfo.movieName+'&html=1.html" target="_blank"><img  src="'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.img+'"  width="110" height="176"><em><b>演员:'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.actors+'</b></em><span>'+data.data.movieTopList.topListInfos[0].items[i].movieInfo.movieName+'</span></a></li>';}
+for (var i=0,l=data.data.list.length;i<l;i++)
+{ timu+='<li><a href="./play.html?q='+data.data.list[i].vod_id+'&html=1.html" target="_blank"><img  src="'+data.data.list[i].vod_pic+'"  width="110" height="176"><em><b>'+data.data.list[i].type_name+'</b></em><span>'+data.data.list[i].vod_name+'</span></a></li>';}
+
 document.getElementById("list").innerHTML =timu;
  }
  });
