@@ -140,27 +140,19 @@ document.getElementById("toutou").innerHTML =toutou;
 document.getElementById("souji").innerHTML =souji;
 </script>
 <script>
-$(function(){
-  $.ajax({
-    async: false,
-    type: "GET",
-    dataType: 'jsonp',
-    jsonp: 'callback',
-    jsonpCallback: 'callbackfunction',
-    url: "https://5020.work/json/2.php?url=http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId=290",
-    data: "",
-    timeout: 3000,
-    contentType: "application/json;utf-8",
-    success: function(data) {
-      //console.log(data);
+function pingguojson(data){
+//console.log(data);
 var timu="";
 for(var i=0,l=data.data.ms.length;i<l;i++)
 
 
 {timu+='<li><a class="movie-item" href="./so.html?wd='+data.data.ms[i].t+'&html=1.html" target="_blank"><div class="movie-cover"><img src="'+data.data.ms[i].img+'" ><span class="movie-description"><i class="description-bg"></i><p>评分：'+data.data.ms[i].r+'</p><p>年代：'+data.data.ms[i].year+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.ms[i].t+'</p><p class="movie-tags">'+data.data.ms[i].actors+'</p></div></a></li>'}
-document.getElementById("lie").innerHTML=timu;}
-    })
-  });
+document.getElementById("lie").innerHTML=timu;
+}
+
+var script = document.createElement('script');
+script.src = "https://5020.work/json/2.php?url=http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId=290&callback=pingguojson";
+document.body.insertBefore(script, document.body.firstChild);
 </script>
 <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
 </body>
