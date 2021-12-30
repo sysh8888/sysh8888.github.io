@@ -10,16 +10,16 @@ var qtzy={"0":"https://1080p.tv/api.php/v1.vod?page=1&wd=","1":"https://www.fj60
 "2":"http://mm.tcsdchina.com:6096/mogai_api.php/v1.vod?page=1&wd="};
 var qtplay={"0":"http://1080p.tv/api.php/v1.vod/detail?vod_id=","1":"http://www.fj6080.com/api.php/v1.vod/detail?vod_id=","2":"http://mm.tcsdchina.com:6096/mogai_api.php/v1.vod/detail?vod_id="};
 //苹果接口
-var pingguow={"0":"百度","1":"思古","2":"闪电","3":"无尽","4":"橘猫","5":"快看","6":"影牛","7":"三九","8":"天空","9":"酷点","10":"神马","11":"北斗","12":"速更",
-              "13":"想看","14":"灵芝","15":"飞速"}; 
-var pingguoz={"0":"http://api.dbyunzy.com/api.php/provide/vod/at/json/","1":"http://www.siguyy.com/api.php/provide/vod/at/json/",
+var pingguow={"0":"乐活","1":"八八","2":"闪电","3":"无尽","4":"橘猫","5":"快看","6":"千寻","7":"三九","8":"无极","9":"酷点","10":"神马","11":"木耳","12":"速更",
+              "13":"想看","14":"灵芝","15":"八戒"}; 
+var pingguoz={"0":"https://lehootv.com/api.php/provide/vod/","1":"http://www.88zy.live/inc/apijson_vod.php",
               "2":"https://sdzyapi.com/api.php/provide/vod/","3":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/",
               "4":"http://www.zitv.cc/api.php/provide/vod/at/json/","5":"https://www.vp1127.com/api.php/provide/vod/",
-              "6":"https://www.dianyingn.cc/api.php/provide/vod/at/json/","7":"https://www.39kan.com/api.php/provide/vod/",
-              "8":"http://api.tiankongapi.com/api.php/provide/vod/","9":"https://api.kuapi.cc/api.php/provide/vod/at/json/",
-              "10":"http://www.zitv.cc/api.php/provide/vod/at/json/","11":"https://api.bdxzyapi.com/api.php/provide/vod/",
+              "6":"http://wy.dqyhg.cn/api.php/provide/vod/","7":"https://www.39kan.com/api.php/provide/vod/",
+              "8":"http://wujiys.com/api.php/provide/vod/","9":"https://api.kuapi.cc/api.php/provide/vod/at/json/",
+              "10":"http://www.zitv.cc/api.php/provide/vod/at/json/","11":"http://vip.muoutv.com/api.php/provide/vod/",
               "12":"https://sugengzy.cn/api.php/provide/vod/","13":"https://m3u8.xiangkanapi.com/provide/vod/",
-              "14":"https://app.linzhiyuan.xyz/api.php/provide/vod/at/json/","15":"https://m3u8.feisuzyapi.com/vod/"}; 
+              "14":"https://app.linzhiyuan.xyz/api.php/provide/vod/at/json/","15":"http://cj.bajiecaiji.com/inc/apijson_vod.php"}; 
 //萌果http://api.appearoo.top/api.php/provide/vod/,明日,八零http://zy.yilans.net:8090/api.php/provide/vod/at/json/
 //蘑菇http://www.moguzyw.com:520/moguzy.php/provide/vod/，百度https://m3u8.apibdzy.com/api.php/provide/vod/at/json/
 //天空https://www.tiankongzy.cc/api.php/provide/vod/at/json/from/tkm3u8/柚子http://tv.aitesucai.xyz/api.php/provide/vod/
