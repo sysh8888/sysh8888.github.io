@@ -10,9 +10,9 @@ var qtzy={"0":"https://1080p.tv/api.php/v1.vod?page=1&wd=","1":"https://www.fj60
 "2":"http://mm.tcsdchina.com:6096/mogai_api.php/v1.vod?page=1&wd="};
 var qtplay={"0":"http://1080p.tv/api.php/v1.vod/detail?vod_id=","1":"http://www.fj6080.com/api.php/v1.vod/detail?vod_id=","2":"http://mm.tcsdchina.com:6096/mogai_api.php/v1.vod/detail?vod_id="};
 //苹果接口
-var pingguow={"0":"天龙","1":"八八","2":"闪电","3":"无尽","4":"橘猫","5":"快看","6":"千寻","7":"三九","8":"无极","9":"酷点","10":"神马","11":"木耳","12":"速更",
+var pingguow={"0":"跟剧","1":"八八","2":"闪电","3":"无尽","4":"橘猫","5":"快看","6":"千寻","7":"三九","8":"无极","9":"酷点","10":"神马","11":"木耳","12":"速更",
               "13":"想看","14":"灵芝","15":"八戒"}; 
-var pingguoz={"0":"http://www.tl86dy.com/api.php/provide/vod/","1":"http://www.88zy.live/inc/apijson_vod.php",
+var pingguoz={"0":"https://www.genmov.com/api.php/provide/vod/","1":"http://www.88zy.live/inc/apijson_vod.php",
               "2":"https://sdzyapi.com/api.php/provide/vod/","3":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/",
               "4":"http://www.zitv.cc/api.php/provide/vod/at/json/","5":"https://www.vp1127.com/api.php/provide/vod/",
               "6":"http://wy.dqyhg.cn/api.php/provide/vod/","7":"https://www.39kan.com/api.php/provide/vod/",
@@ -34,5 +34,5 @@ var pingguoz={"0":"http://www.tl86dy.com/api.php/provide/vod/","1":"http://www.8
 //好好http://haohaozy.com/api.php/provide/vod/at/xml/游艺http://api01.hexh.ink/api.php/provide/vod/?ac=list
 //987https://www.9875.xyz/api.php/provide/vod/?ac=list//淘片https://taopianzy.com/home/cjapi/c4ca4238a0b923820dcc509a6f75849b/vod/json
 //电牛https://www.dianyingn.com/api.php/provide/vod/at/xml/百度采集https://api.bdjx.vip/api.php/provide/vod/?ac=list
-//乐七一https://www.lqiyi.co/api.php/provide/vod/at/xml三零http://api.000zy.com/provide/vod/畅视http://app.reboju.net/api.php/provide/vod/
+//乐七一https://www.lqiyi.co/api.php/provide/vod/at/xml三零http://api.000zy.com/provide/vod/天龙http://www.tl86dy.com/api.php/provide/vod/
 //初心https://18mv.club/api.php/provide/vod/at/json/片库https://pianku.wang/api.php/provide/vod/at/json/
