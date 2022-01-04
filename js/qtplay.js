@@ -6,6 +6,7 @@ $(function(){
  async: true,
  type: "GET",
  dataType: 'jsonp',
+  cache: true,
  jsonp: 'callback',
  jsonpCallback: 'callbackfunction',
  url: appqt+url4+lianjie,
