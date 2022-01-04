@@ -5,6 +5,7 @@ function ying(ying){
    async: true,
    type: "GET",
    dataType: 'jsonp',
+     cache: true,
    jsonp: 'callback',
    jsonpCallback: 'callbackfunction',
    url: url1,
