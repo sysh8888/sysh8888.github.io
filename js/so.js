@@ -12,6 +12,7 @@ function frompg(id){
                },
           data: "",
                dataType: "jsonp",
+          cache: true,
     contentType: "application/json;utf-8",
              success: function(data) {
               if(null != data && "" != data){
@@ -43,6 +44,7 @@ function zy2(id){
   async: true,
   type: "GET",
   dataType: 'jsonp',
+    cache: true,
   jsonp: 'callback',
   jsonpCallback: 'callback2',
   url: url2,
@@ -70,6 +72,7 @@ function zy3(id){
   async: true,
   type: "GET",
   dataType: 'jsonp',
+    cache: true,
   jsonp: 'callback',
   jsonpCallback: 'callback3',
   url: url3,
@@ -95,6 +98,7 @@ function zy3(id){
         $.ajax({
             type: "get",
        dataType: 'jsonp',
+          cache: true,
             url: appfq +url4 +"?ac=detail&wd=" + lianjie1,
             data: "",
             async: true,
