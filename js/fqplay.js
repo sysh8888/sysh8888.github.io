@@ -15,6 +15,7 @@ $(function(){
                  this; // 调用本次AJAX请求时传递的options参数
              },
              dataType: "jsonp",
+	 cache: true,
 			 contentType: "application/json;utf-8",
  success: function(data) {
 //console.log(data);
