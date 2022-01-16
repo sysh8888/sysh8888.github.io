@@ -7,8 +7,8 @@ var fqzy={"0":"http://api.fqzy.cc/api.php/provide/vod/at/json/","1":"https://zy.
 var fqplay={"0":"https://jiexi.8b5q.cn/player/jx.php?url=","1":"https://www.dmplay.xyz/j?url=","2":"./v/bo.html?url="};
 //其他APP
 var qtzy={"0":"https://1080p.tv/api.php/v1.vod?page=1&wd=","1":"https://www.fj6080.com/api.php/v1.vod?page=1&wd=",
-"2":"http://mm.tcsdchina.com:6096/mogai_api.php/v1.vod?page=1&wd="};
-var qtplay={"0":"http://1080p.tv/api.php/v1.vod/detail?vod_id=","1":"http://www.fj6080.com/api.php/v1.vod/detail?vod_id=","2":"http://mm.tcsdchina.com:6096/mogai_api.php/v1.vod/detail?vod_id="};
+"2":"http://www.ccc8.net/api.php/v1.vod?page=1&wd="};
+var qtplay={"0":"http://1080p.tv/api.php/v1.vod/detail?vod_id=","1":"http://www.fj6080.com/api.php/v1.vod/detail?vod_id=","2":"http://www.ccc8.net/api.php/v1.vod/detail?vod_id="};
 //苹果接口
 var pingguow={"0":"三九","1":"天龙","2":"闪电","3":"无尽","4":"剧好","5":"快看","6":"千寻","7":"大米","8":"无极","9":"酷点","10":"神马","11":"木耳","12":"速更",
               "13":"想看","14":"灵芝","15":"酷点"}; 
