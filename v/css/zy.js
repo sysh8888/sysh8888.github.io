@@ -10,9 +10,9 @@ var qtzy={"0":"https://1080p.tv/api.php/v1.vod?page=1&wd=","1":"https://www.fj60
 "2":"http://www.ccc8.net/api.php/v1.vod?page=1&wd="};
 var qtplay={"0":"http://1080p.tv/api.php/v1.vod/detail?vod_id=","1":"http://www.fj6080.com/api.php/v1.vod/detail?vod_id=","2":"http://www.ccc8.net/api.php/v1.vod/detail?vod_id="};
 //苹果接口
-var pingguow={"0":"三九","1":"天龙","2":"闪电","3":"无尽","4":"剧好","5":"快看","6":"千寻","7":"大米","8":"无极","9":"酷点","10":"神马","11":"木耳","12":"速更",
+var pingguow={"0":"三九","1":"奈菲","2":"闪电","3":"无尽","4":"剧好","5":"快看","6":"千寻","7":"大米","8":"无极","9":"酷点","10":"神马","11":"木耳","12":"速更",
               "13":"想看","14":"灵芝","15":"酷点"}; 
-var pingguoz={"0":"https://www.39kan.com/api.php/provide/vod/","1":"http://www.tl86dy.com/api.php/provide/vod/",
+var pingguoz={"0":"https://www.39kan.com/api.php/provide/vod/","1":"http://shdmv.com/api.php/provide/vod/",
               "2":"https://sdzyapi.com/api.php/provide/vod/","3":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/",
               "4":"https://www.juhaokan.cc/api.php/provide/vod/","5":"https://www.vp1127.com/api.php/provide/vod/",
               "6":"http://wy.dqyhg.cn/api.php/provide/vod/","7":"https://www.dmzyu.com/api.php/provide/vod/from/mim3u8/",
@@ -21,3 +21,4 @@ var pingguoz={"0":"https://www.39kan.com/api.php/provide/vod/","1":"http://www.t
               "12":"https://sugengzy.cn/api.php/provide/vod/","13":"https://m3u8.xiangkanapi.com/provide/vod/",
               "14":"https://app.linzhiyuan.xyz/api.php/provide/vod/at/json/","15":"https://api.kuapi.cc/api.php/provide/vod/from/kdm3u8/"}; 
 
+//天龙http://www.tl86dy.com/api.php/provide/vod/
