@@ -26,7 +26,7 @@ if(lurl.indexOf('tc.html?url=')>0) lurl=lurl.split('tc.html?url=')[1];
 var player = new TcPlayer('id_test_video', {
     "m3u8": lurl, //请替换成实际可用的播放地址
     "autoplay" : true,      //iOS 下 safari 浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
-    "poster" : "",//封面
+    "poster" : "https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/logo5.png",//封面
     "width" :  "100%",//视频的显示宽度，请尽量使用视频分辨率宽度
     "height" : "100%",//视频的显示高度，请尽量使用视频分辨率高度
 	"wording": {1: "请求视频失败，可能是网络错误或视频失效",
