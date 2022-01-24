@@ -67,6 +67,7 @@ document.getElementById("wd").value =wd;
                 url: jiekou+url1+"?page=1&wd=" + wd,
                 data: "",
                 async: true,
+		    cache: true,
 				 dataType: "jsonp",
 				  contentType: "application/json;utf-8",
                  success: function(data) {
