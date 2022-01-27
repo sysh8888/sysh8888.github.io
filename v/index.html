@@ -24,7 +24,7 @@
 </ul>
 <div id="content">
 <div class="search">
-<form action="./so.html" method="GET">
+<form action="../so.html" method="GET">
 <input type="hidden" name="mode" value="search">
 <input type="text" name="wd" id="wd" placeholder="输入关键词搜索" value="" autocomplete="off">
 <input type="hidden" name="html" value="1.html" />
@@ -32,7 +32,7 @@
 </form>
 </div>
 <div class="bd">
-<div id="title"><b id="tibiao">最近</b><b>-更新</b></div>
+<div id="title"><b id="tibiao">热门</b><b>-电影</b></div>
 <!--
 <ul id="nav">
 <li class="hot"><a href="?typ=1">电影</a></li>
@@ -76,11 +76,10 @@
    
 </script>
 <script type="text/javascript">
-     var url1=jiekou+zy+"?api=111";
+     var url1="https://api.web.360kan.com/v1/block?blockid=90&size=28";
  $(function(){
  $.ajax({
  async: true,
- cache: true,
  type: "GET",
  dataType: 'jsonp',
  jsonp: 'callback',
@@ -92,10 +91,10 @@
  success: function(data)  {
     var Node = $("#loading");  
                      Node.hide();
-//console.log(data);
+console.log(data);
 var timu="";
-for (var i=0,l=data.data.list.length;i<l;i++)
-{ timu+='<li><a href="./play.html?q='+data.data.list[i].vod_id+'&html=1.html" target="_blank"><img  src="'+data.data.list[i].vod_pic+'"  width="110" height="176"><em><b>'+data.data.list[i].type_name+'</b></em><span>'+data.data.list[i].vod_name+'</span></a></li>';}
+for (var i=0,l=data.data.lists.length;i<l;i++)
+{ timu+='<li><a href="../so.html?wd='+data.data.lists[i].title+'&html=1.html" target="_blank"><img  src="'+data.data.lists[i].pic_lists["0"].url+'"  width="110" height="176"><em><b>'+data.data.lists[i].comment+'</b></em><span>'+data.data.lists[i].title+'</span></a></li>';}
 
 document.getElementById("list").innerHTML =timu;
  }
