@@ -133,17 +133,22 @@
 </div>
 </div>
 <div data-am-widget="list_news" class="am-list-news am-list-news-default">
-<div>
-<P style="font-size:20px;"><B style="color:#00CC33">资源站选择-当前:</B><SPAN><b style="color:#CC0033" id=bolei>默认</b></SPAN></P>
-<div class="am-btn-group" id="ff"></div>
+   <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
+<h2 class="am-titlebar-title ">资源站搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei>默认</b></SPAN></h2>
+
 </div>
 
+ <div class="am-panel am-panel-default" style="margin-bottom: 10px">
+
+    <ul class="ty-screen__list clearfix">
+        <li><span  class="text-muted">资源站:</span></li>
+		<div  id="ff"></div>
+      
+    </ul>
+
+    </div>  <!-- 面板 -->
   <!-- 影片列表开始 -->
-    <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
-        <h2 class="am-titlebar-title ">
-            资源站搜索结果:
-        </h2>
-    </div>
+
 
     <ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list">
 	 <div id="loading">
@@ -273,7 +278,7 @@ var fenff="";
 //{ fenff+='<li class="hot"><span onclick="fromff('+j+')">'+feifeiw[j]+'</span></li>';} 
 //document.getElementById("ff").innerHTML =fenff;
 for ( k in pingguow)
-{ fenff+='<button type="button" class="am-btn am-btn-secondary  am-radius"><span onclick="frompg('+k+')">'+pingguow[k]+'</span></button>';} 
+{ fenff+='<li><a href="javascript:frompg('+k+');">'+pingguow[k]+'</a></li>';} 
 document.getElementById("ff").innerHTML =fenff;
 //console.log(fenff); 
 setTimeout(function(){frompg('0');},1000);
@@ -284,4 +289,3 @@ setTimeout(function(){zy4('0');},4000);
 <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
 </body>
 </html>
-
