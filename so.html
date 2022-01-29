@@ -22,7 +22,7 @@
 <!--[if (gte IE 9)|!(IE)]>
     <!--<script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/jquery.min.js"></script>-->
 <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
-<script src="./v/css/zy.js"></script>
+<script src="./js/zy.js"></script>
 <script src="./js/gg.js"></script>
 <script src="./js/so.js"></script>
 <!--<![endif]-->
@@ -137,7 +137,7 @@
 <h2 class="am-titlebar-title ">资源站搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei>默认</b></SPAN></h2>
 
 </div>
-
+<!-- 面板 -->
  <div class="am-panel am-panel-default" style="margin-bottom: 10px">
 
     <ul class="ty-screen__list clearfix" id="ff">
@@ -162,10 +162,18 @@
  <!-- 影片列表开始 -->
     <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
         <h2 class="am-titlebar-title ">
-            1080资源搜索:
+            APP资源搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei2>默认</b></SPAN>
         </h2>
     </div>
+<!-- 面板 -->
+ <div class="am-panel am-panel-default" style="margin-bottom: 10px">
 
+    <ul class="ty-screen__list clearfix" id="app">
+		
+      
+    </ul>
+
+    </div>  <!-- 面板 -->
     <ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list2">
 	 <div id="loading">
 <div class="k-ball7a"></div>
@@ -176,13 +184,22 @@
 <h3>资源加载中延迟2秒。。。</h3>
 </ul>
 	  <!-- 影片列表结束 -->
+ 
  <!-- 影片列表开始 -->
     <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
         <h2 class="am-titlebar-title ">
-            HG资源搜索:
+            其他资源搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei3>默认</b></SPAN>
         </h2>
     </div>
+<!-- 面板 -->
+ <div class="am-panel am-panel-default" style="margin-bottom: 10px">
 
+    <ul class="ty-screen__list clearfix" id="qita">
+		
+      
+    </ul>
+
+    </div>  <!-- 面板 -->
     <ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list3">
 	 <div id="loading">
 <div class="k-ball7a"></div>
@@ -191,23 +208,6 @@
 <div class="k-ball7d"></div>
 </div>
 <h3>资源加载中延迟3秒。。。</h3>
-</ul>
-	  <!-- 影片列表结束 -->
- <!-- 影片列表开始 -->
-    <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
-        <h2 class="am-titlebar-title ">
-            番茄资源搜索:
-        </h2>
-    </div>
-
-    <ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list4">
-	 <div id="loading">
-<div class="k-ball7a"></div>
-<div class="k-ball7b"></div>
-<div class="k-ball7c"></div>
-<div class="k-ball7d"></div>
-</div>
-<h3>资源加载中延迟4秒。。。</h3>
 </ul>
 	  <!-- 影片列表结束 -->
 </div>
@@ -272,18 +272,24 @@ document.getElementById("wd").value =lianjie1;
 <script type="text/javascript">
 document.getElementById("toutou").innerHTML =toutou;
 document.getElementById("souji").innerHTML =souji;
+//资源列表
 var fenff='<li><span  class="text-muted">资源站:</span></li>';
-//for ( j in feifeiw)
-//{ fenff+='<li class="hot"><span onclick="fromff('+j+')">'+feifeiw[j]+'</span></li>';} 
-//document.getElementById("ff").innerHTML =fenff;
-for ( k in pingguow)
-{ fenff+='<li><a href="javascript:frompg('+k+');">'+pingguow[k]+'</a></li>';} 
+for ( k in pingguozy)
+{ fenff+='<li><a href="javascript:frompg('+k+');">'+pingguozy[k]["name"]+'</a></li>';} 
 document.getElementById("ff").innerHTML =fenff;
-//console.log(fenff); 
+//app列表
+var fenapp='<li><span  class="text-muted">APP站:</span></li>';
+for ( h in appzy)
+{ fenapp+='<li><a href="javascript:zy2('+h+');">'+appzy[h]["name"]+'</a></li>';} 
+document.getElementById("app").innerHTML =fenapp;
+//其他列表
+var fenqita='<li><span  class="text-muted">其他站:</span></li>';
+for ( i in fqzy)
+{ fenqita+='<li><a href="javascript:zy3('+i+');">'+fqzy[i]["name"]+'</a></li>';} 
+document.getElementById("qita").innerHTML =fenqita; 
 setTimeout(function(){frompg('0');},1000);
 setTimeout(function(){zy2('0');},2000);
-setTimeout(function(){zy3('2');},3000);
-setTimeout(function(){zy4('0');},4000);
+setTimeout(function(){zy3('0');},3000);
 </script>
 <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
 </body>
