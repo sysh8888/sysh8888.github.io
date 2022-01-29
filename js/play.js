@@ -1,6 +1,6 @@
 
 //内容开始
-url1=pingguoz[id];
+url1=pingguozy[id]["url"];
 $(function(){
 $.ajax({
           type: "get",

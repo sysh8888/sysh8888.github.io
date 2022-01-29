@@ -1,6 +1,6 @@
 //内容开始
-var url1=fqzy[id];
-var playy=fqplay[id];
+var url1=fqzy[id]["url"];
+var playy=fqzy[id]["play"];
 $(function(){
  $.ajax({
  async: true,

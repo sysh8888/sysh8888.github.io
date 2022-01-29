@@ -1,6 +1,6 @@
 
 //内容开始
-url4=qtplay[id];
+url4=appzy[id]["url"]+"/detail?vod_id=";
 $(function(){
  $.ajax({
  async: true,
