@@ -1,0 +1,348 @@
+<!doctype html>
+<html class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="never">
+<title> 一个简单的影视搜索- 7080.wang</title>
+<meta name="description" content="7080影视搜" />
+<meta name="keywords" content="7080影视搜" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/favicon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" sizes="192x192" href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/app-icon72x72@2x.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Amaze UI" />
+<link rel="apple-touch-icon-precomposed" href="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/app-icon72x72@2x.png">
+<meta name="msapplication-TileImage" content="https://cdn.jsdelivr.net/gh/sysh8888/sysh8888.github.io/img/app-icon72x72@2x.png">
+<link rel="stylesheet" href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css">
+<link rel="stylesheet" href="./css/app.css">
+<!--[if (gte IE 9)|!(IE)]>
+    <!--<script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/jquery.min.js"></script>-->
+<script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
+<script src="./js/gg.js"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+    <script src="https://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/27K8/52v/assets/js/amazeui.ie8polyfill.min.js"></script>
+    <![endif]-->
+<style>
+.video-score {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    font-size: 16px;
+    color: #f72;
+}
+.video-score:first-letter {
+    font-size: 20px;
+}
+/* 封面左侧边距 */
+.am-list-news-default .am-list .am-list-item-thumb-left .am-list-thumb {
+    padding-left: 10px;
+}
+/* 图片尺寸，居中 */
+.am-list-news-default .am-list .am-list-thumb img {
+    max-width: 200px;
+    margin: 0 auto;
+}
+/* 文字右侧边距 */
+.am-list-news-default .am-list .am-list-item-text {
+    -webkit-line-clamp: 10; 
+    max-height: none; 
+    line-height: 1.6em;
+    margin-right: 10px;
+}
+/* 电影标题 */
+.am-list-item-hd a {
+    font-size: 150%;
+}
+@media only screen and (max-width: 640px) {
+    /* 小屏图片展示完全 */
+    .am-list-news-default .am-list-item-thumb-left .am-list-thumb {
+        max-height: none;
+    }
+    /* 右侧描述 */
+    .am-list-news-default .am-list .am-list-item-text {
+        -webkit-line-clamp: 3; 
+        max-height: 3.9em; 
+        line-height: 1.3em;
+    }
+    /* 电影标题 */
+    .am-list-item-hd a {
+        font-size: 100%;
+    }
+}
+
+/* 按钮 */
+.am-list .am-list-item-desced .am-btn, .am-list .am-list-item-thumbed .am-btn {
+    margin-top: 10px;
+    padding: .5em 1em;
+}
+/* 加载 */
+  #loading{position:.5;width:60px;height:60px;z-index:999;margin:80px auto}.k-ball7a{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#19a68c;animation-delay:-1.5s}.k-ball7b{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#f63d3a;animation-delay:-1s}.k-ball7c{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#fda543;animation-delay:-.5s}.k-ball7d{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#193b48}@keyframes k-loadingA{0{height:15px}50%{height:35px}100%{height:15px}}@keyframes k-loadingB{0{width:15px}50%{width:35px}100%{width:15px}}@keyframes k-loadingC{0{transform:translate(0,0)}50%{transform:translate(0,15px)}100%{transform:translate(0,0)}}@keyframes k-loadingD{0{transform:rotate(0)}50%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}@keyframes k-loadingE{0{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes k-loadingF{0%{opacity:0}100%{opacity:1}}@keyframes k-loadingG{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(70px,0) rotate(360deg)}100%{transform:translate(0,0) rotate(0)}}@keyframes k-loadingGb{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(-70px,0) rotate(-360deg)}100%{transform:translate(0,0) rotate(0)}}@keyframes k-loadingH{0%{width:15px}50%{width:35px;padding:4px}100%{width:15px}}@keyframes k-loadingHb{0%{width:15px;background-color:#607d8b}50%{width:35px;padding:4px;background-color:#455a64}100%{width:15px;background-color:#263238}}@keyframes k-loadingI{100%{transform:rotate(360deg)}}@keyframes k-loadingIb{0%,100%{transform:scale(0)}50%{transform:scale(1)}}@keyframes k-loadingJ{0%,100%{transform:translate(0,0)}50%{transform:translate(80px,0);background-color:#f5634a;width:25px}}@keyframes k-loadingK{0%{left:0;transform:scale(1.1)}50%{left:100%;transform:scale(1)}100%{left:0;transform:scale(1.1)}}@keyframes k-loadingL{0%{left:100%;transform:scale(1.1)}50%{left:0;transform:scale(1)}100%{left:100%;transform:scale(1.1)}}@keyframes k-loadingM{0%{z-index:0}50%{z-index:1}100%{z-index:0}}@keyframes k-loadingN{0%{z-index:1}50%{z-index:0}100%{z-index:1}}@keyframes k-loadingO{0%,100%{transform:translate(0)}25%{transform:translate(160%)}50%{transform:translate(160%,160%)}75%{transform:translate(0,160%)}}@keyframes k-loadingP{0%{transform:translateY(0)}35%{transform:translateY(0);opacity:.3}50%{transform:translateY(-20px);opacity:.8}70%{transform:translateY(3px);opacity:.8}85%{transform:translateY(-3px)}}@keyframes k-loadingQ{33%{transform:translate(0,0);opacity:.7}66%{transform:translate(0,0);opacity:.7}}@keyframes k-loadingR{0%{opacity:.5;background:#000}30%{opacity:.5;background:#666}60%{opacity:0}75%{opacity:0}100%{opacity:.5;background:#000}}@keyframes k-loadingS{40%{transform:translateX(0);opacity:.8}100%{transform:translateX(300px);opacity:0}}
+</style>
+</head>
+<body>
+<header class="am-topbar">
+<div class="am-container">
+<h1 class="am-topbar-brand hover-bounce">
+<a href="../index.html" class="web-name">
+<span class="am-icon-film am-icon-md"></span>
+7080网
+</a>
+</h1>
+<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}">
+<span class="am-sr-only">导航切换</span>
+<span class="am-icon-bars"></span>
+</button>
+<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+<ul class="am-nav am-nav-pills am-topbar-nav" id="toutou">
+</ul>
+<form class="am-topbar-form am-topbar-left am-form-inline" role="search" action="./so.html" name="tyForm" onsubmit="return Checkfrom();">
+<div class="am-input-group am-input-group-primary am-input-group-sm">
+<input name="wd" type="text" class="am-form-field" placeholder="搜索..." required>
+<span class="am-input-group-btn">
+<button class="am-btn am-btn-primary" type="submit">
+<span class="am-icon-search"></span>
+</button>
+</span>
+</div>
+</form>
+</div>
+</header>
+
+<div class="am-container">
+<div class="am-g" style="margin: 20px 0">
+<div class="am-u-lg-10 am-u-sm-centered">
+<form action="./so.html" method="get" class="am-margin-bottom" role="search" name="SoForm" onsubmit="return Checkfrom1();">
+<div class="am-input-group am-input-group-primary">
+<input name="wd" id="wd" value="" type="text" class="am-form-field" placeholder="输入关键词搜索" required>
+<span class="am-input-group-btn">
+<button class="am-btn am-btn-primary" id="b_so" type="submit">
+<span class="am-icon-search"></span>
+</button>
+</span>
+</div>
+</form>
+</div>
+</div>
+<div data-am-widget="list_news" class="am-list-news am-list-news-default">
+   <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
+<h2 class="am-titlebar-title ">影视选择-当前:</B><SPAN><b style="color:#CC0033" id=bolei>全部</b></SPAN></h2>
+
+</div>
+<!-- 面板 -->
+ <div class="am-panel am-panel-default" style="margin-bottom: 10px">
+
+	<ul class="ty-screen__list clearfix">
+        <li><span class="text-muted">电影类型:</span></li>
+        <li class="active"><a href="?catid=1&rank=rankhot&cat=&year=&area=&act=&pageno=1">全部</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E5%96%9C%E5%89%A7&year=&area=&act=&pageno=1">喜剧</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E7%88%B1%E6%83%85&year=&area=&act=&pageno=1">爱情</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E5%8A%A8%E4%BD%9C&year=&area=&act=&pageno=1">动作</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E6%81%90%E6%80%96&year=&area=&act=&pageno=1">恐怖</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E7%A7%91%E5%B9%BB&year=&area=&act=&pageno=1">科幻</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E5%89%A7%E6%83%85&year=&area=&act=&pageno=1">剧情</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E7%8A%AF%E7%BD%AA&year=&area=&act=&pageno=1">犯罪</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E5%A5%87%E5%B9%BB&year=&area=&act=&pageno=1">奇幻</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E6%88%98%E4%BA%89&year=&area=&act=&pageno=1">战争</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E6%82%AC%E7%96%91&year=&area=&act=&pageno=1">悬疑</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E5%8A%A8%E7%94%BB&year=&area=&act=&pageno=1">动画</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E6%96%87%E8%89%BA&year=&area=&act=&pageno=1">文艺</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E7%BA%AA%E5%BD%95&year=&area=&act=&pageno=1">纪录</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E4%BC%A0%E8%AE%B0&year=&area=&act=&pageno=1">传记</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E6%AD%8C%E8%88%9E&year=&area=&act=&pageno=1">歌舞</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E5%8F%A4%E8%A3%85&year=&area=&act=&pageno=1">古装</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E5%8E%86%E5%8F%B2&year=&area=&act=&pageno=1">历史</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E6%83%8A%E6%82%9A&year=&area=&act=&pageno=1">惊悚</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E4%BC%A6%E7%90%86&year=&area=&act=&pageno=1">伦理</a></li>
+        <li><a href="?catid=1&rank=rankhot&cat=%E5%85%B6%E4%BB%96&year=&area=&act=&pageno=1">其他</a></li>
+    </ul>
+ <ul class="ty-screen__list clearfix">
+        <li><span class="text-muted">电视剧类型:</span></li>
+        <li class="active"><a href="?catid=2&rank=rankhot&cat=&year=&area=&act=&pageno=1">全部</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E8%A8%80%E6%83%85&year=&area=&act=&pageno=1">言情</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E5%89%A7%E6%83%85&year=&area=&act=&pageno=1">剧情</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E4%BC%A6%E7%90%86&year=&area=&act=&pageno=1">伦理</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E5%96%9C%E5%89%A7&year=&area=&act=&pageno=1">喜剧</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E6%82%AC%E7%96%91&year=&area=&act=&pageno=1">悬疑</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E9%83%BD%E5%B8%82&year=&area=&act=&pageno=1">都市</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E5%81%B6%E5%83%8F&year=&area=&act=&pageno=1">偶像</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E5%8F%A4%E8%A3%85&year=&area=&act=&pageno=1">古装</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E5%86%9B%E4%BA%8B&year=&area=&act=&pageno=1">军事</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E8%AD%A6%E5%8C%AA&year=&area=&act=&pageno=1">警匪</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E5%8E%86%E5%8F%B2&year=&area=&act=&pageno=1">历史</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E5%8A%B1%E5%BF%97&year=&area=&act=&pageno=1">励志</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E7%A5%9E%E8%AF%9D&year=&area=&act=&pageno=1">神话</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E8%B0%8D%E6%88%98&year=&area=&act=&pageno=1">谍战</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E9%9D%92%E6%98%A5%E5%89%A7&year=&area=&act=&pageno=1">青春</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E5%AE%B6%E5%BA%AD%E5%89%A7&year=&area=&act=&pageno=1">家庭</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E5%8A%A8%E4%BD%9C&year=&area=&act=&pageno=1">动作</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E6%83%85%E6%99%AF&year=&area=&act=&pageno=1">情景</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E6%AD%A6%E4%BE%A0&year=&area=&act=&pageno=1">武侠</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E7%A7%91%E5%B9%BB&year=&area=&act=&pageno=1">科幻</a></li>
+        <li><a href="?catid=2&rank=rankhot&cat=%E5%85%B6%E4%BB%96&year=&area=&act=&pageno=1">其他</a></li>
+    </ul>
+	 <ul class="ty-screen__list clearfix">
+        <li><span class="text-muted">综艺类型:</span></li>
+        <li class="active"><a href="?catid=3&rank=rankhot&cat=&act=&area=&pageno=1">全部</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E8%84%B1%E5%8F%A3%E7%A7%80&act=&area=&pageno=1">脱口秀</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E7%9C%9F%E4%BA%BA%E7%A7%80&act=&area=&pageno=1">真人秀</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E6%90%9E%E7%AC%91&act=&area=&pageno=1">搞笑</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E9%80%89%E7%A7%80&act=&area=&pageno=1">选秀</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E5%85%AB%E5%8D%A6&act=&area=&pageno=1">八卦</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E8%AE%BF%E8%B0%88&act=&area=&pageno=1">访谈</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E6%83%85%E6%84%9F&act=&area=&pageno=1">情感</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E7%94%9F%E6%B4%BB&act=&area=&pageno=1">生活</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E6%99%9A%E4%BC%9A&act=&area=&pageno=1">晚会</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E9%9F%B3%E4%B9%90&act=&area=&pageno=1">音乐</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E8%81%8C%E5%9C%BA&act=&area=&pageno=1">职场</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E7%BE%8E%E9%A3%9F&act=&area=&pageno=1">美食</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E6%97%B6%E5%B0%9A&act=&area=&pageno=1">时尚</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E6%B8%B8%E6%88%8F&act=&area=&pageno=1">游戏</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E4%BD%93%E8%82%B2&act=&area=&pageno=1">体育</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E7%BA%AA%E5%AE%9E&act=&area=&pageno=1">纪实</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E7%A7%91%E6%95%99&act=&area=&pageno=1">科教</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E6%9B%B2%E8%89%BA&act=&area=&pageno=1">曲艺</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E6%AD%8C%E8%88%9E&act=&area=&pageno=1">歌舞</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E8%B4%A2%E7%BB%8F&act=&area=&pageno=1">财经</a></li>
+        <li><a href="?catid=3&rank=rankhot&cat=%E6%B1%BD%E8%BD%A6&act=&area=&pageno=1">汽车</a></li>
+    </ul>
+	<ul class="ty-screen__list clearfix">
+        <li><span class="text-muted">动漫类型:</span></li>
+        <li class="active"><a href="?catid=4&rank=rankhot&cat=&year=&area=&pageno=1">全部</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E7%83%AD%E8%A1%80&year=&area=&pageno=1">热血</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E7%A7%91%E5%B9%BB&year=&area=&pageno=1">科幻</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E7%BE%8E%E5%B0%91%E5%A5%B3&year=&area=&pageno=1">美少女</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E9%AD%94%E5%B9%BB&year=&area=&pageno=1">魔幻</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E7%BB%8F%E5%85%B8&year=&area=&pageno=1">经典</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E5%8A%B1%E5%BF%97&year=&area=&pageno=1">励志</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E5%B0%91%E5%84%BF&year=&area=&pageno=1">少儿</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E5%86%92%E9%99%A9&year=&area=&pageno=1">冒险</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E6%90%9E%E7%AC%91&year=&area=&pageno=1">搞笑</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E6%8E%A8%E7%90%86&year=&area=&pageno=1">推理</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E6%81%8B%E7%88%B1&year=&area=&pageno=1">恋爱</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E6%B2%BB%E6%84%88&year=&area=&pageno=1">治愈</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E5%B9%BB%E6%83%B3&year=&area=&pageno=1">幻想</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E6%A0%A1%E5%9B%AD&year=&area=&pageno=1">校园</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E5%8A%A8%E7%89%A9&year=&area=&pageno=1">动物</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E6%9C%BA%E6%88%98&year=&area=&pageno=1">机战</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E4%BA%B2%E5%AD%90&year=&area=&pageno=1">亲子</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E5%84%BF%E6%AD%8C&year=&area=&pageno=1">儿歌</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E8%BF%90%E5%8A%A8&year=&area=&pageno=1">运动</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E6%82%AC%E7%96%91&year=&area=&pageno=1">悬疑</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E6%80%AA%E7%89%A9&year=&area=&pageno=1">怪物</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E6%88%98%E4%BA%89&year=&area=&pageno=1">战争</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E7%9B%8A%E6%99%BA&year=&area=&pageno=1">益智</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E9%9D%92%E6%98%A5&year=&area=&pageno=1">青春</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E7%AB%A5%E8%AF%9D&year=&area=&pageno=1">童话</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E7%AB%9E%E6%8A%80&year=&area=&pageno=1">竞技</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E5%8A%A8%E4%BD%9C&year=&area=&pageno=1">动作</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E7%A4%BE%E4%BC%9A&year=&area=&pageno=1">社会</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E5%8F%8B%E6%83%85&year=&area=&pageno=1">友情</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E7%9C%9F%E4%BA%BA%E7%89%88&year=&area=&pageno=1">真人版</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E7%94%B5%E5%BD%B1%E7%89%88&year=&area=&pageno=1">电影版</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=OVA%E7%89%88&year=&area=&pageno=1">OVA版</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=TV%E7%89%88&year=&area=&pageno=1">TV版</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E6%96%B0%E7%95%AA%E5%8A%A8%E7%94%BB&year=&area=&pageno=1">新番动画</a></li>
+        <li><a href="?catid=4&rank=rankhot&cat=%E5%AE%8C%E7%BB%93%E5%8A%A8%E7%94%BB&year=&area=&pageno=1">完结动画</a></li>
+    </ul>
+    </div>  <!-- 面板 -->
+  <!-- 影片列表开始 -->
+
+
+    <ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list">
+	 <div id="loading">
+<div class="k-ball7a"></div>
+<div class="k-ball7b"></div>
+<div class="k-ball7c"></div>
+<div class="k-ball7d"></div>
+</div>
+<h3>资源加载中延迟1秒。。。</h3>
+</ul>
+	  <!-- 影片列表结束 -->
+<ul class="am-pagination" id="yeshu">	
+	</ul> 
+
+
+</div>
+</div>
+
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" title="返回顶部">
+<a href="#top" title="">
+<i class="am-gotop-icon am-icon-arrow-up"></i>
+</a>
+</div>
+<footer data-am-widget="footer" class="am-footer am-footer-default am-hide-sm-only" data-am-footer="{  }">
+<div class="am-footer-miscs">
+<p>本网站个人测试学习使用为非赢利性站点</p>
+<p>所有内容均来源于互联网相关站点自动搜索采集信息</p>
+<script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1258200835'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/stat.php%3Fid%3D1258200835%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+</footer>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default am-show-sm-only" id="">
+<ul class="am-navbar-nav am-cf am-avg-sm-4" id="souji">
+
+</ul>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+<script type="text/javascript">
+    
+ function GetQueryString(name)
+   {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  decodeURIComponent(r[2]); return null;
+ 
+   }
+var catid = GetQueryString("catid");
+var cat = GetQueryString("cat");
+var pageno = GetQueryString("pageno");
+if(catid !=null && catid.toString().length>0){
+if(catid =='1'){var catid1="电影";} else if(catid =='2'){var catid1="电视剧";}
+else if(catid =='3'){var catid1="综艺";}else if(catid =='4'){var catid1="动漫";}
+} else{var catid1="其他";}
+document.getElementById("bolei").innerHTML =catid1+"."+cat;
+</script>
+<script type="text/javascript">
+document.getElementById("toutou").innerHTML =toutou;
+document.getElementById("souji").innerHTML =souji;
+
+$(function (){
+  var url1="https://api.web.360kan.com/v1/filter/list?catid="+catid+"&rank=rankhot&cat="+cat+"&year=&area=&act=&size=35&pageno="+pageno;
+        $.ajax({
+            type: "get",
+       dataType: 'jsonp',
+            url: url1,
+            data: "", 
+			cache: true,
+          async: true,
+		  jsonp: 'callback',
+  jsonpCallback: '_jpg7',
+          timeout: 8000,
+    contentType: "application/json;utf-8",
+             success: function(data) {
+				// console.log(data);
+              var timu="";
+
+for(var i=0,l=data.data.movies.length;i<l;i++){
+timu+='<li><a class="movie-item" href="./so.html?wd='+data.data.movies[i].title+'&html=1.html" target="_blank"><div class="movie-cover"><img src="https:'+data.data.movies[i].cdncover+'" ><span class="movie-description"><i class="description-bg"></i><p>主演：暂无</p><p>导演：暂无</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.movies[i].title+'</p><p class="movie-tags">'+data.data.movies[i].comment+'</p></div></a></li>'}
+document.getElementById("list").innerHTML=timu;
+            }  })
+    })
+</script>
+<script type="text/javascript">
+var page2=parseInt(pageno)+1;
+var page3=parseInt(pageno)+2;
+var page4=parseInt(pageno)+3;
+var yeshu='<li><a href="?catid='+catid+'&rank=rankhot&cat='+cat+'&year=&area=&act=&size=35&pageno=1">首页</a></li><li class="am-active"><a href="?catid='+catid+'&rank=rankhot&cat='+cat+'&year=&area=&act=&size=35&pageno='+pageno+'">'+pageno+'</a></li><li><a href="?catid='+catid+'&rank=rankhot&cat='+cat+'&year=&area=&act=&size=35&pageno='+page2+'">'+page2+'</a></li><li><a href="?catid='+catid+'&rank=rankhot&cat='+cat+'&year=&area=&act=&size=35&pageno='+page3+'">'+page3+'</a></li><li><a href="?catid='+catid+'&rank=rankhot&cat='+cat+'&year=&area=&act=&size=35&pageno='+page4+'">'+page4+'</a></li><li><a href="?catid='+catid+'&rank=rankhot&cat='+cat+'&year=&area=&act=&size=35&pageno='+page2+'">下一页</a></li><li>当前第'+pageno+'页</li> ';
+document.getElementById("yeshu").innerHTML=yeshu;
+</script>
+<script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+</body>
+</html>
