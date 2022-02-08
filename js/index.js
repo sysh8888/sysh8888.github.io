@@ -1,28 +1,46 @@
-function ying(ying){
-  var url1=jiekou5+"http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId="+ying;
-  $(function(){
-   $.ajax({
-   async: true,
-   type: "GET",
-   dataType: 'jsonp',
-     cache: true,
-   jsonp: 'callback',
-   jsonpCallback: 'callbackfunction',
-   url: url1,
-   data: "",
-   timeout: 8000,
-   contentType: "application/json;utf-8",
-   success: function(data) {
-  //console.log(data);
-  var timu="";
-  for (var i=0,l=data.data.ms.length;i<l;i++)
-
-  { timu+='<div class="module-item"><div class="module-item-cover"><div class="module-item-pic"><a href="./so.html?wd='+data.data.ms[i].t+'&html=1.html" title="'+data.data.ms[i].t+'"  target="_blank"><i class="icon-play"></i></a><img class="lazyloaded" src="'+data.data.ms[i].img+'" alt="'+data.data.ms[i].t+'"/><div class="loading"></div></div><div class="module-item-caption"><span>'+data.data.ms[i].year+'</span><span class="video-class">'+data.data.ms[i].movieType+'</span><span>'+data.data.ms[i].r+'</span></div><div class="module-item-content"><div class="module-item-style video-name"><a href="./so.html?wd='+data.data.ms[i].t+'&html=1.html" title="'+data.data.ms[i].t+'"  target="_blank">'+data.data.ms[i].t+'</a></div><div class="module-item-style video-tag"><a href="#" target="_blank">'+data.data.ms[i].dN+'</a></div><div class="module-item-style video-text">'+data.data.ms[i].commonSpecial+'</div></div></div><div class="module-item-titlebox"><a href="./so.html?wd='+data.data.ms[i].t+'&html=1.html" title="'+data.data.ms[i].t+'"  target="_blank">'+data.data.ms[i].t+'</a></div><div class="module-item-text">'+data.data.ms[i].actors+'</div></div>';}
-  
-  document.getElementById("lie").innerHTML =timu;
-   }
-   });
-  })
-    }
-//https://bird.ioliu.cn/v1?url=http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId=290
+   //https://bird.ioliu.cn/v1?url=http://front-gateway.mtime.com/ticket/schedule/showing/movies.api?locationId=290
 //https://bird.ioliu.cn/v1?url=http://front-gateway.mtime.com/library/index/app/topList.api
+   //热门电影
+  $(function (){
+  var url1="https://api.web.360kan.com/v1/block?blockid=90&size=16";
+        $.ajax({
+            type: "get",
+       dataType: 'jsonp',
+            url: url1,
+            data: "", 
+			cache: true,
+          async: true,
+		  jsonp: 'callback',
+  jsonpCallback: '_jpg7',
+          timeout: 8000,
+    contentType: "application/json;utf-8",
+             success: function(data) {
+				 //console.log(data);
+              var timu1="";
+for(var i=0,l=data.data.lists.length;i<l;i++){
+timu1+='<li><a class="movie-item" href="./so.html?wd='+data.data.lists[i].title+'&html=1.html" target="_blank"><div class="movie-cover"><img src="'+data.data.lists[i].pic_lists[0].url+'" ><span class="movie-description"><i class="description-bg"></i><p>主演：'+data.data.lists[i].actor[0]+'</p><p>ID：'+data.data.lists[i].ent_id+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.lists[i].title+'</p><p class="movie-tags">'+data.data.lists[i].comment+'</p></div></a></li>'}
+document.getElementById("lie1").innerHTML=timu1;
+            }  })
+    })
+   //热门电视
+  $(function (){
+  var url2="https://api.web.360kan.com/v1/block?blockid=131&size=14";
+        $.ajax({
+            type: "get",
+       dataType: 'jsonp',
+            url: url2,
+            data: "", 
+			cache: true,
+          async: true,
+		  jsonp: 'callback',
+  jsonpCallback: '_jpg3',
+          timeout: 8000,
+    contentType: "application/json;utf-8",
+             success: function(data) {
+				// console.log(data);
+              var timu2="";
+for(var i=0,l=data.data.lists.length;i<l;i++){
+timu2+='<li><a class="movie-item" href="./so.html?wd='+data.data.lists[i].title+'&html=1.html" target="_blank"><div class="movie-cover"><img src="'+data.data.lists[i].pic_lists[0].url+'" ><span class="movie-description"><i class="description-bg"></i><p>主演：'+data.data.lists[i].title+'</p><p>ID：'+data.data.lists[i].ent_id+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.lists[i].title+'</p><p class="movie-tags">'+data.data.lists[i].comment+'</p></div></a></li>'}
+document.getElementById("lie2").innerHTML=timu2;
+            }  })
+    })
