@@ -7,7 +7,7 @@ var pingguozy={"0":{"name":"三九","url":"https://www.39kan.com/api.php/provide
                "5":{"name":"快看","url":"https://www.vp1127.com/api.php/provide/vod/"},
                "6":{"name":"千寻","url":"http://wy.dqyhg.cn/api.php/provide/vod/"},
                "7":{"name":"雪人","url":"https://qpys.qd234.cn/api.php/provide/vod/"},
-               "8":{"name":"无极","url":"http://wujiys.com/api.php/provide/vod/"},
+               "8":{"name":"速播","url":"https://gcku.suboyun.vip/api.php/provide/vod/"},
                "9":{"name":"酷点","url":"https://api.kuapi.cc/api.php/provide/vod/at/json/"},
                "10":{"name":"神马","url":"http://www.zitv.cc/api.php/provide/vod/at/json/"},
                "11":{"name":"木耳","url":"http://vip.muoutv.com/api.php/provide/vod/"},
