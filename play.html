@@ -158,10 +158,10 @@
 </div>
 
 <div class="am-panel am-panel-default">
-    <div class="am-panel-hd">相关推荐</div>
+    <div class="am-panel-hd">电影推荐</div>
     <div class="am-panel-bd">
         
-        <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-bordered tuijian-list">
+        <ul class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-6 am-gallery-bordered" data-am-widget="gallery" id="tuijian">
 
                     <div class="am-alert am-alert-secondary" data-am-alert>
                            <p id="zhuang"></p><p id="zhuang"></p><p id="yuyan"></p> <p id="time"></p> <p id="nian"></p> <p id="diqu"></p> <p id="yanyuan"></p>
@@ -239,7 +239,26 @@ document.getElementById("souji").innerHTML =souji;
     else if(zy=="360"){urll="https://img.5020.work/js/360play.js"};
     document.write(unescape("%3Cscript src='"+urll+"' type='text/javascript'%3E%3C/script%3E"));
     </script>
+<script type="text/javascript">
+    $(function (){
+        var url8="https://api.web.360kan.com/v1/rank?cat=2";
+        $.ajax({type:"get",dataType:'jsonp',
+        url:url8,
+        data:"",
+        cache:true,
+        async:true,
+        jsonp:'callback',jsonpCallback:'__jp0',timeout:8000,contentType:"application/json;utf-8",
+        success:function(data){
 
+            console.log(data);
+            var tuijian="";
+            for(var t=0;t<data.data.length;t++){
+                tuijian+='<li><div class="am-gallery-item"><a href="./so.html?wd='+data.data[t].title+'&html=1.html" target="_blank"><img alt="" src="'+data.data[t].cover+'" ><h3 class="am-gallery-title">'+data.data[t].title+'</h3></a></div></li>'}
+                document.getElementById("tuijian").innerHTML=tuijian;
+        }})
+
+    })
+</script>
 
 </body> 
 </html>
