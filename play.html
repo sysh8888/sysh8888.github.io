@@ -250,7 +250,7 @@ document.getElementById("souji").innerHTML =souji;
         jsonp:'callback',jsonpCallback:'__jp0',timeout:8000,contentType:"application/json;utf-8",
         success:function(data){
 
-            console.log(data);
+           // console.log(data);
             var tuijian="";
             for(var t=0;t<data.data.length;t++){
                 tuijian+='<li><div class="am-gallery-item"><a href="./so.html?wd='+data.data[t].title+'&html=1.html" target="_blank"><img alt="" src="'+data.data[t].cover+'" ><h3 class="am-gallery-title">'+data.data[t].title+'</h3></a></div></li>'}
