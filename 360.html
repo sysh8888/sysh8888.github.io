@@ -331,7 +331,7 @@ $(function (){
               var timu="";
 
 for(var i=0,l=data.data.movies.length;i<l;i++){
-timu+='<li><a class="movie-item" href="./so.html?wd='+data.data.movies[i].title+'&html=1.html" target="_blank"><div class="movie-cover"><img src="https:'+data.data.movies[i].cdncover+'" ><span class="movie-description"><i class="description-bg"></i><p>主演：暂无</p><p>导演：暂无</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.movies[i].title+'</p><p class="movie-tags">'+data.data.movies[i].comment+'</p></div></a></li>'}
+timu+='<li><a class="movie-item" href="./play.html?q='+data.data.movies[i].id+'&id='+catid+'&zy=360&html=1.html" target="_blank"><div class="movie-cover"><img src="https:'+data.data.movies[i].cdncover+'" ><span class="movie-description"><i class="description-bg"></i><p>主演：暂无</p><p>导演：暂无</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.movies[i].title+'</p><p class="movie-tags">'+data.data.movies[i].comment+'</p></div></a></li>'}
 document.getElementById("list").innerHTML=timu;
             }  })
     })
