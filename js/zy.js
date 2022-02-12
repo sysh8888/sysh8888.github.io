@@ -1,7 +1,7 @@
 //内容开始
 var pingguozy={"0":{"name":"三九","url":"https://www.39kan.com/api.php/provide/vod/"},
                "1":{"name":"奈菲","url":"http://shdmv.com/api.php/provide/vod/"},
-               "2":{"name":"闪电","url":"https://sdzyapi.com/api.php/provide/vod/"},
+               "2":{"name":"鱼乐","url":"https://api.yulecj.com/api.php/provide/vod/"},
                "3":{"name":"无尽","url":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/"},
                "4":{"name":"剧好","url":"https://www.juhaokan.cc/api.php/provide/vod/"},
                "5":{"name":"快看","url":"https://www.vp1127.com/api.php/provide/vod/"},
