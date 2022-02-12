@@ -241,24 +241,23 @@ document.getElementById("souji").innerHTML =souji;
     </script>
 <script type="text/javascript">
     $(function (){
-        var url8="https://api.web.360kan.com/v1/rank?cat=2";
+        var url8="https://api.web.360kan.com/v1/rank?cat=2&size=12";
         $.ajax({type:"get",dataType:'jsonp',
         url:url8,
         data:"",
         cache:true,
         async:true,
-        jsonp:'callback',jsonpCallback:'__jp0',timeout:8000,contentType:"application/json;utf-8",
+        jsonp:'callback',jsonpCallback:'__jp8',timeout:8000,contentType:"application/json;utf-8",
         success:function(data){
 
-           // console.log(data);
+            console.log(data);
             var tuijian="";
             for(var t=0;t<data.data.length;t++){
-                tuijian+='<li><div class="am-gallery-item"><a href="./so.html?wd='+data.data[t].title+'&html=1.html" target="_blank"><img alt="" src="'+data.data[t].cover+'" ><h3 class="am-gallery-title">'+data.data[t].title+'</h3></a></div></li>'}
+                tuijian+='<li><div class="am-gallery-item"><a href="play.html?q='+data.data[t].ent_id+'&id='+data.data[t].cat+'&zy=360&html=1.html" target="_blank"><img alt="" src="'+data.data[t].cover+'" ><h3 class="am-gallery-title">'+data.data[t].title+'</h3></a></div></li>'}
                 document.getElementById("tuijian").innerHTML=tuijian;
         }})
 
     })
 </script>
-
 </body> 
 </html>
