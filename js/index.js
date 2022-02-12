@@ -18,7 +18,7 @@
 				 //console.log(data);
               var timu1="";
 for(var i=0,l=data.data.lists.length;i<l;i++){
-timu1+='<li><a class="movie-item" href="./so.html?wd='+data.data.lists[i].title+'&html=1.html" target="_blank"><div class="movie-cover"><img src="'+data.data.lists[i].pic_lists[0].url+'" ><span class="movie-description"><i class="description-bg"></i><p>主演：'+data.data.lists[i].actor[0]+'</p><p>ID：'+data.data.lists[i].ent_id+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.lists[i].title+'</p><p class="movie-tags">'+data.data.lists[i].comment+'</p></div></a></li>'}
+timu1+='<li><a class="movie-item" href="./play.html?q='+data.data.lists[i].ent_id+'&id='+data.data.lists[i].cat+'&zy=360&html=1.html" target="_blank"><div class="movie-cover"><img src="'+data.data.lists[i].pic_lists[0].url+'" ><span class="movie-description"><i class="description-bg"></i><p>主演：'+data.data.lists[i].actor[0]+'</p><p>ID：'+data.data.lists[i].ent_id+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.lists[i].title+'</p><p class="movie-tags">'+data.data.lists[i].comment+'</p></div></a></li>'}
 document.getElementById("lie1").innerHTML=timu1;
             }  })
     })
@@ -40,7 +40,7 @@ document.getElementById("lie1").innerHTML=timu1;
 				// console.log(data);
               var timu2="";
 for(var i=0,l=data.data.lists.length;i<l;i++){
-timu2+='<li><a class="movie-item" href="./so.html?wd='+data.data.lists[i].title+'&html=1.html" target="_blank"><div class="movie-cover"><img src="'+data.data.lists[i].pic_lists[0].url+'" ><span class="movie-description"><i class="description-bg"></i><p>主演：'+data.data.lists[i].title+'</p><p>ID：'+data.data.lists[i].ent_id+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.lists[i].title+'</p><p class="movie-tags">'+data.data.lists[i].comment+'</p></div></a></li>'}
+timu2+='<li><a class="movie-item" href="./play.html?q='+data.data.lists[i].ent_id+'&id='+data.data.lists[i].cat+'&zy=360&html=1.html" target="_blank"><div class="movie-cover"><img src="'+data.data.lists[i].pic_lists[0].url+'" ><span class="movie-description"><i class="description-bg"></i><p>主演：'+data.data.lists[i].title+'</p><p>ID：'+data.data.lists[i].ent_id+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.lists[i].title+'</p><p class="movie-tags">'+data.data.lists[i].comment+'</p></div></a></li>'}
 document.getElementById("lie2").innerHTML=timu2;
             }  })
     })
