@@ -16,11 +16,15 @@ var pingguozy={"0":{"name":"三九","url":"https://www.39kan.com/api.php/provide
                "14":{"name":"灵芝","url":"https://app.linzhiyuan.xyz/api.php/provide/vod/at/json/"}};
 //其他APP
 var appzy={"0":{"name":"1080P","url":"https://1080p.tv/api.php/v1.vod"},
-           "1":{"name":"酷酷","url":"http://www.ccc8.net/api.php/v1.vod"},
-           "2":{"name":"艾特","url":"https://www.aitee.cc/api.php/v1.vod"},
+           "1":{"name":"1231D","url":"https://vue.app.yunboys.cn/api.php/v1.vod"},
+           "2":{"name":"1080网","url":"https://1080p.one/mogai_api.php/v1.vod"},
            "3":{"name":"橘子","url":"http://jz.juzidy.vip/mogai_api.php/v1.vod"},
            "4":{"name":"冷视","url":"https://len.tv/api.php/v1.vod"},
-           "5":{"name":"奈菲","url":"https://www.naifei.org/api.php/v1.vod"}};	
+           "5":{"name":"CJT影院","url":"https://www.cjt521.com/api.php/v1.vod"}},
+           "6":{"name":"白嫖联盟","url":"http://zgjxdtg.cn/api.php/v1.vod"}},
+           "7":{"name":"初心影视","url":"https://www.18mv.club/api.php/v1.vod"}},
+           "8":{"name":"疯狂看","url":"http://app.fkkdy.vip/mogai_api.php/v1.vod"}},
+           "9":{"name":"柠柚影视","url":"https://nu.e4tv.cn/lvdou_api.php/v1.vod"}};	
 
 //其他番茄、优剧、欧乐、1080tv
 var fqzy={"0":{"name":"番茄","url":"http://api.fqzy.cc/api.php/provide/vod/at/json/","play":"https://jiexi.8b5q.cn/player/jx.php?url="},
