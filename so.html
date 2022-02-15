@@ -287,9 +287,26 @@ var fenqita='<li><span  class="text-muted">其他站:</span></li>';
 for ( i in fqzy)
 { fenqita+='<li><a href="javascript:zy3('+i+');">'+fqzy[i]["name"]+'</a></li>';} 
 document.getElementById("qita").innerHTML =fenqita; 
-setTimeout(function(){frompg('0');},1000);
 setTimeout(function(){zy2('0');},2000);
 setTimeout(function(){zy3('0');},3000);
+</script>
+<script>
+function __jp0(data){
+ console.log(data); 
+    var jieguo5="";
+    if(data.msg!="ok"){setTimeout(function(){frompg('0');},1000);} else{
+ 
+          for (var p=0;p<data.data.longData.rows.length;p++)
+			       { jieguo5+='<li><a class="movie-item" href="./play.html?q='+data.data.longData.rows[p].en_id+'&id='+data.data.longData.rows[p].cat_id+'&zy=360" target="_blank"><div class="movie-cover"><img src="'+data.data.longData.rows[p].cover+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.longData.rows[p].coverInfo.quality+'</p><p>年代：'+data.data.longData.rows[p].year+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.longData.rows[p].titleTxt+'</p><p class="movie-tags" title="演员">'+data.data.longData.rows[p].actList[0]+'</p></div></a></li>';} 
+
+  }
+   document.getElementById("list").innerHTML =jieguo5;
+ document.getElementById("bolei").innerHTML ="360聚合";
+ 
+}
+var script = document.createElement('script');
+script.src = 'https://api.so.360kan.com/index?force_v=1&kw='+lianjie1+'&from=&pageno=1&v_ap=1&tab=all&cb=__jp0';
+document.body.insertBefore(script, document.body.firstChild);
 </script>
 <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
 </body>
