@@ -294,7 +294,7 @@ setTimeout(function(){zy3('0');},3000);
 function __jp0(data){
  //console.log(data); 
     var jieguo5="";
-    if(data.msg!="ok"){setTimeout(function(){frompg('0');},1000);} else{
+    if(data.data.longData.length==0){setTimeout(function(){frompg('0');},1000);} else{
  
           for (var p=0;p<data.data.longData.rows.length;p++)
 			       { jieguo5+='<li><a class="movie-item" href="./play.html?q='+data.data.longData.rows[p].en_id+'&id='+data.data.longData.rows[p].cat_id+'&zy=360" target="_blank"><div class="movie-cover"><img src="'+data.data.longData.rows[p].cover+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.longData.rows[p].coverInfo.quality+'</p><p>年代：'+data.data.longData.rows[p].year+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.longData.rows[p].titleTxt+'</p><p class="movie-tags" title="演员">'+data.data.longData.rows[p].actList[0]+'</p></div></a></li>';} 
