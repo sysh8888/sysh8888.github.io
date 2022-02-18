@@ -36,7 +36,7 @@ for (h=0;h<strs.length ;h++){
 bolie1 +='<li class="'+boliee+'" ><a href="#'+bolie[h]+'">'+bolie[h]+'</a></li>';
   for (i=0;i<str1[h].length ;i+=2)
   {
-      neirong1 +='<li class="am-btn am-btn-sm btn-play-source"><a href="'+playy+str1[h][i+1]+'"  target="ajax" onclick="GetHref(this);return false;">'+str1[h][i]+'</a></li>';
+      neirong1 +='<li class="am-btn am-btn-sm btn-play-source"><button type="button" class="am-btn am-btn-sm am-round" title="'+str1[h][i]+'" value="'+playy+str1[h][i+1]+'"  onclick="GetHref(this);">'+str1[h][i]+'</button></li>';
   }
 neirong +='<div class="'+neinei+'" id="'+bolie[h]+'">'+neirong1+'</div>';
 var neirong1="";
