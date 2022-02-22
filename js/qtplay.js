@@ -14,7 +14,7 @@ $.getJSON(dataroot, function(data){
   bolie1 +='<li class="'+boliee+'" ><a href="#'+data.data.vod_play_list[h].from+'">'+data.data.vod_play_list[h].from+'</a></li>';
     for (i=0;i<data.data.vod_play_list[h].urls.length ;i++)
     {
-        neirong1 +='<li class="am-btn am-btn-sm btn-play-source"><button type="button" class="am-btn am-btn-sm am-round" title="'+data.data.vod_play_list[h].urls[i].name+'" value="'+jx+data.data.vod_play_list[h].urls[i].url+'"  onclick="GetHref(this);">'+data.data.vod_play_list[h].urls[i].name+'</button></li>';
+        neirong1 +='<button type="button" class="am-btn am-btn-sm am-round" title="'+data.data.vod_play_list[h].urls[i].name+'" value="'+jx+data.data.vod_play_list[h].urls[i].url+'"  onclick="GetHref(this);">'+data.data.vod_play_list[h].urls[i].name+'</button>';
     }
   neirong +='<div class="'+neinei+'" id="'+data.data.vod_play_list[h].from+'">'+neirong1+'</div>';
   }

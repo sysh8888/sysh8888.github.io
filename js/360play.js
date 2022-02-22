@@ -24,7 +24,7 @@ $.ajax({
 			   var bolie=data.data.playlinksdetail;
 			   bolie1 +='<li class="am-active" ><a href="#dy">播放地址</a></li>'; 
 			   for (var key in bolie){
-				   neirong1 +='<li class="am-btn am-btn-sm btn-play-source"><button type="button" class="am-btn am-btn-sm am-round" title="'+bolie[key].site+'" value="'+jx+bolie[key].default_url+'"  onclick="GetHref(this);">'+bolie[key].site+'</button></li>';
+				   neirong1 +='<button type="button" class="am-btn am-btn-sm am-round btn-play-source" title="'+bolie[key].site+'" value="'+jx+bolie[key].default_url+'"  onclick="GetHref(this);">'+bolie[key].site+'</button>';
 				   var vide=bolie[key].default_url;var vide1=bolie[key].site;
 			   }
 			    neirong ='<div class="am-tab-panel am-fade am-in am-active" id="dy">'+neirong1+'</div>';
@@ -34,7 +34,7 @@ $.ajax({
 				  var neinei="am-tab-panel am-fade am-in am-active";var boliee='am-active';
 bolie1 +='<li class="'+boliee+'" ><a href="#'+key+'">'+key+'</a></li>';  		   
 	for (i=0;i<bolie[key].length ;i++){
-		neirong1 +='<li class="am-btn am-btn-sm btn-play-source"><button type="button" class="am-btn am-btn-sm am-round" title="'+bolie[key][i].playlink_num+'" value="'+jx+bolie[key][i].url+'"  onclick="GetHref(this);">'+bolie[key][i].playlink_num+'</button></li>';
+		neirong1 +='<button type="button" class="am-btn am-btn-sm am-round btn-play-source" title="'+bolie[key][i].playlink_num+'" value="'+jx+bolie[key][i].url+'"  onclick="GetHref(this);">'+bolie[key][i].playlink_num+'</button>';
 		var vide=bolie[key][i].url;var vide1=bolie[key][i].playlink_num;
 	}
 	neirong +='<div class="'+neinei+'" id="'+key+'">'+neirong1+'</div>';
@@ -46,7 +46,7 @@ bolie1 +='<li class="'+boliee+'" ><a href="#'+key+'">'+key+'</a></li>';
 			   else if (id=="3"){var bolie=data.data.defaultepisode;
 			   bolie1 +='<li class="am-active" ><a href="#zy">播放地址</a></li>'; 
 			   	for (i=0;i<bolie.length ;i++){
-		neirong1 +='<li class="am-btn am-btn-sm btn-play-source"><button type="button" class="am-btn am-btn-sm am-round" title="'+bolie[i].period+'" value="'+jx+bolie[i].url+'"  onclick="GetHref(this);">'+bolie[i].period+'</button></li>';
+		neirong1 +='<button type="button" class="am-btn am-btn-sm am-round btn-play-source" title="'+bolie[i].period+'" value="'+jx+bolie[i].url+'"  onclick="GetHref(this);">'+bolie[i].period+'</button>';
 	}neirong ='<div class="am-tab-panel am-fade am-in am-active" id="zy">'+neirong1+'</div>';
 	var vide=bolie[0].url;var vide1=bolie[0].period;
 			   }
@@ -54,7 +54,7 @@ bolie1 +='<li class="'+boliee+'" ><a href="#'+key+'">'+key+'</a></li>';
 
 //console.log(vide);
 document.getElementById("demo1").innerHTML =vide1;
-document.getElementById("video").src="./jx/index.html?url="+vide ;
+document.getElementById("video").src=jx+vide ;
 document.getElementById("neirong").innerHTML =neirong;
 document.getElementById("bolie2").innerHTML =bolie1;
 document.getElementById("name").innerHTML =data.data.title;
