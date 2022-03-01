@@ -51,8 +51,6 @@
       var height_g = $(window).height();
 	     if (url_adress == null){play("./wu.html"); } 
       else if(url_adress.indexOf("/share") != -1 ){play(url_adress);}
-	else if(url_adress.indexOf("www.mgtv.com") != -1 ){play("./5020.html?url="+url_adress);}
-	else if(url_adress.indexOf("tv.sohu.com") != -1 ){play("https://chaxun.truechat365.com/?url="+url_adress);}
 	else if(url_adress.indexOf("www.huanxi.com") != -1 ){play("https://www.pangujiexi.com/pangu/?url="+url_adress);}
 	else if(url_adress.indexOf(".m3u8") != -1 ){play("./ali.html?url="+url_adress);}
 	else if(url_adress.indexOf(".mp4") != -1 ){play("./tc.html?url="+url_adress);}
