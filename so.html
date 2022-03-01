@@ -122,15 +122,15 @@
 </div>
 <div data-am-widget="list_news" class="am-list-news am-list-news-default">
    <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
-<h2 class="am-titlebar-title ">资源站搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei>默认</b></SPAN></h2>
+<h2 class="am-titlebar-title ">APP资源站搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei1>默认</b></SPAN></h2>
 </div>
 <!-- 面板 -->
  <div class="am-panel am-panel-default" style="margin-bottom: 10px">
-    <ul class="ty-screen__list clearfix" id="ff">  
+    <ul class="ty-screen__list clearfix" id="app">  
     </ul>
     </div>  <!-- 面板 -->
   <!-- 影片列表开始 -->
-    <ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list">
+    <ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list1">
 	 <div id="loading">
 <div class="k-ball7a"></div>
 <div class="k-ball7b"></div>
@@ -143,12 +143,12 @@
  <!-- 影片列表开始 -->
     <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
         <h2 class="am-titlebar-title ">
-            APP资源搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei2>默认</b></SPAN>
+            资源站搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei2>默认</b></SPAN>
         </h2>
     </div>
 <!-- 面板 -->
  <div class="am-panel am-panel-default" style="margin-bottom: 10px">
-    <ul class="ty-screen__list clearfix" id="app">  
+    <ul class="ty-screen__list clearfix" id="ff">  
     </ul>
     </div>  <!-- 面板 -->
     <ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list2">
@@ -275,8 +275,8 @@ function __jp0(data){
 			       { jieguo5+='<li><a class="movie-item" href="./play.html?q='+data.data.longData.rows[p].en_id+'&id='+data.data.longData.rows[p].cat_id+'&zy=360" target="_blank"><div class="movie-cover"><img src="'+data.data.longData.rows[p].cover+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.longData.rows[p].coverInfo.quality+'</p><p>年代：'+data.data.longData.rows[p].year+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.longData.rows[p].titleTxt+'</p><p class="movie-tags" title="演员">'+data.data.longData.rows[p].actList[0]+'</p></div></a></li>';} 
 
   }
-   document.getElementById("list").innerHTML =jieguo5;
- document.getElementById("bolei").innerHTML ="360聚合";
+   document.getElementById("list2").innerHTML =jieguo5;
+ document.getElementById("bolei2").innerHTML ="360聚合";
  
 }
 var script = document.createElement('script');
