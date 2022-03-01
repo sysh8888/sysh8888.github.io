@@ -15,8 +15,8 @@ var pingguozy={"0":{"name":"三九","url":"https://www.39kan.com/api.php/provide
                "13":{"name":"想看","url":"https://m3u8.xiangkanapi.com/provide/vod/"},
                "14":{"name":"灵芝","url":"https://app.linzhiyuan.xyz/api.php/provide/vod/at/json/"}};
 //其他APP
-var appzy={"0":{"name":"奈菲中文","url":"https://www.naifei.org/api.php/v1.vod"},
-           "1":{"name":"1231D","url":"https://vue.app.yunboys.cn/api.php/v1.vod"},
+var appzy={"0":{"name":"小极影视","url":"http://app.8d8q.com/api.php/v1.vod"},
+           "1":{"name":"蜜蜂影视","url":"http://app.f8tp.com/lvdou_api.php/v1.vod"},
            "2":{"name":"1080网","url":"https://1080p.one/mogai_api.php/v1.vod"},
            "3":{"name":"橘子","url":"http://jz.juzidy.vip/mogai_api.php/v1.vod"},
            "4":{"name":"冷视","url":"https://len.tv/api.php/v1.vod"},
