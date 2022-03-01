@@ -1,7 +1,7 @@
 	//苹果接口
 function frompg(id){
   var url1=pingguozy[id]["url"];
-  $("#list").hide();
+  $("#list2").hide();
         $.ajax({
             type: "get",
             url: jiekou +url1 +"?ac=detail&wd=" + lianjie1,
@@ -26,8 +26,8 @@ function frompg(id){
                   for (var i=0;i<data.list.length;i++)
                    { jieguo1+='<li><a class="movie-item" href="./play.html?q='+data.list[i].vod_id+'&id='+id+'&zy=pg" target="_blank"><div class="movie-cover"><img src="'+data.list[i].vod_pic+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.list[i].vod_remarks+'</p><p>年代：'+data.list[i].vod_year+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.list[i].vod_name+'</p><p class="movie-tags">'+data.list[i].vod_actor+'</p></div></a></li>';}
          } 
-                $("#list").html(jieguo1);
-                 $("#list").slideDown();
+                $("#list2").html(jieguo1);
+                 $("#list2").slideDown();
               }else{
                 alert("无结果,请切换其他资源！");
               }
@@ -36,12 +36,12 @@ function frompg(id){
                 alert("失败，请检查关键字。");
             }
         })
-        document.getElementById("bolei").innerHTML =pingguozy[id]["name"]; 
+        document.getElementById("bolei2").innerHTML =pingguozy[id]["name"]; 
     }
   
 //其他资源接口APP
 function zy2(id){
-		$("#list2").hide();
+		$("#list1").hide();
   var url3=appzy[id]["url"]+"?page=1&wd="+ lianjie1;
 var dataroot=url3;
 $.getJSON(dataroot, function(data){
@@ -54,11 +54,11 @@ $.getJSON(dataroot, function(data){
 			       { jieguo2+='<li><a class="movie-item" href="./play.html?q='+data.data.list[i].vod_id+'&id='+id+'&zy=qt" target="_blank"><div class="movie-cover"><img src="'+data.data.list[i].vod_pic+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.list[i].vod_remarks+'</p><p>年代：'+data.data.list[i].vod_year+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[i].vod_name+'</p><p class="movie-tags" title="演员">'+data.data.list[i].vod_actor+'</p></div></a></li>';} 
 
   }
-    $("#list2").html(jieguo2);
-                 $("#list2").slideDown();
+    $("#list1").html(jieguo2);
+                 $("#list1").slideDown();
 
 });
-document.getElementById("bolei2").innerHTML =appzy[id]["name"]; 
+document.getElementById("bolei1").innerHTML =appzy[id]["name"]; 
 }
 
 
