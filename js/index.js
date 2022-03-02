@@ -2,7 +2,7 @@
 //https://bird.ioliu.cn/v1?url=http://front-gateway.mtime.com/library/index/app/topList.api
    //热门电影
   $(function (){
-  var url1="https://api.web.360kan.com/v1/rank?cat=2&size=16";
+  var url1="https://api.web.360kan.com/v1/rank?cat=2&size=18";
         $.ajax({
             type: "get",
        dataType: 'jsonp',
@@ -24,7 +24,7 @@ document.getElementById("lie1").innerHTML=timu1;
     })
    //热门电视
   $(function (){
-  var url2="https://api.web.360kan.com/v1/rank?cat=3&size=16";
+  var url2="https://api.web.360kan.com/v1/rank?cat=3&size=18";
         $.ajax({
             type: "get",
        dataType: 'jsonp',
