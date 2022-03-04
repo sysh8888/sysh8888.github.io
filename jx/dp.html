@@ -20,9 +20,9 @@
     <script src="https://cdn.jsdelivr.net/npm/cdnbye@latest"></script>
 	<script src="https://cdn.jsdelivr.net/npm/dplayer@latest"></script>
     <script>
-	var lurl=window.location.href;
-if(lurl.indexOf('dp.html?url=')>0) {var url1=lurl.split('dp.html?url=')[1];var url= decodeURIComponent(url1);//对中文网址解码
-				    }else{var url="";};
+	var url1=window.location.href;
+var lurl= decodeURIComponent(url1);//对中文转换
+if(lurl.indexOf('dp.html?url=')>0) {var url=lurl.split('dp.html?url=')[1];}else {var url="";}
     //    var url = 'https://test-streams.mux.dev/x36xhzz/url_2/193039199_mp4_h264_aac_ld_7.m3u8';
         var isWap = false; 
         if(!isWap){
