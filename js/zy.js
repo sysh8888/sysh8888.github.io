@@ -24,9 +24,9 @@ var appzy={"0":{"name":"超人","url":"http://chaorenbb.com/api.php/v1.vod"},
            "6":{"name":"白嫖联盟","url":"http://zgjxdtg.cn/api.php/v1.vod"},
            "7":{"name":"初心影视","url":"https://www.18mv.club/api.php/v1.vod"},
            "8":{"name":"疯狂看","url":"http://app.fkkdy.vip/mogai_api.php/v1.vod"},
-           "9":{"name":"柠柚影视","url":"https://nu.e4tv.cn/lvdou_api.php/v1.vod"}},
+           "9":{"name":"柠柚影视","url":"https://nu.e4tv.cn/lvdou_api.php/v1.vod"},
            "10":{"name":"虎猫视频","url":"https://humaosp.com/mogai_api.php/v1.vod"},
-           "11":{"name":"小极影视","url":"http://app.8d8q.com/api.php/v1.vod"};	
+           "11":{"name":"小极影视","url":"http://app.8d8q.com/api.php/v1.vod"}};	
 
 //其他番茄、优剧、欧乐、1080tv
 var fqzy={"0":{"name":"番茄","url":"http://api.fqzy.cc/api.php/provide/vod/at/json/","play":"https://jiexi.8b5q.cn/player/jx.php?url="},
