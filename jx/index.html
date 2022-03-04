@@ -47,8 +47,9 @@
       ></iframe>
     </div>
     <script>
-      var url_adress = GetQueryString("url");
-   //  var url_adress = decodeURIComponent(url_adress1);//对中文网址解码
+        var url1=window.location.href;
+var lurl= decodeURIComponent(url1);//对中文解码
+if(lurl.indexOf('index.html?url=')>0) {var url_adress=lurl.split('index.html?url=')[1];}else {var url_adress="";}
       var height_g = $(window).height();
 	     if (url_adress == null){play("./wu.html"); } 
         else if(url_adress.indexOf("/share") != -1 ){play(url_adress);}
