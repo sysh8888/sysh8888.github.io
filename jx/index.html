@@ -54,7 +54,7 @@ if(lurl.indexOf('index.html?url=')>0) {var url_adress=lurl.split('index.html?url
 	     if (url_adress == null){play("./wu.html"); } 
         else if(url_adress.indexOf("/share") != -1 ){play(url_adress);}
 	else if(url_adress.indexOf("www.huanxi.com") != -1 ){play("https://www.pangujiexi.com/pangu/?url="+url_adress);}
-	else if(url_adress.indexOf(".m3u8") != -1 ){play("./h5.html?url="+url_adress);}
+	else if(url_adress.indexOf(".m3u8") != -1 ){play("./dp.html?url="+url_adress);}
 	else if(url_adress.indexOf(".mp4") != -1 ){play("./tc.html?url="+url_adress);}
 	else if(url_adress.indexOf("renrenmi-") != -1 ){play("https://jiexi.moeamv.com/?url="+url_adress);}
 	else if(url_adress.indexOf("RongXingVR-") != -1 ){play("https://jx.cjt521.com/?url="+url_adress);}
