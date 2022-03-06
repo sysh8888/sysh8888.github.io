@@ -15,16 +15,16 @@ var pingguozy={"0":{"name":"三九","url":"https://www.39kan.com/api.php/provide
                "13":{"name":"想看","url":"https://m3u8.xiangkanapi.com/provide/vod/"},
                "14":{"name":"灵芝","url":"https://app.linzhiyuan.xyz/api.php/provide/vod/at/json/"}};
 //其他APP
-var appzy={"0":{"name":"超人","url":"http://chaorenbb.com/api.php/v1.vod"},
+var appzy={"0":{"name":"300看世界","url":"https://300ys.xyz/api.php/v1.vod"},
            "1":{"name":"蜜蜂影视","url":"http://app.f8tp.com/lvdou_api.php/v1.vod"},
-           "2":{"name":"1080网","url":"https://1080p.one/mogai_api.php/v1.vod"},
+           "2":{"name":"超人","url":"http://chaorenbb.com/api.php/v1.vod"},
            "3":{"name":"月色影视","url":"http://69ty.cc/mogai_api.php/v1.vod"},
            "4":{"name":"冷视","url":"https://len.tv/api.php/v1.vod"},
-           "5":{"name":"CJT影院","url":"https://www.cjt521.com/api.php/v1.vod"},
-           "6":{"name":"白嫖联盟","url":"http://zgjxdtg.cn/api.php/v1.vod"},
+           "5":{"name":"奇趣影视","url":"https://app.qiqu.me/mogai_api.php/v1.vod"},
+           "6":{"name":"兔子窝","url":"http://app.qianju.cc/api.php/v1.vod"},
            "7":{"name":"初心影视","url":"https://www.18mv.club/api.php/v1.vod"},
-           "8":{"name":"疯狂看","url":"http://app.fkkdy.vip/mogai_api.php/v1.vod"},
-           "9":{"name":"柠柚影视","url":"https://nu.e4tv.cn/lvdou_api.php/v1.vod"},
+           "8":{"name":"QC影视","url":"https://www.qcsvip.com/mogai_api.php/v1.vod"},
+           "9":{"name":"手指影视","url":"https://szys5678.com/mogai_api.php/v1.vod"},
            "10":{"name":"虎猫视频","url":"https://humaosp.com/mogai_api.php/v1.vod"},
            "11":{"name":"小极影视","url":"http://app.8d8q.com/api.php/v1.vod"}};	
 
