@@ -1,6 +1,6 @@
 @charset "utf-8";
-/* Love TY Movies system
-   爱TY影视系统 aty.pw
+/* love TY Movies system
+   爱TY影视系统 atyys.com
    by 、 TY
    Write your styles 
 */
@@ -52,13 +52,13 @@ body {
     display: block;
     width: 100%;
     max-width: 178px;
-    height: 232px;
+    height: 262px;
     cursor: pointer;
-    margin: 10px auto;
+    margin: 2px auto;
 }
 .movie-cover {
     width: 100%;
-    height: 178px;
+    height: 208px;
     position: relative;
     overflow: hidden;
 }
@@ -69,41 +69,35 @@ body {
 }
 @media only screen and (max-width: 550px) {
     .movie-item {
-        height: 212px;
+        height: 242px;
     }
     .movie-cover {
-        height: 158px;
+        height: 188px;
     }
 }
 @media only screen and (max-width: 500px) {
     .movie-item {
-        height: 192px;
+        height: 222px;
     }
     .movie-cover {
-        height: 138px;
+        height: 168px;
     }
 }
 @media only screen and (max-width: 450px) {
     .movie-item {
-        height: 172px;
+        height: 202px;
     }
     .movie-cover {
-        height: 118px;
+        height: 148px;
     }
 }
 @media only screen and (max-width: 400px) {
     .movie-item {
-        height: 152px;
+        height: 182px;
     }
     .movie-cover {
-        height: 98px;
+        height: 128px;
     }
-    /*.am-avg-sm-3>li {*/
-    /*    width: 50%;*/
-    /*}*/
-    /*.am-avg-sm-3>li:nth-of-type(2n+1) {*/
-    /*    clear: both;*/
-    /*} */
 }
 .movie-description {
     position: absolute;
@@ -160,16 +154,6 @@ body {
     color: #fff;
 }
 
-/* 自动隐藏多出的两个 */
-@media only screen and (min-width: 1025px) {
-    .index-container .movie-lists li:nth-last-child(2), .index-container .movie-lists li:nth-last-child(1) {
-        display: none!important;
-    }
-    /*.tv-lists li:nth-child(16),.tv-lists li:nth-child(17),.tv-lists li:nth-child(18) {*/
-    /*    display: none!important;*/
-    /*}*/
-}
-
 @media only screen and (min-width: 640px) and (max-width: 1025px) {
     .tv-lists li:nth-child(19),.tv-lists li:nth-child(20) {
         display: none!important;
@@ -188,7 +172,7 @@ body {
 
 .tv-lists .movie-cover {
     height: auto;
-    max-height: 100px;
+    max-height: 120px;
 }
 
 /* 右侧列表 */
@@ -237,7 +221,10 @@ body {
 .player-box {
     height: 600px;
     padding: 0;
-    background: #000 url(../img/loading.gif) no-repeat center;
+    //background: #000 url(../i/loading.gif) no-repeat center;
+	background-image:url(../i/loading.gif);
+	background-repeat:no-repeat;
+	background-position:center;
 }
 @media only screen and (max-width: 600px) {
     .player-box {
@@ -289,7 +276,7 @@ body {
         padding-bottom: 0;
     }
 }
-/* 搜索选择 */ 
+
 .ty-nav{
     font-size: 1.4rem;
     color: #333;
@@ -379,7 +366,7 @@ body {
 	border-bottom: 2px solid #5FB878;
 	border-radius:3px
 }
-	@media (max-width: 1023px){
+@media (max-width: 1023px){
 	.ty-screen__list{ padding:0px 0 0; margin: 0 0 0 0px; width:100%; white-space:nowrap; overflow-y:hidden;overflow-x:scroll; -webkit-overflow-scrolling:touch}
 	.ty-screen__list li{ float: none; display: inline-block;font-size:15px;}
 	.ty-screen__list li a{ padding: 2px 2px;margin-left: 2px;}
