@@ -1,4 +1,4 @@
-var jiekou="https://5020.work/json/?url=";//通用
+var jiekou="https://bird.ioliu.cn/v1?url=";//通用
 var jiekou1="http://b.7080.wang:666/v1/?url=";//无法使用https://bird.ioliu.cn/v1?url=
 var jiekou2="http://7080.eu5.org/json/huancun.php?url=";//高清
 var jiekou3="https://7080.c.freefrp.net/v1/?url=";
