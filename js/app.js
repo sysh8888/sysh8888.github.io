@@ -34,7 +34,7 @@ function nei(zyid,catid,cat,pageno){
               var timu="";
 
 for(var i=0;i<data.data.list.length;i++){
-timu+='<li><a class="movie-item" href="./play.html?q='+data.data.list[i].vod_id+'&id='+zyid+'&zy=qt&html=1.html" target="_blank"><div class="movie-cover"><img src="'+data.data.list[i].vod_pic+'" ><span class="movie-description"><i class="description-bg"></i><p>主演：暂无</p><p>导演：暂无</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[i].vod_name+'</p><p class="movie-tags">'+data.data.list[i].vod_tag+'</p></div></a></li>'}
+timu+='<li><a class="movie-item" href="./play.html?q='+data.data.list[i].vod_id+'&id='+zyid+'&zy=qt&html=1.html" target="_blank"><div class="movie-cover"><img src="'+data.data.list[i].vod_pic+'" ><span class="movie-description"><i class="description-bg"></i><p>'+data.data.list[i].vod_remarks+'</p><p>DATE：'+data.data.list[i].vod_pubdate+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[i].vod_name+'</p><p class="movie-tags">'+data.data.list[i].vod_tag+'</p></div></a></li>'}
 document.getElementById("list").innerHTML=timu;
 if(catid=="0"){var catid1="全部";}else{var catid1=data.data.list[0].type_name+'.'+cat;}
 document.getElementById("bolei").innerHTML =catid1;
