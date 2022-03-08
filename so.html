@@ -165,7 +165,7 @@
  <!-- 影片列表开始 -->
     <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
         <h2 class="am-titlebar-title ">
-            其他资源搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei3>默认</b></SPAN>
+            其他资源搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei3>360聚合</b></SPAN>
         </h2>
     </div>
 <!-- 面板 -->
@@ -258,12 +258,10 @@ for ( h in appzy)
 { fenapp+='<li><a href="javascript:zy2('+h+');">'+appzy[h]["name"]+'</a></li>';} 
 document.getElementById("app").innerHTML =fenapp;
 //其他列表
-var fenqita='<li><span  class="text-muted">其他站:</span></li>';
-for ( i in fqzy)
-{ fenqita+='<li><a href="javascript:zy3('+i+');">'+fqzy[i]["name"]+'</a></li>';} 
+var fenqita='<li><span  class="text-muted">其他站:</span></li><li><span>360聚合</span></li>';
 document.getElementById("qita").innerHTML =fenqita; 
+setTimeout(function(){frompg('0');},1000);
 setTimeout(function(){zy2('0');},2000);
-setTimeout(function(){zy3('0');},3000);
 </script>
 <script>
 function __jp0(data){
@@ -275,8 +273,7 @@ function __jp0(data){
 			       { jieguo5+='<li><a class="movie-item" href="./play.html?q='+data.data.longData.rows[p].en_id+'&id='+data.data.longData.rows[p].cat_id+'&zy=360" target="_blank"><div class="movie-cover"><img src="'+data.data.longData.rows[p].cover+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.longData.rows[p].coverInfo.quality+'</p><p>年代：'+data.data.longData.rows[p].year+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.longData.rows[p].titleTxt+'</p><p class="movie-tags" title="演员">'+data.data.longData.rows[p].actList[0]+'</p></div></a></li>';} 
 
   }
-   document.getElementById("list2").innerHTML =jieguo5;
- document.getElementById("bolei2").innerHTML ="360聚合";
+   document.getElementById("list3").innerHTML =jieguo5;
  
 }
 var script = document.createElement('script');
