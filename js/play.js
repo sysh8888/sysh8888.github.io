@@ -1,6 +1,6 @@
 
 //内容开始
-var jx="./jx/index.html?url=";
+var jx=pingguozy[id]["play"];;
 var url1=pingguozy[id]["url"];
 $(function(){
 $.ajax({
@@ -44,7 +44,7 @@ var vide1=str1[0][0];
 var vide=str1[0][1];  
 document.getElementById("demo1").innerHTML =vide1;
 document.getElementById("bolie2").innerHTML =bolie1;
-document.getElementById("video").src="./jx/index.html?url="+vide ;
+document.getElementById("video").src=jx+vide ;
 document.getElementById("neirong").innerHTML =neirong;
 document.getElementById("name").innerHTML =data.list[0].vod_name;
 document.getElementById("tu").src=data.list[0].vod_pic;

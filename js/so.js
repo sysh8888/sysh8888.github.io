@@ -63,43 +63,6 @@ document.getElementById("bolei1").innerHTML =appzy[id]["name"];
 
 
 
-//APP接口备用
-function zy21(id){
-	$("#list2").hide();
-  var url3=appqt +appzy[id]["url"]+"?page=1&wd="+ lianjie1;
-  $(function (){
-  $.ajax({
-  async: true,
-  type: "GET",
-  dataType: 'jsonp',
-   cache: true,
-          async: true,
-  jsonp: 'callback',
-  jsonpCallback: 'callback2',
-  url: url3,
-  data: "",
-  timeout: 8000,
-  contentType: "application/json;utf-8",
-  success: function(data)  {
-       var Node = $("#loading");  
-                  Node.hide(); 
-    var jieguo2="";
-    if(data.data.list.length==0){jieguo2='<P style="font-size:15px;"><SPAN><b style="color:#CC0033" >暂无资源，请查看其他资源！</b></SPAN></P>'} else{
-  
-          for (var i=0;i<data.data.list.length;i++)
-			       { jieguo2+='<li><a class="movie-item" href="./play.html?q='+data.data.list[i].vod_id+'&id='+id+'&zy=qt" target="_blank"><div class="movie-cover"><img src="'+data.data.list[i].vod_pic+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.list[i].vod_remarks+'</p><p>年代：'+data.data.list[i].vod_year+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[i].vod_name+'</p><p class="movie-tags" title="演员">'+data.data.list[i].vod_actor+'</p></div></a></li>';} 
-
-  }
-    $("#list2").html(jieguo2);
-                 $("#list2").slideDown();
-  }
- })
-})
-document.getElementById("bolei2").innerHTML =appzy[id]["name"]; 
-
-
-}
-
    //苹果接口番茄资源
   function zy3(id){
 	  $("#list3").hide();
