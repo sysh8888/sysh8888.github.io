@@ -32,3 +32,12 @@ var appzy={"0":{"name":"300看世界","url":"https://300ys.xyz/api.php/v1.vod"},
 //其他番茄、优剧、欧乐、1080tv
 var fqzy={"0":{"name":"番茄","url":"http://api.fqzy.cc/api.php/provide/vod/at/json/","play":"https://jiexi.8b5q.cn/player/jx.php?url="},
           "1":{"name":"优剧","url":"https://zy.ujuba.com/api.php/provide/vod/at/json/","play":"https://www.dmplay.xyz/j?url="}};
+
+//站外资源
+var zwzy={"0":{"name":"影视工厂","url":"https://www.ysgc.cc","play":"/vodplay/{id}-1-1.html"},
+          "1":{"name":"九亿国语","url":"https://www.9e03.com","play":"/vodplay/{id}-1-1.html"},
+		  "2":{"name":"天空影视","url":"https://www.tkys.tv","play":"/vodplay/{id}-1-1.html"},
+		  "3":{"name":"大鱼","url":"https://www.dytv123.com","play":"/p/{id}/play-1-1.html"},
+		  "4":{"name":"极品影视","url":"http://www.jpys.me","play":"/vodplay/{id}-1-1.html"},
+		  "5":{"name":"影视工厂","url":"https://www.ysgc.cc","play":"/vodplay/{id}-1-1.html"}
+		  };

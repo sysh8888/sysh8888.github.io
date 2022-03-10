@@ -1,4 +1,4 @@
-	//苹果接口
+//苹果接口
 function frompg(id){
   var url1=pingguozy[id]["url"];
   $("#list2").hide();
@@ -61,37 +61,38 @@ $.getJSON(dataroot, function(data){
 document.getElementById("bolei1").innerHTML =appzy[id]["name"]; 
 }
 
-
-
-   //苹果接口番茄资源
-  function zy3(id){
-	  $("#list3").hide();
-  var url3=fqzy[id]["url"];
+   //站外资源
+  function zy4(id){
+	  $("#list4").hide();
+  var url4=zwzy[id]["url"];
+  var play4=zwzy[id]["play"];
         $.ajax({
             type: "get",
        dataType: 'jsonp',
-            url: appfq +url3 +"?ac=detail&wd=" + lianjie1,
+            url: jiekou +url4 +"/index.php/ajax/suggest?mid=1&wd=" + lianjie1,
             data: "", 
 			cache: true,
           async: true,
 		  jsonp: 'callback',
-  jsonpCallback: 'callback3',
-          timeout: 8000,
+  jsonpCallback: 'callback4',
+          timeout: 3000,
     contentType: "application/json;utf-8",
              success: function(data) {
        var Node = $("#loading");  
                   Node.hide();
-                  var jieguo3="";
+                  var jieguo4="";
             if(data.list.length==0){jieguo4='<P style="font-size:15px;"><SPAN><b style="color:#CC0033" >暂无资源，请查看其他资源！</b></SPAN></P>'} else{
           
-                  for (var i=0;i<data.list.length;i++)
-                   { jieguo3+='<li><a class="movie-item" href="./play.html?q='+data.list[i].vod_id+'&id='+id+'&zy=fq" target="_blank"><div class="movie-cover"><img src="'+data.list[i].vod_pic+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.list[i].vod_remarks+'</p><p>年代：'+data.list[i].vod_year+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.list[i].vod_name+'</p><p class="movie-tags">'+data.list[i].vod_actor+'</p></div></a></li>';}
+                  for (var t=0;t<data.list.length;t++)
+                   { var play5=play4.replace('{id}', data.list[t].id);
+			  
+			   jieguo4+='<li><a class="movie-item" href="./if/1.html?dz='+url4+play5+'" target="_blank"><div class="movie-cover"><img src="'+data.list[t].pic+'" ><span class="movie-description"><i class="description-bg"></i><p>en：'+data.list[t].en+'</p><p>点击详情</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.list[t].name+'</p><p class="movie-tags">点击详情</p></div></a></li>';}
             }
-                    $("#list3").html(jieguo3);
-                 $("#list3").slideDown();
+                    $("#list4").html(jieguo4);
+                 $("#list4").slideDown();
              
              
             }
         })
-		document.getElementById("bolei3").innerHTML =fqzy[id]["name"]; 
+		document.getElementById("bolei4").innerHTML =zwzy[id]["name"]; 
     }
