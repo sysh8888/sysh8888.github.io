@@ -135,6 +135,29 @@
 <h3>资源加载中延迟3秒。。。</h3>
 </ul>
 	  <!-- 影片列表结束 -->
+	   
+ <!-- 影片列表开始 -->
+    <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
+        <h2 class="am-titlebar-title ">
+            站外资源搜索-当前:</B><SPAN><b style="color:#CC0033" id=bolei4>默认</b></SPAN>
+        </h2>
+    </div>
+<!-- 面板 -->
+ <div class="am-panel am-panel-default" style="margin-bottom: 10px">
+    <ul class="ty-screen__list clearfix" id="zw">  
+    </ul>
+    </div>  <!-- 面板 -->
+    <ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list4">
+	 <div id="loading">
+<div class="k-ball7a"></div>
+<div class="k-ball7b"></div>
+<div class="k-ball7c"></div>
+<div class="k-ball7d"></div>
+</div>
+<h3>资源加载中延迟2秒。。。</h3>
+</ul>
+	  <!-- 影片列表结束 -->
+	  
 </div>
 </div>
 <script>
@@ -208,10 +231,16 @@ document.getElementById("app").innerHTML =fenapp;
 //其他列表
 var fenqita='<li><span  class="text-muted">其他站:</span></li><li><span>360聚合</span></li>';
 document.getElementById("qita").innerHTML =fenqita; 
+//站外列表
+var fenzhanwai='<li><span  class="text-muted">站外资源:</span></li>';
+for ( i in zwzy)
+{ fenzhanwai+='<li><a href="javascript:zy4('+i+');">'+zwzy[i]["name"]+'</a></li>';} 
+document.getElementById("zw").innerHTML =fenzhanwai; 
 setTimeout(function(){frompg('0');},1000);
 setTimeout(function(){zy2('0');},2000);
-</script>
-<script>
+setTimeout(function(){zy4('0');},2000);
+
+//360资源
 function __jp0(data){
  //console.log(data); 
     var jieguo5="";
@@ -227,6 +256,7 @@ function __jp0(data){
 var script = document.createElement('script');
 script.src = 'https://api.so.360kan.com/index?force_v=1&kw='+lianjie1+'&from=&pageno=1&v_ap=1&tab=all&cb=__jp0';
 document.body.insertBefore(script, document.body.firstChild);
+
 </script>
 <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
 </body>
