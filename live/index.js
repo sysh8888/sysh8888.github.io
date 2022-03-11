@@ -1,4 +1,4 @@
-----------//内容开始
+//内容开始
 var zjiptv={"浙江卫视":"https://hw-m-l.cztv.com/channels/lantian/channel01/360p.m3u8",
 "浙江钱江":"https://hw-m-l.cztv.com/channels/lantian/channel02/360p.m3u8",
 "经济生活":"https://hw-m-l.cztv.com/channels/lantian/channel03/360p.m3u8",
