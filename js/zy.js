@@ -40,7 +40,7 @@ var zwzy={"0":{"name":"555影视","url":"https://www.555dy1.com","play":"/vodpla
 		  "3":{"name":"大鱼","url":"https://www.dytv123.com","play":"/p/{id}/play-1-1.html"},
 		  "4":{"name":"极品影视","url":"http://www.jpys.me","play":"/vodplay/{id}-1-1.html"},
 		  "5":{"name":"影视工厂","url":"https://www.ysgc.cc","play":"/vodplay/{id}-1-1.html"},
-		  "6":{"name":"4K奈菲","url":"https://yanetflix.com","play":"/index.php/vod/play/id/{id}/sid/1/nid/1.html"},
+		  "6":{"name":"4K奈菲","url":"https://netflix.mom","play":"/index.php/vod/play/id/{id}/sid/1/nid/1.html"},
 		  "7":{"name":"1080P影视","url":"https://1080p.tv","play":"/vodplay/{id}-1-1/"},
 		  "8":{"name":"爱看电影","url":"https://ikan6.vip","play":"/vodplay/{id}-1-1/"}
 		  };
