@@ -15,12 +15,23 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="stylesheet" href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css">
-<link rel="stylesheet" href="https://img.5020.work/css/app.css">
+<link rel="stylesheet" href="./css/app.css">
 <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
 <script src="./js/gg.js"></script>
+<style>
+    .get {
+      background:url(http://yingshi-stream.2345cdn.net/dypcimg/tv/newupload/870dfd45c834ecd1b3935bc67ad484ba.jpg);
+	  /* 以父元素的百分比来设置背景图像的宽度和高度。background-size: 100% 100%;*/
+     background-size: auto 100%;
+      color: #fff;
+      text-align: center;
+     padding: 80px 0;
+    }
+
+	</style>
 </head>
 <body>
-<header class="am-topbar">
+<header class="am-topbar am-topbar-fixed-top">
 <div class="am-container">
 <h1 class="am-topbar-brand hover-bounce">
 <a href="../index.html" class="web-name">
@@ -37,19 +48,20 @@
 </ul>
 </div></div>
 </header>
-<br>
-<div class="am-container index-container">
+<div class="get">
+  <div class="am-g">
+
 <div class="logo" align="center">
-<img src="https://img.5020.work/img/index-logo.png" title="7080" width="230px" />
+<img src="https://img.5020.work/img/index-logo.png" title="7080" width="280px" />
 </div>
 <div class="am-container">
 <div class="am-g" style="margin: 20px 0">
 <div class="am-u-lg-10 am-u-sm-centered">
 <form action="./so.html" method="get" class="am-margin-bottom" role="search" name="SoForm" onsubmit="return Checkfrom1();">
 <div class="am-input-group am-input-group-primary">
-<input name="wd" id="wd" value="" type="text" class="am-form-field" placeholder="搜索电影、电视关键词" required>
+<input style="border-bottom-left-radius:15px;border-top-left-radius:15px;" name="wd" id="wd" value="" type="text" class="am-form-field" placeholder="搜索电影、电视关键词" required>
 <span class="am-input-group-btn">
-<button class="am-btn am-btn-primary" id="b_so" type="submit">
+<button class="am-btn am-btn-primary" style="border-bottom-right-radius:15px;border-top-right-radius:15px;" id="b_so" type="submit">
 <span class="am-icon-search"></span>
 </button>
 </span>
@@ -58,9 +70,10 @@
 </div>
 </div>
 </div>
-  <!-- 电影影片列表开始 -->
-    <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
-        <h2 class="am-titlebar-title ">
+</div></div>
+<div class="am-container index-container">
+<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+<h2 class="am-titlebar-title ">
             热门电影
         </h2>
 		<nav class="am-titlebar-nav">
