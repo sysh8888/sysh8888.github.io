@@ -55,6 +55,7 @@ body {
     height: 262px;
     cursor: pointer;
     margin: 2px auto;
+
 }
 .movie-cover {
     width: 100%;
@@ -63,6 +64,7 @@ body {
     overflow: hidden;
 }
 .movie-cover>img {
+border-radius:10px;
     display: block;
     width: 100%;
     height: auto;
@@ -128,6 +130,8 @@ body {
     bottom: 0;
 }
 .movie-title {
+	border-bottom-left-radius:15px;
+	border-bottom-right-radius:15px;
     background-color: #fff;
     width: 100%;
     padding: 5px 0;
