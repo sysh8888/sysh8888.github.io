@@ -34,8 +34,8 @@ var fqzy={"0":{"name":"番茄","url":"http://api.fqzy.cc/api.php/provide/vod/at/
           "1":{"name":"优剧","url":"https://zy.ujuba.com/api.php/provide/vod/at/json/","play":"https://www.dmplay.xyz/j?url="}};
 
 //站外资源
-var zwzy={"0":{"name":"384影视","url":"https://348z.com","play":"/vodplay/{id}-1-1.html"},
-          "1":{"name":"九亿国语","url":"https://www.9e03.com","play":"/vodplay/{id}-1-1.html"},
+var zwzy={"0":{"name":"益达影院","url":"http://www.ks1905.com","play":"/index.php/vod/play/id/{id}/sid/1/nid/1.html"},
+          "1":{"name":"384影视","url":"https://348z.com","play":"/vodplay/{id}-1-1.html"},
 		  "2":{"name":"天空影视","url":"https://www.tkys.tv","play":"/vodplay/{id}-1-1.html"},
 		  "3":{"name":"大鱼","url":"https://www.dytv123.com","play":"/p/{id}/play-1-1.html"},
 		  "4":{"name":"极品影视","url":"http://www.jpys.me","play":"/vodplay/{id}-1-1.html"},
