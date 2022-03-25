@@ -225,8 +225,8 @@ border-radius:10px;
 .player-box {
     height: 600px;
     padding: 0;
-    //background: #000 url(../i/loading.gif) no-repeat center;
-	background-image:url(../i/loading.gif);
+    //background: #000 url(../img/loading.gif) no-repeat center;
+	background-image:url(../img/loading.gif);
 	background-repeat:no-repeat;
 	background-position:center;
 }
