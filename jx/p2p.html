@@ -104,11 +104,11 @@ if(lurl.indexOf('p2p.html?url=')>0) {var url=lurl.split('p2p.html?url=')[1];}els
 		}else{
 			var htm = '<video id="video" src="' + url + '" controls="controls" autoplay="autoplay"  preload="preload" poster="./loading_wap.gif" width="100%" height="100%" webkit-playsinline="true" playsinline="true" x5-playsinline="true"></video>';
 			document.getElementById('dplayer').innerHTML = htm;
-			//document.getElementById("video").onended = function(){
-			//	if(next){
-			//		top.location.href = next;
-			//	}
-			//}
+			document.getElementById("video").onended = function(){
+				if(next){
+					top.location.href = next;
+				}
+			}
 		}//判断客服终端
 	}//判断来源
 </script>
