@@ -41,7 +41,7 @@ if(lurl.indexOf('p2p.html?url=')>0) {var url=lurl.split('p2p.html?url=')[1];}els
 	var setIntervaler = 0;
 	var noad='';
 //var url = "https://test-streams.mux.dev/x36xhzz/url_2/193039199_mp4_h264_aac_ld_7.m3u8";
-	var next='';
+	//var next='';
 	
 	if(ly==0){
 		var htm = '<iframe allowfullscreen="true" scrolling="no" allowtransparency="true" style="background:url(./loadingbf.gif) #000 center center no-repeat;overflow:hidden;background-size: 50px 50px;" frameborder="0" src="' + url + '" width="100%" height="100%"></iframe>';
@@ -104,11 +104,11 @@ if(lurl.indexOf('p2p.html?url=')>0) {var url=lurl.split('p2p.html?url=')[1];}els
 		}else{
 			var htm = '<video id="video" src="' + url + '" controls="controls" autoplay="autoplay"  preload="preload" poster="./loading_wap.gif" width="100%" height="100%" webkit-playsinline="true" playsinline="true" x5-playsinline="true"></video>';
 			document.getElementById('dplayer').innerHTML = htm;
-			document.getElementById("video").onended = function(){
-				if(next){
-					top.location.href = next;
-				}
-			}
+			//document.getElementById("video").onended = function(){
+			//	if(next){
+			//		top.location.href = next;
+			//	}
+			//}
 		}//判断客服终端
 	}//判断来源
 </script>
