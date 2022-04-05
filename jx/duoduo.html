@@ -9,30 +9,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="referrer" content="Origin">
-<style>
-body,html,.dplayer{padding: 0;margin: 0;width:100%;height:100%;color:#aaa;background-color:#000;}
-#a1{ background-repeat:no-repeat; background-attachment:fixed; background-position:center; }
-a {text-decoration:none !important; }
-#bfq_if{background:#000;}
-#stats{position:fixed;top:5px;left:10px;font-size:12px;color:#fdfdfd;z-index:2147483647;text-shadow:1px 1px 1px #000, 1px 1px 1px #000;opacity: 0.2;}
-</style>
-<script>
-var u = navigator.userAgent;
-var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-var isPhone = u.match(/iPad|iPhone|Android|Linux|iPod/i) != null;
-function isWeiXin(){var ua = u.toLowerCase();if(ua.match(/MicroMessenger/i) == 'micromessenger'){return true;}else{return false;};};
-function IsPC(){var system={win:false,mac:false,xll:false};var p=navigator.platform;system.win=p.indexOf("Win")==0;system.mac=p.indexOf("Mac")==0;system.x11=(p=="X11")||(p.indexOf("Linux")==0);if(system.win||system.mac||system.xll){return true}else{return false}};
-</script>
-<script type="text/javascript">var ly=1 </script>
+<style type="text/css">
+    body,html{width:100%;height:100%;background:#000;padding:0;margin:0;overflow-x:hidden;overflow-y:hidden}
+    *{margin:0;border:0;padding:0;text-decoration:none}
+    #stats{position:fixed;top:5px;left:10px;font-size:9px;color:#fdfdfd;z-index:20719029;text-shadow:1px 1px 1px #000, 1px 1px 1px #000}
+    #video{position:inherit}
+    </style>
 </head>
 	<script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script> 
-	<script src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-543a8026-9860-4c9b-95e7-6eab2c7999b0/9e2a16e5-3b60-4b84-919f-4a5bc3aa3be7.js"></script>
-	<script src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-543a8026-9860-4c9b-95e7-6eab2c7999b0/3c45b40b-4732-4864-ba94-532f0c349cbc.js"></script>
-	<script src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-543a8026-9860-4c9b-95e7-6eab2c7999b0/851410d0-35bd-4aa1-8569-7a40940e3fac.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <body >
-<div class="dplayer" id="dplayer"><iframe id="player" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" scrolling="no" allowtransparency="true" allowfullscreen="true" frameborder="0" src="http://7080.wang/jiazai.html" width="100%" height="100%" allowfullscreen="true"></iframe></div>
-<div id="stats"></div>
-<div id="a"></div>
+<video id="video" controls width="100%" height="100%"></video>
 <script type="text/javascript">
 var dl="//www.5020.work/json/jx1.php?url="
 var bof="//7080.wang/jx/hls.html?url=";
@@ -48,79 +35,22 @@ $.getJSON(url3, function(data){
 console.log(data);
 
 if (data.code == "200"){
-var setIntervaler = 0;
-	var noad='';
-var url =data.url;
-	var next='';
-	
-	if(ly==0){
-		var htm = '<iframe allowfullscreen="true" scrolling="no" allowtransparency="true" style="background:url(https://api.leduotv.com/wp-api/images/loadingbf.gif) #000 center center no-repeat;overflow:hidden;background-size: 50px 50px;" frameborder="0" src="' + url + '" width="100%" height="100%"></iframe>';
-		document.getElementById('dplayer').innerHTML = htm;
-	}else if(ly==1){
-		if(IsPC()){
-			var dp = new DPlayer({
-							container: document.getElementById('dplayer'),
-							live: false,
-							autoplay: true,
-							preload: 'auto',
-							video: {
-								url: url,
-								pic: '',
-								type: url.indexOf(".m3u8") > 0 ? 'hls' : 'mp4'
-							},
-							hlsjsConfig: {
-								//debug: false,
-								//Other hlsjsConfig options provided by hls.js
-								p2pConfig: {
-									logLevel: true,
-									live: false,
-									// Other p2pConfig options provided by CDNBye
-									// https://docs.cdnbye.com/#/API
-								}
-							}
-			});
-			dp.on('loadeddata', function (stats) {
-				clearInterval(setIntervaler); 
-				setIntervaler = setInterval(() => {updateStats(randomNum(0,20), randomNum(1000,10000), randomNum(10000,100000))}, 1000);
-			});
-			dp.on('ended', function (){
-				if(next){
-					top.location.href = next;
-				}
-			});
-			dp.on('playing', function (peers) {
-				clearInterval(setIntervaler); 
-				setIntervaler = setInterval(() => {updateStats(randomNum(0,20), randomNum(1000,10000), randomNum(10000,100000))}, 1000);
-			});
-			function randomNum(minNum,maxNum){ 
-				switch(arguments.length){ 
-					case 1: 
-						return parseInt(Math.random()*minNum+1,10); 
-					break; 
-					case 2: 
-						return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
-					break; 
-						default: 
-							return 0;  
-						break; 
-				} 
-			} 
-
-			function updateStats(_peerNum, _totalP2PDownloaded, _totalP2PUploaded ) {
-				var text = 'CDNBye P2P为您加速' + (_totalP2PDownloaded/1024).toFixed(2)
-					+ 'MB 已分享' + (_totalP2PUploaded/1024).toFixed(2) + 'MB' + ' 节点' + _peerNum + '个';
-				document.getElementById('stats').innerText = text
-			}
-		}else{
-			var htm = '<video id="video" src="' + url + '" controls="controls" autoplay="autoplay"  preload="preload" poster="https://api.leduotv.com/static/img/loading_wap.gif" width="100%" height="100%" webkit-playsinline="true" playsinline="true" x5-playsinline="true"></video>';
-			document.getElementById('dplayer').innerHTML = htm;
-			document.getElementById("video").onended = function(){
-				if(next){
-					top.location.href = next;
-				}
-			}
-		}//判断客服终端
-	}//判断来源https://z1.m1907.cn/?eps=0&jx=
+	var url=data.url;
+  var video = document.getElementById('video');
+      var videoSrc = url;
+      if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          video.play();
+        });
+      }else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoSrc;
+        video.addEventListener('loadedmetadata', function() {
+          video.play();
+        });
+      }
 }else{document.getElementById("player").src="https://api.leduotv.com/wp-api/ifr.php?vid="+url;}
 })};
 var lurl=window.location.href;
