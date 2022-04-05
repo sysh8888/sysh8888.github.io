@@ -37,7 +37,7 @@ $.getJSON(url3, function(data){
 console.log(data);
 
 if (data.code == "200"){
-	var url=data.url
+	var url=data.url;
  var video = document.getElementById('video');
       var videoSrc = url;
       if (Hls.isSupported()) {
