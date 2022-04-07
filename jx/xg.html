@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui">
+    <meta name="referrer" content="no-referrer">
+    <title>xgplayer</title>
+    <style type="text/css">
+      html, body {width:100%;height:100%;margin:auto;overflow: hidden;}
+    </style>
+  </head>
+  <body>
+    <div id="mse"></div>
+    <script src="https://unpkg.byted-static.com/xgplayer/2.31.2/browser/index.js" charset="utf-8"></script>
+	<script src="https://unpkg.byted-static.com/xgplayer-hls.js/2.2.2/browser/index.js" charset="utf-8"></script>
+	<script src="https://unpkg.byted-static.com/xgplayer-flv.js/2.1.2/browser/index.js" charset="utf-8"></script>
+	<script>
+var lurl=window.location.href;
+//var lurl= decodeURIComponent(url1);
+if(lurl.indexOf('xg.html?url=')>0) {var url=lurl.split('xg.html?url=')[1];}else {var url="https:////sf1-cdn-tos.huoshanstatic.com/obj/media-fe/xgplayer_doc_video/mp4/xgplayer-demo-360p.mp4";}
+	 // var url="https://sf1-cdn-tos.huoshanstatic.com/obj/media-fe/xgplayer_doc_video/flv/xgplayer-demo-360p.flv";
+	  if(url.indexOf(".mp4")>0){
+      let player = new Player({
+		"id": "mse",
+		"url": url,
+		"playsinline": true,
+		"whitelist": [
+				""
+		],
+		"width": null,
+		"height": null,
+		"autoplay": true,
+		"x5-video-player-type": "h5",
+		"x5-video-player-fullscreen": "true"
+      });}
+	  else if(url.indexOf(".m3u8")>0){
+	  let player = new HlsJsPlayer({
+		"id": "mse",
+		"url": url,
+		"playsinline": true,
+		"whitelist": [
+				""
+		],
+		"width": null,
+		"height": null,
+		"autoplay": true,
+		"x5-video-player-type": "h5",
+		"x5-video-player-fullscreen": "true"
+      });
+	  }else if(url.indexOf(".flv")>0){
+	   let player = new FlvJsPlayer({
+          id: 'mse',
+          url: url,
+		  "playsinline": true,
+		"whitelist": [
+				""
+		],
+		"width": null,
+		"height": null,
+		"autoplay": true,
+		"x5-video-player-type": "h5",
+		"x5-video-player-fullscreen": "true"
+		 });
+	  }
+      
+          </script>
+  </body>
+</html>
