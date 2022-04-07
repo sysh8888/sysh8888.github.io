@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <title>CSS transform: CSS only loading spinners</title>
+<style>
+html{background-color:black;width:100%;height:100%；}
+  .center-in-center{
+            position: absolute;
+            top: 40%;
+            left: 45%;
+        }
+
+.loading:after {
+color:white;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
+  animation: ellipsis steps(4,end) 900ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 20px;    
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 20px;    
+  }
+}
+</style>
+</head>
+
+<body>
+<div  class="center-in-center">
+<img src="./loadingbf.gif" width="100%" height="100%"> 
+<div >
+<br>
+<div class="loading">
+<p><font style="color:white; font-family:kaiti;"><b>播放器加载完毕</b></font></P>
+<font style="color:white; font-family:kaiti;"><b>内容加载中</b></font>
+</div></div>
+</div>
+
+</body>
+</html>
