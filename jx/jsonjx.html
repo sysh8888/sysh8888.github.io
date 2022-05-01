@@ -29,7 +29,7 @@ var jx=[{"name":"解析1","url":"https://jhpc.manduhu.com/j1217.php?url="},
 	//https://api.m3u8.tv:5678/home/api?type=ys&uid=1931000&key=gktuvyzABEORSYZ135&url=
 //var url="http://www.mgtv.com/b/297817/4050151.html";
 function zy2(id){
-  var url3=dl+jx[id].url+url;
+  var url3=dl+jx[id].url+url1;
 $.getJSON(url3, function(data){
 console.log(data);
 
@@ -79,10 +79,10 @@ if (data.code == "200" && data.url != ""){
 		"x5-video-player-fullscreen": "true"
 		 });
 	  }
-}else if(id=="0"){zy2(1);}else if(id=="1"){zy2(2);}else{document.getElementById("player").src="https://api.leduotv.com/wp-api/ifr.php?vid="+url;}
+}else if(id=="0"){zy2(1);}else if(id=="1"){zy2(2);}else{document.getElementById("player").src="https://api.leduotv.com/wp-api/ifr.php?vid="+url1;}
 })};
 var lurl=window.location.href;
-if(lurl.indexOf('jsonjx.html?url=')>0){ url=lurl.split('jsonjx.html?url=')[1];zy2(0);}else{document.getElementById("player").src="./wu.html";}
+if(lurl.indexOf('jsonjx.html?url=')>0){ url1=lurl.split('jsonjx.html?url=')[1];zy2(0);}else{document.getElementById("player").src="./wu.html";}
 //zy2(0);
 </script>
 </body>
