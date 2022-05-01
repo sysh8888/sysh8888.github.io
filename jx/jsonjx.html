@@ -33,7 +33,7 @@ function zy2(id){
 $.getJSON(url3, function(data){
 console.log(data);
 
-if (data.code == "200"){
+if (data.code == "200" && data.url != ""){
 	var url=data.url;
 	$('#player-con').html("");
  if(url.indexOf(".mp4")>0){
