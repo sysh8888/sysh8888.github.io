@@ -54,7 +54,6 @@ if(lurl.indexOf('index.html?url=')>0) {var url_adress=lurl.split('index.html?url
 	     if (url_adress == null){play("./wu.html"); } 
         else if(url_adress.indexOf("/share") != -1 ){play(url_adress);}
 	else if(url_adress.indexOf("www.huanxi.com") != -1 ){play("https://www.pangujiexi.com/pangu/?url="+url_adress);}
-	else if(url_adress.indexOf("www.1905.com") != -1 ){play("https://jx.quanmingjiexi.com/?url="+url_adress);}
 	else if(url_adress.indexOf("cache.suoyo.cc") != -1 ){play("./duoduo.html?url="+url_adress);}
 	else if(url_adress.indexOf(".m3u8") != -1 ){play("./hls.html?url="+url_adress);}
 	else if(url_adress.indexOf(".mp4") != -1 ){play("./mp4.html?url="+url_adress);}
@@ -67,7 +66,7 @@ if(lurl.indexOf('index.html?url=')>0) {var url_adress=lurl.split('index.html?url
 	else if(url_adress.indexOf("xueren-") != -1 ){play("https://xrm3u8.qd234.cn/?url="+url_adress);}
 	else if(url_adress.indexOf("zhilian.daiguaji.com") != -1 ){play("./zhilian.html?url="+url_adress);}
 	else if(url_adress.indexOf("Xing1_") != -1 ){play("https://qpsvip.naifeimi.com/?url="+url_adress);}
-        else {play("https://api.leduotv.com/wp-api/ifr.php?vid="+url_adress);}
+        else {play("https://jx.quanmingjiexi.com/?url="+url_adress);}
 	    //https://test.rongxingvr.com/test2/?url=https://jx.cjt521.com/?url=https://jx.xiaoysw1.com/?url=
 	    //人人迷https://jx.parwix.com:4433/player/?url=https://jx.yunboys.cn/?url=http://jx.03006.top/yywuji322.php?url=https://17kyun.com/api.php?url=
 	    //https://jx.renrenmi.cc/?url=https://www.80k.tv/rr/?url=https://jiexi.1080zy.top/jx/?url=人人迷
