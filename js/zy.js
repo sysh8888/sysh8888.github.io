@@ -34,7 +34,7 @@ var fqzy={"0":{"name":"番茄","url":"http://api.fqzy.cc/api.php/provide/vod/at/
           "1":{"name":"优剧","url":"https://zy.ujuba.com/api.php/provide/vod/at/json/","play":"https://www.dmplay.xyz/j?url="}};
 
 //站外资源
-var zwzy={"0":{"name":"CJT","url":"https://www.cjtyy.top","play":"/index.php/vod/play/id/{id}/sid/1/nid/1.html"},
+var zwzy={"0":{"name":"4K奈菲","url":"https://netflix.mom","play":"/index.php/vod/play/id/{id}/sid/1/nid/1.html"},
           "1":{"name":"384影视","url":"https://348z.com","play":"/vodplay/{id}-1-1.html"},
 		  "2":{"name":"天空影视","url":"https://www.tkys.tv","play":"/vodplay/{id}-1-1.html"},
 		  "3":{"name":"片吧","url":"https://www.pianba.tv","play":"/yun/{id}-1-1.html"},
