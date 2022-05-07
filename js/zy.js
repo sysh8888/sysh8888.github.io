@@ -16,10 +16,10 @@ var pingguozy={"0":{"name":"番茄","url":"https://api.fqzy.cc/api.php/provide/v
                "14":{"name":"新浪","url":"https://api.xinlangapi.com/xinlangapi.php/provide/vod/","play":"./jx/index.html?url="},
                "15":{"name":"CK","url":"https://ckzy.me/api.php/provide/vod/","play":"./jx/index.html?url="}};
 //其他APP
-var appzy={"0":{"name":"300看世界","url":"https://300ys.xyz/mogai_api.php/v1.vod"},
+var appzy={"0":{"name":"爱酷影视","url":"https://www.zhanlangbu.com/ruifenglb_api.php/v1.vod"},
            "1":{"name":"月儿影视","url":"https://yue52.xyz/api.php/v1.vod"},
            "2":{"name":"爱看美剧","url":"https://www.uumjw.com/api.php/v1.vod"},
-           "3":{"name":"爱酷影视","url":"https://www.zhanlangbu.com/ruifenglb_api.php/v1.vod"},
+           "3":{"name":"300看世界","url":"https://300ys.xyz/mogai_api.php/v1.vod"},
            "4":{"name":"冷视","url":"https://len.tv/api.php/v1.vod"},
            "5":{"name":"飞捷影视","url":"https://www.fj6080.com/api.php/v1.vod"},
            "6":{"name":"钟特影视","url":"https://www.qcsvip.com/mogai_api.php/v1.vod"},
