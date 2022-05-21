@@ -35,7 +35,7 @@ var fqzy={"0":{"name":"番茄","url":"http://api.fqzy.cc/api.php/provide/vod/at/
 
 //站外资源
 var zwzy={"0":{"name":"4K奈菲","url":"https://netflix.mom","play":"/index.php/vod/play/id/{id}/sid/1/nid/1.html"},
-          "1":{"name":"384影视","url":"https://348z.com","play":"/vodplay/{id}-1-1.html"},
+          "1":{"name":"libvio","url":"https://www.libvio.com","play":"/play/{id}-1-1.html"},
 		  "2":{"name":"天空影视","url":"https://www.tkys.tv","play":"/vodplay/{id}-1-1.html"},
 		  "3":{"name":"片吧","url":"https://www.pianba.tv","play":"/yun/{id}-1-1.html"},
 		  "4":{"name":"极品影视","url":"http://www.jpys.me","play":"/vodplay/{id}-1-1.html"},
@@ -43,6 +43,6 @@ var zwzy={"0":{"name":"4K奈菲","url":"https://netflix.mom","play":"/index.php/
 		  "6":{"name":"4K奈菲","url":"https://netflix.mom","play":"/index.php/vod/play/id/{id}/sid/1/nid/1.html"},
 		  "7":{"name":"1080P影视","url":"https://1080p.tv","play":"/vodplay/{id}-1-1/"},
 		  "8":{"name":"爱看电影","url":"https://ikan6.vip","play":"/vodplay/{id}-1-1/"},
-		  "9":{"name":"船长影视","url":"https://www.4kcz.com/","play":"/vodplay/{id}-1-1.html"},
+		  "9":{"name":"周末影视","url":"https://www.zzzlike.vip","play":"/vodplay/{id}-1-1.html"},
 	  "10":{"name":"瓜皮TV","url":"https://dijiaxia.com","play":"/index.php/vod/play/id/{id}/sid/1/nid/1.html"}
 		  };
