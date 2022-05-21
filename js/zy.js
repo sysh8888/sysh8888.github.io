@@ -1,6 +1,6 @@
 //内容开始
 var pingguozy={"0":{"name":"番茄","url":"https://api.fqzy.cc/api.php/provide/vod/at/json/","play":"https://jiexi.8b5q.cn/player/jx.php?url="},
-	           "1":{"name":"三九","url":"https://www.39kan.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+	       "1":{"name":"三九","url":"https://www.39kan.com/api.php/provide/vod/","play":"./jx/index.html?url="},
                "2":{"name":"神速","url":"https://api.sszyapi.com/api.php/provide/vod/","play":"./jx/index.html?url="},
                "3":{"name":"鱼乐","url":"https://api.yulecj.com/api.php/provide/vod/","play":"./jx/index.html?url="},
                "4":{"name":"无尽","url":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/","play":"./jx/index.html?url="},
@@ -24,9 +24,9 @@ var appzy={"0":{"name":"U5影视","url":"https://appx.uy07.com/api.php/v1.vod"},
            "5":{"name":"零刻影视","url":"https://ys.ling00.cn/api.php/v1.vod"},
            "6":{"name":"钟特影视","url":"https://www.qcsvip.com/mogai_api.php/v1.vod"},
            "7":{"name":"爱酷影视","url":"https://www.zhanlangbu.com/ruifenglb_api.php/v1.vod"},
-           "8":{"name":"QC影视","url":"https://www.qcsvip.com/mogai_api.php/v1.vod"},
-           "9":{"name":"看看剧","url":"https://www.kankanju.cn/api.php/v1.vod"},
-           "10":{"name":"虎猫视频","url":"https://humaosp.com/mogai_api.php/v1.vod"},
+           "8":{"name":"淘剧社","url":"https://app.shuhai99.com/api.php/v1.vod"},
+           "9":{"name":"筋斗影视","url":"https://tv.jindcloud.com/api.php/v1.vod"},
+           "10":{"name":"寒枫视频","url":"https://vip.shenyunwl.cn/mogai_api.php/v1.vod"},
            "11":{"name":"美剧虫","url":"https://meijuchong.com/api.php/v1.vod"}};	
 
 //其他番茄、优剧、欧乐、1080tv
