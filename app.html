@@ -15,7 +15,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="stylesheet" href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css">
-<link rel="stylesheet" href="https://img.5020.work/css/app.css">
+<link rel="stylesheet" href="./css/app.css">
+<link rel="stylesheet" href="./css/so.css">
 <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
 <script src="./js/gg.js"></script>
 <!--<![endif]-->
@@ -59,29 +60,15 @@
 </form>
 </div>
 </header>
-
 <div class="am-container">
-<div class="am-g" style="margin: 20px 0">
-<div class="am-u-lg-10 am-u-sm-centered">
-<form action="./so.html" method="get" class="am-margin-bottom" role="search" name="SoForm" onsubmit="return Checkfrom1();">
-<div class="am-input-group am-input-group-primary">
-<input name="wd" id="wd" value="" type="text" class="am-form-field" placeholder="输入关键词搜索" required>
-<span class="am-input-group-btn">
-<button class="am-btn am-btn-primary" id="b_so" type="submit">
-<span class="am-icon-search"></span>
-</button>
-</span>
-</div>
-</form>
-</div>
-</div>
+<div class="bpz search-bar"><form action="./so.html" method="get" class="bpz"><input type="hidden" name="show" value="title">
+    <input type="hidden" name="tbname" value="movie">
+    <input type="hidden" name="tempid" value="1"> <input type="search" placeholder="搜索电影、电视剧、动漫……" class="bpz input-bar" name="wd" id="wd"><button class="bpz search-btn">搜索影视</button></form></div>
 <div data-am-widget="list_news" class="am-list-news am-list-news-default">
-   <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
-<h2 class="am-titlebar-title ">影视选择-当前:</B><SPAN><b style="color:#CC0033" id=bolei>全部</b></SPAN></h2>
 
-</div>
 <!-- 面板 -->
- <div class="am-panel am-panel-default" style="margin-bottom: 10px">
+<div  style="margin-bottom: 10px">
+  <ul class="ty-screen__list clearfix" ><div class="am-breadcrumb"><li><span class="text-muted">已选:</span></li><li><span ><b style="color:#CC0033" id="bolei" ></b></span></li></div></ul>
 
 	<ul class="ty-screen__list clearfix" id="app">
         <li><span class="text-muted">电影类型:</span></li>
