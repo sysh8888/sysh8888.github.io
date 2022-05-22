@@ -1,6 +1,6 @@
 //内容开始
-var pingguozy={"0":{"name":"番茄","url":"https://api.fqzy.cc/api.php/provide/vod/at/json/","play":"https://jiexi.8b5q.cn/player/jx.php?url="},
-	       "1":{"name":"三九","url":"https://www.39kan.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+var pingguozy={"0":{"name":"三九","url":"https://www.39kan.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+	       "1":{"name":"番茄","url":"https://api.fqzy.cc/api.php/provide/vod/at/json/","play":"https://jiexi.8b5q.cn/player/jx.php?url="},
                "2":{"name":"神速","url":"https://api.sszyapi.com/api.php/provide/vod/","play":"./jx/index.html?url="},
                "3":{"name":"鱼乐","url":"https://api.yulecj.com/api.php/provide/vod/","play":"./jx/index.html?url="},
                "4":{"name":"无尽","url":"https://www.wujinzy.com/api.php/provide/vod/from/wjm3u8/at/json/","play":"./jx/index.html?url="},
