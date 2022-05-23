@@ -17,7 +17,7 @@
         href="javascript:play('https://api.leduotv.com/wp-api/ifr.php?vid='+url_adress)"
         >【1线】</a
       ><a
-        href="javascript:play('https://jx.xmflv.com/?url='+url_adress)"
+        href="javascript:play('https://jx.xiaoysw1.com/?url='+url_adress)"
         >【2线】</a
       ><a
         href="javascript:play('https://jx.quanmingjiexi.com/?url='+url_adress)"
@@ -54,7 +54,9 @@ if(lurl.indexOf('index.html?url=')>0) {var url_adress=lurl.split('index.html?url
 	     if (url_adress == null){play("./wu.html"); } 
         else if(url_adress.indexOf("/share") != -1 ){play(url_adress);}
 	else if(url_adress.indexOf("www.huanxi.com") != -1 ){play("https://www.pangujiexi.com/pangu/?url="+url_adress);}
+	else if(url_adress.indexOf("v.pptv.com") != -1 ){play("https://z1.m1907.cn/?eps=0&jx="+url_adress);}
 	else if(url_adress.indexOf("www.bilibili.com") != -1 ){play("https://jsap.attakids.com/?url="+url_adress);}
+	else if(url_adress.indexOf("www.mgtv.com") != -1 ){play("https://jx.xiaoysw1.com/?url="+url_adress);}
 	else if(url_adress.indexOf("cache.suoyo.cc") != -1 ){play("./duoduo.html?url="+url_adress);}
 	else if(url_adress.indexOf(".m3u8") != -1 ){play("./hls.html?url="+url_adress);}
 	else if(url_adress.indexOf(".mp4") != -1 ){play("./mp4.html?url="+url_adress);}
@@ -67,10 +69,10 @@ if(lurl.indexOf('index.html?url=')>0) {var url_adress=lurl.split('index.html?url
 	else if(url_adress.indexOf("xueren-") != -1 ){play("https://s.2tu.uk/?url="+url_adress);}
 	else if(url_adress.indexOf("zhilian.daiguaji.com") != -1 ){play("./zhilian.html?url="+url_adress);}
 	else if(url_adress.indexOf("Xing1_") != -1 ){play("https://qpsvip.naifeimi.com/?url="+url_adress);}
-        else {play("https://jx.xiaoysw1.com/?url="+url_adress);}
+        else {play("https://jx.playerjy.com/?url="+url_adress);}
 	    //https://test.rongxingvr.com/test2/?url=https://jx.cjt521.com/?url=https://jx.xiaoysw1.com/?url=
-	    //人人迷https://jx.parwix.com:4433/player/?url=https://jx.yunboys.cn/?url=http://jx.03006.top/yywuji322.php?url=https://17kyun.com/api.php?url=
-	    //https://jx.renrenmi.cc/?url=https://www.80k.tv/rr/?url=https://jiexi.1080zy.top/jx/?url=人人迷
+	    //人人迷https://jx.parwix.com:4433/player/?url=
+	    //https://jx.renrenmi.cc/?url=https://www.gai4.com/?url=https://jx.gbxy.net.cn/?url=
            //https://xrm3u8.qd234.cn/?url=renrenmi-e2f7537a21409a49雪人
            //https://www.rongxingvr.cc/dmplayer/jxplayer.php?v=https://diaoyong.qd234.cn/?url=xueren-1647262351
 	    //猫派对https://tv1.cjt521.com/?url=https://jx5.mgtv.co/m3u8.php?url=https://jx.mrcy0.com/?url=http://23.224.174.74:5579/?url=
