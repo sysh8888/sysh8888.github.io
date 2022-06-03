@@ -24,7 +24,7 @@ var appzy={"0":{"name":"U5影视","url":"https://appx.uy07.com/api.php/v1.vod"},
            "5":{"name":"零刻影视","url":"https://ys.ling00.cn/api.php/v1.vod"},
            "6":{"name":"钟特影视","url":"https://www.qcsvip.com/mogai_api.php/v1.vod"},
            "7":{"name":"爱酷影视","url":"https://www.zhanlangbu.com/ruifenglb_api.php/v1.vod"},
-           "8":{"name":"淘剧社","url":"https://app.shuhai99.com/api.php/v1.vod"},
+           "8":{"name":"暖光影视","url":"https://app.bl210.com/api.php/v1.vod"},
            "9":{"name":"筋斗影视","url":"https://tv.jindcloud.com/api.php/v1.vod"},
            "10":{"name":"寒枫视频","url":"https://vip.shenyunwl.cn/mogai_api.php/v1.vod"},
            "11":{"name":"美剧虫","url":"https://meijuchong.com/api.php/v1.vod"}};	
