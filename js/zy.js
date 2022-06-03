@@ -19,7 +19,7 @@ var pingguozy={"0":{"name":"三九","url":"https://www.39kan.com/api.php/provide
 var appzy={"0":{"name":"U5影视","url":"https://appx.uy07.com/api.php/v1.vod"},
            "1":{"name":"月儿影视","url":"https://yue52.xyz/api.php/v1.vod"},
            "2":{"name":"爱看美剧","url":"https://www.uumjw.com/api.php/v1.vod"},
-           "3":{"name":"爱电影","url":"https://www.idianying.com.cn/mogai_api.php/v1.vod"},
+           "3":{"name":"九亿国语","url":"https://vod.9e03.com/lvdou_api.php/v1.vod"},
            "4":{"name":"冷视","url":"https://len.tv/api.php/v1.vod"},
            "5":{"name":"零刻影视","url":"https://ys.ling00.cn/api.php/v1.vod"},
            "6":{"name":"钟特影视","url":"https://www.qcsvip.com/mogai_api.php/v1.vod"},
