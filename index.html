@@ -15,8 +15,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="stylesheet" href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css">
+ <link rel="stylesheet" href="https://7080.wang/css/amazeui.swiper.min.css">
 <link rel="stylesheet" href="./css/app.css">
-<link rel="stylesheet" href="./css/lunbo.css">
 <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
 <script src="./js/gg.js"></script>
 <style>
@@ -27,6 +27,17 @@
 	.bpz-title{margin:0;width:100%;text-align:center;font-size:1.2rem;color:#8590a6;padding:20px 0;}.search-bar{width:100%;height:67px;padding:0 15px;}.search-bar.bpz{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-radius:4px;display:block;position:relative;height:47px;background-color:#FFF;border:1px solid rgba(0,0,0,0.15);box-shadow:0 2px 3px rgba(0,0,0,0.06);padding-left:0.75em;padding-right:3.5em;}.search-bar.bpz .input-bar.bpz{opacity:1;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;-o-appearance:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;-webkit-tap-highlight-color:rgba(0,0,0,0);font-size:14px;font-weight:normal;display:block;width:100%;background:none;outline:none;border:none;padding-left:5px;height:47px;z-index:1;position:relative;top:-1px;}.search-bar.bpz .acp.bpz{color:#8590a6;width:100%;text-align:center;font-size:0.8rem;padding:5px 0 15px 0;line-height:25px;display:block;}.search-bar.bpz{width:100%;padding:0;}
 	/**手机端搜索框-end**/
 </style>
+  <style>
+    .swiper-container {
+      width: 100%;
+ 
+    }
+
+    .swiper-wrapper img{
+      width: 100%;
+     
+    }
+  </style>
 </head>
 <body>
 <header class="am-topbar am-topbar-fixed-top">
@@ -54,24 +65,34 @@
 <!--搜索end -->
 
 <!--轮播开始 -->
-<div class="c-banner">
-	<div class="banner">
-		<ul id="lunbotu">
-			<li><a href="./play.html?q=QLNtbX7lTG8oMX&id=2&zy=360&html=1.html" target="_blank"><img src="https://p1.qhimg.com/t01e99207ae7f7cd4e0.jpg"></a></li>
-			<li><a href="./play.html?q=ZcEpbnN072M7Dz&id=3&zy=360&html=1.html" target="_blank"><img src="https://p1.qhimg.com/t01e57243d8859fc533.jpg"></a></li>
-			<li><a href="./play.html?q=ZscmcXNzAJk2Ej&id=3&zy=360&html=1.html" target="_blank"><img src="https://p7.qhimg.com/t01d56bbea301e4a60f.jpg"></a></li>
-		</ul>
-	</div>
-	
-	<div class="jumpBtn">
-		<ul id="lunbotu1">
-		<li jumpImg="0"></li>
-			<li jumpImg="1"></li>
-			<li jumpImg="2"></li>
-		</ul>
-	</div>
+<div id="mySwiper" class="swiper-container">
+
+  <!-- slides 容器，必需 -->
+  <div class="swiper-wrapper" id="lunbotu">
+    <!-- Slides -->
+    <div class="swiper-slide"><a href="./play.html?q=QLNtbX7lTG8oMX&id=2&zy=360&html=1.html" target="_blank"><img src="https://p1.qhimg.com/t01e99207ae7f7cd4e0.jpg" alt=""></a></div>
+    <div class="swiper-slide"><a href="./play.html?q=ZcEpbnN072M7Dz&id=3&zy=360&html=1.html" target="_blank"><img src="https://p1.qhimg.com/t01e57243d8859fc533.jpg" alt=""></a></div>
+    <div class="swiper-slide"><a href="./play.html?q=ZscmcXNzAJk2Ej&id=3&zy=360&html=1.html" target="_blank"><img src="https://p7.qhimg.com/t01d56bbea301e4a60f.jpg" alt=""></a></div>
+	<div class="swiper-slide"><a href="./play.html?q=YcIqbKlv7JQ3Ez&id=3&zy=360&html=1.html" target="_blank"><img src="https://p1.qhimg.com/t01c84d6504304022c5.jpg"></a></div>
+	<div class="swiper-slide"><a href="./play.html?q=Pbdwan7lTG8pN3&id=2&zy=360&html=1.html" target="_blank"><img src="https://p8.qhimg.com/t01bb511a28dc1b3f25.jpg"></a></div>
+
+  </div>
+
+  <!-- 分页容器，可选 -->
+  <div class="swiper-pagination"></div>
+
+  <!-- 上下翻页箭头，可选 -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+  <!--&lt;!&ndash; 滚动条容器，可选 &ndash;&gt;-->
+  <!--<div class="swiper-scrollbar"></div>-->
 </div>
 <script src="./js/lunbo.js"></script>
+<script src="https://7080.wang/js/amazeui.swiper.min.js"></script>
+<script>
+ 
+</script>
 <!--轮播end -->
 
 <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
