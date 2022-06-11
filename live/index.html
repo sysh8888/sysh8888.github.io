@@ -180,7 +180,7 @@ $(function(){
 //console.log(data);
 var tuijian="";
 for (var i=0;i<data.data.length;i++)
-{ tuijian+=' <li><div class="am-gallery-item tuijian-item"><a href="../so.html?q='+data.data[i].title+'"><img  alt="" src="'+data.data[i].cover+'" ><h3 class="am-gallery-title">'+data.data[i].title+'<span class="am-gallery-desc"></span></h3></a></div></li>';}
+{ tuijian+=' <li><div class="am-gallery-item tuijian-item"><a href="../so.html?wd='+data.data[i].title+'"><img  alt="" src="'+data.data[i].cover+'" ><h3 class="am-gallery-title">'+data.data[i].title+'<span class="am-gallery-desc"></span></h3></a></div></li>';}
 document.getElementById("tuijian").innerHTML =tuijian;
  }
  });
