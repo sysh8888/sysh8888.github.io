@@ -6,19 +6,43 @@
     <meta name="referrer" content="no-referrer">
     <title>xgplayer</title>
 	  <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
+	  <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.9.19/skins/default/aliplayer-min.css" />
+<script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.9.19/aliplayer-min.js"></script>
     <style type="text/css">
-      html, body {width:100%;height:100%;margin:auto;overflow: hidden;}
+       body,html{width:100%;height:100%;background:#000;padding:0;margin:0;overflow-x:hidden;overflow-y:hidden}
+	   #player-con{position:inherit}
+	  #loading {
+        background:url(https://img.zcool.cn/community/018b305a1d375ca80120908da51a31.gif);
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        z-index: 10000000001;
+        background-size: 100% 100%;
+    }
+    #error{
+        background:url(https://pic.rmb.bdstatic.com/bjh/a7f890b31588ad011dc0d62628fab326.jpeg);
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        text-align:center;
+        display:table; 
+        position: absolute;
+        z-index: 10000000001;
+        background-size: 100% 100%; 
+    }
     </style>
   </head>
   <body>
-    <div id="mse" ><img src="https://img.zcool.cn/community/018b305a1d375ca80120908da51a31.gif" width="100%"  height="100%"></div>
-    <script src="https://unpkg.byted-static.com/xgplayer/2.31.2/browser/index.js" charset="utf-8"></script>
-	<script src="https://unpkg.byted-static.com/xgplayer-hls.js/2.2.2/browser/index.js" charset="utf-8"></script>
-	<script src="https://unpkg.byted-static.com/xgplayer-flv.js/2.1.2/browser/index.js" charset="utf-8"></script>
+ <div class="prism-player" id="player-con"><img src="https://img.zcool.cn/community/018b305a1d375ca80120908da51a31.gif" width="100%"  height="100%"></div>
+
+
 <script type="text/javascript">
 var dl="https://www.5020.work/json/jx1.php?url="
 var bof="//7080.wang/jx/hls.html?url=";
-var jx=[{"name":"解析1","url":"https://jiexiheyi.naifeimi.com/api/?key=WWBdFWHgw5HkfmOHR7&url="},
+var jx=[{"name":"解析1","url":"https://svip.rongxingvr.top/api/?key=bpWXKrAJUKm3puOCH4&url="},
 {"name":"解析2","url":"http://124.222.68.182/jiexi/4kJX.php/?url="},
 {"name":"解析3","url":"https://za.kuanjv.com/?url="},
 {"name":"解析4","url":"https://json.5lp.net/json.php?url="},
@@ -27,72 +51,49 @@ var jx=[{"name":"解析1","url":"https://jiexiheyi.naifeimi.com/api/?key=WWBdFWH
 {"name":"解析7","url":"https://jiexiheyi.naifeimi.com/api/?key=WWBdFWHgw5HkfmOHR7&url="}
 ];
 //https://json.hfyrw.com/mao.go?url=,https://jhjx.kuanjv.com/newky/?url=
-//https://ldy.jx.cn/wp-api/getvodurl.php?token=1001&vid=
-//https://apis.jxcxin.cn/api/jx?url=
-//https://jhpc.manduhu.com/j1217.php?url=
-//https://api.m3u8.tv:5678/home/api?type=ys&uid=1931000&key=gktuvyzABEORSYZ135&url=
-//var url="http://www.mgtv.com/b/297817/4050151.html";
+//http://23.224.174.74:5579/api.php?url=https://jx.300ys.xyz/jiexi/v.php/?url=
+//http://47.100.138.210:91/home/api?type=ys&uid=7593435&key=ehortuyAHMNQTWX457&url=https://apis.jxcxin.cn/api/jx?url=
+//https://jhpc.manduhu.com/j1217.php?url=https://json.hfyrw.com/mao.go?url=https://vvip.funsline.cn/api/?key=JNiddoRwmLBYehxnFq&url=
+	//42.157.128.85:880/analysis/json/?uid=1735&my=bglwBCEHIJLTWXZ237&url= https://a.dxzj88.com/jhjhjx/?url=
+	//https://api.m3u8.tv:5678/home/api?type=ys&uid=1931000&key=gktuvyzABEORSYZ135&url=
+//var url="http://v.qq.com/x/cover/mzc00200p51jpn7/s004237dmoq.html";
 function zy2(id){
   var url3=dl+jx[id].url+url;
 $.getJSON(url3, function(data){
 console.log(data);
 
 if (data.code == "200"){
+$('#player-con').html("");
 	var url=data.url;
-	$('#player-con').html("");
- if(url.indexOf(".mp4")>0){
-      let player = new Player({
-		"id": "mse",
-		"url": url,
-		"playsinline": true,
-		"whitelist": [
-				""
-		],
-		"width": null,
-		"height": null,
-		"autoplay": true,
-		"x5-video-player-type": "h5",
-		"x5-video-player-fullscreen": "true"
-      });}
-	  else if(url.indexOf(".m3u8")>0){
-	  let player = new HlsJsPlayer({
-		"id": "mse",
-		"url": url,
-		"playsinline": true,
-		"whitelist": [
-				""
-		],
-		"width": null,
-		"height": null,
-		"autoplay": true,
-		"x5-video-player-type": "h5",
-		"x5-video-player-fullscreen": "true"
-      });
-	  }else if(url.indexOf(".flv")>0){
-	   let player = new FlvJsPlayer({
-          id: 'mse',
-          url: url,
-		  "playsinline": true,
-		"whitelist": [
-				""
-		],
-		"width": null,
-		"height": null,
-		"autoplay": true,
-		"x5-video-player-type": "h5",
-		"x5-video-player-fullscreen": "true"
-		 });
-	  }
+	var player = new Aliplayer({
+  "id": "player-con",
+  "source":url,//视频链接
+  "width": "100%",
+  "height": "100%",
+  "autoplay": true,
+  "isLive": false,
+  "rePlay": false,
+  "videoHeight": "100%",
+  "playsinline": true,
+  "preload": true,
+  "language": "zh-cn",
+  "controlBarVisibility": "always",
+  "videoWidth": "100%",
+  "useH5Prism": true
+}, function (player) {
+    console.log("The player is created");
+  }
+);
+	  
 }else if(id=="0"){zy2(1);}
 else if(id=="1"){zy2(2);}
 else if(id=="2"){zy2(3);}
 else if(id=="3"){zy2(4);}
 else if(id=="4"){zy2(5);}
-else if(id=="5"){zy2(6);}
 else{document.getElementById("player").src="https://z1.m1907.cn/?eps=0&jx="+url;}
 })};
 var lurl=window.location.href;
-if(lurl.indexOf('jsonjx.html?url=')>0){ url=lurl.split('jsonjx.html?url=')[1];zy2(0);}else{document.getElementById("player").src="./wu.html";}
+if(lurl.indexOf('jsonjx.html?url=')>0){ url=lurl.split('jsonjx.html?url=')[1];zy2(0);}else{document.getElementById("player").src="https://7080.wang/jx/wu.html";}
 //zy2(0);
 </script>
 </body>
