@@ -16,8 +16,8 @@ var pingguozy={"0":{"name":"三九","url":"https://www.39kan.com/api.php/provide
                "14":{"name":"新浪","url":"https://api.xinlangapi.com/xinlangapi.php/provide/vod/","play":"./jx/index.html?url="},
                "15":{"name":"松鼠","url":"https://m3u8.songshuzy.com/api.php/provide/vod/","play":"./jx/index.html?url="}};
 //其他APP
-var appzy={"0":{"name":"U5影视","url":"https://appx.uy07.com/api.php/v1.vod"},
-           "1":{"name":"小七影视","url":"https://www.xiaoqi0.cn/cuican_api.php/v1.vod"},
+var appzy={"0":{"name":"小七影视","url":"https://www.xiaoqi0.cn/cuican_api.php/v1.vod"},
+           "1":{"name":"小七影视","url":"https://appx.uy07.com/api.php/v1.vod"},
            "2":{"name":"爱看美剧","url":"https://www.uumjw.com/api.php/v1.vod"},
            "3":{"name":"我爱跟剧","url":"https://www.genmov.com/mogai_api.php/v1.vod"},
            "4":{"name":"冷视","url":"https://len.tv/api.php/v1.vod"},
