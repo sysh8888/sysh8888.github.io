@@ -65,9 +65,6 @@
 <a href="#cntv">其他直播</a>
 </li>
 <li>
-<a href="#iptv">手机</a>
-</li>
-<li>
 <a href="#woiptv">学习</a>
 </li>
 </ul>
@@ -78,7 +75,6 @@
 <div class="am-tab-panel am-fade tv-res" id="cntv">
 加载中
 </div>
-<div class="am-tab-panel am-fade tv-res" id="iptv">加载中</div>
 <div class="am-tab-panel am-fade tv-res" id="woiptv">加载中</div>
 </div>
 </div>
@@ -149,11 +145,6 @@ for (var key in qtiptv)
 }
 document.getElementById("cntv").innerHTML =qtiptv1;
 
-var ipiptv1="";
-for (var key in ipiptv) 
-    { ipiptv1+='<li class="am-btn am-btn-sm btn-play-source"><a href="./h5.html?url='+ipiptv[key]+'"  target="ajax" onclick="GetHref(this);return false;">'+key+'</a></li>';
-}
-document.getElementById("iptv").innerHTML =ipiptv1;
 
 var woiptv1="";
 for (var key in woiptv) 
