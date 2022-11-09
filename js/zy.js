@@ -16,18 +16,14 @@ var pingguozy={"0":{"name":"三九","url":"https://www.39kan.com/api.php/provide
                "14":{"name":"新浪","url":"https://api.xinlangapi.com/xinlangapi.php/provide/vod/","play":"./jx/index.html?url="},
                "15":{"name":"松鼠","url":"https://m3u8.songshuzy.com/api.php/provide/vod/","play":"./jx/index.html?url="}};
 //其他APP
-var appzy={"0":{"name":"小七影视","url":"https://www.xiaoqi0.cn/cuican_api.php/v1.vod"},
-           "1":{"name":"冷视TV","url":"https://len.tv/api.php/v1.vod"},
-           "2":{"name":"爱看美剧","url":"https://www.uumjw.com/api.php/v1.vod"},
-           "3":{"name":"我爱跟剧","url":"https://www.genmov.com/mogai_api.php/v1.vod"},
-           "4":{"name":"爱酷影视","url":"https://www.zhanlangbu.com/ruifenglb_api.php/v1.vod"},
-           "5":{"name":"淘剧社","url":"https://app.shuhai99.com/api.php/v1.vod"},
-           "6":{"name":"钟特影视","url":"https://www.qcsvip.com/mogai_api.php/v1.vod"},
-           "7":{"name":"零刻影院","url":"https://ys.ling00.cn/api.php/v1.vod"},
-           "8":{"name":"暖光影视","url":"https://app.bl210.com/api.php/v1.vod"},
-           "9":{"name":"龙猫影视","url":"https://lb.ybnxcx.com/api.php/v1.vod"},
-           "10":{"name":"佳佳影视","url":"https://www.jiajia.pub/api.php/v1.vod"},
-           "11":{"name":"看剧吧","url":"https://app.ishen520.com/api.php/v1.vod"}};	
+var appzy={   "1":{"name":"爱看美剧","url":"https://www.uumjw.com/api.php/v1.vod"},
+           "2":{"name":"我爱跟剧","url":"https://www.genmov.com/mogai_api.php/v1.vod"},
+           "3":{"name":"爱酷影视","url":"https://www.zhanlangbu.com/ruifenglb_api.php/v1.vod"},
+           "4":{"name":"淘剧社","url":"https://app.shuhai99.com/api.php/v1.vod"},
+           "5":{"name":"暖光影视","url":"https://app.bl210.com/api.php/v1.vod"},
+           "6":{"name":"龙猫影视","url":"https://lb.ybnxcx.com/api.php/v1.vod"},
+           "7":{"name":"佳佳影视","url":"https://www.jiajia.pub/api.php/v1.vod"},
+           "8":{"name":"看剧吧","url":"https://app.ishen520.com/api.php/v1.vod"}};		
 
 //其他番茄、优剧、欧乐、1080tv
 var fqzy={"0":{"name":"番茄","url":"http://api.fqzy.cc/api.php/provide/vod/at/json/","play":"https://jiexi.8b5q.cn/player/jx.php?url="},
