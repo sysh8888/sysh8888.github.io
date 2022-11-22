@@ -67,6 +67,7 @@ var zjiptv={"浙江卫视":"https://hw-m-l.cztv.com/channels/lantian/channel01/3
 var qtiptv={"CCTV1":"https://cctvwbndks.v.kcdnvip.com/cctvwbnd/cctv1_2/index.m3u8",
 "CCTV5":"https://cctvwbndks.v.kcdnvip.com/cctvwbnd/cctv5_2/index.m3u8",
 "CCTV13":"https://cctvwbndks.v.kcdnvip.com/cctvwbnd/cctv13_2/index.m3u8",
+"CCTV16":"https://liveop.cctv.cn/hls/CCTV16HD/playlist.m3u8",
 "倒霉熊":"https://newcntv.qcloudcdn.com/asp/hls/1200/0303000a/3/default/87f87ba569c147e3805f80e4844d2de9/1200.m3u8",
 "反转星球":"https://newcntv.qcloudcdn.com/asp/hls/1200/0303000a/3/default/3ccdecc7d6e341c1920ad4eac5d82f38/1200.m3u8",
 "云朵妈妈":"https://newcntv.qcloudcdn.com/asp/hls/1200/0303000a/3/default/d8ad434c6b08421a927557a4d98da65c/1200.m3u8",
