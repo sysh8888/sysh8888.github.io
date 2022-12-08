@@ -31,14 +31,7 @@ var fqzy={"0":{"name":"番茄","url":"http://api.fqzy.cc/api.php/provide/vod/at/
 
 //站外资源
 var zwzy={"0":{"name":"大米星球","url":"https://www.dmxq.fun","play":"/vodplay/{id}-1-1.html"},
-          "1":{"name":"达达龟","url":"https://www.dadagui.com","play":"/vodplay/{id}-1-1.html"},
-		  "2":{"name":"天空影视","url":"https://www.tkys.tv","play":"/vodplay/{id}-1-1.html"},
-		  "3":{"name":"片吧","url":"https://www.pianba.tv","play":"/yun/{id}-1-1.html"},
-		  "4":{"name":"极品影视","url":"http://www.jpys.me","play":"/vodplay/{id}-1-1.html"},
-		  "5":{"name":"影视工厂","url":"https://www.ysgc.cc","play":"/vodplay/{id}-1-1.html"},
-		  "6":{"name":"剧白白","url":"https://www.jubaibai.cc","play":"/play/{id}-1-1.html"},
-		  "7":{"name":"1080P影视","url":"https://1080p.tv","play":"/vodplay/{id}-1-1/"},
-		  "8":{"name":"爱看电影","url":"https://ikan6.vip","play":"/vodplay/{id}-1-1/"},
-		  "9":{"name":"555影视","url":"https://www.xawqxh.net","play":"/vodplay/{id}-1-1.html"},
-	  "10":{"name":"大米星球","url":"https://www.dmxq.fun","play":"/vodplay/{id}-1-1.html"}
+		  "1":{"name":"剧白白","url":"https://www.jubaibai.cc","play":"/play/{id}-1-1.html"},
+		  "2":{"name":"555影视","url":"https://www.xawqxh.net","play":"/vodplay/{id}-1-1.html"},
+	  "3":{"name":"大米星球","url":"https://www.dmxq.fun","play":"/vodplay/{id}-1-1.html"}
 		  };
