@@ -29,7 +29,7 @@ var fqzy={"0":{"name":"番茄","url":"http://api.fqzy.cc/api.php/provide/vod/at/
           "1":{"name":"优剧","url":"https://zy.ujuba.com/api.php/provide/vod/at/json/","play":"https://www.dmplay.xyz/j?url="}};
 
 //站外资源
-var zwzy={"0":{"name":"真不卡","url":"https://www.zbkk.net","play":"/zbkplay/{id}-1-1.html"},
+var zwzy={"0":{"name":"奈菲","url":"https://www.tvfans.top","play":"/vod/play/{id}-1-1.html"},
 		  "1":{"name":"真不卡","url":"https://www.zbkk.net","play":"/zbkplay/{id}-1-1.html"},
 		  "2":{"name":"555影视","url":"https://www.xawqxh.net","play":"/vodplay/{id}-1-1.html"},
 	  "3":{"name":"饭团星球","url":"https://www.fantuanhd.com","play":"/play/id-{id}-1-1.html"}
