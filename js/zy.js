@@ -1,20 +1,12 @@
 //内容开始
 var pingguozy={"0":{"name":"三九","url":"https://www.39kan.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-	       "1":{"name":"番茄","url":"https://api.fqzy.cc/api.php/provide/vod/at/json/","play":"https://jiexi.8b5q.cn/player/jx.php?url="},
-               "2":{"name":"诺迅","url":"https://caiji.nxflv.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "3":{"name":"鱼乐","url":"https://api.yulecj.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "4":{"name":"量子","url":"http://cj.lziapi.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "5":{"name":"冠军","url":"https://www.cmpzy.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "6":{"name":"多多","url":"https://www.ddzyz1.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "7":{"name":"卧龙","url":"https://collect.wolongzyw.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "8":{"name":"TOM","url":"https://api.tomcaiji.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "9":{"name":"快车","url":"https://caiji.kczyapi.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "10":{"name":"酷点","url":"https://api.kuapi.cc/api.php/provide/vod/at/json/","play":"./jx/index.html?url="},
-               "11":{"name":"神马","url":"http://www.zitv.cc/api.php/provide/vod/at/json/","play":"./jx/index.html?url="},
-               "12":{"name":"光速","url":"https://api.guangsuapi.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "13":{"name":"速更","url":"https://sugengzy.cn/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "14":{"name":"新浪","url":"https://api.xinlangapi.com/xinlangapi.php/provide/vod/","play":"./jx/index.html?url="},
-               "15":{"name":"松鼠","url":"https://m3u8.songshuzy.com/api.php/provide/vod/","play":"./jx/index.html?url="}};
+               "1":{"name":"鱼乐","url":"https://api.yulecj.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+	       "2":{"name":"快播","url":"https://www.kuaibozy.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+               "3":{"name":"卧龙","url":"https://collect.wolongzyw.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+               "4":{"name":"快车","url":"https://caiji.kczyapi.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+               "5":{"name":"酷点","url":"https://api.kuapi.cc/api.php/provide/vod/at/json/","play":"./jx/index.html?url="},
+               "6":{"name":"光速","url":"https://api.guangsuapi.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+               "7":{"name":"新浪","url":"https://api.xinlangapi.com/xinlangapi.php/provide/vod/","play":"./jx/index.html?url="}};
 //其他APP
 var appzy={   
            "0":{"name":"佳佳影视","url":"https://www.jiajia.pub/api.php/v1.vod"},
