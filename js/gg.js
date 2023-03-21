@@ -1,5 +1,5 @@
 var jiekou="https://www.5020.work/json/?url=";
-var jiekou1="https://bird.ioliu.cn/v1?url=;
+var jiekou1="https://bird.ioliu.cn/v1?url=";
 var jiekou2="http://host084219.free.cnaaa7.com/json/huancun.php?url=";
 var jiekou3="http://so.7080.wang/json/huancun.php?url=";
 var jsonjx="https://www.5020.work/json/jx1.php?url=";
