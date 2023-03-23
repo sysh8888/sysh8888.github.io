@@ -200,14 +200,14 @@ document.getElementById("app").innerHTML =fenapp;
 var fenqita='<li><span  class="text-muted">🎾其他站:</span></li><li><span class="am-btn am-btn-default">🥭360聚合</span></li>';
 document.getElementById("qita").innerHTML =fenqita; 
 //站外列表
-var fenzhanwai='<li><span  class="text-muted">🀄️站外推荐:</span></li>';
-for ( i in zwzy)
-{ fenzhanwai+='<li><a class="am-btn am-btn-default" href="javascript:zy4('+i+');">🍧'+zwzy[i]["name"]+'</a></li>';} 
+var fenzhanwai='<li><span  class="text-muted">🀄️推荐搜索:</span></li>';
+for ( i in tjzy)
+{ fenzhanwai+='<li><a class="am-btn am-btn-default" href="javascript:zy5('+i+');">🍧'+tjzy[i]["name"]+'</a></li>';} 
 document.getElementById("zw").innerHTML =fenzhanwai; 
 setTimeout(function(){frompg('0');},1000);
 setTimeout(function(){zy2('0');},2000);
-setTimeout(function(){zy4('0');},2000);
-
+//setTimeout(function(){zy4('0');},2000);
+zy5('0');
 //360资源
 function __jp0(data){
  //console.log(data); 
@@ -224,6 +224,16 @@ function __jp0(data){
 var script = document.createElement('script');
 script.src = 'https://api.so.360kan.com/index?force_v=1&kw='+lianjie1+'&from=&pageno=1&v_ap=1&tab=all&cb=__jp0';
 document.body.insertBefore(script, document.body.firstChild);
+
+function zy5(id) {
+         var Node = $("#loading");  
+                    Node.hide();
+                    var jieguo4="";
+     jieguo4='<li><a class="movie-item" href="./if/1.html?dz='+tjzy[id]["url"]+ lianjie1+'" target="_blank"><div class="movie-cover"><img src="'+tjzy[id]["pic"]+'" ><span class="movie-description"><i class="description-bg"></i><p>推荐网：'+tjzy[id]["name"]+'</p><p>点击详情</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+lianjie1+'</p><p class="movie-tags">点击详情</p></div></a></li>';
+     //console.log(tjzy[id]["url"]);
+                     $("#list4").html(jieguo4);
+                  $("#list4").slideDown();
+}
 </script>
 <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
 </body>
