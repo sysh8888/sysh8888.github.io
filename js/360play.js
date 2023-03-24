@@ -32,7 +32,7 @@ $.ajax({
 			   else if (id=="2"||id=="4"){var bolie=data.data.allepidetail;
 			    for (var key in bolie){
 				  var neinei="am-tab-panel am-fade am-in am-active";var boliee='am-active';
-bolie1 +='<li class="'+boliee+'" ><a href="#'+key+'">'+key+'</a></li>';  		   
+bolie1 +='<li class="'+boliee+'" ><a href="#'+key+'">⏳'+key+'</a></li>';  		   
 	for (i=0;i<bolie[key].length ;i++){
 		neirong1 +='<button type="button" class="am-btn am-btn-sm am-round btn-play-source" title="'+bolie[key][i].playlink_num+'" value="'+jx+bolie[key][i].url+'"  onclick="GetHref(this);">'+bolie[key][i].playlink_num+'</button>';
 		var vide=bolie[key][i].url;var vide1=bolie[key][i].playlink_num;
@@ -46,7 +46,7 @@ bolie1 +='<li class="'+boliee+'" ><a href="#'+key+'">'+key+'</a></li>';
 			   else if (id=="3"){var bolie=data.data.defaultepisode;
 			   bolie1 +='<li class="am-active" ><a href="#zy">播放地址</a></li>'; 
 			   	for (i=0;i<bolie.length ;i++){
-		neirong1 +='<button type="button" class="am-btn am-btn-sm am-round btn-play-source" title="'+bolie[i].period+'" value="'+jx+bolie[i].url+'"  onclick="GetHref(this);">'+bolie[i].period+'</button>';
+		neirong1 +='<button type="button" class="am-btn am-btn-sm am-round btn-play-source" title="'+bolie[i].period+'" value="'+jx+bolie[i].url+'"  onclick="GetHref(this);">⏳'+bolie[i].period+'</button>';
 	}neirong ='<div class="am-tab-panel am-fade am-in am-active" id="zy">'+neirong1+'</div>';
 	var vide=bolie[0].url;var vide1=bolie[0].period;
 			   }
