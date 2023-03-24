@@ -31,7 +31,7 @@ var str1= new Array();
 for (h=0;h<strs.length ;h++){
   str1[h]=strs[h].split("#");
   if(h==0){var neinei="am-tab-panel am-fade am-in am-active";var boliee='am-active';}else{var neinei="am-tab-panel am-fade tv-res"; var boliee='am';}
-bolie1 +='<li class="'+boliee+'" ><a href="#'+bolie[h]+'">'+bolie[h]+'</a></li>';
+bolie1 +='<li class="'+boliee+'" ><a href="#'+bolie[h]+'">⏳'+bolie[h]+'</a></li>';
   for (i=0;i<str1[h].length ;i+=2)
   {
       neirong1 +='<button type="button" class="am-btn am-btn-sm am-round" title="'+str1[h][i]+'" value="'+jx+str1[h][i+1]+'"  onclick="GetHref(this);">'+str1[h][i]+'</button>';
