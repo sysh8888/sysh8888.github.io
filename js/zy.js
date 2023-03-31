@@ -14,7 +14,7 @@ var appzy={
            "2":{"name":"霹雳影视","url":"https://plyy.cc/api.php/v1.vod"},
            "3":{"name":"188看","url":"https://www.188kan.com/api.php/v1.vod"},
 	   "4":{"name":"影库","url":"https://yingkudy.com/lvdou_api.php/v1.vod"},
-           "5":{"name":"HG影视","url":"http://bbq.1006.tk/api.php/v1.vod"}};		
+           "5":{"name":"免费影视","url":"https://wlgwys.com/api.php/v1.vod"}};		
 
 //其他番茄、优剧、欧乐、1080tv
 var fqzy={"0":{"name":"番茄","url":"http://api.fqzy.cc/api.php/provide/vod/at/json/","play":"https://jiexi.8b5q.cn/player/jx.php?url="},
