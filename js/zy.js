@@ -1,5 +1,5 @@
 //内容开始
-var pingguozy={"0":{"name":"非凡","url":"https://cj.ffzyapi.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+var pingguozy={"0":{"name":"非凡","url":"http://ffzy5.tv/api.php/provide/vod/","play":"./jx/index.html?url="},
                "1":{"name":"鱼乐","url":"https://api.yulecj.com/api.php/provide/vod/","play":"./jx/index.html?url="},
 	       "2":{"name":"三九","url":"https://www.39kan.com/api.php/provide/vod/","play":"./jx/index.html?url="},
                "3":{"name":"卧龙","url":"https://collect.wolongzyw.com/api.php/provide/vod/","play":"./jx/index.html?url="},
