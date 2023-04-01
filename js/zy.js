@@ -9,8 +9,8 @@ var pingguozy={"0":{"name":"非凡","url":"https://cj.ffzyapi.com/api.php/provid
                "7":{"name":"新浪","url":"https://api.xinlangapi.com/xinlangapi.php/provide/vod/","play":"./jx/index.html?url="}};
 //其他APP
 var appzy={   
-           "0":{"name":"看剧影视","url":"https://app.ishen520.com/api.php/v1.vod"},
-           "1":{"name":"佳佳影视","url":"https://www.jiajia.pub/api.php/v1.vod"},
+           "0":{"name":"汪了个汪","url":"https://wlgwys.com//api.php/v1.vod"},
+           "1":{"name":"看剧影视","url":"https://app.ishen520.com/api.php/v1.vod"},
            "2":{"name":"霹雳影视","url":"https://plyy.cc/api.php/v1.vod"},
            "3":{"name":"188看","url":"https://www.188kan.com/api.php/v1.vod"},
 	   "4":{"name":"影库","url":"https://yingkudy.com/lvdou_api.php/v1.vod"},
