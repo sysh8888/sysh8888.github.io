@@ -27,6 +27,7 @@ var zwzy={"0":{"name":"爱看影视","url":"https://ikanys.tv","play":"/vodplay/
 	  "3":{"name":"饭团星球","url":"https://www.fantuanhd.com","play":"/play/id-{id}-1-1.html"}
 		  };
 //推荐资源
-var tjzy={"0":{"name":"邦宁云搜","url":"https://video.isyour.love/Search/SearchName/","pic":"https://pic1.zhimg.com/80/v2-87e52a2009e862e1b9e49524e4e0e1a8_720w.webp"},
-		  "1":{"name":"M1907","url":"https://z1.m1907.top/?jx=","pic":"https://picx.zhimg.com/80/v2-d30a21cb503f34f6e922288b69a9172f_720w.webp?source=1940ef5c"}
+var tjzy={"0":{"name":"爱看","url":"https://www.ikanbot.com/search?q=","pic":"https://pic1.zhimg.com/80/v2-190cf20fa3ae0fd8bdd83524ebe9fbf0_720w.webp"},
+	  "1":{"name":"邦宁云搜","url":"https://video.isyour.love/Search/SearchName/","pic":"https://pic1.zhimg.com/80/v2-87e52a2009e862e1b9e49524e4e0e1a8_720w.webp"},
+	  "2":{"name":"M1907","url":"https://z1.m1907.top/?jx=","pic":"https://picx.zhimg.com/80/v2-d30a21cb503f34f6e922288b69a9172f_720w.webp?source=1940ef5c"}
 		  };
