@@ -1,8 +1,8 @@
 //内容开始
-var pingguozy={"0":{"name":"非凡","url":"http://ffzy5.tv/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "1":{"name":"鱼乐","url":"https://api.yulecj.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-	       "2":{"name":"三九","url":"https://www.39kan.com/api.php/provide/vod/","play":"./jx/index.html?url="},
-               "3":{"name":"卧龙","url":"https://collect.wolongzyw.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+var pingguozy={"0":{"name":"蜂蜜","url":"http://6611.me/api.php/provide/vod/","play":"./jx/index.html?url="},
+               "1":{"name":"非凡","url":"http://ffzy5.tv/api.php/provide/vod/","play":"./jx/index.html?url="},
+	       "2":{"name":"量子","url":"https://lzizy8.com/api.php/provide/vod/","play":"./jx/index.html?url="},
+               "3":{"name":"三九","url":"https://www.39kan.com/api.php/provide/vod/","play":"./jx/index.html?url="},
                "4":{"name":"快车","url":"https://caiji.kczyapi.com/api.php/provide/vod/","play":"./jx/index.html?url="},
                "5":{"name":"酷点","url":"https://api.kuapi.cc/api.php/provide/vod/at/json/","play":"./jx/index.html?url="},
                "6":{"name":"光速","url":"https://api.guangsuapi.com/api.php/provide/vod/","play":"./jx/index.html?url="},
