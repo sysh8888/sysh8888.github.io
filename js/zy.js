@@ -9,7 +9,7 @@ var pingguozy={"0":{"name":"蜂蜜","url":"http://6611.me/api.php/provide/vod/",
                "7":{"name":"新浪","url":"https://api.xinlangapi.com/xinlangapi.php/provide/vod/","play":"./jx/index.html?url="}};
 //其他APP
 var appzy={   
-           "0":{"name":"汪了个汪","url":"https://wlgwys.com//api.php/v1.vod"},
+           "0":{"name":"123看","url":"https://123aktv.com/api.php/v1.vod"},
            "1":{"name":"看剧影视","url":"https://app.ishen520.com/api.php/v1.vod"},
            "2":{"name":"霹雳影视","url":"https://plyy.cc/api.php/v1.vod"},
            "3":{"name":"188看","url":"https://www.188kan.com/api.php/v1.vod"},
