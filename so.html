@@ -97,23 +97,6 @@
 
 
 <div class="am-panel am-panel-default" style="margin-bottom: 10px">
-<ul class="ty-screen__list clearfix"><div class="am-breadcrumb"><li><span class="text-muted">🏓其他站已选:</span></li><li><span><b style="color:#CC0033" id="bolei3">360影视</b></span></li></div></ul>
-<ul class="ty-screen__list clearfix" id="qita">
-</ul>
-</div> 
-<ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list3">
-<div id="loading">
-<div class="k-ball7a"></div>
-<div class="k-ball7b"></div>
-<div class="k-ball7c"></div>
-<div class="k-ball7d"></div>
-</div>
-<h3>资源加载中延迟3秒。。。</h3>
-</ul>
-
-
-
-<div class="am-panel am-panel-default" style="margin-bottom: 10px">
 <ul class="ty-screen__list clearfix"><div class="am-breadcrumb"><li><span class="text-muted">🃏站外已选:</span></li><li><span><b style="color:#CC0033" id="bolei4">默认</b></span></li></div></ul>
 <ul class="ty-screen__list clearfix" id="zw">
 </ul>
@@ -196,9 +179,6 @@ var fenapp='<li><span  class="text-muted">🚕APP选择:</span></li>';
 for ( h in appzy)
 { fenapp+='<li><a class="am-btn am-btn-default" href="javascript:zy2('+h+');">🚏'+appzy[h]["name"]+'</a></li>';} 
 document.getElementById("app").innerHTML =fenapp;
-//其他列表
-var fenqita='<li><span  class="text-muted">🎾其他站:</span></li><li><span class="am-btn am-btn-default">🥭360聚合</span></li>';
-document.getElementById("qita").innerHTML =fenqita; 
 //站外列表
 var fenzhanwai='<li><span  class="text-muted">🀄️推荐搜索:</span></li>';
 for ( i in tjzy)
@@ -208,22 +188,6 @@ setTimeout(function(){frompg('0');},1000);
 setTimeout(function(){zy2('0');},2000);
 //setTimeout(function(){zy4('0');},2000);
 zy5('0');
-//360资源
-function __jp0(data){
- //console.log(data); 
-    var jieguo5="";
-    if(data.data.longData.length==0){setTimeout(function(){frompg('0');},1000);} else{
- 
-          for (var p=0;p<data.data.longData.rows.length;p++)
-			       { jieguo5+='<li><a class="movie-item" href="./play.html?q='+data.data.longData.rows[p].en_id+'&id='+data.data.longData.rows[p].cat_id+'&zy=360" target="_blank"><div class="movie-cover"><img src="'+data.data.longData.rows[p].cover+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.longData.rows[p].coverInfo.quality+'</p><p>年代：'+data.data.longData.rows[p].year+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.longData.rows[p].titleTxt+'</p><p class="movie-tags" title="演员">'+data.data.longData.rows[p].actList[0]+'</p></div></a></li>';} 
-
-  }
-   document.getElementById("list3").innerHTML =jieguo5;
- 
-}
-var script = document.createElement('script');
-script.src = 'https://api.so.360kan.com/index?force_v=1&kw='+lianjie1+'&from=&pageno=1&v_ap=1&tab=all&cb=__jp0';
-document.body.insertBefore(script, document.body.firstChild);
 
 function zy5(id) {
          var Node = $("#loading");  
