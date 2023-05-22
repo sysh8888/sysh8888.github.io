@@ -19,9 +19,9 @@
 <link rel="stylesheet" href="./css/app.css">
 <link rel="stylesheet" href="./css/so.css">
 <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
-<script src="./js/zy.js"></script>
+<script crossorigin="anonymous" integrity="sha384-sgoqC3bqmmWCnjh3cuKrC4G2NN2bKvFVxd+zB1/X5HzhNzMkpwhbY81HRS7ETF8K" src="https://lib.baomitu.com/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
+<script src="./js/zy1.js"></script>
 <script src="./js/gg.js"></script>
-<script src="./js/so.js"></script>
 <style>
 /* 加载 */
   #loading{position:.5;width:60px;height:60px;z-index:999;margin:80px auto}.k-ball7a{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#19a68c;animation-delay:-1.5s}.k-ball7b{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#f63d3a;animation-delay:-1s}.k-ball7c{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#fda543;animation-delay:-.5s}.k-ball7d{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#193b48}@keyframes k-loadingA{0{height:15px}50%{height:35px}100%{height:15px}}@keyframes k-loadingB{0{width:15px}50%{width:35px}100%{width:15px}}@keyframes k-loadingC{0{transform:translate(0,0)}50%{transform:translate(0,15px)}100%{transform:translate(0,0)}}@keyframes k-loadingD{0{transform:rotate(0)}50%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}@keyframes k-loadingE{0{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes k-loadingF{0%{opacity:0}100%{opacity:1}}@keyframes k-loadingG{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(70px,0) rotate(360deg)}100%{transform:translate(0,0) rotate(0)}}@keyframes k-loadingGb{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(-70px,0) rotate(-360deg)}100%{transform:translate(0,0) rotate(0)}}@keyframes k-loadingH{0%{width:15px}50%{width:35px;padding:4px}100%{width:15px}}@keyframes k-loadingHb{0%{width:15px;background-color:#607d8b}50%{width:35px;padding:4px;background-color:#455a64}100%{width:15px;background-color:#263238}}@keyframes k-loadingI{100%{transform:rotate(360deg)}}@keyframes k-loadingIb{0%,100%{transform:scale(0)}50%{transform:scale(1)}}@keyframes k-loadingJ{0%,100%{transform:translate(0,0)}50%{transform:translate(80px,0);background-color:#f5634a;width:25px}}@keyframes k-loadingK{0%{left:0;transform:scale(1.1)}50%{left:100%;transform:scale(1)}100%{left:0;transform:scale(1.1)}}@keyframes k-loadingL{0%{left:100%;transform:scale(1.1)}50%{left:0;transform:scale(1)}100%{left:100%;transform:scale(1.1)}}@keyframes k-loadingM{0%{z-index:0}50%{z-index:1}100%{z-index:0}}@keyframes k-loadingN{0%{z-index:1}50%{z-index:0}100%{z-index:1}}@keyframes k-loadingO{0%,100%{transform:translate(0)}25%{transform:translate(160%)}50%{transform:translate(160%,160%)}75%{transform:translate(0,160%)}}@keyframes k-loadingP{0%{transform:translateY(0)}35%{transform:translateY(0);opacity:.3}50%{transform:translateY(-20px);opacity:.8}70%{transform:translateY(3px);opacity:.8}85%{transform:translateY(-3px)}}@keyframes k-loadingQ{33%{transform:translate(0,0);opacity:.7}66%{transform:translate(0,0);opacity:.7}}@keyframes k-loadingR{0%{opacity:.5;background:#000}30%{opacity:.5;background:#666}60%{opacity:0}75%{opacity:0}100%{opacity:.5;background:#000}}@keyframes k-loadingS{40%{transform:translateX(0);opacity:.8}100%{transform:translateX(300px);opacity:0}}
@@ -61,78 +61,15 @@
 <input type="hidden" name="tempid" value="1"> <input type="search" placeholder="搜索电影、电视剧、动漫……" class="bpz input-bar" name="wd" id="wd"><button class="bpz search-btn">搜索影视</button></form><div class="bpz acp">https://7080.wang 一个简单的影视搜索！</div></div></div>
 <div data-am-widget="list_news" class="am-list-news am-list-news-default">
 
-<div class="am-panel am-panel-default" style="margin-bottom: 10px">
-<ul class="ty-screen__list clearfix"><div class="am-breadcrumb"><li><span class="text-muted">🚌APP已选:</span></li><li><span><b style="color:#CC0033" id="bolei1">默认</b></span></li></div></ul>
-<ul class="ty-screen__list clearfix" id="app">
-</ul>
-</div> 
 
-<ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list1">
-<div id="loading">
-<div class="k-ball7a"></div>
-<div class="k-ball7b"></div>
-<div class="k-ball7c"></div>
-<div class="k-ball7d"></div>
-</div>
-<h3>资源加载中延迟1秒。。。</h3>
+
+<ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list">
 </ul>
 
-
-
-<div class="am-panel am-panel-default" style="margin-bottom: 10px">
-<ul class="ty-screen__list clearfix"><div class="am-breadcrumb"><li><span class="text-muted">🚴🏾‍♀️资源网已选:</span></li><li><span><b style="color:#CC0033" id="bolei2">默认</b></span></li></div></ul>
-<ul class="ty-screen__list clearfix" id="ff">
-</ul>
-</div> 
-<ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list2">
-<div id="loading">
-<div class="k-ball7a"></div>
-<div class="k-ball7b"></div>
-<div class="k-ball7c"></div>
-<div class="k-ball7d"></div>
-</div>
-<h3>资源加载中延迟2秒。。。</h3>
-</ul>
-
-
-
-<div class="am-panel am-panel-default" style="margin-bottom: 10px">
-<ul class="ty-screen__list clearfix"><div class="am-breadcrumb"><li><span class="text-muted">🃏站外已选:</span></li><li><span><b style="color:#CC0033" id="bolei4">默认</b></span></li></div></ul>
-<ul class="ty-screen__list clearfix" id="zw">
-</ul>
-</div> 
-<ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list4">
-<div id="loading">
-<div class="k-ball7a"></div>
-<div class="k-ball7b"></div>
-<div class="k-ball7c"></div>
-<div class="k-ball7d"></div>
-</div>
-<h3>资源加载中延迟2秒。。。</h3>
-</ul>
 
 </div>
 </div>
-<script>
-$('.search-item-href').each(function(){
-    var href = $(this).attr('href');
-    if(href == '') {
-        $(this).removeAttr('href');
-        $(this).removeAttr('target');
-    }
-});
-$('.search-item-btn').each(function(){
-    var href = $(this).attr('href');
-    if(href == '') {
-        $(this).removeAttr('href');
-        $(this).removeAttr('target');
-        $(this).attr('disabled', 'disabled');
-        $(this).html('无法播放');
-        $(this).removeClass('am-btn-secondary');
-        $(this).addClass('am-btn-default');
-    }
-});
-</script>
+
 <div data-am-widget="gotop" class="am-gotop am-gotop-fixed" title="返回顶部">
 <a href="#top" title="">
 <i class="am-gotop-icon am-icon-arrow-up"></i>
@@ -149,7 +86,38 @@ $('.search-item-btn').each(function(){
 </ul>
 </div>
 <script type="text/javascript">
-    
+  //资源列表
+//console.log(appzy);
+function go(wd){
+//console.log(appzy);
+
+for (var i=0;i<appzy.length;i++){ 
+//console.log(i);
+(function(i){
+setTimeout(function () {
+var jieguo="";
+var url=appzy[i].url+"?page=1&wd="+wd;
+           var name=appzy[i].name;
+		  $.get(url, function(data) {  
+		   var data=JSON.parse(data);
+          
+          for (var j=0;j<data.data.list.length;j++)
+			       {var tu=data.data.list[j].vod_pic;
+              //if(tu.substr(0, 4) == "http")
+              if(tu.indexOf("//") != -1)
+              {var tu1=tu;
+}else{var urll=appzy[i].url;var tu2= urll.match(/https:\/\/(\S*)\/api/)[1];var tu1="https://"+tu2+"/"+tu;
+}
+               jieguo+='<li><a class="movie-item" href="./play.html?q='+data.data.list[j].vod_id+'&id='+i+'&zy=qt" target="_blank"><div class="movie-cover"><img id="img"  src="'+tu1+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.list[j].vod_remarks+'</p><p>年代：'+data.data.list[j].vod_year+'</p><p>来源:'+name+'</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[j].vod_name+'</p><p class="movie-tags" title="演员">'+data.data.list[j].vod_actor+'</p></div></a></li>';} 
+  $('#list').append((jieguo)); 
+  });     
+	   
+	   }, 2000);
+   })(i)
+}
+
+}  
+//获取搜索
  function GetQueryString(name)
    {
         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -158,9 +126,9 @@ $('.search-item-btn').each(function(){
  
    }
 var lianjie = GetQueryString("wd");
-
+//判断是否为空
 if(lianjie !=null && lianjie.toString().length>1){
-  var lianjie1=lianjie;
+  var lianjie1=lianjie; go(lianjie1);
 } else{var lianjie1="";}
 
 document.getElementById("wd").value =lianjie1;
@@ -169,36 +137,14 @@ document.getElementById("wd").value =lianjie1;
 <script type="text/javascript">
 document.getElementById("toutou").innerHTML =toutou;
 document.getElementById("souji").innerHTML =souji;
-//资源列表
-var fenff='<li><span  class="text-muted">🚴‍♂️资源选择:</span></li>';
-for ( k in pingguozy)
-{ fenff+='<li><a class="am-btn am-btn-default" href="javascript:frompg('+k+');">🎋'+pingguozy[k]["name"]+'</a></li>';} 
-document.getElementById("ff").innerHTML =fenff;
-//app列表
-var fenapp='<li><span  class="text-muted">🚕APP选择:</span></li>';
-for ( h in appzy)
-{ fenapp+='<li><a class="am-btn am-btn-default" href="javascript:zy2('+h+');">🚏'+appzy[h]["name"]+'</a></li>';} 
-document.getElementById("app").innerHTML =fenapp;
-//站外列表
-var fenzhanwai='<li><span  class="text-muted">🀄️推荐搜索:</span></li>';
-for ( i in tjzy)
-{ fenzhanwai+='<li><a class="am-btn am-btn-default" href="javascript:zy5('+i+');">🍧'+tjzy[i]["name"]+'</a></li>';} 
-document.getElementById("zw").innerHTML =fenzhanwai; 
-setTimeout(function(){frompg('0');},1000);
-setTimeout(function(){zy2('0');},2000);
-//setTimeout(function(){zy4('0');},2000);
-zy5('0');
 
-function zy5(id) {
-         var Node = $("#loading");  
-                    Node.hide();
-                    var jieguo4="";
-     jieguo4='<li><a class="movie-item" href="./if/1.html?dz='+tjzy[id]["url"]+ lianjie1+'" target="_blank"><div class="movie-cover"><img src="'+tjzy[id]["pic"]+'" ><span class="movie-description"><i class="description-bg"></i><p>推荐网：'+tjzy[id]["name"]+'</p><p>点击详情</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+lianjie1+'</p><p class="movie-tags">点击详情</p></div></a></li>';
-     //console.log(tjzy[id]["url"]);
-                     $("#list4").html(jieguo4);
-                  $("#list4").slideDown();
-}
 </script>
 <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+<script language="JavaScript">
+  function showerrimg(obj){
+       var errorimg = "/img/load.gif";//替换图片地址
+       obj.src = errorimg;
+  }
+  </script>
 </body>
 </html>
