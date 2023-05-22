@@ -95,13 +95,14 @@ document.getElementById("souji").innerHTML =souji;
  //console.log(data);
  var timu1="";
    for (i=0;i<data.data.length ;i++)
-     {timu1+='<li><a class="movie-item" href="./so.html?wd='+data.data[i].title+'"><div class="movie-cover"><img src="'+data.data[i].image_cover+'" loading="lazy" ><span class="movie-description"><i class="description-bg"></i><p>'+data.data[i].tag+'</p><p>日期：'+data.data[i].showDate+'</p><p>'+data.data[i].dq_updatestatus+'</p></span></div><div class="movie-title"><p class="movie-name">'+data.data[i].title+'</p><p class="movie-tags">'+data.data[i].desc+'</p></div></a></li>'}
+     {var tu=data.data[i].image_cover;var tu1=tu.replace('http://','https://')
+      timu1+='<li><a class="movie-item" href="./so.html?wd='+data.data[i].title+'"><div class="movie-cover"><img src="'+tu1+'" loading="lazy" ><span class="movie-description"><i class="description-bg"></i><p>'+data.data[i].tag+'</p><p>日期：'+data.data[i].showDate+'</p><p>'+data.data[i].dq_updatestatus+'</p></span></div><div class="movie-title"><p class="movie-name">'+data.data[i].title+'</p><p class="movie-tags">'+data.data[i].desc+'</p></div></a></li>'}
  document.getElementById("lie1").innerHTML=timu1;
  })
- var ver="20230422";document.getElementById("ver").innerHTML=ver;
+
+
  </script>
 <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
 <script src="./js/tongji.js"></script>
 </body>
 </html>
-
