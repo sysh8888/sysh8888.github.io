@@ -96,7 +96,7 @@ document.getElementById("souji").innerHTML =souji;
  var timu1="";
    for (i=0;i<data.data.length ;i++)
      {var tu=data.data[i].image_cover;var tu1=tu.replace('http://','https://')
-      timu1+='<li><a class="movie-item" href="./so.html?wd='+data.data[i].title+'"><div class="movie-cover"><img src="'+tu1+'" loading="lazy" ><span class="movie-description"><i class="description-bg"></i><p>'+data.data[i].tag+'</p><p>日期：'+data.data[i].showDate+'</p><p>'+data.data[i].dq_updatestatus+'</p></span></div><div class="movie-title"><p class="movie-name">'+data.data[i].title+'</p><p class="movie-tags">'+data.data[i].desc+'</p></div></a></li>'}
+      timu1+='<li><a class="movie-item" href="./so.html?wd='+data.data[i].title+'"><div class="movie-cover"><img src="'+tu1+'" loading="lazy" referrerPolicy="no-referrer"><span class="movie-description"><i class="description-bg"></i><p>'+data.data[i].tag+'</p><p>日期：'+data.data[i].showDate+'</p><p>'+data.data[i].dq_updatestatus+'</p></span></div><div class="movie-title"><p class="movie-name">'+data.data[i].title+'</p><p class="movie-tags">'+data.data[i].desc+'</p></div></a></li>'}
  document.getElementById("lie1").innerHTML=timu1;
  })
 
