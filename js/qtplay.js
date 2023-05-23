@@ -11,7 +11,7 @@ $.getJSON(dataroot, function(data){
   for (h=0;h<data.data.vod_play_list.length ;h++){
 	  	var neirong1='';
     if(h==0){var neinei="am-tab-panel am-fade am-in am-active";var boliee='am-active';}else{var neinei="am-tab-panel am-fade tv-res"; var boliee='am';}
-  bolie1 +='<li class="'+boliee+'" ><a href="#'+data.data.vod_play_list[h].from+'">⏳'+data.data.vod_play_list[h].from+'</a></li>';
+  bolie1 +='<li class="'+boliee+'" ><a href="#'+data.data.vod_play_list[h].from+'">'+data.data.vod_play_list[h].from+'</a></li>';
     for (i=0;i<data.data.vod_play_list[h].urls.length ;i++)
     {
         neirong1 +='<button type="button" class="am-btn am-btn-sm am-round" title="'+data.data.vod_play_list[h].urls[i].name+'" value="'+jx+data.data.vod_play_list[h].urls[i].url+'"  onclick="GetHref(this);">'+data.data.vod_play_list[h].urls[i].name+'</button>';
@@ -19,6 +19,11 @@ $.getJSON(dataroot, function(data){
   neirong +='<div class="'+neinei+'" id="'+data.data.vod_play_list[h].from+'">'+neirong1+'</div>';
   }
   //console.log(str1);
+  var tu=data.data.vod_pic;
+   if(tu.indexOf("//") != -1)
+              {var tu1=tu;
+}else{var urll=appzy[id]["url"];var tu2= urll.match(/https:\/\/(\S*)\/api/)[1];var tu1="https://"+tu2+"/"+tu;
+}
   var vide1=data.data.vod_play_list[0].urls[0].name;
   var vide=data.data.vod_play_list[0].urls[0].url;  
   document.getElementById("demo1").innerHTML=vide1;
@@ -26,7 +31,7 @@ $.getJSON(dataroot, function(data){
   document.getElementById("bolie2").innerHTML =bolie1;
   document.getElementById("neirong").innerHTML =neirong;
   document.getElementById("name").innerHTML =data.data.vod_name;
-  document.getElementById("tu").src=data.data.vod_pic;
+  document.getElementById("tu").innerHTML='<img alt="" src="'+tu1+'" width="127px" height="179px" onerror="javascript:this.src=\'./img/nopic.gif\';">';
   document.getElementById("nian").innerHTML =data.data.vod_year;
   document.getElementById("diqu").innerHTML =data.data.vod_area;
   document.getElementById("daoyan").innerHTML =data.data.vod_director;
