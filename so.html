@@ -102,8 +102,8 @@ var url=appzy[i].url+"?page=1&wd="+wd;
               {var tu1=tu;
 }else{var urll=appzy[i].url;var tu2= urll.match(/https:\/\/(\S*)\/api/)[1];var tu1="https://"+tu2+"/"+tu;
 }
-               jieguo+='<li><a class="movie-item" href="./play.html?q='+data.data.list[j].vod_id+'&id='+i+'&zy=qt" target="_blank"><div class="movie-cover"><img id="img"  src="'+tu1+'" onerror="javascript:this.src=\'./img/nopic.gif\';" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.list[j].vod_remarks+'</p><p>年代：'+data.data.list[j].vod_year+'</p><p>来源:'+name+'</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[j].vod_name+'</p><p class="movie-tags" title="演员">'+data.data.list[j].vod_actor+'</p></div></a></li>';} 
-  $('#list').append((jieguo)); 
+                  jieguo+='<li><a class="movie-item" href="./play.html?q='+data.data.list[j].vod_id+'&id='+i+'&zy=qt" target="_blank"><div class="movie-cover"><img id="img"  src="'+tu1+'" onerror="javascript:this.src=\'./img/nopic.gif\';" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.list[j].vod_remarks+'</p><p>年代：'+data.data.list[j].vod_year+'</p><p>'+data.data.list[j].vod_actor+'</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[j].vod_name+'</p><p class="movie-tags" title="来源">视频来源:'+name+'</p></div></a></li>';} 
+			  $('#list').append((jieguo)); 
   });     
 	   
 	   }, 2000);
