@@ -12,4 +12,4 @@ var jsonjx="https://www.5020.work/json/jx1.php?url=";//通用
 var appqt=jiekou4;
 var appfq=jiekou5;
 var toutou='<li><a href="//7080.wang">首页</a></li><li><a href="/app.html?zy=0&type=0&class=&area=&year=&by=&limit=21&page=1">APP分类</a></li><li><a href="/live/index.html">IPTV</a></li><li><a href="https://mao.7080.wang" target="_blank">APP下载</a></li>';
-var souji='<li><a href="//7080.wang" class=""><img src="/img/film.png" alt="首页 " /><span class="am-navbar-label">首页</span></a></li><span class="am-navbar-label">APP分类</span></a></li><li><a href="/live/index.html" class=""><img src="./img/zongyi.png" alt="IPTV" /><span class="am-navbar-label">电视直播</span></a></li>';
+var souji='<li><a href="//7080.wang" class=""><img src="/img/film.png" alt="首页 " /><span class="am-navbar-label">首页</span></a></li><li><a href="/app.html?zy=0&type=0&class=&area=&year=&by=&limit=21&page=1"><img src="/img/mg.png" alt="分类 " /><span class="am-navbar-label">APP分类</span></a></li><li><a href="/live/index.html" class=""><img src="./img/zongyi.png" alt="IPTV" /><span class="am-navbar-label">电视直播</span></a></li>';
