@@ -20,13 +20,8 @@
 <link rel="stylesheet" href="./css/app.css">
 <link rel="stylesheet" href="./css/so.css">
 <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
-<script crossorigin="anonymous" integrity="sha384-sgoqC3bqmmWCnjh3cuKrC4G2NN2bKvFVxd+zB1/X5HzhNzMkpwhbY81HRS7ETF8K" src="https://lib.baomitu.com/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
 <script src="./js/zy1.js"></script>
 <script src="./js/gg.js"></script>
-<style>
-/* 加载 */
-  #loading{position:.5;width:60px;height:60px;z-index:999;margin:80px auto}.k-ball7a{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#19a68c;animation-delay:-1.5s}.k-ball7b{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#f63d3a;animation-delay:-1s}.k-ball7c{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#fda543;animation-delay:-.5s}.k-ball7d{border:0;margin:0;width:16px;height:16px;position:absolute;border-radius:50%;animation:k-loadingO 2s ease infinite;background:#193b48}@keyframes k-loadingA{0{height:15px}50%{height:35px}100%{height:15px}}@keyframes k-loadingB{0{width:15px}50%{width:35px}100%{width:15px}}@keyframes k-loadingC{0{transform:translate(0,0)}50%{transform:translate(0,15px)}100%{transform:translate(0,0)}}@keyframes k-loadingD{0{transform:rotate(0)}50%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}@keyframes k-loadingE{0{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes k-loadingF{0%{opacity:0}100%{opacity:1}}@keyframes k-loadingG{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(70px,0) rotate(360deg)}100%{transform:translate(0,0) rotate(0)}}@keyframes k-loadingGb{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(-70px,0) rotate(-360deg)}100%{transform:translate(0,0) rotate(0)}}@keyframes k-loadingH{0%{width:15px}50%{width:35px;padding:4px}100%{width:15px}}@keyframes k-loadingHb{0%{width:15px;background-color:#607d8b}50%{width:35px;padding:4px;background-color:#455a64}100%{width:15px;background-color:#263238}}@keyframes k-loadingI{100%{transform:rotate(360deg)}}@keyframes k-loadingIb{0%,100%{transform:scale(0)}50%{transform:scale(1)}}@keyframes k-loadingJ{0%,100%{transform:translate(0,0)}50%{transform:translate(80px,0);background-color:#f5634a;width:25px}}@keyframes k-loadingK{0%{left:0;transform:scale(1.1)}50%{left:100%;transform:scale(1)}100%{left:0;transform:scale(1.1)}}@keyframes k-loadingL{0%{left:100%;transform:scale(1.1)}50%{left:0;transform:scale(1)}100%{left:100%;transform:scale(1.1)}}@keyframes k-loadingM{0%{z-index:0}50%{z-index:1}100%{z-index:0}}@keyframes k-loadingN{0%{z-index:1}50%{z-index:0}100%{z-index:1}}@keyframes k-loadingO{0%,100%{transform:translate(0)}25%{transform:translate(160%)}50%{transform:translate(160%,160%)}75%{transform:translate(0,160%)}}@keyframes k-loadingP{0%{transform:translateY(0)}35%{transform:translateY(0);opacity:.3}50%{transform:translateY(-20px);opacity:.8}70%{transform:translateY(3px);opacity:.8}85%{transform:translateY(-3px)}}@keyframes k-loadingQ{33%{transform:translate(0,0);opacity:.7}66%{transform:translate(0,0);opacity:.7}}@keyframes k-loadingR{0%{opacity:.5;background:#000}30%{opacity:.5;background:#666}60%{opacity:0}75%{opacity:0}100%{opacity:.5;background:#000}}@keyframes k-loadingS{40%{transform:translateX(0);opacity:.8}100%{transform:translateX(300px);opacity:0}}
-</style>
 </head>
 <body>
 <header class="am-topbar">
@@ -109,7 +104,7 @@ var url=appzy[i].url+"?page=1&wd="+wd;
               {var tu1=tu;
 }else{var urll=appzy[i].url;var tu2= urll.match(/https:\/\/(\S*)\/api/)[1];var tu1="https://"+tu2+"/"+tu;
 }
-               jieguo+='<li><a class="movie-item" href="./play.html?q='+data.data.list[j].vod_id+'&id='+i+'&zy=qt" target="_blank"><div class="movie-cover"><img id="img"  src="'+tu1+'" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.list[j].vod_remarks+'</p><p>年代：'+data.data.list[j].vod_year+'</p><p>来源:'+name+'</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[j].vod_name+'</p><p class="movie-tags" title="演员">'+data.data.list[j].vod_actor+'</p></div></a></li>';} 
+               jieguo+='<li><a class="movie-item" href="./play.html?q='+data.data.list[j].vod_id+'&id='+i+'&zy=qt" target="_blank"><div class="movie-cover"><img id="img"  src="'+tu1+'" onerror="javascript:this.src=\'./img/nopic.gif\';" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.list[j].vod_remarks+'</p><p>年代：'+data.data.list[j].vod_year+'</p><p>来源:'+name+'</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[j].vod_name+'</p><p class="movie-tags" title="演员">'+data.data.list[j].vod_actor+'</p></div></a></li>';} 
   $('#list').append((jieguo)); 
   });     
 	   
@@ -141,11 +136,6 @@ document.getElementById("souji").innerHTML =souji;
 
 </script>
 <script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
-<script language="JavaScript">
-  function showerrimg(obj){
-       var errorimg = "/img/load.gif";//替换图片地址
-       obj.src = errorimg;
-  }
-  </script>
+
 </body>
 </html>
