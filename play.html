@@ -1,19 +1,10 @@
 <html class="no-js">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>播放器在线播放- 7080网</title>
     <meta name="description" content="播放器在线播放,7080网"/>
     <meta name="keywords" content="播放器在线播放7080网"/>
-    <!-- No Baidu Siteapp-->
-   <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link rel="icon" type="image/png" href="https://jsdelivr.b-cdn.net/gh/sysh8888/sysh8888.github.io/img/favicon.png">
-<meta name="mobile-web-app-capable" content="yes">
-<link rel="icon" sizes="192x192" href="https://jsdelivr.b-cdn.net/gh/sysh8888/sysh8888.github.io/img/app-icon72x72@2x.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Amaze UI" />
 	<script src="https://jsdelivr.b-cdn.net/gh/sysh8888/sysh8888.github.io/js/tongji.js"></script>
 <meta name="referrer"  content="no-referrer">
 <link rel="apple-touch-icon-precomposed" href="https://jsdelivr.b-cdn.net/gh/sysh8888/sysh8888.github.io/img/app-icon72x72@2x.png">
@@ -193,7 +184,7 @@ document.getElementById("souji").innerHTML =souji;
     document.write(unescape("%3Cscript src='"+urll+"' type='text/javascript'%3E%3C/script%3E"));
     </script>
 <script type="text/javascript">
-    $(function (){
+    function tuijian(){
         var url8="https://api.web.360kan.com/v1/rank?cat=2&size=12";
         $.ajax({type:"get",dataType:'jsonp',
         url:url8,
@@ -210,7 +201,7 @@ document.getElementById("souji").innerHTML =souji;
                 document.getElementById("tuijian").innerHTML=tuijian;
         }})
 
-    })
+    }
 	
 	</script>
 
