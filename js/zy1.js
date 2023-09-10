@@ -9,6 +9,5 @@ var appzy=[{"name":"创意","url":"https://www.30dian.cn/api.php/v1.vod"},
 	 {"name":"木白","url":"https://www.chiguafilm.com/api.php/v1.vod"},
 		    {"name":"光年","url":"https://www.gntv.live/api.php/v1.vod"},
 	  {"name":"聚焦","url":"https://www.mjlnl.cn/api.php/v1.vod"},
-	   {"name":"吃瓜","url":"https://www.chiguafilm.com/api.php/v1.vod"},
-	    {"name":"霹雳影视","url":"https://plyy.cc/api.php/v1.vod"}
+	   {"name":"吃瓜","url":"https://www.chiguafilm.com/api.php/v1.vod"}
 		   ];	
