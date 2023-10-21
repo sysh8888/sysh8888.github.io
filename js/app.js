@@ -33,10 +33,14 @@ function nei(zyid,catid,cat,pageno){
 				//console.log(data);
               var timu="";
 
-for(var i=0;i<data.data.list.length;i++){
-timu+='<li><a class="movie-item" href="./play.html?q='+data.data.list[i].vod_id+'&id='+zyid+'&zy=qt&html=1.html" target="_blank"><div class="movie-cover"><img src="'+data.data.list[i].vod_pic+'" ><span class="movie-description"><i class="description-bg"></i><p>'+data.data.list[i].vod_remarks+'</p><p>DATE：'+data.data.list[i].vod_pubdate+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[i].vod_name+'</p><p class="movie-tags">'+data.data.list[i].vod_tag+'</p></div></a></li>'}
+for(var i=0;i<data.data.list.length;i++){ var tu=data.data.list[i].vod_pic;
+  if(tu.indexOf("//") != -1)
+  {var tu1=tu;
+}else{var urll=appzy[zyid]["url"];var tu2= urll.match(/https:\/\/(\S*)\/api/)[1];var tu1="https://"+tu2+"/"+tu;
+}
+timu+='<li><a class="movie-item" href="./play.html?q='+data.data.list[i].vod_id+'&id='+zyid+'&zy=qt&html=1.html" target="_blank"><div class="movie-cover"><img src="'+tu1+'" ><span class="movie-description"><i class="description-bg"></i><p>'+data.data.list[i].vod_remarks+'</p><p>DATE：'+data.data.list[i].vod_pubdate+'</p><p>&gt; 在线观看</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[i].vod_name+'</p><p class="movie-tags">'+data.data.list[i].vod_tag+'</p></div></a></li>'}
 document.getElementById("list").innerHTML=timu;
-if(catid=="0"){var catid1="全部";}else{var catid1=data.data.list[0].type_name+'--'+cat;}
+if(catid=="0"){var catid1="全部";}else{var catid1=data.data.list[0].type_name+'.'+cat;}
 document.getElementById("bolei").innerHTML =catid1;
             }  )
     }
