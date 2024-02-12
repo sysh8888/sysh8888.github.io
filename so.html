@@ -1,115 +1,35 @@
-<html>
-<head>
-<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title> 一个简单的影视搜索- 7080.wang</title>
-<meta name="description" content="7080影视搜" />
-<meta name="keywords" content="7080影视搜" />
-<script src="./js/tongji.js"></script>
-<meta name="referrer" content="no-referrer">
-<link rel="stylesheet" href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css">
-<link rel="stylesheet" href="./css/app.css">
-<link rel="stylesheet" href="./css/so.css">
-<script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
-<script src="./js/zy1.js"></script>
-<script src="./js/gg.js"></script>
-</head>
-<body>
-<header class="am-topbar">
-<div class="am-container">
-<h1 class="am-topbar-brand hover-bounce">
-<a href="../index.html" class="web-name">
-<span class="am-icon-film am-icon-md"></span>
-7080网
-</a>
-</h1>
-<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}">
-<span class="am-sr-only">导航切换</span>
-<span class="am-icon-bars"></span>
-</button>
-<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-<ul class="am-nav am-nav-pills am-topbar-nav" id="toutou">
-</ul>
-<form class="am-topbar-form am-topbar-left am-form-inline" role="search" action="./so.html" name="tyForm" onsubmit="return Checkfrom();">
-<div class="am-input-group am-input-group-primary am-input-group-sm">
-<input name="wd" type="text" class="am-form-field" placeholder="搜索..." required>
-<span class="am-input-group-btn">
-<button class="am-btn am-btn-primary" type="submit">
-<span class="am-icon-search"></span>
-</button>
-</span>
-</div>
-</form>
-</div>
-</header>
-<div class="am-container">
-<div class="bpz-title"><img style=" width:auto; max-width:50%;" src="./img/index-logo.png" title="7080" /></div><div class="search-bar"><div class="bpz search-bar"><form action="./so.html" method="get" class="bpz"><input type="hidden" name="show" value="title">
-<input type="hidden" name="tbname" value="movie">
-<input type="hidden" name="tempid" value="1"> <input type="search" placeholder="搜索电影、电视剧、动漫……" class="bpz input-bar" name="wd" id="wd"><button class="bpz search-btn">搜索影视</button></form><div class="bpz acp">https://7080.wang 一个简单的影视搜索！</div></div></div>
-<div data-am-widget="list_news" class="am-list-news am-list-news-default">
-
-
-
-<ul class="am-avg-sm-3 am-avg-md-4 am-avg-lg-7 am-thumbnails movie-lists" id="list">
-</ul>
-
-
-</div>
-</div>
-
-<div data-am-widget="gotop" class="am-gotop am-gotop-fixed" title="返回顶部">
-<a href="#top" title="">
-<i class="am-gotop-icon am-icon-arrow-up"></i>
-</a>
-</div>
-<footer data-am-widget="footer" class="am-footer am-footer-default am-hide-sm-only" data-am-footer="{  }">
-<div class="am-footer-miscs">
-<p>本网站个人测试学习使用为非赢利性站点</p>
-<p>所有内容均来源于互联网相关站点自动搜索采集信息</p>
-</div>
-</footer>
-<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default am-show-sm-only" id="">
-<ul class="am-navbar-nav am-cf am-avg-sm-4" id="souji">
-</ul>
-</div>
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit"/>
+		<meta name="force-rendering" content="webkit"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>搜索的结果 | 7080影院 - 全能影视搜索引擎</title>
+		<meta name="keywords" content="7080" />
+		<meta name="description" content="7080是一款全能影视搜索引擎,下载全集版影视资源。" />
+		<link rel="stylesheet" href="./css/so.css?t=20240212">
+	</head>
+	<body>
+	<header class="white-header">
+				<nav class="super-search-nav-2">
+					<a href="/" class="super-search-logo-2"><div class="logo">影视搜索</div></a>
+					<div class="super-search-form super-search-form-2">
+						<div class="super-search-input-box super-search-input-box-2">
+							<form id="formsearch" action="./so.html" method="get"><input class="super-search-input super-search-input-2" type="text" name="wd" id="wd" value="" placeholder="请输入搜索关键字">
+							<button type="submit" class="search-btn">立即搜索</button>
+							</form>
+							<div class="super-search-hot-box super-search-source">
+								<span>切换搜索源：</span>
+								<span id="lie"> </span>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</header>
+			<div class="super-search-iframe-box"><iframe class="super-search-iframe" name="iframe-player" rameborder="0" marginwidth="0" marginheight="0" allowfullscreen="true" allowtransparency="true" id="video" src=""></iframe></div>
 <script type="text/javascript">
-  //资源列表
-//console.log(appzy);
-function go(wd){
-//console.log(appzy);
-
-for (var i=0;i<appzy.length;i++){ 
-//console.log(i);
-(function(i){
-setTimeout(function () {
-var jieguo="";
-var url=appzy[i].url+"?page=1&wd="+wd;
-           var name=appzy[i].name;
-		  $.get(url, function(data) {  
-		   var data=JSON.parse(data);
-          
-          for (var j=0;j<data.data.list.length;j++)
-			       {var tu=data.data.list[j].vod_pic;
-              //if(tu.substr(0, 4) == "http")
-              if(tu.indexOf("//") != -1)
-              {var tu1=tu;
-}else{var urll=appzy[i].url;var tu2= urll.match(/https:\/\/(\S*)\/api/)[1];var tu1="https://"+tu2+"/"+tu;
-}
-                  jieguo+='<li><a class="movie-item" href="./play.html?q='+data.data.list[j].vod_id+'&id='+i+'&zy=qt" target="_blank"><div class="movie-cover"><img id="img"  src="'+tu1+'" onerror="javascript:this.src=\'./img/nopic.gif\';" ><span class="movie-description"><i class="description-bg"></i><p>状态：'+data.data.list[j].vod_remarks+'</p><p>年代：'+data.data.list[j].vod_year+'</p><p>'+data.data.list[j].vod_actor+'</p></span></div><div class="movie-title"><p class="movie-name">'+data.data.list[j].vod_name+'</p><p class="movie-tags" title="来源">视频来源:'+name+'</p></div></a></li>';} 
-			  $('#list').append((jieguo)); 
-  });     
-	   
-	   }, 2000);
-   })(i)
-}
-
-}  
-//获取搜索
  function GetQueryString(name)
    {
         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -117,21 +37,14 @@ var url=appzy[i].url+"?page=1&wd="+wd;
         if(r!=null)return  decodeURIComponent(r[2]); return null;
  
    }
-var lianjie = GetQueryString("wd");
-//判断是否为空
-if(lianjie !=null && lianjie.toString().length>1){
-  var lianjie1=lianjie; go(lianjie1);
-} else{var lianjie1="";}
 
-document.getElementById("wd").value =lianjie1;
-
+var wd=GetQueryString("wd");
+document.getElementById("wd").value =wd;
+document.getElementById("video").src ="https://video.isyour.love/player/getplayer?url="+wd;
+var wang='<a class="super-search-source-item" href="https://video.isyour.love/player/getplayer?url='+wd+'" target="iframe-player">邦宁</a><a class="super-search-source-item" href="https://z1.m1907.top/?jx='+wd+'" target="iframe-player">M1907</a>'
+document.getElementById("lie").innerHTML =wang;
 </script>
-<script type="text/javascript">
-document.getElementById("toutou").innerHTML =toutou;
-document.getElementById("souji").innerHTML =souji;
-
-</script>
-<script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
+<script src="./js/tongji.js"></script>
 
 </body>
 </html>
