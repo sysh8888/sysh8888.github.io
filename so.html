@@ -18,13 +18,13 @@ html,body{margin:0; padding:0;width:100%;height:100%;background-color:#faf4f4;}
 <body>
 
     <div class="container" >
-        <form action="./so.html" method="get" class="search-form" style="margin:0;padding: 0;">
+        <form action="./so.html" method="get" class="search-form" >
          
             <div class="input-group mb-3" style="margin:0;padding: 0;">
               
                 <a href="./index.html" class="btn btn-success"><div class="logo img">🏠7080网</div></a>
-
-                <input id="wd" type="text" class="form-control" placeholder="搜索电影、电视剧、动漫……" aria-label="Search" aria-describedby="button-addon">
+                <input id="iid" type="hidden" name="id" value="0">
+                <input id="wd" name="wd" type="text" class="form-control" placeholder="搜索电影、电视剧、动漫……" aria-label="Search" aria-describedby="button-addon">
                 <button class="btn  btn-primary" type="submit" id="button-addon">🔍搜索</button>
             </div></form>
               <div  class="navbar navbar-expand-sm " style="margin:0;padding: 0;">♻️选择源：
@@ -35,7 +35,7 @@ html,body{margin:0; padding:0;width:100%;height:100%;background-color:#faf4f4;}
             <iframe id="video" security="restricted" 
 	      sandbox="allow-scripts allow-same-origin allow-popups"
 	      scrolling="no" allowtransparency="true" 
-	      allowfullscreen="true" frameborder="0" src="http://www.5020.work" 
+	      allowfullscreen="true" frameborder="0" src="https://video.isyour.love/player/getplayer?url=" 
 	      width="100%" height="100%" allowfullscreen="true"></iframe>
         
 
@@ -55,30 +55,26 @@ html,body{margin:0; padding:0;width:100%;height:100%;background-color:#faf4f4;}
            
              }
           
-          var wd=GetQueryString("wd");
+          var wdd=GetQueryString("wd");
+          if (wdd === null) {var wd="";} else {var wd=wdd;}
           document.getElementById("wd").value =wd;
           var id=GetQueryString("id");// 定义一个变量并赋予null值
-if (id === null) {var iid=0;
-    console.log("这个值是null");
-} else {var iid=id;
-    console.log(iid);
-}
+if (id === null) {var iid=0;} else {var iid=id;}
           var biao=[{"name":"邦宁资源","url":"https://video.isyour.love/player/getplayer?url="},
           {"name":"M1907资源","url":"https://z1.m1907.top/?jx="},
           {"name":"KABA资源","url":"https://jx.kabal.cn/?v="},
           {"name":"OROL资源","url":"https://vjx.orol.cn/so.php?wd="},
           {"name":"SHAK资源","url":"https://dy.shake123.cc/?v="},
-          {"name":"XYPL资源","url":"https://parse.xyplayer.net/?v="},
-          {"name":"KBC资源","url":"https://parse.kbcms.net/?v="}
+          {"name":"XYPL资源","url":"https://parse.xyplayer.net/?v="}
         ];
-          var liebiao=""; console.log(biao);
+          var liebiao=""; //console.log(biao);
           for (var i=0;i<biao.length;i++) 
     { if(i==iid){var kai="nav-link active";}else{kai="nav-link";}
       liebiao+='<li class="nav-item"><a href="./so.html?id='+i+'&wd='+wd+'" class="'+kai+'">🎦'+biao[i]["name"]+'</a></li>';
 }
-        //  var wang='<a class="super-search-source-item" href="https://video.isyour.love/player/getplayer?url='+wd+'" target="iframe-player">邦宁</a><a class="super-search-source-item" href="https://z1.m1907.top/?jx='+wd+'" target="iframe-player">M1907</a>'
-        document.getElementById("lie").innerHTML =liebiao;
+            document.getElementById("lie").innerHTML =liebiao;
         document.getElementById("video").src =biao[iid]["url"]+wd;
+        document.getElementById("iid").value =iid;
           </script>
     
     <!-- 引入Bootstrap JS -->
