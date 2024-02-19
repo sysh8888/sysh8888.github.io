@@ -1,110 +1,113 @@
-<html class="no-js">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="referrer" content="origin">
-<title> 一个简单的影视搜索-7080影视搜</title>
-<meta name="description" content="7080影视搜" />
-<meta name="keywords" content="7080影视搜,7080.wang,7080wang" />
-<link rel="icon" type="image/png" href="./img/favicon.png">
-<link rel="stylesheet" href="https://lib.baomitu.com/amazeui/2.7.2/css/amazeui.min.css">
-<link rel="stylesheet" href="./css/app.css">
-<script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
-<style>
-/**PC搜索框-begin**/
-.bpz-title{margin:0;width:100%;text-align:center;font-size:1.8rem;color:#8590a6;padding-top:30px;}.search-bar{width:80%;margin:0 auto;padding:15px 0 15px 0;height:120px;margin-bottom:30px;}.search-bar.bpz{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-radius:4px;display:block;position:relative;height:54px;background-color:#FFF;border:1px solid rgba(0,0,0,0.15);box-shadow:0 2px 3px rgba(0,0,0,0.06);padding-left:0.75em;padding-right:3.5em;}.search-bar.bpz .input-bar.bpz{opacity:1;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;-o-appearance:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;-webkit-tap-highlight-color:rgba(0,0,0,0);font-size:16px;font-weight:normal;display:block;width:80%;background:none;outline:none;border:none;padding:0;height:54px;z-index:1;position:relative;top:-15px;}.search-bar.bpz .search-btn.bpz{border-radius:0 4px 4px 0;min-width:66px;color:#FFF;font-size:1.15em;padding:0 0.64em;height:auto;min-height:1.8em;margin-top:-1px;margin-bottom:-1px;margin-right:-3px;line-height:1.5;-webkit-font-smoothing:subpixel-antialiased;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;-o-appearance:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;speak:none;font-style:normal;font-weight:normal !important;font-variant:normal;text-transform:none;-webkit-text-decoration:none !important;text-decoration:none !important;-moz-osx-font-smoothing:grayscale;-webkit-tap-highlight-color:rgba(0,0,0,0);width:1em;display:block;cursor:pointer;background:transparent no-repeat 50% 50%;text-align:center;border:none;position:absolute;top:0;bottom:0;right:2px;left:auto;z-index:2;outline:none;background-color:#03A9F4;}.search-bar.bpz .acp.bpz{color:#8590a6;width:100%;text-align:center;}.search-bar.bpz .search-btn.bpz:hover{background-color:#ff9800;}
-/**PC搜索框-end**/
-	/**手机端搜索框-begin**/
-	.bpz-title{margin:0;width:100%;text-align:center;font-size:1.2rem;color:#8590a6;padding:20px 0;}.search-bar{width:100%;height:67px;padding:0 15px;}.search-bar.bpz{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-radius:4px;display:block;position:relative;height:47px;background-color:#FFF;border:1px solid rgba(0,0,0,0.15);box-shadow:0 2px 3px rgba(0,0,0,0.06);padding-left:0.75em;padding-right:3.5em;}.search-bar.bpz .input-bar.bpz{opacity:1;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;-o-appearance:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;-webkit-tap-highlight-color:rgba(0,0,0,0);font-size:14px;font-weight:normal;display:block;width:100%;background:none;outline:none;border:none;padding-left:5px;height:47px;z-index:1;position:relative;top:-1px;}.search-bar.bpz .acp.bpz{color:#8590a6;width:100%;text-align:center;font-size:0.8rem;padding:5px 0 15px 0;line-height:25px;display:block;}.search-bar.bpz{width:100%;padding:0;}
-	/**手机端搜索框-end**/
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap 5 Search Form</title>
+    <!-- 引入Bootstrap CSS -->
+    <link href="https://cdn.staticfile.net/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+    background-color: #f4f4f4;
+}
+    </style>
 </head>
 <body>
-<header class="am-topbar am-topbar-fixed-top">
-<div class="am-container">
-<h1 class="am-topbar-brand hover-bounce">
-<a class='web-name' href='/'>
-<span class="am-icon-film am-icon-md"></span>
-7080网
-</a>
-</h1>
-<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}">
-<span class="am-sr-only">导航切换</span>
-<span class="am-icon-bars"></span>
-</button>
-<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-<ul class="am-nav am-nav-pills am-topbar-nav" >
-  <li><a href="//7080.wang">首页</a></li>
-  <li><a href="/live/index.html">IPTV</a></li><li><a href="https://mao.7080.wang" target="_blank">APP下载</a></li>
-</ul>
-</div></div>
-</header>
-<div class="am-container index-container">
+    <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
+        <!-- Brand/logo -->
+        <a class="navbar-brand" href="#">7080.wang</a>
+        
+        <!-- Links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="https://7080.wang">首页</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../live/">IPTV</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://mao.7080.wang/">app</a>
+          </li>
+        </ul>
+      </nav>
+<br/>
 
-<div class="bpz-title"><img style=" width:auto; max-width:50%;" src="./img/index-logo.png" title="7080" /></div><div class="search-bar"><div class="bpz search-bar"><form action="./so.html" method="get" class="bpz"><input type="hidden" name="show" value="title">
-<input type="hidden" name="tbname" value="movie">
-<input type="hidden" name="tempid" value="1"> <input type="search" placeholder="搜索电影、电视剧、动漫……" class="bpz input-bar" name="wd" id="wd">
-<button class="bpz search-btn">搜索</button></form></div></div>
+    <div class="container">
+      <div class="text-center"><img style=" width:auto; max-width:50%;" src="https://7080.wang/img/index-logo.png" title="7080" /></div>
+        <form action="./so.html" method="get" class="search-form">
+            <div class="input-group mb-3">
+              <input type="hidden" name="id" value="0">
+                <input type="text" name="wd" class="form-control" placeholder="搜索电影、电视剧、动漫……" aria-label="Search" aria-describedby="button-addon">
+                <button class="btn  btn-primary" type="submit" id="button-addon">🔍搜索</button>
+            </div>
+        </form>
+        <br/>
+        <div >
+
+          <p class="text-success"> 注：推荐使用影视仓、TVBOX等app播放，此APP是公开最新电视盒子软件，支持电视端和手机安装使用，欢迎大家前来下载。
+          </p>
+          <div class="col-md-14 column" >
+            <h3 class="text-danger">🚂软件特色</h3> 
+            <p>1.支持导入多个影视源；<br>
+            2.支持添加在线字幕、快进、进度条、播放速度调整等功能；<br>
+            3.支持一键安装和一键解压；<br>
+            4.支持一键复制视频地址到本地；<br>
+            5.支持添加书签和播放记录到本地；<br>
+            6.支持添加多个浏览器书签，可自由选择；<br>
+            7.可以根据时间或者地点来选择不同的背景图片；<br>
+            8.采用了最新的传输协议，不会产生卡顿；<br>
+            9.所有资源均来自腾讯云视听和芒果 TV资源库，绿色无毒无广告，一键导入无广告；零流量免登录无弹窗。影视仓最新版在原基础上增加了更多功能。</p>
+            <h3 class="text-danger">🌈影视仓使用说明</h3>
+            <p>首次打开除了基本功能按钮，影视类资源全都是空白，需要我们手动设置：<br>
+            1.安装完毕后打开APP；<br>
+            2.点击首页配置；<br>
+            3.输入名字，如：7080；<br>
+            4.输入推送链接，如： http://w.7080.wang/tv/1.json <br>
+            5.点击确定即可使用。</p>
+            <h3 class="text-danger">📻TVBOX使用说明</h3>
+            <p>TVBOX支持低版本安卓电视，首次打开除了基本功能按钮，影视类资源全都是空白，需要我们手动设置：设置-设置其他-配置地址，输入接口地址才可以。
+            点击界面中的设置按钮，来到设置界面，选择设置其他-配置地址，我们点击编辑输入接口地址即可,如输入：http://w.7080.wang/tv/1.json</p>
+            <h3 class="text-danger">🩺网络接口推荐</h3>
+            <p>　　1.道长接口,https://pastebin.com/raw/5NHaxyGR</p>
+            <p>　　2.肥猫接口,http://我不是.肥猫.love:63/接口禁止贩卖</p>
+            <p>　　3.多多家庭接口,http://cdn.yydsys.top/duo</p>
+            <p>　　4.饭太硬接口,http://xn--t75a.eu.org/tv</p>
+            <p>　　5.神器接口,https://神器每日推送.tk/pz.json</p>
+            <p>　　6.南风接口,https://agit.ai/Yoursmile7/TVBox/raw/branch/master/XC.json</p>
+            <p>　　7.采妮诗,https://tvbox.cainisi.cf</p>
+            <p>　　8.蚂蚁论坛接口,https://download.kstore.space/download/2883/m3u8/dsj/guochan/mp1/1.m3u8</p>
+            <p>　　9.4K云盘接口,http://9xi4o.tk/0725.json</p>
+            <p>　　10.月光宝盒接口,http://52bsj.vip:81/api/v3/file/get/29899/box2.json?sign=3cVyKZQr3lFAwdB3HK-A7h33e0MnmG6lLB9oWlvSNnM%3D%3A0</p>
+            <p>　　11.巧儿接口,http://pandown.pro/tvbox/tvbox.json</p>
+            <p>　　12.吾爱线路,https://qixing.myhkw.com/tianwei/svip.json</p>
+            <p>　　13.星辰线路,http://8.210.232.168/xc.json</p>
+            <p>　　14.元兴线路,https://freed.yuanhsing.cf/TVBox/meowcf.json</p>
+            <p>　　15.荷城茶秀,http://rihou.cc:88/荷城茶秀</p>
+            <p>　　16.更多接口,https://freed.yuanhsing.cf/TVBox/meowcf.json</p>
+            <a href="https://xz.jmzp.net.cn/apk/110/xlma24_eae2a3a9a03e9702.apk" target="_blank" class="btn btn-primary">
+              <i class="am-icon-play"></i>
+              📺
+              影视仓手机下载
+              </a>
+            <a href="http://6a1.mtyzx.cn/web/com.mygithub0.tvbox0.osdx.apk" target="_blank" class="btn btn-primary">
+            <i class="am-icon-play"></i>
+            📺
+            影视仓TV版下载
+            </a> <a href="http://6a1.mtyzx.cn/web/com.github.tvbox.osc.apk" target="_blank" class="btn btn-primary">
+            <i class="am-icon-play"></i>📽
+            TVOBX电视版下载
+            </a>
+            <p style="color:red;">注：接口均支持影视仓、TVBOX，影视仓功能多推荐使用，安卓5以下电视盒子推荐TVBOX。</p>
+          </div></div>
 
 
-<div data-am-widget="list_news" class="am-list-news am-list-news-default">
+      </div>
+<footer class="d-flex flex-wrap justify-content-center align-items-center">
+    <p class="text-center">个人测试学习使用非赢利性站点 &copy; 内容均来源于互联网相关站点自动搜索采集</p>
+  </footer>
 
-<p> 推荐使用影视仓、TVBOX的app安装播放，此APP是公开最新电视盒子软件，支持电视端和手机安装使用， 是一款非常不错的电视盒子APP，欢迎大家前来下载。
-</p>
-<div class="col-md-14 column" >
-  <h3 >软件特色</h3> 
-  <p>1.支持导入多个影视源；<br>
-  2.支持添加在线字幕、快进、进度条、播放速度调整等功能；<br>
-  3.支持一键安装和一键解压；<br>
-  4.支持一键复制视频地址到本地；<br>
-  5.支持添加书签和播放记录到本地；<br>
-  6.支持添加多个浏览器书签，可自由选择；<br>
-  7.可以根据时间或者地点来选择不同的背景图片；<br>
-  8.采用了最新的传输协议，不会产生卡顿；<br>
-  9.所有资源均来自腾讯云视听和芒果 TV资源库，绿色无毒无广告，一键导入无广告；零流量免登录无弹窗。影视仓最新版在原基础上增加了更多功能。</p>
-  <h3>影视仓使用方法</h3>
-  <p>首次打开除了基本功能按钮，影视类资源全都是空白，需要我们手动设置：<br>
-  1.安装完毕后打开APP；<br>
-  2.点击首页配置；<br>
-  3.输入名字，如：7080；<br>
-  4.输入推送链接，如： http://w.7080.wang/tv/1.json <br>
-  5.点击确定即可使用。</p>
-  <h3>TVBOX使用说明</h3>
-  <p>TVBOX支持低版本安卓电视，首次打开除了基本功能按钮，影视类资源全都是空白，需要我们手动设置：设置-设置其他-配置地址，输入接口地址才可以。
-  点击界面中的设置按钮，来到设置界面，选择设置其他-配置地址，我们点击编辑输入接口地址即可,如输入：http://w.7080.wang/tv/1.json</p>
-  <a href="https://xz.jmzp.net.cn/apk/110/xlma24_eae2a3a9a03e9702.apk" target="_blank" class="am-btn am-btn-secondary am-btn-sm search-item-btn">
-    <i class="am-icon-play"></i>
-    📺
-    影视仓手机下载
-    </a>
-  <a href="http://6a1.mtyzx.cn/web/com.mygithub0.tvbox0.osdx.apk" target="_blank" class="am-btn am-btn-secondary am-btn-sm search-item-btn">
-  <i class="am-icon-play"></i>
-  📺
-  影视仓TV版下载
-  </a> <a href="http://6a1.mtyzx.cn/web/com.github.tvbox.osc.apk" target="_blank" class="am-btn am-btn-secondary am-btn-sm search-item-btn">
-  <i class="am-icon-play"></i>📽
-  TVOBX电视版下载
-  </a>
-  <p style="color:red;">注：接口均支持影视仓、TVBOX，影视仓功能多推荐使用，安卓5以下电视盒子推荐TVBOX。</p>
-</div>
-
-</div>
-
-<footer data-am-widget="footer" class="am-footer am-footer-default am-hide-sm-only" data-am-footer="{  }">
-<div class="am-footer-miscs">
-<p>本网站个人测试学习使用为非赢利性站点</p>
-<p>所有内容均来源于互联网相关站点自动搜索采集信息</p>
-</div>
-</footer>
-<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default am-show-sm-only" id="">
-
-<script src="https://lib.baomitu.com/amazeui/2.7.2/js/amazeui.min.js"></script>
-<script src="./js/tongji.js"></script>
+    
+    <!-- 引入Bootstrap JS -->
+    <script src="https://cdn.staticfile.net/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
