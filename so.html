@@ -1,50 +1,82 @@
 <!DOCTYPE html>
-<html lang="zh">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="renderer" content="webkit"/>
-		<meta name="force-rendering" content="webkit"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>搜索的结果 | 7080影院 - 全能影视搜索引擎</title>
 		<meta name="keywords" content="7080" />
 		<meta name="description" content="7080是一款全能影视搜索引擎,下载全集版影视资源。" />
-		<link rel="stylesheet" href="./css/so.css?t=20240212">
-	</head>
-	<body>
-	<header class="white-header">
-				<nav class="super-search-nav-2">
-					<a href="/" class="super-search-logo-2"><div class="logo">影视搜索</div></a>
-					<div class="super-search-form super-search-form-2">
-						<div class="super-search-input-box super-search-input-box-2">
-							<form id="formsearch" action="./so.html" method="get"><input class="super-search-input super-search-input-2" type="text" name="wd" id="wd" value="" placeholder="请输入搜索关键字">
-							<button type="submit" class="search-btn">立即搜索</button>
-							</form>
-							<div class="super-search-hot-box super-search-source">
-								<span>切换搜索源：</span>
-								<span id="lie"> </span>
-							</div>
-						</div>
-					</div>
-				</nav>
-			</header>
-			<div class="super-search-iframe-box"><iframe class="super-search-iframe" name="iframe-player" rameborder="0" marginwidth="0" marginheight="0" allowfullscreen="true" allowtransparency="true" id="video" src=""></iframe></div>
-<script type="text/javascript">
- function GetQueryString(name)
-   {
-        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if(r!=null)return  decodeURIComponent(r[2]); return null;
- 
-   }
+    <!-- 引入Bootstrap CSS -->
+    <link href="https://cdn.staticfile.net/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
 
-var wd=GetQueryString("wd");
-document.getElementById("wd").value =wd;
-document.getElementById("video").src ="https://video.isyour.love/player/getplayer?url="+wd;
-var wang='<a class="super-search-source-item" href="https://video.isyour.love/player/getplayer?url='+wd+'" target="iframe-player">邦宁</a><a class="super-search-source-item" href="https://z1.m1907.top/?jx='+wd+'" target="iframe-player">M1907</a>'
-document.getElementById("lie").innerHTML =wang;
-</script>
-<script src="./js/tongji.js"></script>
+    <style>
 
+html,body{margin:0; padding:0;width:100%;height:100%;background-color:#faf4f4;overflow-x:hidden;overflow-y:hidden}
+       
+    </style>
+</head>
+<body>
+
+    <div class="container" >
+        <form action="./so.html" method="get" class="search-form" style="margin:0;padding: 0;">
+         
+            <div class="input-group mb-3" style="margin:0;padding: 0;">
+              
+                <a href="./index.html" class="btn btn-success"><div class="logo img">🏠7080网</div></a>
+
+                <input id="wd" type="text" class="form-control" placeholder="搜索电影、电视剧、动漫……" aria-label="Search" aria-describedby="button-addon">
+                <button class="btn  btn-primary" type="submit" id="button-addon">🔍搜索</button>
+            </div></form>
+              <div  class="navbar navbar-expand-sm " style="margin:0;padding: 0;">♻️选择源：
+              <ul class="nav nav-pills" id="lie"  style="margin:0;padding: 0;">
+              </ul></div>
+          </div >
+          <div style=" width: 100%; height: 90%">
+            <iframe id="video" security="restricted" 
+	      sandbox="allow-scripts allow-same-origin allow-popups"
+	      scrolling="no" allowtransparency="true" 
+	      allowfullscreen="true" frameborder="0" src="http://www.5020.work" 
+	      width="100%" height="100%" allowfullscreen="true"></iframe>
+          </div>
+
+
+       
+          <script>
+       // var ifm= document.getElementById("video");
+
+//ifm.height=document.documentElement.clientHeight;
+          </script>
+          <script type="text/javascript">
+           function GetQueryString(name)
+             {
+                  var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                  var r = window.location.search.substr(1).match(reg);
+                  if(r!=null)return  decodeURIComponent(r[2]); return null;
+           
+             }
+          
+          var wd=GetQueryString("wd");
+          document.getElementById("wd").value =wd;
+          var id=GetQueryString("id");// 定义一个变量并赋予null值
+if (id === null) {var iid=0;
+    console.log("这个值是null");
+} else {var iid=id;
+    console.log(iid);
+}
+          var biao=[{"name":"邦宁资源","url":"https://video.isyour.love/player/getplayer?url="},
+          {"name":"M1907资源","url":"https://z1.m1907.top/?jx="}];
+          var liebiao=""; console.log(biao);
+          for (var i=0;i<biao.length;i++) 
+    { if(i==iid){var kai="nav-link active";}else{kai="nav-link";}
+      liebiao+='<li class="nav-item"><a href="./so.html?id='+i+'&wd='+wd+'" class="'+kai+'">🎦'+biao[i]["name"]+'</a></li>';
+}
+        //  var wang='<a class="super-search-source-item" href="https://video.isyour.love/player/getplayer?url='+wd+'" target="iframe-player">邦宁</a><a class="super-search-source-item" href="https://z1.m1907.top/?jx='+wd+'" target="iframe-player">M1907</a>'
+        document.getElementById("lie").innerHTML =liebiao;
+        document.getElementById("video").src =biao[iid]["url"]+wd;
+          </script>
+    
+    <!-- 引入Bootstrap JS -->
+    <script src="https://cdn.staticfile.net/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/tongji.js"></script>
 </body>
 </html>
