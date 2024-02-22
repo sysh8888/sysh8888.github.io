@@ -6,20 +6,129 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="referrer" content="origin">
 <title> 一个简单的影视搜索-7080影视搜</title>
 <meta name="description" content="7080影视搜" />
 <meta name="keywords" content="7080影视搜,7080.wang,7080wang" />
     <!-- 引入Bootstrap CSS -->
-    <link href="https://cdn.staticfile.net/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://lib.sinaapp.com/js/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
-   html,body{margin:0; padding:0;width:100%;height:100%;background-color:#faf4f4;}
+   body{background-color: #F9F9F9;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			color: #333;
+			margin: 0;
+			padding: 0;}
+      .dark-mode {
+			background-color: #333;
+			color: #FFF;
+		}
+    .screenshot {
+			margin-top: 50px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.screenshot img {
+			max-width: 100%;
+			max-height: 400px;
+			box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);
+			border-radius: 10px;
+			margin: 0px;
+		}
+		.dark-mode .download-button {
+			background-color: #574FE9;
+		}
+		.dark-mode .toggle {
+			color: #FFF;
+		}
+		.dark-mode .toggle:hover {
+			color: #F9F9F9;
+		}
+
+    .text-center{
+  text-align: center;
+  font-size: 18px;
+}
+
+.text-center h2{
+  font-weight: 500;
+  font-size: 1.6em;
+}
+
+.text-center h2 span{
+  font-weight: 800;
+}
+
+.text-center p{
+  max-width: 500px;
+  margin: 0 auto;
+  color: #6c757d;
+  line-height: 1.5;
+  font-size: 1em;
+}
+
+.col{
+  width: 33.3333333%;
+  overflow: hidden;
+  padding: 15px;
+}
+
+.col .card{
+  width: 100%;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.col img{
+  width: 100%;
+  height: auto;
+  border: 0;
+}
+
+.col .card-body{
+  padding: 0 15px 15px 15px;
+  background-color: #fff;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.card-body h5{
+  font-size: 24px;
+  margin: 7px 0;
+}
+
+.card:hover{
+  transform: translateY(-10px);
+  transition: transform 0.3s ease;
+}
+
+.card p{
+  color: #6c757d;
+}
+
+.card-body .date-author span{
+  color: #e74c3c;
+}
+
+.card-body h5 a{
+  color: #222;
+}
+
+@media(min-width: 577px) and (max-width: 768px){
+  .col{
+      width: 50%;
+  }
+}
+
+@media(max-width: 576px){
+  .col{
+      width: 100%;
+  }}
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <!-- Brand/logo -->
         <a class="navbar-brand" href="#">7080.wang</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
@@ -38,84 +147,141 @@
           </li>
         </ul> </div>
       </nav>
-<br/>
+      <div class="toggle text-right"  onclick="toggleDarkMode()">🌙</div>
+
 
     <div class="container">
       <div class="text-center"><img style=" width:auto; max-width:50%;" src="https://7080.wang/img/index-logo.png" title="7080" /></div>
         <form action="./so.html" method="get" class="search-form">
-            <div class="input-group mb-3">
+            <div class="input-group mb-4">
               <input type="hidden" name="id" value="0">
                 <input type="text" name="wd" class="form-control" placeholder="搜索电影、电视剧、动漫……" aria-label="Search" aria-describedby="button-addon">
                 <button class="btn  btn-primary" type="submit" id="button-addon">🔍搜索</button>
             </div>
         </form>
         <br/>
-        <div >
-
-          <p class="text-success"> 注：推荐使用影视仓、TVBOX等app播放，此APP是公开最新电视盒子软件，支持电视端和手机安装使用，欢迎大家前来下载。
-          </p>
-          <div class="col-xs-12 col-md-6" >
-            <h3 class="text-danger">🚂软件特色</h3> 
-            <p>1.支持导入多个影视源；<br>
-            2.支持添加在线字幕、快进、进度条、播放速度调整等功能；<br>
+        <div class="text-center" >
+          <h2>下载APP</h2>
+          <p>免费畅享4K画质追剧，多线路选择并支持投屏。APP操作简单功能齐全（支持安卓、PC、TV端）！</p></div>
+          <div class="screenshot">
+            <img src="https://pic3.zhimg.com/v2-f2de95b51dc77976c346e6e2b3fe2d7a_r.png" alt="软件截图">
+          <!--	<img src="static/picture/64a8fd3f1ddac507cc9798f5.jpg" alt="软件截图">-->
+          </div>
+        <div class="container mt-4">
+            <h4 >🚂APP推荐</h4> 
+            <p>推荐使用影视仓、TVBOX等app播放，此APP是开源软件，支持电视端和手机安装使用。<br>
+              1.支持导入多个影视源；<br>
+            2.支持添加在线字幕、快进、播放速度调整等功能；<br>
             3.支持一键安装和一键解压；<br>
             4.支持一键复制视频地址到本地；<br>
             5.支持添加书签和播放记录到本地；<br>
             6.支持添加多个浏览器书签，可自由选择；<br>
             7.可以根据时间或者地点来选择不同的背景图片；<br>
             8.采用了最新的传输协议，不会产生卡顿；<br>
-            9.所有资源均来自腾讯云视听和芒果 TV资源库，绿色无毒无广告，一键导入无广告；零流量免登录无弹窗。影视仓最新版在原基础上增加了更多功能。</p>
-            <h3 class="text-danger">🌈影视仓使用说明</h3>
+            9.所有资源均来互联网，绿色无毒无广告。<br>
+            10.影视仓最新版在原基础上增加了更多功能。</p>
+            <h4 >📻TVBOX使用说明</h4>
             <p>首次打开除了基本功能按钮，影视类资源全都是空白，需要我们手动设置：<br>
             1.安装完毕后打开APP；<br>
             2.点击首页配置；<br>
             3.输入名字，如：7080；<br>
             4.输入推送链接，如： http://w.7080.wang/tv/1.json <br>
             5.点击确定即可使用。</p>
-            <h3 class="text-danger">📻TVBOX使用说明</h3>
-            <p>TVBOX支持低版本安卓电视，首次打开除了基本功能按钮，影视类资源全都是空白，需要我们手动设置：设置-设置其他-配置地址，输入接口地址才可以。
-            点击界面中的设置按钮，来到设置界面，选择设置其他-配置地址，我们点击编辑输入接口地址即可,如输入：http://w.7080.wang/tv/1.json</p>
-            <h3 class="text-danger">🩺网络接口推荐</h3>
-          <p>1.道长接口,https://pastebin.com/raw/5NHaxyGR<br/>
-              2.肥猫接口,http://我不是.肥猫.love:63/接口禁止贩卖<br/>
-              3.多多家庭接口,http://cdn.yydsys.top/duo<br/>
-              4.饭太硬接口,http://xn--t75a.eu.org/tv<br/>
-              5.神器接口,https://神器每日推送.tk/pz.json<br/>
-              6.俊歌,http://home.jundie.top:81/top98.json<br/>
-              7.采妮诗,https://tvbox.cainisi.cf<br/>
-              8.纯一,https://100km.top/0<br/>
-              9.4K云盘接口,http://9xi4o.tk/0725.json<br/>
-              10.小米,http://xhww.fun:63/小米/DEMO.json<br/>
-              11.巧儿接口,http://pandown.pro/tvbox/tvbox.json<br/>
-              12.吾爱线路,https://qixing.myhkw.com/tianwei/svip.json<br/>
-              13.星辰线路,http://8.210.232.168/xc.json<br/>
-              14.元兴线路,https://freed.yuanhsing.cf/TVBox/meowcf.json<br/>
-              15.荷城茶秀,http://rihou.cc:88/荷城茶秀<br/>
-              16.更多接口,https://freed.yuanhsing.cf/TVBox/meowcf.json</p>
-            <a href="https://xz.jmzp.net.cn/apk/110/xlma24_eae2a3a9a03e9702.apk" target="_blank" class="btn btn-primary">
-              <i class="am-icon-play"></i>
-              📺
-              影视仓手机下载
-              </a>
-            <a href="http://6a1.mtyzx.cn/web/com.mygithub0.tvbox0.osdx.apk" target="_blank" class="btn btn-primary">
-            <i class="am-icon-play"></i>
-            📺
-            影视仓TV版下载
-            </a> <a href="http://6a1.mtyzx.cn/web/com.github.tvbox.osc.apk" target="_blank" class="btn btn-primary">
-            <i class="am-icon-play"></i>📽
-            TVOBX电视版下载
-            </a>
-            <p style="color:red;">注：接口均支持影视仓、TVBOX，影视仓功能多推荐使用，安卓5以下电视盒子推荐TVBOX。</p>
-          </div></div>
+            <h4 >🩺TVBOX接口推荐</h4>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://w.7080.wang/tv/1.json">7080</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://我不是.肥猫.live/接口禁止贩卖">肥猫</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://饭太硬.top/tv">饭太硬</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://pandown.pro/tvbox/tvbox.json">巧儿</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://home.jundie.top:81/top98.json">俊哥</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="https://bitbucket.org/xduo/duoapi/raw/master/xpg.json">小苹果</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="https://tvbox.cainisi.cf">采妮诗</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="https://神器每日推送.tk/pz.json">神器</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://itvbox.cc/tvbox/云星日记/1.m3u8">云星</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="https://pastebin.com/raw/5NHaxyGR">道长</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://cdn.yydsys.top/duo">多多</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://xhww.fun:63/小米/DEMO.json">小米</button>
+            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://rihou.cc:88/荷城茶秀">荷城</button>
+         
 
-
+          </div>
+          
+          
       </div>
+      <section class="our-blog">
+
+        <div class="container">
+         
+          <div class="row mt-5">
+            <div class="col">
+              <div class="card">
+                <img src="https://pic1.zhimg.com/v2-7c67ac14f900813a418b1a33ef3ffedc_r.jpg?source=2c26e567" alt="">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="http://6a1.mtyzx.cn/web/com.mygithub0.tvbox0.osdx.apk" class="btn btn-success">下载</a>
+                  </h5>
+                  <p class="card-text">
+                    <b>影视仓</b>支持安卓手机及电视盒
+                  </p>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col">
+              <div class="card">
+                <img src="https://picx.zhimg.com/70/v2-c63b8967f1fe7a31de9e960947231cd6_1440w.avis?source=172ae18b&biz_tag=Post" alt="">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="http://6a1.mtyzx.cn/web/com.github.tvbox.osc.apk" class="btn btn-success">下载</a>
+                  </h5>
+                  <p class="card-text">
+                    <b>TVBOX</b> 支持安卓手机及电视盒
+                  </p>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col">
+              <div class="card">
+                <img src="https://picx.zhimg.com/70/v2-0b2307cc562ecf2a82d407c361bbc298_1440w.avis?source=172ae18b&biz_tag=Post" alt="">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="http://zj.downxia.com/down/maoyingshi.rar" class="btn btn-success">下载</a>
+                  </h5>
+                  <p class="card-text">
+                    <b >猫影视</b>支持Windows64位电脑
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </section>
 <footer class="d-flex flex-wrap justify-content-center align-items-center">
     <p class="text-center">个人测试学习使用非赢利性站点 &copy; 内容均来源于互联网相关站点自动搜索采集</p>
   </footer>
     <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.net/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://lib.sinaapp.com/js/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="./js/tongji.js"></script>
+    <script>
+function toggleDarkMode() {
+			document.body.classList.toggle("dark-mode");
+		}
 
+      function copyValue(button) {
+        // 创建一个临时的输入框
+        const input = document.createElement('input');
+        input.value = button.value; // 将按钮的值赋给输入框
+        // 将输入框添加到文档中
+        document.body.appendChild(input);
+        // 选中输入框的内容
+        input.select();
+        // 执行复制操作
+        document.execCommand('copy');
+        // 移除临时输入框
+        document.body.removeChild(input);
+        alert("温馨提醒：复制成功，请前往影视仓、TVBOX接口粘贴");
+      }
+      </script>
 </body>
 </html>
