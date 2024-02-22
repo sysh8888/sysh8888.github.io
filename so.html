@@ -6,18 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="referrer" content="origin">
 		<title>搜索的结果 | 7080影院 - 全能影视搜索引擎</title>
 		<meta name="keywords" content="7080" />
 		<meta name="description" content="7080是一款全能影视搜索引擎,下载全集版影视资源。" />
     <!-- 引入Bootstrap CSS -->
-    <link href="https://cdn.staticfile.net/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://lib.sinaapp.com/js/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
-
-html,body{margin:0; padding:0;width:100%;height:100%;background-color:#faf4f4;}
+html,body{background-color: #F9F9F9;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			color: #333;
+			margin:0; padding:0;width:100%;height:100%;}
        
     </style>
 </head>
@@ -28,7 +29,7 @@ html,body{margin:0; padding:0;width:100%;height:100%;background-color:#faf4f4;}
          
             <div class="input-group mb-3" style="margin:0;padding: 0;">
               
-                <a href="./index.html" class="btn btn-success"><div class="logo img">🏠7080网</div></a>
+                <a class='btn btn-success' href='/'><div class="logo img">🏠7080网</div></a>
                 <input id="iid" type="hidden" name="id" value="0">
                 <input id="wd" name="wd" type="text" class="form-control" placeholder="搜索电影、电视剧……" aria-label="Search" aria-describedby="button-addon">
                 <button class="btn  btn-primary" type="submit" id="button-addon">🔍搜索</button>
@@ -84,7 +85,7 @@ if (id === null) {var iid=0;} else {var iid=id;}
           </script>
     
     <!-- 引入Bootstrap JS -->
-    <script src="https://cdn.staticfile.net/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://lib.sinaapp.com/js/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="./js/tongji.js"></script>
 </body>
 </html>
