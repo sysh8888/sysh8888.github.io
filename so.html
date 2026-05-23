@@ -1,89 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="referrer" content="origin">
-		<title>搜索的结果 | 7080影院 - 全能影视搜索引擎</title>
-		<meta name="keywords" content="7080" />
-		<meta name="description" content="7080是一款全能影视搜索引擎,下载全集版影视资源。" />
-    <!-- 引入Bootstrap CSS -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet" />
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>搜索结果 | ces</title>
     <style>
-html,body{background-color: #F9F9F9;
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			color: #333;
-			margin:0; padding:0;width:100%;height:100%;}
+        :root {
+            --bg-color: #e0e5ec;
+            --text-main: #4a5568;
+            --text-light: #718096;
+            --shadow-light: #ffffff;
+            --shadow-dark: #a3b1c6;
+            --accent-color: #6d5dfc;
+        }
+
+        html,body { background-color: var(--bg-color); color: var(--text-main);font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0; padding:0;width:100%;height:100%; }
+        .neu-pressed { background: var(--bg-color); box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light); border-radius: 50px; border: none; padding: 15px 20px; color: var(--text-main); outline: none; width: 100%; font-size: 1rem; }
+        .neu-btn { background: var(--bg-color); box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light); border-radius: 30px; border: none; padding: 5px 10px; color: var(--text-main); cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; margin: 4px; }
+        .neu-btn:hover { transform: translateY(-2px); color: var(--accent-color); }
+        .neu-btn:active, .neu-btn.active { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); color: var(--accent-color); transform: translateY(0); }
+
+        .header-area { display: flex; flex-direction: column; gap: 15px; align-items: center; }
        
+        .site-title { font-size: 1.5rem; font-weight: 700; }
+        
+        .search-form { position: relative; width: 100%; max-width: 600px; display: flex; align-items: center; }
+        .search-btn { position: absolute; right: 15px; background: transparent; border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-light); }
+
+        
     </style>
 </head>
 <body>
+    <!-- 头部搜索区 -->
+    <div class="header-area">
+        <!-- 修改点：表单 action 指向自身，方法 GET，参数 wd -->
+        <form action="./so.html" method="get" class="search-form">
+		 <a href="./index.html" class="neu-btn" style="padding: 10px 15px;">🏠</a>
+            <input name="wd" id="wdInput" type="text" class="neu-pressed" placeholder="搜索电影、电视剧……" required>
+            <input type="hidden" name="id" id="idInput" value="0">
+            <button type="submit" class="search-btn">🔍</button>
+        </form>
+    </div>
 
-    <div class="container" >
-        <form action="./so.html" method="get" class="search-form" >
-         
-            <div class="input-group mb-3" style="margin:0;padding: 0;">
-              
-                <a class='btn btn-success' href='/'><div class="logo img">🏠7080网</div></a>
-                <input id="iid" type="hidden" name="id" value="0">
-                <input id="wd" name="wd" type="text" class="form-control" placeholder="搜索电影、电视剧……" aria-label="Search" aria-describedby="button-addon">
-                <button class="btn  btn-primary" type="submit" id="button-addon">🔍搜索</button>
-            </div></form>
-              <div  class="navbar navbar-expand-sm " style="margin:0;padding: 0;">♻️选择源：
-              <ul class="nav nav-pills" id="lie"  style="margin:0;padding: 0;">
-              </ul></div>
-          </div >
-       
-            <iframe id="video" security="restricted" 
+    <!-- 资源选择区 -->
+    <div class="neu-flat">
+        <div style="text-align: center;font-weight: 600;">♻️播放源：
+        <span id="sourceList">
+            <!-- JS 动态生成 -->
+        </span></div>
+    </div>
+
+    <!-- 视频播放区 -->
+    
+        <iframe id="videoFrame"  security="restricted" 
 	      sandbox="allow-scripts allow-same-origin allow-popups"
 	      scrolling="no" allowtransparency="true" 
 	      allowfullscreen="true" frameborder="0" src="https://video.isyour.love/player/getplayer?url=" 
 	      width="100%" height="100%" allowfullscreen="true"></iframe>
-        
+   
 
-
-       
-          <script>
-       // var ifm= document.getElementById("video");
-
-//ifm.height=document.documentElement.clientHeight;
-          </script>
-          <script type="text/javascript">
-           function GetQueryString(name)
-             {
+    <script>
+        // 1. 获取 URL 参数
+        function getParam(name) {
                   var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
                   var r = window.location.search.substr(1).match(reg);
                   if(r!=null)return  decodeURIComponent(r[2]); return null;
            
              }
-          
-          var wdd=GetQueryString("wd");
-          if (wdd === null) {var wd="";} else {var wd=wdd;}
-          document.getElementById("wd").value =wd;
-          var id=GetQueryString("id");// 定义一个变量并赋予null值
-if (id === null) {var iid=0;} else {var iid=id;}
-          var biao=[{"name":"邦宁资源","url":"https://video.isyour.love/player/getplayer?url="},
-          {"name":"M1907资源","url":"https://z1.m1907.top/?jx="},
-           {"name":"xymov资源","url":"https://xymov.nohacks.cn/?v="},
-          {"name":"wkvip资源","url":"https://a.wkvip.net/so.php?wd="}
+
+        var wd = getParam("wd") || "";
+        var iid = parseInt(getParam("id")) || 0;
+
+        // 2. 填充表单
+        document.getElementById("wdInput").value = wd;
+        document.getElementById("idInput").value = iid;
+
+        // 3. 配置资源源 (参考原源码)
+        const sources = [
+            {"name": "邦宁资源", "url": "https://video.isyour.love/player/getplayer?url="},
+            {"name": "M1907资源", "url": "https://z1.m1907.top/?jx="},
+            {"name": "wkvip资源", "url": "https://a.wkvip.net/so.php?wd="}
         ];
-          var liebiao=""; //console.log(biao);
-          for (var i=0;i<biao.length;i++) 
-    { if(i==iid){var kai="nav-link active";}else{kai="nav-link";}
-      liebiao+='<li class="nav-item"><a href="./so.html?id='+i+'&wd='+wd+'" class="'+kai+'">🎦'+biao[i]["name"]+'</a></li>';
-}
-            document.getElementById("lie").innerHTML =liebiao;
-        document.getElementById("video").src =biao[iid]["url"]+wd;
-        document.getElementById("iid").value =iid;
-          </script>
-    
-    <!-- 引入Bootstrap JS -->
-    <script src="https://cdn.staticfile.net/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="./js/tongji.js"></script>
+
+        // 4. 渲染资源按钮
+        const sourceListEl = document.getElementById("sourceList");
+        sources.forEach((src, index) => {
+            const btn = document.createElement("a");
+            btn.className = `neu-btn ${index === iid ? 'active' : ''}`;
+            btn.innerText = `🎦 ${src.name}`;
+            // 点击切换：保持 wd 不变，改变 id
+            btn.href = `./so.html?id=${index}&wd=${encodeURIComponent(wd)}`;
+            sourceListEl.appendChild(btn);
+        });
+
+        // 5. 加载视频
+        const videoFrame = document.getElementById("videoFrame");
+        if (wd && sources[iid]) {
+            // 注意：不同接口的参数拼接方式可能不同，这里依据原源码逻辑
+            // 原源码中 wkvip 是 ?wd=，其他是 ?url= 或 ?jx= 或 ?v=
+            // 这里为了简化，假设接口都支持直接拼接，实际使用中可能需要针对每个接口做判断
+            let finalUrl = sources[iid].url + wd;
+            
+            // 特殊处理：如果接口需要特定参数名，需在此调整
+            // 例如 wkvip 已经是 ?wd=，直接拼接即可
+            // 其他接口通常是 ?url=keyword
+            
+            videoFrame.src = finalUrl;
+        } else {
+            videoFrame.src = "";
+        }
+    </script>
+	 <script src="./js/tongji.js"></script>
 </body>
 </html>
