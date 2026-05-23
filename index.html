@@ -1,173 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="referrer" content="origin">
-<title> 一个简单的影视搜索-7080影视搜</title>
-<meta name="description" content="7080影视搜" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一个简单的影视搜索导航-7080影视搜</title>
+	<meta name="description" content="7080影视搜" />
 <meta name="keywords" content="7080影视搜,7080.wang,7080wang" />
-    <!-- 引入Bootstrap CSS -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
     <style>
-   body{background-color: #F9F9F9;
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			color: #333;
-			margin: 0;
-			padding: 0;}
-      .dark-mode {
-			background-color: #333;
-			color: #FFF;
-		}
-    .screenshot {
-			margin-top: 50px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		.screenshot img {
-			max-width: 100%;
-			max-height: 400px;
-			box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);
-			border-radius: 10px;
-			margin: 0px;
-		}
-		.dark-mode .download-button {
-			background-color: #574FE9;
-		}
-		.dark-mode .toggle {
-			color: #FFF;
-		}
-		.dark-mode .toggle:hover {
-			color: #F9F9F9;
-		}
+        :root {
+            --bg-color: #e0e5ec;
+            --text-main: #4a5568;
+            --text-light: #718096;
+            --shadow-light: #ffffff;
+            --shadow-dark: #a3b1c6;
+            --accent-color: #6d5dfc;
+        }
 
-    .text-center{
-  text-align: center;
-  font-size: 18px;
-}
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; min-height: 100vh; padding: 20px; }
+        .container { width: 100%; max-width: 1000px; display: flex; flex-direction: column; gap: 30px; }
 
-.text-center h2{
-  font-weight: 500;
-  font-size: 1.6em;
-}
+        /* 头部搜索区域 */
+        header { display: flex; flex-direction: column; align-items: center; padding: 40px 20px; border-radius: 30px; background: var(--bg-color); box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light); }
+        h1 { font-size: 2rem; margin-bottom: 20px; letter-spacing: 1px; }
+        
+        /* 搜索表单样式 */
+        .search-form { position: relative; width: 100%; max-width: 600px; display: flex; align-items: center; }
+        .search-input { width: 100%; padding: 15px 20px; padding-right: 50px; border: none; outline: none; border-radius: 50px; background: var(--bg-color); color: var(--text-main); font-size: 1rem; box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light); transition: all 0.3s ease; }
+        .search-input:focus { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); }
+        .search-btn { position: absolute; right: 15px; background: transparent; border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-light); }
 
-.text-center h2 span{
-  font-weight: 800;
-}
+        /* 分类标签栏 */
+        .categories { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
+        .cat-btn { padding: 10px 20px; border: none; border-radius: 20px; background: var(--bg-color); color: var(--text-main); font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
+        .cat-btn:hover { transform: translateY(-2px); color: var(--accent-color); }
+        .cat-btn.active { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); color: var(--accent-color); }
 
-.text-center p{
-  max-width: 500px;
-  margin: 0 auto;
-  color: #6c757d;
-  line-height: 1.5;
-  font-size: 1em;
-}
-
-.col{
-  width: 33.3333333%;
-  overflow: hidden;
-  padding: 15px;
-}
-
-.col .card{
-  width: 100%;
-  box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease;
-}
-
-.col img{
-  width: 100%;
-  height: auto;
-  border: 0;
-}
-
-.col .card-body{
-  padding: 0 15px 15px 15px;
-  background-color: #fff;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-}
-
-.card-body h5{
-  font-size: 24px;
-  margin: 7px 0;
-}
-
-.card:hover{
-  transform: translateY(-10px);
-  transition: transform 0.3s ease;
-}
-
-.card p{
-  color: #6c757d;
-}
-
-.card-body .date-author span{
-  color: #e74c3c;
-}
-
-.card-body h5 a{
-  color: #222;
-}
-
-@media(min-width: 577px) and (max-width: 768px){
-  .col{
-      width: 50%;
-  }
-}
-
-@media(max-width: 576px){
-  .col{
-      width: 100%;
-  }}
+        /* 内容展示区域 */
+        .content-area { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 20px; padding: 6px; }
+        .card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 10px; border-radius: 15px; background: var(--bg-color); box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); transition: all 0.3s ease; text-decoration: none; color: var(--text-main); }
+        .card:hover { transform: translateY(-5px); box-shadow: 10px 10px 15px var(--shadow-dark), -10px -10px 15px var(--shadow-light); }
+        .card-emoji { font-size: 2.5rem; margin-bottom: 15px; line-height: 1; }
+        .card-title { font-size: 1rem; font-weight: 600; text-align: center; margin-bottom: 5px; }
+        .card-desc { font-size: 0.8rem; color: var(--text-light); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+        
+        @media (max-width: 600px) { .content-area { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } h1 { font-size: 1.5rem; } }
+		/* 底部展示区域 */
+		.neu-flat { background: var(--bg-color); box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light); border-radius: 20px; padding: 20px; width: 100%; max-width: 1000px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <!-- Brand/logo -->
-        <a class="navbar-brand" href="#">7080.wang</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarContent">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="https://7080.wang">首页</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../live/">IPTV</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://mao.7080.wang/">app</a>
-          </li>
-        </ul> </div>
-      </nav>
-      <div class="toggle text-right"  onclick="toggleDarkMode()">🌙</div>
 
-
-    <div class="container">
-      <div class="text-center"><img style=" width:auto; max-width:50%;" src="https://7080.wang/img/index-logo.png" title="7080" /></div>
+<div class="container">
+    <header>
+        <h1>🧭 7080影视搜</h1>
         <form action="./so.html" method="get" class="search-form">
-            <div class="input-group mb-4">
-              <input type="hidden" name="id" value="0">
-                <input type="text" name="wd" class="form-control" placeholder="搜索电影、电视剧、动漫……" aria-label="Search" aria-describedby="button-addon">
-                <button class="btn  btn-primary" type="submit" id="button-addon">🔍搜索</button>
-            </div>
+            <input type="text" name="wd" class="search-input" placeholder="搜索电影、电视剧、动漫……" required>
+            <button type="submit" class="search-btn">🔍</button>
         </form>
-        <br/>
-        <div class="text-center" >
-          <h2>下载APP</h2>
-          <p>免费畅享4K画质追剧，多线路选择并支持投屏。APP操作简单功能齐全（支持安卓、PC、TV端）！</p></div>
-          <div class="screenshot">
-            <img src="https://pic3.zhimg.com/v2-f2de95b51dc77976c346e6e2b3fe2d7a_r.png" alt="软件截图">
-          <!--	<img src="static/picture/64a8fd3f1ddac507cc9798f5.jpg" alt="软件截图">-->
-          </div>
-        <div class="container mt-4">
+        
+        <div class="categories" id="categoryContainer">
+            <button class="cat-btn active" data-category="all">全部</button>
+            <button class="cat-btn" data-category="VIDEO">🚂 影视</button>
+            <button class="cat-btn" data-category="GAME">🎮️ 游戏</button>
+            <button class="cat-btn" data-category="XUEXI">📚 学习</button>
+            <button class="cat-btn" data-category="tools">🛠️ 工具</button>
+        </div>
+    </header>
+
+    <main class="content-area" id="linksContainer">
+        <!-- 链接卡片 -->
+    </main>
+
+        <div class="neu-flat">
             <h4 >🚂APP推荐</h4> 
             <p>推荐使用影视仓、OK影视等app播放，此APP是开源软件，支持安卓电视TV端和手机安装使用。<br>
               1.支持导入多个影视源；<br>
@@ -184,84 +89,82 @@
             <p>首次打开除了基本功能按钮，影视类资源全都是空白，需要我们手动设置：<br>
             1.安装完毕后打开APP；<br>
             2.点击首页配置；<br>
-            3.输入接口名字，如：7080；<br>
-            4.输入推送链接，如： http://w.7080.wang/tv/1.json <br>
+            3.输入接口名字，如：影视；<br>
+            4.输入推送链接，如：https://cdn.jsdelivr.net/gh/sysh8888/mao/tv/1.json <br>
             5.点击确定即可使用。</p>
+			
             <h4 >🩺影视仓接口推荐</h4>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://肥猫.com/">肥猫</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://www.饭太硬.com/tv">饭太硬</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://cdn.qiaoji8.com/tvbox.json">巧技</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://home.jundie.top:81/top98.json">俊哥</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://tvbox.xn--4kq62z5rby2qupq9ub.top/">王小二</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="https://fastly.jsdelivr.net/gh/xyq254245/xyqonlinerule/XYQTVBox.json">香雅琴</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://ok213.top/tv">OK接口</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="https://raw.liucn.cc/box/m.json">刘备</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="https://tv.菜妮丝.top">菜妮丝</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="https://fastly.jsdelivr.net/gh/yoursmile66/TVBox/XC.json">南风</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://我不是.摸鱼儿.com">摸鱼</button>
-            <button type="button" class="btn btn-outline-success" onclick="copyValue(this)" value="http://mitvbox.xyz/%E5%B0%8F%E7%B1%B3/DEMO.json">小米</button>
-         
+			<div class="categories">
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://肥猫.com/">肥猫</button>
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://www.饭太硬.com/tv">饭太硬</button>
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://cdn.qiaoji8.com/tvbox.json">巧技</button>
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://home.jundie.top:81/top98.json">俊哥</button>
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://tvbox.xn--4kq62z5rby2qupq9ub.top/">王小二</button>
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="https://fastly.jsdelivr.net/gh/xyq254245/xyqonlinerule/XYQTVBox.json">香雅琴</button>
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://ok213.top/tv">OK接口</button>
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="https://raw.liucn.cc/box/m.json">刘备</button>
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="https://tv.菜妮丝.top">菜妮丝</button>
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="https://fastly.jsdelivr.net/gh/yoursmile66/TVBox/XC.json">南风</button>
+            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://我不是.摸鱼儿.com">摸鱼</button>
+         </div></div>
 
-          </div>
-          
-          
-      </div>
-      <section class="our-blog">
+	
+</div>
 
-        <div class="container">
-         
-          <div class="row mt-5">
-            <div class="col">
-              <div class="card">
-                <img src="https://pic1.zhimg.com/v2-7c67ac14f900813a418b1a33ef3ffedc_r.jpg?source=2c26e567" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <a href="https://pan.quark.cn/s/0c47dfe3a371#/list/share" tagret="_blank" class="btn btn-success">下载</a>
-                  </h5>
-                  <p class="card-text">
-                    <b>影视仓</b>支持安卓手机及电视盒
-                  </p>
-                </div>
-              </div>
-            </div>
+<script>
+    // 数据源保持不变
+    const linksData = [
+        { id: 1, title: "找电影", desc: "寻找电影名", category: "VIDEO", emoji: "📺", url: "https://www.aimoviefinder.com/zh-CN#google_vignette" },
+        { id: 2, title: "搜片网", desc: "影视搜索", category: "VIDEO", emoji: "📺", url: "https://sopw.cc/" },
+        { id: 3, title: "NO视频", desc: "在线电影", category: "VIDEO", emoji: "📺", url: "https://www.novipnoad.us/" },
+        { id: 4, title: "注视影视", desc: "在线电影", category: "VIDEO", emoji: "📺", url: "https://gazes.site/" },
+        { id: 5, title: "STWTCH520", desc: "游戏下载", category: "GAME", emoji: "🎮️", url: "https://www.gamer520.com/" },
+        { id: 6, title: "poki", desc: "小游戏", category: "GAME", emoji: "🎮️", url: "https://poki.com/zh/html5" },
+        { id: 7, title: "playhop", desc: "在线游戏", category: "GAME", emoji: "🎮️", url: "https://playhop.com/zh" },
+        { id: 8, title: "Bilibili", desc: "视频学习", category: "XUEXI", emoji: "📺", url: "https://www.bilibili.com" },
+        { id: 9, title: "Coursera", desc: "在线课程", category: "XUEXI", emoji: "🎓", url: "https://www.coursera.org" },
+        { id: 10, title: "Google", desc: "搜索引擎", category: "tools", emoji: "🔍", url: "https://www.google.com" },
+        { id: 11, title: "TinyPNG", desc: "图片压缩", category: "tools", emoji: "🖼️", url: "https://tinypng.com" },
+        { id: 12, title: "Remove.bg", desc: "一键抠图", category: "tools", emoji: "✂️", url: "https://www.remove.bg" },
+		{ id: 13, title: "公开课", desc: "网易公开课", category: "XUEXI", emoji: "🎓", url: "https://open.163.com/" },
+		{ id: 14, title: "蜂蜜剪辑", desc: "视频剪辑", category: "tools", emoji: "✂️", url: "https://beecut.cn/" }
+    ];
+
+    const linksContainer = document.getElementById('linksContainer');
+    const categoryBtns = document.querySelectorAll('.cat-btn');
+    let currentCategory = 'all';
+
+    function init() {
+        renderLinks();
+        setupEventListeners();
+    }
+
+    function renderLinks() {
+        linksContainer.innerHTML = '';
+        const filteredLinks = linksData.filter(link => currentCategory === 'all' || link.category === currentCategory);
         
-            <div class="col">
-              <div class="card">
-                <img src="https://picx.zhimg.com/70/v2-c63b8967f1fe7a31de9e960947231cd6_1440w.avis?source=172ae18b&biz_tag=Post" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <a href="https://pan.quark.cn/s/de6d689e3c16#/list/share" tagret="_blank" class="btn btn-success">下载</a>
-                  </h5>
-                  <p class="card-text">
-                    <b>OK影视</b> 支持安卓手机及电视盒
-                  </p>
-                </div>
-              </div>
-            </div>
-        
-            <div class="col">
-              <div class="card">
-                <img src="https://picx.zhimg.com/70/v2-0b2307cc562ecf2a82d407c361bbc298_1440w.avis?source=172ae18b&biz_tag=Post" alt="">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <a href="http://zj.downxia.com/down/maoyingshi.rar" tagret="_blank" class="btn btn-success">下载</a>
-                  </h5>
-                  <p class="card-text">
-                    <b >猫影视</b>支持Windows64位电脑
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </section>
-<footer class="d-flex flex-wrap justify-content-center align-items-center">
-    <p class="text-center">个人测试学习使用非赢利性站点 &copy; 内容均来源于互联网相关站点自动搜索采集</p>
-  </footer>
-    <script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.net/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="./js/tongji.js"></script>
+        filteredLinks.forEach(link => {
+            const card = document.createElement('a');
+            card.href = link.url;
+            card.target = "_blank";
+            card.className = 'card';
+            card.innerHTML = `<div class="card-emoji">${link.emoji}</div><div class="card-title">${link.title}</div><div class="card-desc">${link.desc}</div>`;
+            linksContainer.appendChild(card);
+        });
+    }
+
+    function setupEventListeners() {
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.getAttribute('data-category');
+                renderLinks();
+            });
+        });
+    }
+    init();
+</script>
     <script>
 function toggleDarkMode() {
 			document.body.classList.toggle("dark-mode");
@@ -282,5 +185,7 @@ function toggleDarkMode() {
         alert("温馨提醒：复制成功，请前往影视仓、TVBOX接口粘贴");
       }
       </script>
+	   <script src="./js/tongji.js"></script>
 </body>
 </html>
+
