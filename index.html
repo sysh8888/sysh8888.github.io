@@ -1,193 +1,409 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>一个简单的影视搜索导航-7080影视搜</title>
-	<meta name="description" content="7080影视搜" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一个简单的影视搜索导航-7080影视搜</title>
+<meta name="description" content="7080影视搜" />
 <meta name="keywords" content="7080影视搜,7080.wang,7080wang" />
-    <style>
-        :root {
-            --bg-color: #e0e5ec;
-            --text-main: #4a5568;
-            --text-light: #718096;
-            --shadow-light: #ffffff;
-            --shadow-dark: #a3b1c6;
-            --accent-color: #6d5dfc;
-        }
+<style>
+:root {
+--bg-color: #e0e5ec;
+--text-main: #4a5568;
+--text-light: #718096;
+--shadow-light: #ffffff;
+--shadow-dark: #a3b1c6;
+--accent-color: #6d5dfc;
+}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; min-height: 100vh; padding: 20px; }
-        .container { width: 100%; max-width: 1000px; display: flex; flex-direction: column; gap: 30px; }
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
 
-        /* 头部搜索区域 */
-        header { display: flex; flex-direction: column; align-items: center; padding: 40px 20px; border-radius: 30px; background: var(--bg-color); box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light); }
-        h1 { font-size: 2rem; margin-bottom: 20px; letter-spacing: 1px; }
-        
-        /* 搜索表单样式 */
-        .search-form { position: relative; width: 100%; max-width: 600px; display: flex; align-items: center; }
-        .search-input { width: 100%; padding: 15px 20px; padding-right: 50px; border: none; outline: none; border-radius: 50px; background: var(--bg-color); color: var(--text-main); font-size: 1rem; box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light); transition: all 0.3s ease; }
-        .search-input:focus { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); }
-        .search-btn { position: absolute; right: 15px; background: transparent; border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-light); }
+body {
+background-color: var(--bg-color);
+color: var(--text-main);
+display: flex;
+justify-content: center;
+min-height: 100vh;
+padding: 10px;
+}
 
-        /* 分类标签栏 */
-        .categories { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
-        .cat-btn { padding: 10px 20px; border: none; border-radius: 20px; background: var(--bg-color); color: var(--text-main); font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light); }
-        .cat-btn:hover { transform: translateY(-2px); color: var(--accent-color); }
-        .cat-btn.active { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light); color: var(--accent-color); }
+.container {
+width: 100%;
+max-width: 1000px;
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
 
-        /* 内容展示区域 */
-        .content-area { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 20px; padding: 6px; }
-        .card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 10px; border-radius: 15px; background: var(--bg-color); box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light); transition: all 0.3s ease; text-decoration: none; color: var(--text-main); }
-        .card:hover { transform: translateY(-5px); box-shadow: 10px 10px 15px var(--shadow-dark), -10px -10px 15px var(--shadow-light); }
-        .card-emoji { font-size: 2.5rem; margin-bottom: 15px; line-height: 1; }
-        .card-title { font-size: 1rem; font-weight: 600; text-align: center; margin-bottom: 5px; }
-        .card-desc { font-size: 0.8rem; color: var(--text-light); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
-        
-        @media (max-width: 600px) { .content-area { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } h1 { font-size: 1.5rem; } }
-		/* 底部展示区域 */
-		.neu-flat { background: var(--bg-color); box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light); border-radius: 20px; padding: 20px; width: 100%; max-width: 1000px; margin-bottom: 20px; }
-    </style>
+/* 头部搜索区域 */
+header {
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 30px 20px;
+border-radius: 30px;
+background: var(--bg-color);
+box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+}
+
+h1 {
+font-size: 1.8rem;
+margin-bottom: 15px;
+letter-spacing: 1px;
+text-align: center;
+}
+
+/* 搜索表单样式 */
+.search-form {
+position: relative;
+width: 100%;
+max-width: 600px;
+display: flex;
+align-items: center;
+}
+
+.search-input {
+width: 100%;
+padding: 15px 20px;
+padding-right: 50px;
+border: none;
+outline: none;
+border-radius: 50px;
+background: var(--bg-color);
+color: var(--text-main);
+font-size: 1rem;
+box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+transition: all 0.3s ease;
+}
+
+.search-input:focus {
+box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+}
+
+.search-btn {
+position: absolute;
+right: 15px;
+background: transparent;
+border: none;
+cursor: pointer;
+font-size: 1.2rem;
+color: var(--text-light);
+}
+
+/* 分类标签栏 */
+.categories {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+gap: 12px;
+margin-top: 15px;
+}
+
+.cat-btn {
+padding: 8px 16px;
+border: none;
+border-radius: 20px;
+background: var(--bg-color);
+color: var(--text-main);
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+font-size: 0.9rem;
+}
+
+.cat-btn:hover {
+transform: translateY(-2px);
+color: var(--accent-color);
+}
+
+.cat-btn.active {
+box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+color: var(--accent-color);
+}
+
+/* 内容展示区域 */
+.content-area {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+gap: 15px;
+padding: 6px;
+}
+
+.card {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 15px 10px;
+border-radius: 15px;
+background: var(--bg-color);
+box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+transition: all 0.3s ease;
+text-decoration: none;
+color: var(--text-main);
+height: 100%;
+}
+
+.card:hover {
+transform: translateY(-3px);
+box-shadow: 10px 10px 15px var(--shadow-dark), -10px -10px 15px var(--shadow-light);
+}
+
+.card-title {
+font-size: 0.9rem;
+font-weight: 600;
+text-align: center;
+margin-bottom: 5px;
+word-break: break-all;
+}
+
+.card-desc {
+font-size: 0.7rem;
+color: var(--text-light);
+text-align: center;
+white-space: normal;
+word-wrap: break-word;
+width: 100%;
+line-height: 1.3;
+}
+
+/* 底部展示区域 */
+.neu-flat {
+background: var(--bg-color);
+box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+border-radius: 20px;
+padding: 15px;
+width: 100%;
+max-width: 1000px;
+margin-bottom: 15px;
+}
+
+.neu-flat p {
+font-size: 0.85rem;
+line-height: 1.5;
+margin: 8px 0;
+word-wrap: break-word;
+/* 修复手机端长网址显示 */
+word-break: break-all;
+}
+
+.neu-flat h4 {
+margin: 12px 0 8px 0;
+font-size: 1rem;
+}
+
+footer {
+text-align: center;
+color: var(--text-light);
+margin-bottom: 10px;
+font-size: 0.8rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+.content-area {
+grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+h1 {
+font-size: 1.4rem;
+}
+
+.search-input {
+padding: 12px 15px;
+padding-right: 45px;
+}
+
+.cat-btn {
+padding: 6px 12px;
+font-size: 0.8rem;
+}
+
+.card-title {
+font-size: 0.8rem;
+}
+
+.card-desc {
+font-size: 0.65rem;
+}
+}
+
+@media (max-width: 400px) {
+.content-area {
+grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+}
+
+h1 {
+font-size: 1.3rem;
+}
+
+.search-form {
+max-width: 100%;
+}
+}
+</style>
 </head>
 <body>
-
 <div class="container">
-    <header>
-        <h1>📺 7080影视搜导航</h1>
-        <form action="./so.html" method="get" class="search-form">
-            <input type="text" name="wd" class="search-input" placeholder="搜索电影、电视剧、动漫……" required>
-            <button type="submit" class="search-btn">🔍</button>
-        </form>
-        
-        <div class="categories" id="categoryContainer">
-            <button class="cat-btn active" data-category="all">全部</button>
-            <button class="cat-btn" data-category="VIDEO">🚂 影视</button>
-            <button class="cat-btn" data-category="GAME">🎮️ 游戏</button>
-            <button class="cat-btn" data-category="XUEXI">📚 学习</button>
-            <button class="cat-btn" data-category="tools">🛠️ 工具</button>
-        </div>
-    </header>
+<header>
+<h1>7080影视搜导航</h1>
+<form action="./so.html" method="get" class="search-form">
+<input type="text" name="wd" class="search-input" placeholder="搜索电影、电视剧、动漫……" required>
+<button type="submit" class="search-btn">🔍</button>
+</form>
+<div class="categories" id="categoryContainer">
+<button class="cat-btn active" data-category="all">全部</button>
+<button class="cat-btn" data-category="VIDEO">影视</button>
+<button class="cat-btn" data-category="GAME">游戏</button>
+<button class="cat-btn" data-category="XUEXI">学习</button>
+<button class="cat-btn" data-category="tools">工具</button>
+</div>
+</header>
 
-    <main class="content-area" id="linksContainer">
-        <!-- 链接卡片 -->
-    </main>
+<main class="content-area" id="linksContainer">
+<!-- 链接卡片由JS生成 -->
+</main>
 
-        <div class="neu-flat">
-            <h4 >🚂APP推荐</h4> 
-            <p>推荐使用影视仓、OK影视等app播放，此APP是开源软件，支持安卓电视TV端和手机安装使用。<br>
-              1.支持导入多个影视源；<br>
-            2.支持添加在线字幕、快进、播放速度调整等功能；<br>
-            3.支持一键安装和一键解压；<br>
-            4.支持一键复制视频地址到本地；<br>
-            5.支持添加书签和播放记录到本地；<br>
-            6.支持添加多个浏览器书签，可自由选择；<br>
-            7.可以根据时间或者地点来选择不同的背景图片；<br>
-            8.采用了最新的传输协议，不会产生卡顿；<br>
-            9.所有资源均来互联网，绿色无毒无广告。<br>
-            10.影视仓最新版在原基础上增加了更多功能。</p>
-            <h4 >📻影视仓使用说明</h4>
-            <p>首次打开除了基本功能按钮，影视类资源全都是空白，需要我们手动设置：<br>
-            1.安装完毕后打开APP；<br>
-            2.点击首页配置；<br>
-            3.输入接口名字，如：影视；<br>
-            4.输入推送链接，如：https://cdn.jsdelivr.net/gh/sysh8888/mao/tv/1.json <br>
-            5.点击确定即可使用。</p>
-			
-            <h4 >🩺影视仓接口推荐</h4>
-			<div class="categories">
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://肥猫.com/">肥猫</button>
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://www.饭太硬.com/tv">饭太硬</button>
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://cdn.qiaoji8.com/tvbox.json">巧技</button>
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://home.jundie.top:81/top98.json">俊哥</button>
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://tvbox.xn--4kq62z5rby2qupq9ub.top/">王小二</button>
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="https://fastly.jsdelivr.net/gh/xyq254245/xyqonlinerule/XYQTVBox.json">香雅琴</button>
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://ok213.top/tv">OK接口</button>
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="https://raw.liucn.cc/box/m.json">刘备</button>
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="https://tv.菜妮丝.top">菜妮丝</button>
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="https://fastly.jsdelivr.net/gh/yoursmile66/TVBox/XC.json">南风</button>
-            <button type="button" class="cat-btn" onclick="copyValue(this)" value="http://我不是.摸鱼儿.com">摸鱼</button>
-         </div></div>
-<footer style="text-align: center; color: var(--text-light); margin-bottom: 10px;">
-    <p >个人测试学习使用非赢利性站点 &copy; 内容均来源于互联网相关站点自动搜索采集</p>
-  </footer>
-	
+<div class="neu-flat">
+<h4>APP推荐</h4>
+<p>推荐使用影视仓、OK影视等app播放，此APP是开源软件，支持安卓电视TV端和手机安装使用。</p>
+<p>1.支持导入多个影视源；<br> 2.支持添加在线字幕、快进、播放速度调整等功能；<br> 3.支持一键安装和一键解压；<br> 4.支持一键复制视频地址到本地；<br> 5.支持添加书签和播放记录到本地；<br> 6.支持添加多个浏览器书签，可自由选择；<br> 7.可以根据时间或者地点来选择不同的背景图片；<br> 8.采用了最新的传输协议，不会产生卡顿；<br> 9.所有资源均来互联网，绿色无毒无广告。<br> 10.影视仓最新版在原基础上增加了更多功能。</p>
+
+<h4>影视仓使用说明</h4>
+<p>首次打开除了基本功能按钮，影视类资源全都是空白，需要我们手动设置：<br> 1.安装完毕后打开APP；<br> 2.点击首页配置；<br> 3.输入接口名字，如：影视；<br> 4.输入推送链接，如：https://cdn.jsdelivr.net/gh/sysh8888/mao/tv/1.json <br> 5.点击确定即可使用。</p>
+
+<h4>接口推荐</h4>
+<div class="categories">
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://肥猫.com/">肥猫</button>
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://www.饭太硬.com/tv">饭太硬</button>
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://cdn.qiaoji8.com/tvbox.json">巧技</button>
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://home.jundie.top:81/top98.json">俊哥</button>
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://tvbox.xn--4kq62z5rby2qupq9ub.top/">王小二</button>
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="https://fastly.jsdelivr.net/gh/xyq254245/xyqonlinerule/XYQTVBox.json">香雅琴</button>
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://ok213.top/tv">OK接口</button>
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="https://raw.liucn.cc/box/m.json">刘备</button>
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="https://tv.菜妮丝.top">菜妮丝</button>
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="https://fastly.jsdelivr.net/gh/yoursmile66/TVBox/XC.json">南风</button>
+<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://我不是.摸鱼儿.com">摸鱼</button>
+</div>
+</div>
+
+<footer>
+<p>个人测试学习使用非赢利性站点 &copy; 内容均来源于互联网相关站点自动搜索采集</p>
+</footer>
 </div>
 
 <script>
-    // 数据源保持不变
-    const linksData = [
-        { id: 1, title: "找电影", desc: "寻找电影名", category: "VIDEO", emoji: "📺", url: "https://www.aimoviefinder.com/zh-CN#google_vignette" },
-        { id: 2, title: "搜片网", desc: "影视搜索", category: "VIDEO", emoji: "📺", url: "https://sopw.cc/" },
-        { id: 3, title: "NO视频", desc: "在线电影", category: "VIDEO", emoji: "📺", url: "https://www.novipnoad.us/" },
-        { id: 4, title: "注视影视", desc: "在线电影", category: "VIDEO", emoji: "📺", url: "https://gazes.site/" },
-        { id: 5, title: "STWTCH520", desc: "游戏下载", category: "GAME", emoji: "🎮️", url: "https://www.gamer520.com/" },
-        { id: 6, title: "poki", desc: "小游戏", category: "GAME", emoji: "🎮️", url: "https://poki.com/zh/html5" },
-        { id: 7, title: "playhop", desc: "在线游戏", category: "GAME", emoji: "🎮️", url: "https://playhop.com/zh" },
-        { id: 8, title: "Bilibili", desc: "视频学习", category: "XUEXI", emoji: "📺", url: "https://www.bilibili.com" },
-        { id: 9, title: "Coursera", desc: "在线课程", category: "XUEXI", emoji: "🎓", url: "https://www.coursera.org" },
-        { id: 10, title: "Google", desc: "搜索引擎", category: "tools", emoji: "🔍", url: "https://www.google.com" },
-        { id: 11, title: "TinyPNG", desc: "图片压缩", category: "tools", emoji: "🖼️", url: "https://tinypng.com" },
-        { id: 12, title: "Remove.bg", desc: "一键抠图", category: "tools", emoji: "✂️", url: "https://www.remove.bg" },
-		{ id: 13, title: "公开课", desc: "网易公开课", category: "XUEXI", emoji: "🎓", url: "https://open.163.com/" },
-		{ id: 14, title: "蜂蜜剪辑", desc: "视频剪辑", category: "tools", emoji: "✂️", url: "https://beecut.cn/" }
-    ];
+// 数据源移除图标和ID项
+const linksData = [
+{ title: "找电影", desc: "寻找电影名", category: "VIDEO", url: "https://www.aimoviefinder.com/zh-CN#google_vignette" },
+{ title: "搜片网", desc: "影视搜索", category: "VIDEO", url: "https://sopw.cc/" },
+{ title: "NO视频", desc: "在线电影", category: "VIDEO", url: "https://www.novipnoad.us/" },
+{ title: "注视影视", desc: "在线电影", category: "VIDEO", url: "https://gazes.site/" },
+{ title: "STWTCH520", desc: "游戏下载", category: "GAME", url: "https://www.gamer520.com/" },
+{ title: "poki", desc: "小游戏", category: "GAME", url: "https://poki.com/zh/html5" },
+{ title: "playhop", desc: "在线游戏", category: "GAME", url: "https://playhop.com/zh" },
+{ title: "Bilibili", desc: "视频学习", category: "XUEXI", url: "https://www.bilibili.com" },
+{ title: "Coursera", desc: "在线课程", category: "XUEXI", url: "https://www.coursera.org" },
+{ title: "Google", desc: "搜索引擎", category: "tools", url: "https://www.google.com" },
+{ title: "TinyPNG", desc: "图片压缩", category: "tools", url: "https://tinypng.com" },
+{ title: "Remove.bg", desc: "一键抠图", category: "tools", url: "https://www.remove.bg" },
+{ title: "公开课", desc: "网易公开课", category: "XUEXI", url: "https://open.163.com/" },
+{ title: "蜂蜜剪辑", desc: "视频剪辑", category: "tools", url: "https://beecut.cn/" },
+{ title: "优品PPT", desc: "免费PPT模板", category: "tools", url: "https://www.ypppt.com/" },
+{ title: "IFXIT", desc: "免费维修手册", category: "XUEXI", url: "https://zh.ifixit.com/" }
+];
 
-    const linksContainer = document.getElementById('linksContainer');
-    const categoryBtns = document.querySelectorAll('.cat-btn');
-    let currentCategory = 'all';
+const linksContainer = document.getElementById('linksContainer');
+const categoryBtns = document.querySelectorAll('.cat-btn');
+let currentCategory = 'all';
+let isExpanded = false; // 控制“全部”分类的展开状态
 
-    function init() {
-        renderLinks();
-        setupEventListeners();
-    }
+function init() {
+renderLinks();
+setupEventListeners();
+}
 
-    function renderLinks() {
-        linksContainer.innerHTML = '';
-        const filteredLinks = linksData.filter(link => currentCategory === 'all' || link.category === currentCategory);
-        
-        filteredLinks.forEach(link => {
-            const card = document.createElement('a');
-            card.href = link.url;
-            card.target = "_blank";
-            card.className = 'card';
-            card.innerHTML = `<div class="card-emoji">${link.emoji}</div><div class="card-title">${link.title}</div><div class="card-desc">${link.desc}</div>`;
-            linksContainer.appendChild(card);
-        });
-    }
+function renderLinks() {
+linksContainer.innerHTML = '';
+let filteredLinks = linksData;
 
-    function setupEventListeners() {
-        categoryBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                categoryBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentCategory = btn.getAttribute('data-category');
-                renderLinks();
-            });
-        });
-    }
-    init();
+// 如果不是“全部”分类，则按原逻辑过滤
+if (currentCategory !== 'all') {
+filteredLinks = linksData.filter(link => link.category === currentCategory);
+} else {
+// 如果是“全部”分类且未展开，则只显示前8个
+if (!isExpanded) {
+filteredLinks = linksData.slice(0, 8);
+}
+// 如果已展开，则显示全部
+}
+
+filteredLinks.forEach(link => {
+const card = document.createElement('a');
+card.href = link.url;
+card.target = "_blank";
+card.className = 'card';
+card.innerHTML = `<div class="card-title">${link.title}</div><div class="card-desc">${link.desc}</div>`;
+linksContainer.appendChild(card);
+});
+
+// 如果是“全部”分类且未展开，添加“更多”按钮
+if (currentCategory === 'all' && !isExpanded) {
+const moreCard = document.createElement('div');
+moreCard.className = 'card';
+moreCard.style.justifyContent = 'center';
+moreCard.innerHTML = '<div class="card-title" style="color: var(--accent-color);">...</div><div class="card-desc">点击加载全部</div>';
+moreCard.onclick = () => {
+isExpanded = true;
+renderLinks();
+};
+linksContainer.appendChild(moreCard);
+}
+}
+
+function setupEventListeners() {
+categoryBtns.forEach(btn => {
+btn.addEventListener('click', () => {
+// 重置展开状态
+isExpanded = false;
+
+categoryBtns.forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+currentCategory = btn.getAttribute('data-category');
+renderLinks();
+});
+});
+}
+
+init();
 </script>
-    <script>
-function toggleDarkMode() {
-			document.body.classList.toggle("dark-mode");
-		}
 
-      function copyValue(button) {
-        // 创建一个临时的输入框
-        const input = document.createElement('input');
-        input.value = button.value; // 将按钮的值赋给输入框
-        // 将输入框添加到文档中
-        document.body.appendChild(input);
-        // 选中输入框的内容
-        input.select();
-        // 执行复制操作
-        document.execCommand('copy');
-        // 移除临时输入框
-        document.body.removeChild(input);
-        alert("温馨提醒：复制成功，请前往影视仓、TVBOX接口粘贴");
-      }
-      </script>
-	   <script src="./js/tongji.js"></script>
+<script>
+// 修复复制链接后导航消失的问题
+async function copyValue(button) {
+const value = button.value;
+try {
+await navigator.clipboard.writeText(value);
+alert("温馨提醒：复制成功，请前往影视仓、TVBOX接口粘贴");
+} catch (err) {
+// 如果现代API失败，回退到旧方法
+const input = document.createElement('input');
+input.value = value;
+document.body.appendChild(input);
+input.select();
+document.execCommand('copy');
+document.body.removeChild(input);
+alert("温馨提醒：复制成功，请前往影视仓、TVBOX接口粘贴");
+}
+}
+</script>
+<script src="./js/tongji.js"></script>
 </body>
 </html>
-
