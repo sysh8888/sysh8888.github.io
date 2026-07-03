@@ -1,408 +1,746 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>一个简单的影视搜索导航-7080影视搜</title>
-<meta name="description" content="7080影视搜" />
-<meta name="keywords" content="7080影视搜,7080.wang,7080wang" />
-<style>
-:root {
---bg-color: #e0e5ec;
---text-main: #4a5568;
---text-light: #718096;
---shadow-light: #ffffff;
---shadow-dark: #a3b1c6;
---accent-color: #6d5dfc;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>7080网-一个简单的娱乐办公导航</title>
+  <meta name="description" content="7080网 (7080.wang) 打造全网优质网站与软件合集。站点收录办公、AI 智能、设计素材、新媒体运营、学习增收、影音娱乐、生活服务等各类实用网址，搭配真实网站点评与口碑参考、实用职场技巧，帮你省去筛选烦恼，上网便捷又省心，是大众常用的上网主页。">
+  <meta name="keywords" content="7080网，7080.wang，休闲娱乐，上网导航，网址大全，网站目录，网站点评，网站口碑，实用软件，办公工具，AI 工具，素材资源">
+  <style>
+    /* ===== 全局重置 & 主题变量 ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
+    :root {
+      --bg: #f6f8fa;
+      --card-bg: #ffffff;
+      --card-hover: #f0f2f5;
+      --primary: #f5a623;
+      --primary-light: #e69500;
+      --primary-soft: #fef3e2;
+      --text: #1f2328;
+      --text-secondary: #57606a;
+      --text-muted: #8c959f;
+      --border: #d0d7de;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
+      --radius: 12px;
+      --radius-lg: 16px;
+      --transition: 0.2s ease;
+    }
 
-body {
-background-color: var(--bg-color);
-color: var(--text-main);
-display: flex;
-justify-content: center;
-min-height: 100vh;
-padding: 10px;
-}
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px 20px 50px;
+      transition: background 0.2s, color 0.2s;
+    }
 
-.container {
-width: 100%;
-max-width: 1000px;
-display: flex;
-flex-direction: column;
-gap: 20px;
-}
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
 
-/* 头部搜索区域 */
-header {
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 30px 20px;
-border-radius: 30px;
-background: var(--bg-color);
-box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
-}
+    /* ===== 头部区域 ===== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+    }
 
-h1 {
-font-size: 1.8rem;
-margin-bottom: 15px;
-letter-spacing: 1px;
-text-align: center;
-}
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--primary), #f7c948);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
 
-/* 搜索表单样式 */
-.search-form {
-position: relative;
-width: 100%;
-max-width: 600px;
-display: flex;
-align-items: center;
-}
+    .logo .tagline {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
 
-.search-input {
-width: 100%;
-padding: 15px 20px;
-padding-right: 50px;
-border: none;
-outline: none;
-border-radius: 50px;
-background: var(--bg-color);
-color: var(--text-main);
-font-size: 1rem;
-box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
-transition: all 0.3s ease;
-}
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-.search-input:focus {
-box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
-}
+    .theme-toggle {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 6px 16px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: var(--transition);
+    }
 
-.search-btn {
-position: absolute;
-right: 15px;
-background: transparent;
-border: none;
-cursor: pointer;
-font-size: 1.2rem;
-color: var(--text-light);
-}
+    .theme-toggle:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
 
-/* 分类标签栏 */
-.categories {
-display: flex;
-justify-content: center;
-flex-wrap: wrap;
-gap: 12px;
-margin-top: 15px;
-}
+    /* ===== 搜索栏 ===== */
+    .search-section {
+      margin-bottom: 28px;
+    }
 
-.cat-btn {
-padding: 8px 16px;
-border: none;
-border-radius: 20px;
-background: var(--bg-color);
-color: var(--text-main);
-font-weight: 600;
-cursor: pointer;
-transition: all 0.3s ease;
-box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
-font-size: 0.9rem;
-}
+    .engine-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
 
-.cat-btn:hover {
-transform: translateY(-2px);
-color: var(--accent-color);
-}
+    .engine-tab {
+      padding: 4px 16px;
+      border-radius: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      color: var(--text-secondary);
+    }
 
-.cat-btn.active {
-box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
-color: var(--accent-color);
-}
+    .engine-tab.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
 
-/* 内容展示区域 */
-.content-area {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-gap: 15px;
-padding: 6px;
-}
+    .engine-tab:hover:not(.active) {
+      background: var(--card-hover);
+    }
 
-.card {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-padding: 15px 10px;
-border-radius: 15px;
-background: var(--bg-color);
-box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-transition: all 0.3s ease;
-text-decoration: none;
-color: var(--text-main);
-height: 100%;
-}
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 48px;
+      padding: 4px 4px 4px 20px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s;
+    }
 
-.card:hover {
-transform: translateY(-3px);
-box-shadow: 10px 10px 15px var(--shadow-dark), -10px -10px 15px var(--shadow-light);
-}
+    .search-box:focus-within {
+      box-shadow: var(--shadow);
+      border-color: var(--primary);
+    }
 
-.card-title {
-font-size: 0.9rem;
-font-weight: 600;
-text-align: center;
-margin-bottom: 5px;
-word-break: break-all;
-}
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      padding: 10px 0;
+    }
 
-.card-desc {
-font-size: 0.7rem;
-color: var(--text-light);
-text-align: center;
-white-space: normal;
-word-wrap: break-word;
-width: 100%;
-line-height: 1.3;
-}
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
 
-/* 底部展示区域 */
-.neu-flat {
-background: var(--bg-color);
-box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
-border-radius: 20px;
-padding: 15px;
-width: 100%;
-max-width: 1000px;
-margin-bottom: 15px;
-}
+    .search-btn {
+      background: var(--primary);
+      border: none;
+      border-radius: 40px;
+      padding: 8px 24px;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
 
-.neu-flat p {
-font-size: 0.85rem;
-line-height: 1.5;
-margin: 8px 0;
-word-wrap: break-word;
-/* 修复手机端长网址显示 */
-word-break: break-all;
-}
+    .search-btn:hover {
+      background: var(--primary-light);
+      transform: scale(0.97);
+    }
 
-.neu-flat h4 {
-margin: 12px 0 8px 0;
-font-size: 1rem;
-}
+    /* ===== 置顶常用区 ===== */
+    .pinned-section {
+      margin-bottom: 32px;
+    }
 
-footer {
-text-align: center;
-color: var(--text-light);
-margin-bottom: 10px;
-font-size: 0.8rem;
-}
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
 
-/* 响应式设计 */
-@media (max-width: 600px) {
-.content-area {
-grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-}
+    .section-header h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
 
-h1 {
-font-size: 1.4rem;
-}
+    .section-header .sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
 
-.search-input {
-padding: 12px 15px;
-padding-right: 45px;
-}
+    .pinned-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 12px;
+    }
 
-.cat-btn {
-padding: 6px 12px;
-font-size: 0.8rem;
-}
+    .pinned-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 6px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
 
-.card-title {
-font-size: 0.8rem;
-}
+    .pinned-card:hover {
+      background: var(--card-hover);
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow);
+    }
 
-.card-desc {
-font-size: 0.65rem;
-}
-}
+    .pinned-icon {
+      font-size: 1.8rem;
+    }
 
-@media (max-width: 400px) {
-.content-area {
-grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-}
+    .pinned-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
 
-h1 {
-font-size: 1.3rem;
-}
+    /* ===== 分类区块 ===== */
+    .category-block {
+      margin-bottom: 36px;
+    }
 
-.search-form {
-max-width: 100%;
-}
-}
-</style>
+    .sites-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .site-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: var(--transition);
+    }
+
+    .site-card:hover {
+      background: var(--card-hover);
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .site-icon {
+      font-size: 1.4rem;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-soft);
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .site-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .site-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .site-desc {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ===== 底部 ===== */
+    .footer {
+      margin-top: 48px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+
+    .footer .slogan {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 640px) {
+      body { padding: 16px 12px; }
+      .sites-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+      .pinned-grid { grid-template-columns: repeat(4, 1fr); }
+      .header { flex-direction: column; align-items: stretch; gap: 8px; }
+      .header-actions { justify-content: flex-end; }
+      .search-box { padding: 4px 4px 4px 16px; }
+      .search-btn { padding: 6px 16px; font-size: 0.8rem; }
+    }
+  </style>
 </head>
 <body>
 <div class="container">
-<header>
-<h1>7080影视搜导航</h1>
-<form action="./so.html" method="get" class="search-form">
-<input type="text" name="wd" class="search-input" placeholder="搜索电影、电视剧、动漫……" required>
-<button type="submit" class="search-btn">🔍</button>
-</form>
-<div class="categories" id="categoryContainer">
-<button class="cat-btn active" data-category="all">全部</button>
-<button class="cat-btn" data-category="VIDEO">影视</button>
-<button class="cat-btn" data-category="GAME">游戏</button>
-<button class="cat-btn" data-category="XUEXI">学习</button>
-<button class="cat-btn" data-category="tools">工具</button>
-</div>
-</header>
+  <!-- ===== 头部 ===== -->
+  <header class="header">
+    <div class="logo">
+      <h1>🧰 7080.wang</h1>
+      <div class="tagline">7080网-一个简单的娱乐办公网 | 效率工具 · 休闲娱乐</div>
+    </div>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle">🌙 暗夜模式</button>
+    </div>
+  </header>
 
-<main class="content-area" id="linksContainer">
-<!-- 链接卡片由JS生成 -->
-</main>
+  <!-- ===== 搜索栏 ===== -->
+  <div class="search-section">
+    <div class="engine-tabs" id="engineTabs">
+	<span class="engine-tab active" data-url="./so.html?wd=">影视</span>
+      <span class="engine-tab " data-url="https://www.baidu.com/s?wd=">百度</span>
+      <span class="engine-tab" data-url="https://www.bing.com/search?q=">必应</span>
+      <span class="engine-tab" data-url="https://search.douban.com/subject_search?search_text=">豆瓣</span>
+      <span class="engine-tab" data-url="https://www.google.com/search?q=">Google</span>
+      <span class="engine-tab" data-url="https://www.zhihu.com/search?type=content&q=">知乎</span>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" class="search-input" placeholder="输入关键词，搜索影视、资讯 ..." autocomplete="off">
+      <button class="search-btn" id="searchBtn">🔍 搜索</button>
+    </div>
+  </div>
 
-<div class="neu-flat">
-<h4>APP推荐</h4>
-<p>推荐使用影视仓、OK影视等app播放，此APP是开源软件，支持安卓电视TV端和手机安装使用。</p>
-<p>1.支持导入多个影视源；<br> 2.支持添加在线字幕、快进、播放速度调整等功能；<br> 3.支持一键安装和一键解压；<br> 4.支持一键复制视频地址到本地；<br> 5.支持添加书签和播放记录到本地；<br> 6.支持添加多个浏览器书签，可自由选择；<br> 7.可以根据时间或者地点来选择不同的背景图片；<br> 8.采用了最新的传输协议，不会产生卡顿；<br> 9.所有资源均来互联网，绿色无毒无广告。<br> 10.影视仓最新版在原基础上增加了更多功能。</p>
+  <!-- ===== 置顶常用区 ===== -->
+  <div class="pinned-section">
+    <div class="section-header">
+      <h2>📌 常用 · 热门工具</h2>
+      <span class="sub">口碑优选，一键直达</span>
+    </div>
+    <div class="pinned-grid" id="pinnedGrid"></div>
+  </div>
 
-<h4>影视仓使用说明</h4>
-<p>首次打开除了基本功能按钮，影视类资源全都是空白，需要我们手动设置：<br> 1.安装完毕后打开APP；<br> 2.点击首页配置；<br> 3.输入接口名字，如：影视；<br> 4.输入推送链接，如：https://cdn.jsdelivr.net/gh/sysh8888/mao/tv/1.json <br> 5.点击确定即可使用。</p>
+  <!-- ===== 分类容器 ===== -->
+  <main id="categoriesContainer"></main>
 
-<h4>接口推荐</h4>
-<div class="categories">
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://肥猫.com/">肥猫</button>
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://www.饭太硬.com/tv">饭太硬</button>
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://cdn.qiaoji8.com/tvbox.json">巧技</button>
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://home.jundie.top:81/top98.json">俊哥</button>
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://tvbox.xn--4kq62z5rby2qupq9ub.top/">王小二</button>
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="https://fastly.jsdelivr.net/gh/xyq254245/xyqonlinerule/XYQTVBox.json">香雅琴</button>
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://ok213.top/tv">OK接口</button>
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="https://raw.liucn.cc/box/m.json">刘备</button>
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="https://tv.菜妮丝.top">菜妮丝</button>
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="https://fastly.jsdelivr.net/gh/yoursmile66/TVBox/XC.json">南风</button>
-<button type="button" class="cat-btn" onclick="copyValue(this)" value="http://我不是.摸鱼儿.com">摸鱼</button>
-</div>
-</div>
-
-<footer>
-<p>个人测试学习使用非赢利性站点 &copy; 内容均来源于互联网相关站点自动搜索采集</p>
-</footer>
+  <!-- ===== 底部 ===== -->
+  <footer class="footer">
+    <div class="slogan">🧰 7080.wang · 上班、娱乐必备职场导航</div>
+    <p>📝 收录办公、AI、设计、学习、工具、资讯、娱乐等优质资源</p>
+    <p style="margin-top: 4px;">🔍 搜索即跳转 · 点击卡片直达</p>
+  </footer>
 </div>
 
 <script>
-// 数据源移除图标和ID项
-const linksData = [
-{ title: "找电影", desc: "寻找电影名", category: "VIDEO", url: "https://www.aimoviefinder.com/zh-CN#google_vignette" },
-{ title: "搜片网", desc: "影视搜索", category: "VIDEO", url: "https://sopw.cc/" },
-{ title: "NO视频", desc: "在线电影", category: "VIDEO", url: "https://www.novipnoad.us/" },
-{ title: "注视影视", desc: "在线电影", category: "VIDEO", url: "https://gazes.site/" },
-{ title: "STWTCH520", desc: "游戏下载", category: "GAME", url: "https://www.gamer520.com/" },
-{ title: "poki", desc: "小游戏", category: "GAME", url: "https://poki.com/zh/html5" },
-{ title: "playhop", desc: "在线游戏", category: "GAME", url: "https://playhop.com/zh" },
-{ title: "Bilibili", desc: "视频学习", category: "XUEXI", url: "https://www.bilibili.com" },
-{ title: "Coursera", desc: "在线课程", category: "XUEXI", url: "https://www.coursera.org" },
-{ title: "Google", desc: "搜索引擎", category: "tools", url: "https://www.google.com" },
-{ title: "TinyPNG", desc: "图片压缩", category: "tools", url: "https://tinypng.com" },
-{ title: "Remove.bg", desc: "一键抠图", category: "tools", url: "https://www.remove.bg" },
-{ title: "公开课", desc: "网易公开课", category: "XUEXI", url: "https://open.163.com/" },
-{ title: "蜂蜜剪辑", desc: "视频剪辑", category: "tools", url: "https://beecut.cn/" },
-{ title: "优品PPT", desc: "免费PPT模板", category: "tools", url: "https://www.ypppt.com/" },
-{ title: "IFXIT", desc: "免费维修手册", category: "XUEXI", url: "https://zh.ifixit.com/" }
-];
+  (function() {
+    // ============================================================
+    // 1. 数据：分类 + 站点（name, link, category, icon）
+    // ============================================================
+    const NAV_DATA = [
+      // --- 开发 ---
+      { name:"GitHub", desc:"代码托管", category: "开发",link:"https://github.com", icon:"💻" }, { name:"Gitee", desc:"国内托管", category: "开发",link:"https://gitee.com", icon:"🏠" },
+      { name:"GitLab", desc:"自建仓库", category: "开发",link:"https://gitlab.com", icon:"🦊" }, { name:"Stack Overflow", desc:"技术问答", category: "开发",link:"https://stackoverflow.com", icon:"🟧" },
+      { name:"掘金", desc:"中文社区", category: "开发",link:"https://juejin.cn", icon:"⛏️" }, { name:"SegmentFault", desc:"技术问答", category: "开发",link:"https://segmentfault.com", icon:"💡" },
+      { name:"V2EX", desc:"创意社区", category: "开发",link:"https://www.v2ex.com", icon:"💬" }, { name:"CSDN", desc:"中文博客", category: "开发",link:"https://www.csdn.net", icon:"📰" },
+      { name:"博客园", desc:"开发者博客", category: "开发",link:"https://www.cnblogs.com", icon:"✍️" }, { name:"开源中国", desc:"开源动态", category: "开发",link:"https://www.oschina.net", icon:"🏠" },
+      { name:"MDN", desc:"Web标准", category: "开发",link:"https://developer.mozilla.org", icon:"📘" }, { name:"W3Schools", desc:"前端教程", category: "开发",link:"https://www.w3schools.com", icon:"🌐" },
+      { name:"菜鸟教程", desc:"快速入门", category: "开发",link:"https://www.runoob.com", icon:"🐦" }, { name:"DevDocs", desc:"API文档", category: "开发",link:"https://devdocs.io", icon:"📚" },
+      { name:"NPM", desc:"Node包", category: "开发",link:"https://www.npmjs.com", icon:"📦" }, { name:"Yarn", desc:"包管理", category: "开发",link:"https://yarnpkg.com", icon:"🧶" },
+      { name:"Webpack", desc:"打包工具", category: "开发",link:"https://webpack.js.org", icon:"📦" }, { name:"Vite", desc:"构建工具", category: "开发",link:"https://vitejs.dev", icon:"⚡" },
+      { name:"ESLint", desc:"代码规范", category: "开发",link:"https://eslint.org", icon:"✅" }, { name:"Prettier", desc:"代码格式化", category: "开发",link:"https://prettier.io", icon:"✨" },
+      { name:"CodePen", desc:"在线编辑", category: "开发",link:"https://codepen.io", icon:"✏️" }, { name:"JSFiddle", desc:"前端测试", category: "开发",link:"https://jsfiddle.net", icon:"🎻" },
+      { name:"Replit", desc:"在线IDE", category: "开发",link:"https://replit.com", icon:"🔄" }, { name:"Vercel", desc:"部署托管", category: "开发",link:"https://vercel.com", icon:"▲" },
+      { name:"Netlify", desc:"静态部署", category: "开发",link:"https://www.netlify.com", icon:"🌐" }, { name:"Docker Hub", desc:"容器镜像", category: "开发",link:"https://hub.docker.com", icon:"🐳" },
+      { name:"Kubernetes", desc:"容器编排", category: "开发",link:"https://kubernetes.io", icon:"☸️" }, { name:"Postman", desc:"API测试", category: "开发",link:"https://www.postman.com", icon:"📮" },
+      { name:"Swagger", desc:"API文档", category: "开发",link:"https://swagger.io", icon:"📋" }, { name:"Jira", desc:"项目管理", category: "开发",link:"https://www.atlassian.com/software/jira", icon:"📊" },
+      { name:"Trello", desc:"看板工具", category: "开发",link:"https://trello.com", icon:"📌" }, { name:"Notion", desc:"笔记协作", category: "开发",link:"https://www.notion.so", icon:"📝" },
+      { name:"飞书", desc:"协同办公", category: "开发",link:"https://www.feishu.cn", icon:"🕊️" }, { name:"语雀", desc:"知识库", category: "开发",link:"https://www.yuque.com", icon:"🐦" },
+      { name:"石墨文档", desc:"在线文档", category: "开发",link:"https://shimo.im", icon:"✍️" }, { name:"IconFont", desc:"图标库", category: "开发",link:"https://www.iconfont.cn", icon:"🔣" },
 
-const linksContainer = document.getElementById('linksContainer');
-const categoryBtns = document.querySelectorAll('.cat-btn');
-let currentCategory = 'all';
-let isExpanded = false; // 控制“全部”分类的展开状态
+      // --- 娱乐 ---
+	  { name: "SWITCH520", icon: "🎮", desc:"游戏下载", category: "娱乐" ,link: "https://www.gamer520.com/" },
+	  { name: "poki", icon: "🎮", desc:"在线游戏", category: "娱乐" ,link: "https://poki.com/zh/html5" },
+      { name:"网易云音乐", desc:"听歌", category: "娱乐",link:"https://music.163.com", icon:"🎵" }, { name:"QQ音乐", desc:"音乐", category: "娱乐",link:"https://y.qq.com", icon:"🎶" },
+      { name:"YouTube", desc:"视频", category: "娱乐",link:"https://www.youtube.com", icon:"▶️" }, { name:"抖音", desc:"短视频", category: "娱乐",link:"https://www.douyin.com", icon:"🎬" },
+      { name:"B站", desc:"弹幕", category: "娱乐",link:"https://www.bilibili.com", icon:"📺" }, { name:"AcFun", desc:"弹幕", category: "娱乐",link:"https://www.acfun.cn", icon:"🍌" },
+      { name:"豆瓣", desc:"书影音", category: "娱乐",link:"https://www.douban.com", icon:"📚" }, { name:"虎牙直播", desc:"游戏", category: "娱乐",link:"https://www.huya.com", icon:"🐯" },
+      { name:"斗鱼", desc:"直播", category: "娱乐",link:"https://www.douyu.com", icon:"🐟" }, { name:"pixiv", desc:"插画", category: "娱乐",link:"https://www.pixiv.net", icon:"🎨" },
+      { name:"半次元", desc:"二次元", category: "娱乐",link:"https://bcy.net", icon:"🌸" }, { name:"LOFTER", desc:"兴趣社区", category: "娱乐",link:"https://www.lofter.com", icon:"📓" },
+      { name:"小红书", desc:"生活", category: "娱乐",link:"https://www.xiaohongshu.com", icon:"📕" }, { name:"下厨房", desc:"美食", category: "娱乐",link:"https://www.xiachufang.com", icon:"🍳" },
+      { name:"马蜂窝", desc:"旅游", category: "娱乐",link:"https://www.mafengwo.cn", icon:"🐝" }, { name:"穷游", desc:"旅行", category: "娱乐",link:"https://www.qyer.com", icon:"🎒" },
+      { name:"猫眼电影", desc:"电影", category: "娱乐",link:"https://maoyan.com", icon:"🎬" }, { name:"IMDb", desc:"电影评分", category: "娱乐",link:"https://www.imdb.com", icon:"⭐" },
+      { name:"Steam", desc:"游戏", category: "娱乐",link:"https://store.steampowered.com", icon:"🎮" }, { name:"Epic", desc:"游戏", category: "娱乐",link:"https://www.epicgames.com", icon:"🎮" },
+      { name:"TapTap", desc:"手游", category: "娱乐",link:"https://www.taptap.cn", icon:"📱" }, { name:"NGA", desc:"玩家社区", category: "娱乐",link:"https://nga.cn", icon:"🐉" },
+      { name:"懂车帝", desc:"汽车", category: "娱乐",link:"https://www.dongchedi.com", icon:"🚗" }, { name:"汽车之家", desc:"汽车", category: "娱乐",link:"https://www.autohome.com.cn", icon:"🚙" },
+      { name:"Keep", desc:"健身", category: "娱乐",link:"https://www.keep.com", icon:"🏃" }, { name:"Boss直聘", desc:"招聘", category: "娱乐",link:"https://www.zhipin.com", icon:"💼" },
+// --- AI ---
+{ name:"ChatGPT", desc:"OpenAI", category: "AI",link:"https://chat.openai.com", icon:"🤖" }, { name:"文心一言", desc:"百度", category: "AI",link:"https://yiyan.baidu.com", icon:"🧠" },
+      { name:"通义千问", desc:"阿里", category: "AI",link:"https://tongyi.aliyun.com", icon:"☁️" }, { name:"Kimi", desc:"月之暗面", category: "AI",link:"https://kimi.moonshot.cn", icon:"🌙" },
+      { name:"智谱清言", desc:"GLM", category: "AI",link:"https://chatglm.cn", icon:"💬" }, { name:"DeepSeek", desc:"深度求索", category: "AI",link:"https://chat.deepseek.com", icon:"🔍" },
+      { name:"豆包", desc:"字节跳动", category: "AI",link:"https://www.doubao.com", icon:"🫘" }, { name:"Poe", desc:"多模型", category: "AI",link:"https://poe.com", icon:"💬" },
+      { name:"Hugging Face", desc:"模型社区", category: "AI",link:"https://huggingface.co", icon:"🤗" }, { name:"Midjourney", desc:"AI绘画", category: "AI",link:"https://www.midjourney.com", icon:"🎨" },
+      { name:"Stable Diffusion", desc:"开源绘图", category: "AI",link:"https://stability.ai", icon:"🖼️" }, { name:"DALL·E", desc:"OpenAI绘图", category: "AI",link:"https://openai.com/dall-e-3", icon:"🖌️" },
+      { name:"文心一格", desc:"百度绘图", category: "AI",link:"https://yige.baidu.com", icon:"🎨" }, { name:"通义万相", desc:"阿里绘图", category: "AI",link:"https://wanxiang.aliyun.com", icon:"🌌" },
+      { name:"Runway", desc:"AI视频", category: "AI",link:"https://runwayml.com", icon:"🎥" }, { name:"Pika", desc:"视频生成", category: "AI",link:"https://pika.art", icon:"🐹" },
+      { name:"Suno", desc:"AI音乐", category: "AI",link:"https://suno.com", icon:"🎵" }, { name:"Udio", desc:"AI作曲", category: "AI",link:"https://www.udio.com", icon:"🎶" },
+      { name:"剪映", desc:"智能剪辑", category: "AI",link:"https://www.capcut.cn", icon:"✂️" }, { name:"Canva AI", desc:"智能设计", category: "AI",link:"https://www.canva.cn", icon:"🖼️" },
+      { name:"Gamma", desc:"AI PPT", category: "AI",link:"https://gamma.app", icon:"📊" }, { name:"Beautiful.ai", desc:"智能演示", category: "AI",link:"https://www.beautiful.ai", icon:"✨" },
+      { name:"Notion AI", desc:"文档智能", category: "AI",link:"https://www.notion.so", icon:"📝" }, { name:"Copilot", desc:"GitHub编程", category: "AI",link:"https://github.com/features/copilot", icon:"👨‍💻" },
+      { name:"Codeium", desc:"免费AI编程", category: "AI",link:"https://codeium.com", icon:"💻" }, { name:"Tabnine", desc:"代码补全", category: "AI",link:"https://www.tabnine.com", icon:"9️⃣" },
+      { name:"百度AI开放平台", desc:"百度AI", category: "AI",link:"https://ai.baidu.com", icon:"🔵" }, { name:"阿里云AI", desc:"阿里AI", category: "AI",link:"https://ai.aliyun.com", icon:"☁️" },
+      { name:"腾讯AI", desc:"腾讯智能", category: "AI",link:"https://ai.qq.com", icon:"💬" }, { name:"华为云AI", desc:"华为", category: "AI",link:"https://www.huaweicloud.com/ei", icon:"🔴" },
+      { name:"飞桨PaddlePaddle", desc:"百度框架", category: "AI",link:"https://www.paddlepaddle.org.cn", icon:"🚣" }, { name:"TensorFlow", desc:"谷歌框架", category: "AI",link:"https://www.tensorflow.org", icon:"🔶" },
+      { name:"PyTorch", desc:"Meta框架", category: "AI",link:"https://pytorch.org", icon:"🔥" }, { name:"OpenCV", desc:"计算机视觉", category: "AI",link:"https://opencv.org", icon:"👁️" },
+      // --- 学习 ---
+      { name:"B站大学", desc:"万能的B站", category: "学习",link:"https://www.bilibili.com", icon:"📺" }, { name:"慕课网", desc:"IT技能", category: "学习",link:"https://www.imooc.com", icon:"🎓" },
+      { name:"菜鸟教程", desc:"编程入门", category: "学习",link:"https://www.runoob.com", icon:"🐦" }, { name:"学堂在线", desc:"名校课程", category: "学习",link:"https://www.xuetangx.com", icon:"🏛️" },
+      { name:"网易公开课", desc:"全球名校", category: "学习",link:"https://open.163.com", icon:"🌍" }, { name:"Coursera", desc:"国际课程", category: "学习",link:"https://www.coursera.org", icon:"🎓" },
+      { name:"edX", desc:"免费课程", category: "学习",link:"https://www.edx.org", icon:"🎓" }, { name:"中国大学MOOC", desc:"国家精品课", category: "学习",link:"https://www.icourse163.org", icon:"🏫" },
+      { name:"得到", desc:"知识服务", category: "学习",link:"https://www.dedao.cn", icon:"📖" }, { name:"极客时间", desc:"IT知识", category: "学习",link:"https://time.geekbang.org", icon:"⏱️" },
+      { name:"掘金", desc:"技术文章", category: "学习",link:"https://juejin.cn", icon:"⛏️" }, { name:"知乎", desc:"问答学习", category: "学习",link:"https://www.zhihu.com", icon:"💡" },
+      { name:"WikiHow", desc:"万事指南", category: "学习",link:"https://zh.wikihow.com", icon:"📘" }, { name:"全历史", desc:"历史脉络", category: "学习",link:"https://www.allhistory.com", icon:"⏳" },
+      { name:"Wolfram Alpha", desc:"知识引擎", category: "学习",link:"https://www.wolframalpha.com", icon:"🔢" }, { name:"可汗学院", desc:"免费学习", category: "学习",link:"https://www.khanacademy.org", icon:"🌐" },
+      { name:"TED", desc:"演讲视频", category: "学习",link:"https://www.ted.com", icon:"🎤" }, { name:"Crash Course", desc:"速成课程", category: "学习",link:"https://www.youtube.com/user/crashcourse", icon:"🎬" },
+      { name:"沪江网校", desc:"外语学习", category: "学习",link:"https://www.hjenglish.com", icon:"🗣️" }, { name:"多邻国", desc:"语言学习", category: "学习",link:"https://www.duolingo.cn", icon:"🦉" },
+      { name:"扇贝", desc:"英语打卡", category: "学习",link:"https://www.shanbay.com", icon:"🐚" }, { name:"百词斩", desc:"背单词", category: "学习",link:"https://www.baicizhan.com", icon:"⚔️" },
+      { name:"每日英语听力", desc:"听力练习", category: "学习",link:"https://www.eudic.net", icon:"🎧" }, { name:"LeetCode", desc:"算法刷题", category: "学习",link:"https://leetcode.cn", icon:"⚡" },
+      { name:"牛客网", desc:"求职刷题", category: "学习",link:"https://www.nowcoder.com", icon:"🐮" }, { name:"Codecademy", desc:"编程交互", category: "学习",link:"https://www.codecademy.com", icon:"💻" },
+      { name:"freeCodeCamp", desc:"免费编程", category: "学习",link:"https://www.freecodecamp.org", icon:"🔥" }, { name:"Udemy", desc:"在线课程", category: "学习",link:"https://www.udemy.com", icon:"🎓" },
+      { name:"Skillshare", desc:"创意课程", category: "学习",link:"https://www.skillshare.com", icon:"✨" }, { name:"实验楼", desc:"在线实验", category: "学习",link:"https://www.lanqiao.cn", icon:"🧪" },
+      { name:"蓝桥云课", desc:"编程实战", category: "学习",link:"https://www.lanqiao.cn", icon:"🔵" }, { name:"阿里云天池", desc:"AI竞赛", category: "学习",link:"https://tianchi.aliyun.com", icon:"☁️" },
+      { name:"Kaggle", desc:"数据科学", category: "学习",link:"https://www.kaggle.com", icon:"📊" }, { name:"网易云课堂", desc:"职场技能", category: "学习",link:"https://study.163.com", icon:"☁️" },
+      { name:"腾讯课堂", desc:"职业培训", category: "学习",link:"https://ke.qq.com", icon:"🎓" }, { name:"万门大学", desc:"通识课程", category: "学习",link:"https://www.wanmen.org", icon:"🚪" },
+      { name:"一席", desc:"演讲分享", category: "学习",link:"https://yixi.tv", icon:"🎙️" }, { name:"看理想", desc:"人文节目", category: "学习",link:"https://www.vistopia.com.cn", icon:"📻" },
+      { name:"简书", desc:"创作阅读", category: "学习",link:"https://www.jianshu.com", icon:"✍️" }, { name:"豆瓣阅读", desc:"电子书", category: "学习",link:"https://read.douban.com", icon:"📱" },
+// --- 设计 ---
+{ name:"站酷", desc:"设计社区", category: "设计",link:"https://www.zcool.com.cn", icon:"🎨" }, { name:"花瓣", desc:"灵感采集", category: "设计",link:"https://huaban.com", icon:"🌸" },
+      { name:"Dribbble", desc:"全球设计", category: "设计",link:"https://dribbble.com", icon:"🏀" }, { name:"Behance", desc:"作品集", category: "设计",link:"https://www.behance.net", icon:"🎨" },
+      { name:"Figma", desc:"UI设计", category: "设计",link:"https://www.figma.com", icon:"🎯" }, { name:"Sketch", desc:"Mac设计", category: "设计",link:"https://www.sketch.com", icon:"💎" },
+      { name:"Adobe XD", desc:"原型设计", category: "设计",link:"https://helpx.adobe.com/xd", icon:"🟪" }, { name:"Axure", desc:"专业原型", category: "设计",link:"https://www.axure.com", icon:"📐" },
+      { name:"墨刀", desc:"国产原型", category: "设计",link:"https://modao.cc", icon:"🔪" }, { name:"即时设计", desc:"在线协作", category: "设计",link:"https://js.design", icon:"⚡" },
+      { name:"MasterGo", desc:"UI协作", category: "设计",link:"https://mastergo.com", icon:"🧩" }, { name:"Canva", desc:"在线设计", category: "设计",link:"https://www.canva.cn", icon:"🖼️" },
+      { name:"稿定设计", desc:"模板设计", category: "设计",link:"https://www.gaoding.com", icon:"📐" }, { name:"创客贴", desc:"平面设计", category: "设计",link:"https://www.chuangkit.com", icon:"✂️" },
+      { name:"Pexels", desc:"免费图片", category: "设计",link:"https://www.pexels.com", icon:"📷" }, { name:"Unsplash", desc:"高清图库", category: "设计",link:"https://unsplash.com", icon:"🖼️" },
+      { name:"Pixabay", desc:"免费素材", category: "设计",link:"https://pixabay.com", icon:"🎞️" }, { name:"Iconfont", desc:"阿里图标", category: "设计",link:"https://www.iconfont.cn", icon:"🔣" },
+      { name:"FontAwesome", desc:"字体图标", category: "设计",link:"https://fontawesome.com", icon:"🔤" }, { name:"Google Fonts", desc:"免费字体", category: "设计",link:"https://fonts.google.com", icon:"🔠" },
+      { name:"字由", desc:"字体工具", category: "设计",link:"https://www.hellofont.cn", icon:"🅰️" }, { name:"ColorHunt", desc:"配色方案", category: "设计",link:"https://colorhunt.co", icon:"🎨" },
+      { name:"Coolors", desc:"调色板", category: "设计",link:"https://coolors.co", icon:"🌈" }, { name:"Gradients", desc:"渐变配色", category: "设计",link:"https://uigradients.com", icon:"🌅" },
+      { name:"Remove.bg", desc:"AI抠图", category: "设计",link:"https://www.remove.bg", icon:"🖼️" }, { name:"TinyPNG", desc:"图片压缩", category: "设计",link:"https://tinypng.com", icon:"🐼" },
+      { name:"Squoosh", desc:"谷歌压缩", category: "设计",link:"https://squoosh.app", icon:"📸" }, { name:"Photopea", desc:"在线PS", category: "设计",link:"https://www.photopea.com", icon:"🖌️" },
+	   
+      // --- 工具 ---
+      { name:"在线PS", desc:"网页版", category: "工具",link:"https://www.photopea.com", icon:"🖌️" }, { name:"ProcessOn", desc:"流程图", category: "工具",link:"https://www.processon.com", icon:"📊" },
+      { name:"草料二维码", desc:"二维码", category: "工具",link:"https://cli.im", icon:"📱" }, { name:"JSON格式化", desc:"解析工具", category: "工具",link:"https://www.json.cn", icon:"🔧" },
+      { name:"有道翻译", desc:"翻译", category: "工具",link:"https://fanyi.youdao.com", icon:"🌐" }, { name:"Convertio", desc:"文件转换", category: "工具",link:"https://convertio.co", icon:"🔄" },
+      { name:"SmallPDF", desc:"PDF工具", category: "工具",link:"https://smallpdf.com", icon:"📄" }, { name:"ILovePDF", desc:"PDF处理", category: "工具",link:"https://www.ilovepdf.com", icon:"❤️" },
+      { name:"腾讯文档", desc:"在线文档", category: "工具",link:"https://docs.qq.com", icon:"📃" }, { name:"石墨文档", desc:"协作", category: "工具",link:"https://shimo.im", icon:"✍️" },
+      { name:"百度网盘", desc:"云存储", category: "工具",link:"https://pan.baidu.com", icon:"☁️" }, { name:"阿里云盘", desc:"不限速", category: "工具",link:"https://www.aliyundrive.com", icon:"☁️" },
+      { name:"蓝奏云", desc:"小文件", category: "工具",link:"https://www.lanzou.com", icon:"🔵" }, { name:"奶牛快传", desc:"临时分享", category: "工具",link:"https://cowtransfer.com", icon:"🐄" },
+      { name:"即时工具", desc:"在线工具箱", category: "工具",link:"https://www.67tool.com", icon:"🧰" }, { name:"一个工具箱", desc:"常用工具", category: "工具",link:"http://www.atoolbox.net", icon:"🔨" },
+      { name:"MikuTools", desc:"轻量工具", category: "工具",link:"https://tools.miku.ac", icon:"🎵" }, { name:"Tool.lu", desc:"开发者工具", category: "工具",link:"https://tool.lu", icon:"🔧" },
+      { name:"IP查询", desc:"IP地址", category: "工具",link:"https://www.ipip.net", icon:"🌍" }, { name:"站长工具", desc:"SEO查询", category: "工具",link:"https://tool.chinaz.com", icon:"🔍" },
+      { name:"百度指数", desc:"搜索趋势", category: "工具",link:"https://index.baidu.com", icon:"📈" }, { name:"今日热榜", desc:"全网热点", category: "工具",link:"https://tophub.today", icon:"🔥" },
+      { name:"AnyKnew", desc:"热点聚合", category: "工具",link:"https://www.anyknew.com", icon:"📰" }, { name:"微信读书", desc:"在线阅读", category: "工具",link:"https://weread.qq.com", icon:"📖" },
+      { name:"豆瓣", desc:"书影音", category: "工具",link:"https://www.douban.com", icon:"📚" }, { name:"网易邮箱", desc:"邮箱大师", category: "工具",link:"https://mail.163.com", icon:"📧" },
+      { name:"QQ邮箱", desc:"腾讯邮箱", category: "工具",link:"https://mail.qq.com", icon:"📧" }, { name:"腾讯会议", desc:"视频会议", category: "工具",link:"https://meeting.tencent.com", icon:"🎥" },
 
-function init() {
-renderLinks();
-setupEventListeners();
-}
+// --- 资讯 ---
+{ name:"知乎", desc:"问答", category: "资讯",link:"https://www.zhihu.com", icon:"💡" }, { name:"微博", desc:"实时", category: "资讯",link:"https://weibo.com", icon:"🔥" },
+      { name:"少数派", desc:"数字生活", category: "资讯",link:"https://sspai.com", icon:"📝" }, { name:"36氪", desc:"科技", category: "资讯",link:"https://36kr.com", icon:"🚀" },
+      { name:"虎嗅", desc:"商业", category: "资讯",link:"https://www.huxiu.com", icon:"🐯" }, { name:"IT之家", desc:"IT", category: "资讯",link:"https://www.ithome.com", icon:"💻" },
+      { name:"InfoQ", desc:"技术", category: "资讯",link:"https://www.infoq.cn", icon:"📡" }, { name:"开源中国", desc:"开源", category: "资讯",link:"https://www.oschina.net", icon:"🏠" },
+      { name:"V2EX", desc:"创意", category: "资讯",link:"https://www.v2ex.com", icon:"💬" }, { name:"ProductHunt", desc:"新品", category: "资讯",link:"https://www.producthunt.com", icon:"🐱" },
+      { name:"Hacker News", desc:"科技", category: "资讯",link:"https://news.ycombinator.com", icon:"🟠" }, { name:"Reddit", desc:"社区", category: "资讯",link:"https://www.reddit.com", icon:"👽" },
+      { name:"煎蛋", desc:"无聊图", category: "资讯",link:"http://jandan.net", icon:"🍳" }, { name:"界面新闻", desc:"财经", category: "资讯",link:"https://www.jiemian.com", icon:"📰" },
+      { name:"澎湃新闻", desc:"时事", category: "资讯",link:"https://www.thepaper.cn", icon:"🌊" }, { name:"今日头条", desc:"推荐", category: "资讯",link:"https://www.toutiao.com", icon:"📰" },
+      { name:"百度新闻", desc:"聚合", category: "资讯",link:"https://news.baidu.com", icon:"🔍" }, { name:"观察者网", desc:"评论", category: "资讯",link:"https://www.guancha.cn", icon:"👀" },
+      { name:"环球网", desc:"国际", category: "资讯",link:"https://www.huanqiu.com", icon:"🌍" }, { name:"机核", desc:"游戏", category: "资讯",link:"https://www.gcores.com", icon:"🎮" },
+      { name:"游民星空", desc:"游戏", category: "资讯",link:"https://www.gamersky.com", icon:"🌟" }, { name:"什么值得买", desc:"消费", category: "资讯",link:"https://www.smzdm.com", icon:"💰" },
+      { name:"数字尾巴", desc:"数码", category: "资讯",link:"https://www.dgtle.com", icon:"📱" }, { name:"爱范儿", desc:"科技", category: "资讯",link:"https://www.ifanr.com", icon:"❤️" },
+      { name:"Engadget", desc:"科技", category: "资讯",link:"https://www.engadget.com", icon:"🖥️" }, { name:"The Verge", desc:"科技", category: "资讯",link:"https://www.theverge.com", icon:"🔺" },
+      // --- 口碑 ---
+      { name:"哔哩哔哩", desc:"学习娱乐", category: "口碑",link:"https://www.bilibili.com", icon:"📺" },
+      { name:"GitHub", desc:"代码仓库", category: "口碑",link:"https://github.com", icon:"💻" },
+      { name:"知乎", desc:"问答社区", category: "口碑",link:"https://www.zhihu.com", icon:"💡" },
+      { name:"掘金", desc:"开发者社区", category: "口碑",link:"https://juejin.cn", icon:"⛏️" },
+      { name:"V2EX", desc:"创意工作者", category: "口碑",link:"https://www.v2ex.com", icon:"💬" },
+      { name:"少数派", desc:"数字生活", category: "口碑",link:"https://sspai.com", icon:"📝" },
+      { name:"36氪", desc:"科技资讯", category: "口碑",link:"https://36kr.com", icon:"🚀" },
+      { name:"ProductHunt", desc:"新品发现", category: "口碑",link:"https://www.producthunt.com", icon:"🐱" },
+      { name:"Stack Overflow", desc:"技术问答", category: "口碑",link:"https://stackoverflow.com", icon:"🟧" },
+      { name:"Medium", desc:"深度阅读", category: "口碑",link:"https://medium.com", icon:"📖" },
+      { name:"InfoQ", desc:"技术新闻", category: "口碑",link:"https://www.infoq.cn", icon:"📡" },
+      { name:"LeetCode", desc:"刷题必备", category: "口碑",link:"https://leetcode.cn", icon:"⚡" },
+      { name:"菜鸟教程", desc:"编程入门", category: "口碑",link:"https://www.runoob.com", icon:"🐦" },
+      { name:"MDN", desc:"Web文档", category: "口碑",link:"https://developer.mozilla.org", icon:"📘" },
+      { name:"Canva", desc:"在线设计", category: "口碑",link:"https://www.canva.cn", icon:"🖼️" },
+      { name:"Notion", desc:"笔记协作", category: "口碑",link:"https://www.notion.so", icon:"📝" },
+      { name:"飞书", desc:"办公协同", category: "口碑",link:"https://www.feishu.cn", icon:"🕊️" },
+      { name:"腾讯文档", desc:"在线文档", category: "口碑",link:"https://docs.qq.com", icon:"📃" },
+      { name:"网易云音乐", desc:"听歌", category: "口碑",link:"https://music.163.com", icon:"🎵" },
+      { name:"豆瓣", desc:"书影音", category: "口碑",link:"https://www.douban.com", icon:"📚" },
+      { name:"虎嗅", desc:"商业评论", category: "口碑",link:"https://www.huxiu.com", icon:"🐯" },
+      { name:"IT之家", desc:"IT新闻", category: "口碑",link:"https://www.ithome.com", icon:"💻" },
+      { name:"开源中国", desc:"开源社区", category: "口碑",link:"https://www.oschina.net", icon:"🏠" },
+      { name:"Gitee", desc:"代码托管", category: "口碑",link:"https://gitee.com", icon:"🏠" },
+      { name:"NPM", desc:"包管理", category: "口碑",link:"https://www.npmjs.com", icon:"📦" },
+      { name:"CodePen", desc:"代码演示", category: "口碑",link:"https://codepen.io", icon:"✏️" },
+      { name:"Figma", desc:"UI设计", category: "口碑",link:"https://www.figma.com", icon:"🎯" },
+      { name:"Dribbble", desc:"设计灵感", category: "口碑",link:"https://dribbble.com", icon:"🏀" },
+      { name:"Behance", desc:"作品集", category: "口碑",link:"https://www.behance.net", icon:"🎨" },
+      { name:"Pexels", desc:"免费图片", category: "口碑",link:"https://www.pexels.com", icon:"📷" }
+    ];
 
-function renderLinks() {
-linksContainer.innerHTML = '';
-let filteredLinks = linksData;
+    // ============================================================
+    // 2. 置顶常用
+    // ============================================================
+    const PINNED = [
+      { name: "GitHub", icon: "🐙",desc:"代码托管", link: "https://github.com" },
+      { name: "豆包", icon: "🤖", desc:"AI资讯",link: "https://www.doubao.com/" },
+      { name: "pdf24", icon: "⚡",desc:"PDF工具箱", link: "https://tools.pdf24.org/zh/" },
+      { name: "爱PPT", icon: "🎯", desc:"模板下载",link: "https://www.2ppt.com/" },
+      { name: "convertio", icon: "📝",desc:"文档转换", link: "https://convertio.co/zh/" },
+      { name: "视频压缩", icon: "‍💻", desc:"视频压缩",link: "https://videocompressors.com/zh" },
+      { name: "SWITCH520", icon: "🎮",desc:"游戏下载", link: "https://www.gamer520.com/" },
+      { name: "tinypng", icon: "☁️",desc:"图片压缩", link: "https://tinypng.com" }
+    ];
 
-// 如果不是“全部”分类，则按原逻辑过滤
-if (currentCategory !== 'all') {
-filteredLinks = linksData.filter(link => link.category === currentCategory);
-} else {
-// 如果是“全部”分类且未展开，则只显示前8个
-if (!isExpanded) {
-filteredLinks = linksData.slice(0, 8);
-}
-// 如果已展开，则显示全部
-}
+    // ============================================================
+    // 3. 渲染函数
+    // ============================================================
+    const pinnedGrid = document.getElementById('pinnedGrid');
+    const categoriesContainer = document.getElementById('categoriesContainer');
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const engineTabs = document.getElementById('engineTabs');
 
-filteredLinks.forEach(link => {
-const card = document.createElement('a');
-card.href = link.url;
-card.target = "_blank";
-card.className = 'card';
-card.innerHTML = `<div class="card-title">${link.title}</div><div class="card-desc">${link.desc}</div>`;
-linksContainer.appendChild(card);
-});
+    // 当前选中的搜索引擎 URL
+    let currentSearchUrl = './so.html?wd=';
 
-// 如果是“全部”分类且未展开，添加“更多”按钮
-if (currentCategory === 'all' && !isExpanded) {
-const moreCard = document.createElement('div');
-moreCard.className = 'card';
-moreCard.style.justifyContent = 'center';
-moreCard.innerHTML = '<div class="card-title" style="color: var(--accent-color);">...</div><div class="card-desc">点击加载全部</div>';
-moreCard.onclick = () => {
-isExpanded = true;
-renderLinks();
-};
-linksContainer.appendChild(moreCard);
-}
-}
+    // 渲染置顶区
+    function renderPinned() {
+      pinnedGrid.innerHTML = '';
+      PINNED.forEach(item => {
+        const card = document.createElement('a');
+        card.className = 'pinned-card';
+        card.href = item.link;
+        card.target = '_blank';
+        card.rel = 'noopener';
+        card.innerHTML = `<span class="pinned-icon">${item.icon}</span><span class="pinned-name">${item.name}</span><span class="site-desc">${item.desc}</span>`;
+        pinnedGrid.appendChild(card);
+      });
+    }
 
-function setupEventListeners() {
-categoryBtns.forEach(btn => {
-btn.addEventListener('click', () => {
-// 重置展开状态
-isExpanded = false;
+    // 获取所有分类
+    function getAllCategories() {
+      const cats = NAV_DATA.map(item => item.category);
+      return [...new Set(cats)];
+    }
 
-categoryBtns.forEach(b => b.classList.remove('active'));
-btn.classList.add('active');
-currentCategory = btn.getAttribute('data-category');
-renderLinks();
-});
-});
-}
+    // 渲染分类 + 站点（固定显示全部，不过滤）
+    function renderCategories() {
+      const categories = getAllCategories();
+      categoriesContainer.innerHTML = '';
 
-init();
-</script>
+      // 按分类分组
+      const grouped = {};
+      NAV_DATA.forEach(item => {
+        if (!grouped[item.category]) grouped[item.category] = [];
+        grouped[item.category].push(item);
+      });
 
-<script>
-// 修复复制链接后导航消失的问题
-async function copyValue(button) {
-const value = button.value;
-try {
-await navigator.clipboard.writeText(value);
-alert("温馨提醒：复制成功，请前往影视仓、TVBOX接口粘贴");
-} catch (err) {
-// 如果现代API失败，回退到旧方法
-const input = document.createElement('input');
-input.value = value;
-document.body.appendChild(input);
-input.select();
-document.execCommand('copy');
-document.body.removeChild(input);
-alert("温馨提醒：复制成功，请前往影视仓、TVBOX接口粘贴");
-}
-}
+      // 按原始分类顺序渲染
+      categories.forEach(cat => {
+        const items = grouped[cat] || [];
+        if (items.length === 0) return;
+
+        const block = document.createElement('section');
+        block.className = 'category-block';
+
+        const header = document.createElement('div');
+        header.className = 'section-header';
+        header.innerHTML = `<h2>${cat}</h2><span class="sub">${items.length} 个工具</span>`;
+        block.appendChild(header);
+
+        const grid = document.createElement('div');
+        grid.className = 'sites-grid';
+
+        items.forEach(site => {
+          const card = document.createElement('a');
+          card.className = 'site-card';
+          card.href = site.link;
+          card.target = '_blank';
+          card.rel = 'noopener';
+          card.innerHTML = `
+            <span class="site-icon">${site.icon || '🔗'}</span>
+            <span class="site-info">
+              <span class="site-name">${site.name}</span>
+              <span class="site-desc">${site.desc}</span>
+            </span>
+          `;
+          grid.appendChild(card);
+        });
+
+        block.appendChild(grid);
+        categoriesContainer.appendChild(block);
+      });
+    }
+
+    // ============================================================
+    // 4. 搜索 & 引擎切换（只跳转，不过滤卡片）
+    // ============================================================
+    function bindSearchEvents() {
+      // 引擎切换
+      document.querySelectorAll('.engine-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.engine-tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          currentSearchUrl = this.dataset.url;
+          const name = this.textContent.trim();
+          searchInput.placeholder = `在 ${name} 中搜索 ...`;
+        });
+      });
+
+      // 执行搜索：仅打开搜索引擎
+      function doSearch() {
+        const query = searchInput.value.trim();
+        if (query === '') {
+          searchInput.focus();
+          return;
+        }
+        window.open(currentSearchUrl + encodeURIComponent(query), '_blank');
+        searchInput.value = '';
+        searchInput.focus();
+      }
+
+      searchBtn.addEventListener('click', doSearch);
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          doSearch();
+        }
+      });
+    }
+
+    // ============================================================
+    // 5. 主题切换
+    // ============================================================
+    function initTheme() {
+      const toggle = document.getElementById('themeToggle');
+      const body = document.body;
+      const saved = localStorage.getItem('toolbox-theme');
+
+      if (saved === 'dark') {
+        body.style.setProperty('--bg', '#0d1117');
+        body.style.setProperty('--card-bg', '#161b22');
+        body.style.setProperty('--card-hover', '#21262d');
+        body.style.setProperty('--text', '#c9d1d9');
+        body.style.setProperty('--text-secondary', '#8b949e');
+        body.style.setProperty('--text-muted', '#6e7681');
+        body.style.setProperty('--border', '#30363d');
+        body.style.setProperty('--primary-soft', '#2a2418');
+        toggle.textContent = '☀️ 亮色模式';
+      } else {
+        body.style.setProperty('--bg', '#f6f8fa');
+        body.style.setProperty('--card-bg', '#ffffff');
+        body.style.setProperty('--card-hover', '#f0f2f5');
+        body.style.setProperty('--text', '#1f2328');
+        body.style.setProperty('--text-secondary', '#57606a');
+        body.style.setProperty('--text-muted', '#8c959f');
+        body.style.setProperty('--border', '#d0d7de');
+        body.style.setProperty('--primary-soft', '#fef3e2');
+        toggle.textContent = '🌙 暗夜模式';
+      }
+
+      toggle.addEventListener('click', () => {
+        const isDark = body.style.getPropertyValue('--bg') === '#0d1117';
+        if (isDark) {
+          body.style.setProperty('--bg', '#f6f8fa');
+          body.style.setProperty('--card-bg', '#ffffff');
+          body.style.setProperty('--card-hover', '#f0f2f5');
+          body.style.setProperty('--text', '#1f2328');
+          body.style.setProperty('--text-secondary', '#57606a');
+          body.style.setProperty('--text-muted', '#8c959f');
+          body.style.setProperty('--border', '#d0d7de');
+          body.style.setProperty('--primary-soft', '#fef3e2');
+          toggle.textContent = '🌙 暗夜模式';
+          localStorage.setItem('toolbox-theme', 'light');
+        } else {
+          body.style.setProperty('--bg', '#0d1117');
+          body.style.setProperty('--card-bg', '#161b22');
+          body.style.setProperty('--card-hover', '#21262d');
+          body.style.setProperty('--text', '#c9d1d9');
+          body.style.setProperty('--text-secondary', '#8b949e');
+          body.style.setProperty('--text-muted', '#6e7681');
+          body.style.setProperty('--border', '#30363d');
+          body.style.setProperty('--primary-soft', '#2a2418');
+          toggle.textContent = '☀️ 亮色模式';
+          localStorage.setItem('toolbox-theme', 'dark');
+        }
+      });
+    }
+
+    // ============================================================
+    // 6. 初始化
+    // ============================================================
+    renderPinned();
+    renderCategories();
+    bindSearchEvents();
+    initTheme();
+
+    console.log(`🧰 7080网已启动 | 收录 ${NAV_DATA.length} 个站点`);
+  })();
 </script>
 <script src="./js/tongji.js"></script>
 </body>
