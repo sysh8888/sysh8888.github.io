@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CSV与JSON互转工具</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.13.8/css/layui.min.css">
+  <style>
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .textarea-container {
+      display: flex;
+      margin-bottom: 20px;
+    }
+    .textarea-box {
+      flex: 1;
+      padding: 10px;
+    }
+    .textarea-box:first-child {
+      margin-right: 15px;
+    }
+    .control-panel {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f8f8f8;
+      border-radius: 4px;
+    }
+    .example-section {
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #f2f2f2;
+      border-radius: 4px;
+    }
+    textarea {
+      width: 100%;
+      height: 300px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: Consolas, Monaco, monospace;
+      resize: vertical;
+    }
+    h2 {
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>CSV、XLS与JSON互转工具</h1>
+  
+  <div class="control-panel">
+    <div class="layui-form">
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">分隔符</label>
+          <div class="layui-input-inline">
+			<select id="delimiter"  class="layui-input">
+			 <option value=",">逗号(,)CSV格式</option>
+                            <option value=";">分号(;)</option>
+                            <!-- 注意：这里的 value 是字面量 \t，JS中需要特殊处理 -->
+                            <option value="\t">制表符(\t)Excel/XLS</option>
+                            <option value="|">竖线 (|)</option>
+                            <option value="、">顿号(、)</option>
+							<option value=".">点号(.)</option>
+			</select>
+			
+          </div>
+          <div class="layui-form-mid layui-word-aux">默认逗号(,)CSV格式，可改为制表符(\t)XLS和XLSX的表格格式、分号(;)等</div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <button class="layui-btn" id="csvToJson">CSV转JSON</button>
+          <button class="layui-btn" id="jsonToCsv">JSON转CSV</button>
+          <button class="layui-btn layui-btn-primary" id="clearAll">清空内容</button>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <button class="layui-btn layui-btn-normal" id="copyJson">复制JSON</button>
+          <button class="layui-btn layui-btn-normal" id="copyCsv">复制CSV</button>
+          <button class="layui-btn layui-btn-danger" id="downloadJson">下载JSON</button>
+          <button class="layui-btn layui-btn-danger" id="downloadCsv">下载CSV</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="textarea-container">
+    <div class="textarea-box">
+      <h2>CSV数据</h2>
+      <textarea id="csvData" placeholder="请在此输入CSV数据..."></textarea>
+    </div>
+    <div class="textarea-box">
+      <h2>JSON数据</h2>
+      <textarea id="jsonData" placeholder="请在此输入JSON数据..."></textarea>
+    </div>
+  </div>
+  
+  <div class="example-section">
+    <h2>转换示例</h2>
+    <div class="layui-tab">
+      <ul class="layui-tab-title">
+        <li class="layui-this">CSV示例</li>
+        <li>JSON示例</li>
+        <li>转换结果</li>
+      </ul>
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <pre>name,age,city
+John,28,New York
+Alice,24,London
+Bob,32,Tokyo</pre>
+        </div>
+        <div class="layui-tab-item">
+          <pre>[
+  {
+    "name": "John",
+    "age": "28",
+    "city": "New York"
+  },
+  {
+    "name": "Alice",
+    "age": "24",
+    "city": "London"
+  },
+  {
+    "name": "Bob",
+    "age": "32",
+    "city": "Tokyo"
+  }
+]</pre>
+        </div>
+        <div class="layui-tab-item">
+          <p>1. 将CSV示例复制到CSV文本框，点击"CSV转JSON"按钮，将在JSON文本框中看到JSON示例内容</p>
+          <p>2. 将JSON示例复制到JSON文本框，点击"JSON转CSV"按钮，将在CSV文本框中看到CSV示例内容</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.13.8/layui.min.js"></script>
+<script>
+layui.use(['layer', 'jquery', 'element'], function(){
+  var layer = layui.layer;
+  var $ = layui.jquery;
+  var element = layui.element;
+  
+  // CSV转JSON
+  $('#csvToJson').on('click', function(){
+    var csv = $('#csvData').val().trim();
+    if(!csv) {
+      layer.msg('请输入CSV数据', {icon: 2});
+      return;
+    }
+    
+    var delimiter = $('#delimiter').val().trim();
+    if(delimiter === '\\t') delimiter = '\t';
+    
+    try {
+      var json = csvToJson(csv, delimiter);
+      $('#jsonData').val(JSON.stringify(json, null, 2));
+      layer.msg('转换成功', {icon: 1});
+    } catch(e) {
+      layer.msg('转换失败: ' + e.message, {icon: 2});
+    }
+  });
+  
+  // JSON转CSV
+  $('#jsonToCsv').on('click', function(){
+    var jsonStr = $('#jsonData').val().trim();
+    if(!jsonStr) {
+      layer.msg('请输入JSON数据', {icon: 2});
+      return;
+    }
+    
+    var delimiter = $('#delimiter').val().trim();
+    if(delimiter === '\\t') delimiter = '\t';
+    
+    try {
+      var json = JSON.parse(jsonStr);
+      var csv = jsonToCsv(json, delimiter);
+      $('#csvData').val(csv);
+      layer.msg('转换成功', {icon: 1});
+    } catch(e) {
+      layer.msg('转换失败: ' + e.message, {icon: 2});
+    }
+  });
+  
+  // 清空内容
+  $('#clearAll').on('click', function(){
+    $('#csvData').val('');
+    $('#jsonData').val('');
+    layer.msg('已清空', {icon: 1});
+  });
+  
+  // 复制JSON
+  $('#copyJson').on('click', function(){
+    var json = $('#jsonData').val().trim();
+    if(!json) {
+      layer.msg('JSON数据为空', {icon: 2});
+      return;
+    }
+    
+    navigator.clipboard.writeText(json).then(function() {
+      layer.msg('已复制JSON到剪贴板', {icon: 1});
+    }, function() {
+      layer.msg('复制失败', {icon: 2});
+    });
+  });
+  
+  // 复制CSV
+  $('#copyCsv').on('click', function(){
+    var csv = $('#csvData').val().trim();
+    if(!csv) {
+      layer.msg('CSV数据为空', {icon: 2});
+      return;
+    }
+    
+    navigator.clipboard.writeText(csv).then(function() {
+      layer.msg('已复制CSV到剪贴板', {icon: 1});
+    }, function() {
+      layer.msg('复制失败', {icon: 2});
+    });
+  });
+  
+  // 下载JSON
+  $('#downloadJson').on('click', function(){
+    var json = $('#jsonData').val().trim();
+    if(!json) {
+      layer.msg('JSON数据为空', {icon: 2});
+      return;
+    }
+    
+    downloadFile('converted.json', json, 'application/json');
+    layer.msg('已下载JSON文件', {icon: 1});
+  });
+  
+  // 下载CSV
+  $('#downloadCsv').on('click', function(){
+    var csv = $('#csvData').val().trim();
+    if(!csv) {
+      layer.msg('CSV数据为空', {icon: 2});
+      return;
+    }
+    
+    downloadFile('converted.csv', csv, 'text/csv');
+    layer.msg('已下载CSV文件', {icon: 1});
+  });
+  
+  // CSV转JSON函数
+  function csvToJson(csv, delimiter) {
+    var lines = csv.split('\n');
+    var headers = lines[0].split(delimiter);
+    var result = [];
+    
+    for(var i = 1; i < lines.length; i++) {
+      if(!lines[i].trim()) continue;
+      
+      var obj = {};
+      var currentline = lines[i].split(delimiter);
+      
+      for(var j = 0; j < headers.length; j++) {
+        obj[headers[j].trim()] = currentline[j] ? currentline[j].trim() : '';
+      }
+      
+      result.push(obj);
+    }
+    
+    return result;
+  }
+  
+  // JSON转CSV函数
+  function jsonToCsv(json, delimiter) {
+    if(!Array.isArray(json)) {
+      json = [json];
+    }
+    
+    var fields = Object.keys(json[0]);
+    var csv = fields.join(delimiter) + '\n';
+    
+    json.forEach(function(item) {
+      var row = fields.map(function(field) {
+        return item[field] !== undefined ? item[field] : '';
+      }).join(delimiter);
+      
+      csv += row + '\n';
+    });
+    
+    return csv;
+  }
+  
+  // 下载文件函数
+  function downloadFile(filename, text, mimeType) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:' + mimeType + ';charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
+});
+</script>
+<script src="../../tongji.js"></script>
+</body>
+</html>
