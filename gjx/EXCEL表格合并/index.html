@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高级在线Excel表格汇总工具</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.mini.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 900px; margin: 30px auto; padding: 20px; background-color: #f5f7fa; color: #333; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 20px; }
+        
+        /* 模式切换与全局设置 */
+        .mode-switch { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; padding: 15px; background: #e8f4fd; border-radius: 8px; }
+        .mode-switch label { font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        
+        .global-settings { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 25px; }
+        .setting-item { display: flex; flex-direction: column; }
+        .setting-item label { font-weight: bold; margin-bottom: 8px; font-size: 0.9em; color: #555; }
+        .setting-item input, .setting-item select { padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 1em; }
+
+        /* 文件上传与列表 */
+        .file-area { border: 2px dashed #3498db; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; transition: 0.3s; margin-bottom: 20px; }
+        .file-area:hover { background-color: #ebf5fb; border-color: #2980b9; }
+        #fileInput { display: none; }
+        
+        /* 独立配置卡片 */
+        .file-config-list { margin-bottom: 25px; max-height: 400px; overflow-y: auto; }
+        .file-config-card { background: #fff; border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; margin-bottom: 10px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 10px; align-items: center; }
+        .file-config-card h4 { margin: 0 0 5px 0; font-size: 0.95em; color: #2c3e50; grid-column: 1 / -1; border-bottom: 1px dashed #eee; padding-bottom: 5px; }
+        .file-config-card .config-field { display: flex; flex-direction: column; }
+        .file-config-card .config-field label { font-size: 0.8em; color: #666; margin-bottom: 4px; }
+        .file-config-card input, .file-config-card select { padding: 6px; border: 1px solid #ccc; border-radius: 4px; }
+
+        .btn { display: block; width: 100%; padding: 15px; background-color: #27ae60; color: white; border: none; border-radius: 8px; font-size: 1.1em; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background-color: #219653; }
+        .btn:disabled { background-color: #95a5a6; cursor: not-allowed; }
+        #status { margin-top: 20px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📊 高级在线Excel表格汇总工具</h1>
+
+    <!-- 模式切换 -->
+    <div class="mode-switch">
+        <label><input type="radio" name="configMode" value="unified" checked onclick="toggleMode()"> 统一设置 (所有文件共用一套规则)</label>
+        <label><input type="radio" name="configMode" value="separate" onclick="toggleMode()"> 分别设置 (为每个文件单独配置)</label>
+    </div>
+
+    <!-- 统一设置区域 -->
+    <div id="globalSettings" class="global-settings">
+        <div class="setting-item">
+            <label>工作表索引 (默认1)</label>
+            <input type="number" id="g_sheetIndex" value="1" min="1">
+        </div>
+        <div class="setting-item">
+            <label>表头所在行 (默认1)</label>
+            <input type="number" id="g_headerRow" value="1" min="1">
+        </div>
+        <div class="setting-item">
+            <label>去除尾部行数 (默认0)</label>
+            <input type="number" id="g_removeTail" value="0" min="0">
+        </div>
+    </div>
+  <p>👉备注：经管导出的“客户贷款明细查询”可以设置--表头所在行“5”、去除尾部行数“5”！</P>
+    <!-- 文件上传 -->
+    <div class="file-area" onclick="document.getElementById('fileInput').click()">
+        <p>点击此处选择多个 Excel 文件 (.xlsx, .xls)</p>
+        <input type="file" id="fileInput" multiple accept=".xlsx, .xls">
+    </div>
+
+    <!-- 独立配置列表 (仅在分别设置模式下显示) -->
+    <div id="fileConfigList" class="file-config-list"></div>
+
+    <button class="btn" id="mergeBtn" disabled>开始合并并下载</button>
+    <div id="status"></div>
+</div>
+
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const globalSettings = document.getElementById('globalSettings');
+    const fileConfigList = document.getElementById('fileConfigList');
+    const mergeBtn = document.getElementById('mergeBtn');
+    const statusDiv = document.getElementById('status');
+    
+    let selectedFiles = [];
+    let fileMetadata = []; // 存储每个文件的Sheet信息等元数据
+
+    // 切换配置模式
+    function toggleMode() {
+        const mode = document.querySelector('input[name="configMode"]:checked').value;
+        if (mode === 'unified') {
+            globalSettings.style.display = 'grid';
+            fileConfigList.innerHTML = '';
+            fileConfigList.style.display = 'none';
+        } else {
+            globalSettings.style.display = 'none';
+            fileConfigList.style.display = 'block';
+            if (selectedFiles.length > 0) renderSeparateConfigs(); // 如果已有文件，重新渲染独立配置
+        }
+    }
+
+    // 监听文件选择，读取文件元数据（工作表名）
+    fileInput.addEventListener('change', async (e) => {
+        selectedFiles = Array.from(e.target.files);
+        if (selectedFiles.length === 0) {
+            mergeBtn.disabled = true;
+            fileConfigList.innerHTML = '';
+            return;
+        }
+
+        statusDiv.textContent = `正在解析 ${selectedFiles.length} 个文件的结构...`;
+        fileMetadata = [];
+
+        // 快速读取所有文件的 SheetNames
+        const readPromises = selectedFiles.map(file => {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    resolve({
+                        file: file,
+                        sheetNames: workbook.SheetNames
+                    });
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        });
+
+        fileMetadata = await Promise.all(readPromises);
+        
+        statusDiv.textContent = '';
+        mergeBtn.disabled = false;
+
+        // 根据当前模式渲染界面
+        const mode = document.querySelector('input[name="configMode"]:checked').value;
+        if (mode === 'separate') {
+            renderSeparateConfigs();
+        }
+    });
+
+    // 渲染“分别设置”的配置卡片
+    function renderSeparateConfigs() {
+        fileConfigList.innerHTML = '';
+        fileMetadata.forEach((meta, index) => {
+            const card = document.createElement('div');
+            card.className = 'file-config-card';
+            
+            // 生成工作表下拉选项
+            const sheetOptions = meta.sheetNames.map((name, i) => `<option value="${i + 1}">${name}</option>`).join('');
+
+            card.innerHTML = `
+                <h4>📄 ${meta.file.name} (共 ${meta.sheetNames.length} 个工作表)</h4>
+                <div class="config-field">
+                    <label>选择工作表</label>
+                    <select id="s_sheet_${index}">${sheetOptions}</select>
+                </div>
+                <div class="config-field">
+                    <label>表头所在行</label>
+                    <input type="number" id="s_header_${index}" value="1" min="1">
+                </div>
+                <div class="config-field">
+                    <label>去除尾部行数</label>
+                    <input type="number" id="s_tail_${index}" value="0" min="0">
+                </div>
+            `;
+            fileConfigList.appendChild(card);
+        });
+    }
+
+    // 核心数据读取函数
+    function extractData(file, sheetIndex, headerRow, removeTail) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    
+                    const sheetName = workbook.SheetNames[sheetIndex - 1] || workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[sheetName];
+                    let jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                    if (jsonData.length === 0) { resolve([]); return; }
+
+                    const headerRowIndex = headerRow - 1;
+                    let validData = jsonData.slice(headerRowIndex);
+
+                    if (removeTail > 0 && validData.length > removeTail) {
+                        validData = validData.slice(0, -removeTail);
+                    }
+                    resolve(validData);
+                } catch (error) {
+                    reject(error);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
+    }
+
+    // 合并与下载
+    mergeBtn.addEventListener('click', async () => {
+        mergeBtn.disabled = true;
+        mergeBtn.textContent = '正在合并处理中...';
+        statusDiv.textContent = '开始提取数据...';
+        statusDiv.style.color = '#333';
+
+        const mode = document.querySelector('input[name="configMode"]:checked').value;
+        let allData = [];
+
+        try {
+            for (let i = 0; i < fileMetadata.length; i++) {
+                const meta = fileMetadata[i];
+                let sheetIndex, headerRow, removeTail;
+
+                // 获取当前文件的配置参数
+                if (mode === 'unified') {
+                    sheetIndex = parseInt(document.getElementById('g_sheetIndex').value) || 1;
+                    headerRow = parseInt(document.getElementById('g_headerRow').value) || 1;
+                    removeTail = parseInt(document.getElementById('g_removeTail').value) || 0;
+                } else {
+                    sheetIndex = parseInt(document.getElementById(`s_sheet_${i}`).value);
+                    headerRow = parseInt(document.getElementById(`s_header_${i}`).value) || 1;
+                    removeTail = parseInt(document.getElementById(`s_tail_${i}`).value) || 0;
+                }
+
+                statusDiv.textContent = `正在处理 (${i + 1}/${fileMetadata.length}): ${meta.file.name}`;
+                const fileData = await extractData(meta.file, sheetIndex, headerRow, removeTail);
+
+                if (fileData.length > 0) {
+                    if (allData.length === 0) {
+                        allData.push(fileData[0]); // 提取第一个文件的表头
+                    }
+                    // 提取数据行（跳过当前文件的表头）
+                    const rows = fileData.slice(1);
+                    allData = allData.concat(rows);
+                }
+            }
+
+            if (allData.length <= 1) throw new Error("未提取到有效数据，请检查配置。");
+
+            // 导出
+            const newWorkbook = XLSX.utils.book_new();
+            const newWorksheet = XLSX.utils.aoa_to_sheet(allData);
+            XLSX.utils.book_append_sheet(newWorkbook, newWorksheet, "汇总数据");
+            const wbout = XLSX.write(newWorkbook, { bookType: 'xlsx', type: 'array' });
+            saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '高级汇总表格.xlsx');
+
+            statusDiv.textContent = '✅ 合并成功！文件已开始下载。';
+            statusDiv.style.color = 'green';
+        } catch (error) {
+            console.error(error);
+            statusDiv.textContent = '❌ 发生错误: ' + error.message;
+            statusDiv.style.color = 'red';
+        } finally {
+            mergeBtn.disabled = false;
+            mergeBtn.textContent = '开始合并并下载';
+        }
+    });
+</script>
+
+</body>
+</html>
