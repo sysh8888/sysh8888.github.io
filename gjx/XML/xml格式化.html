@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线 XML 格式化工具</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f2f9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            padding: 1.5rem;
+            margin: 0;
+        }
+        .card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0, 20, 40, 0.20), 0 8px 20px rgba(0, 0, 0, 0.06);
+            padding: 2rem 2rem 2.5rem;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        h1 {
+            font-weight: 600;
+            font-size: 2.2rem;
+            letter-spacing: -0.02em;
+            color: #0b2b3d;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 0.2rem;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(52, 152, 219, 0.25);
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #3d6b7e;
+            margin-left: auto;
+            background: rgba(52, 152, 219, 0.10);
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            letter-spacing: 0.3px;
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 18px;
+            margin: 1.5rem 0 1.2rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .action-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .btn {
+            background: white;
+            border: none;
+            padding: 0.65rem 1.6rem;
+            border-radius: 60px;
+            font-weight: 550;
+            font-size: 0.95rem;
+            color: #1a4052;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.15s ease;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.2px;
+        }
+        .btn-primary {
+            background: #1a5f7a;
+            color: white;
+            border: 1px solid #1a5f7a;
+            box-shadow: 0 6px 14px rgba(26, 95, 122, 0.25);
+        }
+        .btn-primary:hover {
+            background: #0f4b63;
+            transform: scale(0.98);
+            box-shadow: 0 8px 18px rgba(26, 95, 122, 0.3);
+        }
+        .btn-success {
+            background: #1f8b6b;
+            color: white;
+            border: 1px solid #1f8b6b;
+            box-shadow: 0 6px 14px rgba(31, 139, 107, 0.25);
+        }
+        .btn-success:hover {
+            background: #167258;
+            transform: scale(0.98);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #b6cfde;
+            color: #1e4b60;
+        }
+        .btn-outline:hover {
+            background: rgba(26, 95, 122, 0.06);
+            border-color: #1a5f7a;
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        .editor-wrapper {
+            background: #fafcff;
+            border-radius: 28px;
+            padding: 0.3rem;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.02), 0 10px 25px -10px rgba(0,20,30,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            margin-top: 0.2rem;
+        }
+        textarea {
+            width: 100%;
+            min-height: 340px;
+            height: 52vh;
+            padding: 1.6rem 1.8rem;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            border: none;
+            resize: vertical;
+            background: transparent;
+            color: #17354a;
+            outline: none;
+            border-radius: 28px;
+            letter-spacing: 0.2px;
+            tab-size: 2;
+            white-space: pre-wrap;
+            word-break: break-word;
+            transition: 0.1s ease;
+        }
+        textarea:focus {
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.15);
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 28px;
+        }
+        textarea::placeholder {
+            color: #96b3c7;
+            font-weight: 300;
+            font-family: 'Segoe UI', sans-serif;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+        .status-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 1rem;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: #386477;
+        }
+        .toast-message {
+            background: #1f5f72;
+            color: white;
+            padding: 0.5rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 450;
+            font-size: 0.9rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            transform: translateY(6px);
+            transition: 0.2s ease;
+            pointer-events: none;
+            background: #1d6d7a;
+        }
+        .toast-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .badge {
+            background: rgba(26, 95, 122, 0.08);
+            padding: 0.2rem 1rem;
+            border-radius: 60px;
+            color: #1d5a70;
+            font-weight: 450;
+        }
+        .footer-hint {
+            margin-top: 1rem;
+            font-size: 0.78rem;
+            color: #638b9e;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 1.8rem;
+            justify-content: flex-start;
+            border-top: 1px solid rgba(0,0,0,0.03);
+            padding-top: 1.2rem;
+        }
+        .footer-hint span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .footer-hint kbd {
+            background: #e8f0f6;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #154257;
+        }
+        @media (max-width: 600px) {
+            .card { padding: 1.2rem; }
+            h1 { font-size: 1.8rem; flex-wrap: wrap; }
+            h1 small { margin-left: 0; width: 100%; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .action-group { justify-content: center; }
+            textarea { min-height: 260px; padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>
+            ⚡ XML 格式化
+            <small>美化 · 压缩 · 复制</small>
+        </h1>
+
+        <div class="toolbar">
+            <div class="action-group">
+                <button class="btn btn-primary" id="formatBtn">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 8L2 12L6 16M18 8L22 12L18 16M14 4L10 20M8 12H16"/></svg>
+                    格式化
+                </button>
+                <button class="btn btn-outline" id="compressBtn">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h10v2H4v-2z"/></svg>
+                    压缩
+                </button>
+                <button class="btn btn-success" id="copyBtn">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M16 1H4a2 2 0 00-2 2v14h2V3h12V1zm3 4H8a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V7a2 2 0 00-2-2zm0 16H8V7h11v14z"/></svg>
+                    复制内容
+                </button>
+            </div>
+            <div class="action-group">
+                <button class="btn btn-outline" id="clearBtn">🗑️ 清空</button>
+            </div>
+        </div>
+
+        <div class="editor-wrapper">
+            <textarea id="xmlInput" placeholder="粘贴或输入 XML 内容 …&#10;例如: &lt;root&gt;&lt;child&gt;hello&lt;/child&gt;&lt;/root&gt;" spellcheck="false"></textarea>
+        </div>
+
+        <div class="status-bar">
+            <span class="badge" id="nodeCount">节点: 0</span>
+            <span id="toastMessage" class="toast-message">✔ 已复制</span>
+            <span style="display: flex; gap: 10px; align-items: center;">
+                <span id="lineCount" class="badge">行: 0</span>
+                <span id="charCount" class="badge">字符: 0</span>
+            </span>
+        </div>
+        <div class="footer-hint">
+            <span>📋 <kbd>Ctrl+A</kbd> 全选 · <kbd>Ctrl+C</kbd> 复制</span>
+            <span>⚙️ 自动缩进 · 保留属性</span>
+            <span>✨ 支持 注释 &amp; CDATA</span>
+        </div>
+    </div>
+    <script>
+        (function() {
+            "use strict";
+
+            const xmlInput = document.getElementById('xmlInput');
+            const formatBtn = document.getElementById('formatBtn');
+            const compressBtn = document.getElementById('compressBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const toastMsg = document.getElementById('toastMessage');
+            const nodeCountEl = document.getElementById('nodeCount');
+            const lineCountEl = document.getElementById('lineCount');
+            const charCountEl = document.getElementById('charCount');
+
+            // ---------- 辅助函数 ----------
+            function updateStats(text) {
+                const trimmed = text || '';
+                const lines = trimmed.split(/\n/).length;
+                const chars = trimmed.length;
+                lineCountEl.textContent = `行: ${lines}`;
+                charCountEl.textContent = `字符: ${chars}`;
+                // 粗略统计节点数量 (通过 '<' 出现次数简化)
+                const nodeMatches = trimmed.match(/<[^?][^>]*>/g) || [];
+                const nodeCount = nodeMatches.length;
+                nodeCountEl.textContent = `节点: ${nodeCount}`;
+            }
+
+            // 显示短暂提示
+            function showToast(message = '✔ 已复制', duration = 1800) {
+                toastMsg.textContent = message;
+                toastMsg.classList.add('show');
+                clearTimeout(window.toastTimer);
+                window.toastTimer = setTimeout(() => {
+                    toastMsg.classList.remove('show');
+                }, duration);
+            }
+
+            // ---------- 格式化核心 (带缩进) ----------
+            function formatXML(xmlStr) {
+                if (!xmlStr || xmlStr.trim() === '') {
+                    return '';
+                }
+                // 去除首尾空白，但保留内部空格
+                let raw = xmlStr.trim();
+
+                // 使用 DOMParser 解析并重新序列化 (更可靠)
+                try {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(raw, 'text/xml');
+                    const parseError = xmlDoc.querySelector('parsererror');
+                    if (parseError) {
+                        // 可能是解析错误，退回到手动格式化
+                        throw new Error('DOMParser 解析失败，使用备用格式化');
+                    }
+                    // 序列化为格式化字符串 (使用内置 XML 序列化)
+                    const serializer = new XMLSerializer();
+                    let formatted = serializer.serializeToString(xmlDoc);
+                    // 美化缩进 (简单替换 >< 为 >\n<)
+                    formatted = formatted.replace(/>\s*</g, '>\n<');
+                    // 处理自闭合标签换行
+                    formatted = formatted.replace(/\n\s*\/>/g, '/>');
+                    // 分出行并缩进
+                    const lines = formatted.split('\n');
+                    let indentLevel = 0;
+                    const indentStr = '  '; // 2空格缩进
+                    const resultLines = [];
+                    for (let line of lines) {
+                        line = line.trim();
+                        if (!line) continue;
+                        // 判断是否是结束标签 (或自闭合)
+                        const isClosing = line.startsWith('</');
+                        const isSelfClosing = line.endsWith('/>');
+                        // 如果是结束标签，减少缩进
+                        if (isClosing) {
+                            indentLevel = Math.max(0, indentLevel - 1);
+                        }
+                        // 添加缩进
+                        let indent = indentStr.repeat(indentLevel);
+                        resultLines.push(indent + line);
+                        // 如果是开始标签且不是自闭合且不是结束标签，增加缩进
+                        if (!isClosing && !isSelfClosing && line.startsWith('<') && !line.startsWith('<?') && !line.startsWith('<!--')) {
+                            indentLevel++;
+                        }
+                        // 处理自闭合标签不增加缩进
+                    }
+                    // 重新组合，保留第一行无缩进（XML声明等）
+                    let final = resultLines.join('\n');
+                    // 修复可能的多余空行
+                    final = final.replace(/\n\s*\n/g, '\n');
+                    return final;
+                } catch (e) {
+                    // 备用方案: 手动的 tag 缩进 (更宽容)
+                    return manualFormatXML(raw);
+                }
+            }
+
+            // 手动格式化 (备用)
+            function manualFormatXML(xmlStr) {
+                // 移除多余空白
+                let s = xmlStr.replace(/\s*\n\s*/g, '').replace(/>\s*</g, '><');
+                // 在 >< 之间插入换行 (保留 CDATA/注释)
+                s = s.replace(/(>)(<)(?!\/*[^>]*>)/g, '$1\n$2');
+                // 对每个 tag 缩进
+                const lines = s.split('\n').filter(line => line.trim() !== '');
+                let indent = 0;
+                const indentStr = '  ';
+                const out = [];
+                for (let line of lines) {
+                    line = line.trim();
+                    if (!line) continue;
+                    // 判断是否闭合
+                    const isClosing = line.startsWith('</');
+                    const isSelfClosing = line.endsWith('/>');
+                    const isComment = line.startsWith('<!--');
+                    const isCdata = line.startsWith('<![CDATA[');
+                    const isDeclaration = line.startsWith('<?');
+
+                    if (isClosing) {
+                        indent = Math.max(0, indent - 1);
+                    }
+                    // 特殊：对于注释和CDATA不改变缩进，但保留
+                    let prefix = '';
+                    if (!isComment && !isCdata && !isDeclaration) {
+                        prefix = indentStr.repeat(indent);
+                    } else {
+                        prefix = indentStr.repeat(indent);
+                    }
+                    out.push(prefix + line);
+                    if (!isClosing && !isSelfClosing && !isComment && !isCdata && !isDeclaration && line.startsWith('<')) {
+                        indent++;
+                    }
+                    // 自闭合不增加缩进
+                }
+                return out.join('\n');
+            }
+
+            // ---------- 压缩 XML (删除多余空白) ----------
+            function compressXML(xmlStr) {
+                if (!xmlStr) return '';
+                // 去掉所有换行和多余空格，但保留标签之间的必要空格
+                let compressed = xmlStr.replace(/\s*\n\s*/g, '').replace(/>\s+</g, '><').trim();
+                // 修复属性之间多个空格为一个
+                compressed = compressed.replace(/\s{2,}/g, ' ');
+                return compressed;
+            }
+
+            // ---------- 复制功能 ----------
+            function copyContent() {
+                const text = xmlInput.value;
+                if (!text) {
+                    showToast('⛔ 内容为空', 1200);
+                    return;
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        showToast('✔ 已复制到剪贴板', 1600);
+                    }).catch(() => {
+                        // 降级
+                        fallbackCopy(text);
+                    });
+                } else {
+                    fallbackCopy(text);
+                }
+            }
+
+            function fallbackCopy(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.setAttribute('readonly', '');
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                textarea.style.top = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    const success = document.execCommand('copy');
+                    if (success) {
+                        showToast('✔ 已复制 (兼容模式)', 1600);
+                    } else {
+                        showToast('❌ 复制失败，请手动复制', 1600);
+                    }
+                } catch (e) {
+                    showToast('❌ 复制失败', 1600);
+                }
+                document.body.removeChild(textarea);
+            }
+
+            // ---------- 事件绑定 ----------
+            formatBtn.addEventListener('click', function() {
+                const raw = xmlInput.value;
+                if (!raw.trim()) {
+                    showToast('⛔ 请输入 XML 内容', 1200);
+                    return;
+                }
+                const formatted = formatXML(raw);
+                xmlInput.value = formatted;
+                updateStats(formatted);
+                showToast('✅ 格式化完成', 1200);
+            });
+
+            compressBtn.addEventListener('click', function() {
+                const raw = xmlInput.value;
+                if (!raw.trim()) {
+                    showToast('⛔ 没有内容可压缩', 1200);
+                    return;
+                }
+                const compressed = compressXML(raw);
+                xmlInput.value = compressed;
+                updateStats(compressed);
+                showToast('🗜️ 压缩完成', 1200);
+            });
+
+            copyBtn.addEventListener('click', copyContent);
+
+            clearBtn.addEventListener('click', function() {
+                xmlInput.value = '';
+                updateStats('');
+                showToast('🗑️ 已清空', 1000);
+                xmlInput.focus();
+            });
+
+            // 实时统计 (输入时更新)
+            xmlInput.addEventListener('input', function() {
+                updateStats(this.value);
+            });
+
+            // 快捷键: Ctrl+Enter 格式化, Ctrl+Shift+C 复制
+            xmlInput.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    formatBtn.click();
+                }
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'c' || e.key === 'C')) {
+                    e.preventDefault();
+                    copyBtn.click();
+                }
+            });
+
+            // 初始化统计
+            updateStats('');
+            // 默认示例 (可选)
+            const defaultExample = `<?xml version="1.0" encoding="UTF-8"?>
+            <catalog>
+                <book id="bk101">
+                    <author>Gambardella, Matthew</author>
+                    <title>XML Developer's Guide</title>
+                    <genre>Computer</genre>
+                    <price>44.95</price>
+                    <publish_date>2000-10-01</publish_date>
+                    <description>An in-depth look at creating applications with XML.</description>
+                </book>
+                <book id="bk102">
+                    <author>Ralls, Kim</author>
+                    <title>Midnight Rain</title>
+                    <genre>Fantasy</genre>
+                    <price>5.95</price>
+                    <publish_date>2000-12-16</publish_date>
+                    <description>A former architect battles corporate zombies, an evil sorceress, and her own childhood to become queen of the world.</description>
+                </book>
+            </catalog>`;
+            // 预填示例 (方便演示)
+            xmlInput.value = defaultExample;
+            updateStats(defaultExample);
+        })();
+    </script>
+	<script src="../../tongji.js"></script>
+</body>
+</html>
