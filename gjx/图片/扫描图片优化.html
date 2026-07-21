@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫描图片文档优化工具</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .processing-steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 30px;
+            gap: 30px;
+        }
+        
+        .upload-section {
+            flex: 1;
+            min-width: 350px;
+        }
+        
+        .preview-section {
+            flex: 2;
+            min-width: 500px;
+        }
+        
+        .upload-area {
+            border: 3px dashed #3b82f6;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+            margin-bottom: 25px;
+            position: relative;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .upload-area:hover {
+            background-color: #eff6ff;
+            border-color: #1d4ed8;
+        }
+        
+        .upload-area i {
+            font-size: 4rem;
+            color: #3b82f6;
+            margin-bottom: 20px;
+        }
+        
+        .upload-area h3 {
+            margin-bottom: 15px;
+            color: #1e3a8a;
+        }
+        
+        .upload-area p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-optimize {
+            background-color: #10b981;
+        }
+        
+        .btn-optimize:hover {
+            background-color: #059669;
+        }
+        
+        .btn-reset {
+            background-color: #6b7280;
+        }
+        
+        .btn-reset:hover {
+            background-color: #4b5563;
+        }
+        
+        .btn-download {
+            background-color: #f59e0b;
+        }
+        
+        .btn-download:hover {
+            background-color: #d97706;
+        }
+        
+        .controls {
+            margin-top: 30px;
+            background-color: #f9fafb;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        .control-group h4 {
+            margin-bottom: 12px;
+            color: #1e3a8a;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .slider-container label {
+            min-width: 150px;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .slider {
+            flex: 1;
+            height: 10px;
+            border-radius: 5px;
+            background: #d1d5db;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .value-display {
+            min-width: 50px;
+            text-align: center;
+            font-weight: 600;
+            color: #3b82f6;
+            font-size: 1rem;
+        }
+        
+        .preview-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            height: 100%;
+        }
+        
+        .comparison-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .preview-box {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            background-color: #f8fafc;
+            padding: 20px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .preview-box h3 {
+            margin-bottom: 15px;
+            color: #1e3a8a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .preview-box h3 i {
+            color: #3b82f6;
+        }
+        
+        .image-container {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            border-radius: 8px;
+            background-color: #f3f4f6;
+            position: relative;
+            padding: 10px;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .no-image {
+            color: #6b7280;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .no-image i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #9ca3af;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.9rem;
+            background-color: #f9fafb;
+        }
+        
+        .status {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .status.success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            display: block;
+        }
+        
+        .status.error {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            display: block;
+        }
+        
+        .status.info {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+            display: block;
+        }
+        
+        @media (max-width: 1100px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .comparison-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+            
+            .preview-box {
+                height: 400px;
+            }
+        }
+        
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            border-radius: 8px;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f4f6;
+            border-top: 5px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .algorithm-info {
+            background-color: #eff6ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .algorithm-info h4 {
+            color: #1e40af;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .algorithm-info ul {
+            padding-left: 20px;
+            color: #374151;
+        }
+        
+        .algorithm-info li {
+            margin-bottom: 8px;
+        }
+        
+        .optimization-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .preset-btn {
+            background-color: #e5e7eb;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .preset-btn:hover {
+            background-color: #d1d5db;
+        }
+        
+        .preset-btn.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .file-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #eff6ff;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            align-items: center;
+        }
+        
+        .file-size {
+            font-weight: 600;
+            color: #1e40af;
+        }
+        
+        .quality-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #f0f9ff;
+            border-radius: 8px;
+            border: 1px solid #e0f2fe;
+        }
+        
+        .quality-label {
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .quality-value {
+            font-weight: 700;
+        }
+        
+        .quality-value.poor {
+            color: #ef4444;
+        }
+        
+        .quality-value.fair {
+            color: #f59e0b;
+        }
+        
+        .quality-value.good {
+            color: #10b981;
+        }
+        
+        .quality-value.excellent {
+            color: #059669;
+        }
+        
+        .simple-tip {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #92400e;
+        }
+        
+        .simple-tip i {
+            margin-right: 8px;
+            color: #f59e0b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-file-contract"></i> 扫描文档优化工具</h1>
+            <p class="subtitle">优化扫描或拍照文档，增强文字清晰度，去除背景杂质，生成清晰电子文档</p>
+            
+            <div class="processing-steps">
+                <div class="step"><i class="fas fa-upload"></i> 1. 上传文档图片</div>
+                <div class="step"><i class="fas fa-sliders-h"></i> 2. 调整优化参数</div>
+                <div class="step"><i class="fas fa-download"></i> 3. 下载清晰文档</div>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>上传文档图片</h3>
+                    <p>支持 JPG、PNG 格式，最大文件大小 20MB</p>
+                    <p>将文件拖放到此处，或</p>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    <button class="btn" id="browseBtn">
+                        <i class="fas fa-folder-open"></i> 选择文件
+                    </button>
+                </div>
+                
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <span>已选择文件:</span>
+                    <div>
+                        <span id="fileName" class="file-size"></span>
+                        <span id="fileSize"></span>
+                    </div>
+                </div>
+                
+                <div class="simple-tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>使用建议：</strong>先使用"自动优化"，然后微调参数获得最佳效果
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <h4><i class="fas fa-cogs"></i> 优化模式</h4>
+                        <div class="optimization-presets">
+                            <button class="preset-btn active" data-preset="auto">自动优化</button>
+                            <button class="preset-btn" data-preset="light">轻度优化</button>
+                            <button class="preset-btn" data-preset="strong">深度优化</button>
+                            <button class="preset-btn" data-preset="bw">黑白文档</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h4><i class="fas fa-sliders-h"></i> 优化参数</h4>
+                        
+                        <div class="slider-container">
+                            <label>亮度</label>
+                            <input type="range" min="-50" max="50" value="0" class="slider" id="brightnessSlider">
+                            <span class="value-display" id="brightnessValue">0</span>
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label>对比度</label>
+                            <input type="range" min="80" max="180" value="120" class="slider" id="contrastSlider">
+                            <span class="value-display" id="contrastValue">120%</span>
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label>去背景灰</label>
+                            <input type="range" min="0" max="100" value="30" class="slider" id="backgroundSlider">
+                            <span class="value-display" id="backgroundValue">30</span>
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label>锐化</label>
+                            <input type="range" min="0" max="100" value="20" class="slider" id="sharpenSlider">
+                            <span class="value-display" id="sharpenValue">20</span>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-optimize" id="optimizeBtn">
+                            <i class="fas fa-bolt"></i> 应用优化
+                        </button>
+                        <button class="btn btn-reset" id="resetBtn">
+                            <i class="fas fa-redo"></i> 重置参数
+                        </button>
+                    </div>
+                    
+                    <div class="quality-indicator">
+                        <span class="quality-label">优化效果:</span>
+                        <span class="quality-value good" id="qualityIndicator">良好</span>
+                    </div>
+                    
+                    <div class="status" id="statusMessage"></div>
+                </div>
+                
+                <div class="algorithm-info">
+                    <h4><i class="fas fa-info-circle"></i> 功能说明</h4>
+                    <ul>
+                        <li>亮度调整 - 校正图片整体明暗</li>
+                        <li>对比度增强 - 提高文字与背景反差</li>
+                        <li>去背景灰 - 去除扫描/拍照产生的灰底</li>
+                        <li>锐化处理 - 增强文字边缘清晰度</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <div class="preview-container">
+                    <div class="comparison-container">
+                        <div class="preview-box">
+                            <h3><i class="fas fa-image"></i> 原始图片</h3>
+                            <div class="image-container" id="originalContainer">
+                                <div class="no-image">
+                                    <i class="fas fa-file-image"></i>
+                                    <p>上传图片后在此处预览</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="preview-box">
+                            <h3><i class="fas fa-file-contract"></i> 优化结果</h3>
+                            <div class="image-container" id="optimizedContainer">
+                                <div class="no-image">
+                                    <i class="fas fa-sync-alt"></i>
+                                    <p>优化后的文档将在此处显示</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-download" id="downloadBtn" disabled>
+                            <i class="fas fa-download"></i> 下载优化文档 (PNG)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 扫描文档优化工具 | 所有处理均在本地浏览器完成，保障文档隐私安全</p>
+        </footer>
+    </div>
+
+    <script>
+        // 简单稳定的图像优化算法
+        class SimpleDocumentEnhancer {
+            constructor() {
+                this.canvas = document.createElement('canvas');
+                this.ctx = this.canvas.getContext('2d');
+            }
+            
+            // 应用亮度调整
+            applyBrightness(imageData, brightness) {
+                const data = imageData.data;
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = this.clamp(data[i] + brightness);     // R
+                    data[i + 1] = this.clamp(data[i + 1] + brightness); // G
+                    data[i + 2] = this.clamp(data[i + 2] + brightness); // B
+                }
+                
+                return imageData;
+            }
+            
+            // 应用对比度调整
+            applyContrast(imageData, contrast) {
+                const data = imageData.data;
+                const factor = (contrast / 100);
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = this.clamp(((data[i] / 255 - 0.5) * factor + 0.5) * 255);
+                    data[i + 1] = this.clamp(((data[i + 1] / 255 - 0.5) * factor + 0.5) * 255);
+                    data[i + 2] = this.clamp(((data[i + 2] / 255 - 0.5) * factor + 0.5) * 255);
+                }
+                
+                return imageData;
+            }
+            
+            // 去除背景灰色
+            removeBackgroundGray(imageData, strength) {
+                const data = imageData.data;
+                const threshold = 200 - (strength / 2); // 根据强度调整阈值
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    const avg = (r + g + b) / 3;
+                    
+                    // 如果是浅色背景区域，使其更白
+                    if (avg > threshold) {
+                        const factor = strength / 100;
+                        data[i] = this.clamp(r + (255 - r) * factor);
+                        data[i + 1] = this.clamp(g + (255 - g) * factor);
+                        data[i + 2] = this.clamp(b + (255 - b) * factor);
+                    }
+                }
+                
+                return imageData;
+            }
+            
+            // 简单锐化
+            applySharpen(imageData, strength) {
+                if (strength < 5) return imageData;
+                
+                const data = imageData.data;
+                const width = imageData.width;
+                const height = imageData.height;
+                
+                const tempData = new Uint8ClampedArray(data);
+                const factor = strength / 100;
+                
+                // 简单的锐化核
+                for (let y = 1; y < height - 1; y++) {
+                    for (let x = 1; x < width - 1; x++) {
+                        const idx = (y * width + x) * 4;
+                        
+                        // 计算周围像素平均值
+                        let avgR = 0, avgG = 0, avgB = 0;
+                        for (let dy = -1; dy <= 1; dy++) {
+                            for (let dx = -1; dx <= 1; dx++) {
+                                if (dx === 0 && dy === 0) continue;
+                                const nIdx = ((y + dy) * width + (x + dx)) * 4;
+                                avgR += tempData[nIdx];
+                                avgG += tempData[nIdx + 1];
+                                avgB += tempData[nIdx + 2];
+                            }
+                        }
+                        avgR /= 8; avgG /= 8; avgB /= 8;
+                        
+                        // 增强边缘
+                        const edgeR = tempData[idx] - avgR;
+                        const edgeG = tempData[idx + 1] - avgG;
+                        const edgeB = tempData[idx + 2] - avgB;
+                        
+                        data[idx] = this.clamp(tempData[idx] + edgeR * factor);
+                        data[idx + 1] = this.clamp(tempData[idx + 1] + edgeG * factor);
+                        data[idx + 2] = this.clamp(tempData[idx + 2] + edgeB * factor);
+                    }
+                }
+                
+                return imageData;
+            }
+            
+            // 转换为黑白文档
+            convertToBlackWhite(imageData, threshold = 128) {
+                const data = imageData.data;
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    const avg = (r + g + b) / 3;
+                    
+                    const value = avg < threshold ? 0 : 255;
+                    data[i] = value;
+                    data[i + 1] = value;
+                    data[i + 2] = value;
+                }
+                
+                return imageData;
+            }
+            
+            // 主处理函数
+            processImage(image, params) {
+                // 设置画布尺寸 - 保持高质量
+                let width = image.width;
+                let height = image.height;
+                
+                // 限制最大尺寸以提高性能，但保持足够清晰
+                const maxDimension = 2000;
+                if (width > maxDimension || height > maxDimension) {
+                    const ratio = Math.min(maxDimension / width, maxDimension / height);
+                    width = Math.floor(width * ratio);
+                    height = Math.floor(height * ratio);
+                }
+                
+                this.canvas.width = width;
+                this.canvas.height = height;
+                
+                // 高质量绘制
+                this.ctx.imageSmoothingEnabled = true;
+                this.ctx.imageSmoothingQuality = 'high';
+                this.ctx.drawImage(image, 0, 0, width, height);
+                
+                // 获取图像数据
+                let imageData = this.ctx.getImageData(0, 0, width, height);
+                
+                // 根据预设应用处理
+                switch(params.preset) {
+                    case 'light':
+                        // 轻度优化
+                        imageData = this.applyBrightness(imageData, params.brightness);
+                        imageData = this.applyContrast(imageData, Math.min(params.contrast, 130));
+                        imageData = this.removeBackgroundGray(imageData, Math.min(params.background, 40));
+                        break;
+                        
+                    case 'strong':
+                        // 深度优化
+                        imageData = this.applyBrightness(imageData, params.brightness);
+                        imageData = this.applyContrast(imageData, Math.max(params.contrast, 140));
+                        imageData = this.removeBackgroundGray(imageData, Math.max(params.background, 60));
+                        imageData = this.applySharpen(imageData, Math.max(params.sharpen, 40));
+                        break;
+                        
+                    case 'bw':
+                        // 黑白文档
+                        imageData = this.applyBrightness(imageData, params.brightness);
+                        imageData = this.applyContrast(imageData, params.contrast);
+                        imageData = this.removeBackgroundGray(imageData, params.background);
+                        imageData = this.convertToBlackWhite(imageData, 150);
+                        break;
+                        
+                    default: // 'auto'
+                        // 自动优化
+                        imageData = this.applyBrightness(imageData, params.brightness);
+                        imageData = this.applyContrast(imageData, params.contrast);
+                        imageData = this.removeBackgroundGray(imageData, params.background);
+                        imageData = this.applySharpen(imageData, params.sharpen);
+                }
+                
+                // 放回处理后的数据
+                this.ctx.putImageData(imageData, 0, 0);
+                
+                // 返回高质量PNG
+                return this.canvas.toDataURL('image/png', 0.95);
+            }
+            
+            // 辅助函数：限制值在0-255之间
+            clamp(value) {
+                return Math.max(0, Math.min(255, value));
+            }
+        }
+
+        // DOM元素
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.getElementById('browseBtn');
+        const optimizeBtn = document.getElementById('optimizeBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const originalContainer = document.getElementById('originalContainer');
+        const optimizedContainer = document.getElementById('optimizedContainer');
+        const statusMessage = document.getElementById('statusMessage');
+        const qualityIndicator = document.getElementById('qualityIndicator');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        
+        // 滑块和值显示
+        const brightnessSlider = document.getElementById('brightnessSlider');
+        const contrastSlider = document.getElementById('contrastSlider');
+        const backgroundSlider = document.getElementById('backgroundSlider');
+        const sharpenSlider = document.getElementById('sharpenSlider');
+        
+        const brightnessValue = document.getElementById('brightnessValue');
+        const contrastValue = document.getElementById('contrastValue');
+        const backgroundValue = document.getElementById('backgroundValue');
+        const sharpenValue = document.getElementById('sharpenValue');
+        
+        // 预设按钮
+        const presetButtons = document.querySelectorAll('.preset-btn');
+        
+        // 全局变量
+        let originalImage = null;
+        let optimizedImage = null;
+        let isImageLoaded = false;
+        let enhancer = new SimpleDocumentEnhancer();
+        let currentPreset = 'auto';
+        let originalFileSize = 0;
+
+        // 防止重复处理标志
+        let isProcessingFile = false;
+
+        // 初始化事件监听器
+        function initEventListeners() {
+            // 上传区域点击事件
+            uploadArea.addEventListener('click', (e) => {
+                if (e.target !== browseBtn && !isProcessingFile) {
+                    fileInput.click();
+                }
+            });
+            
+            // 浏览按钮点击事件
+            browseBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!isProcessingFile) {
+                    fileInput.click();
+                }
+            });
+            
+            // 文件输入变化事件
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // 拖放事件
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#10b981';
+                uploadArea.style.backgroundColor = '#ecfdf5';
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = '#3b82f6';
+                uploadArea.style.backgroundColor = '#f8fafc';
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#3b82f6';
+                uploadArea.style.backgroundColor = '#f8fafc';
+                
+                if (e.dataTransfer.files.length && !isProcessingFile) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+            
+            // 优化和重置按钮事件
+            optimizeBtn.addEventListener('click', processImage);
+            resetBtn.addEventListener('click', resetSliders);
+            
+            // 下载按钮事件
+            downloadBtn.addEventListener('click', downloadImage);
+            
+            // 滑块事件
+            brightnessSlider.addEventListener('input', updateSliderValue);
+            contrastSlider.addEventListener('input', updateSliderValue);
+            backgroundSlider.addEventListener('input', updateSliderValue);
+            sharpenSlider.addEventListener('input', updateSliderValue);
+            
+            // 滑块变化时重新优化
+            brightnessSlider.addEventListener('change', processImage);
+            contrastSlider.addEventListener('change', processImage);
+            backgroundSlider.addEventListener('change', processImage);
+            sharpenSlider.addEventListener('change', processImage);
+            
+            // 预设按钮事件
+            presetButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    presetButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentPreset = this.dataset.preset;
+                    applyPreset(currentPreset);
+                    processImage();
+                });
+            });
+        }
+        
+        // 处理文件选择
+        function handleFileSelect(e) {
+            if (isProcessingFile) return;
+            
+            const file = e.target.files[0];
+            if (file) {
+                isProcessingFile = true;
+                handleFile(file);
+                
+                // 重置文件输入
+                setTimeout(() => {
+                    fileInput.value = '';
+                    isProcessingFile = false;
+                }, 1000);
+            }
+        }
+        
+        // 处理文件
+        function handleFile(file) {
+            // 检查文件类型
+            if (!file.type.match('image.*')) {
+                showStatus('请选择图片文件 (JPG, PNG)', 'error');
+                return;
+            }
+            
+            // 检查文件大小 (20MB限制)
+            if (file.size > 20 * 1024 * 1024) {
+                showStatus('文件大小不能超过20MB', 'error');
+                return;
+            }
+            
+            // 显示文件信息
+            originalFileSize = file.size;
+            fileName.textContent = file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileInfo.style.display = 'flex';
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                loadImage(e.target.result);
+            };
+            
+            reader.onerror = function() {
+                showStatus('文件读取失败，请重试', 'error');
+                isProcessingFile = false;
+            };
+            
+            reader.readAsDataURL(file);
+            showStatus('图片加载中...', 'info');
+        }
+        
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+        }
+        
+        // 加载图片
+        function loadImage(src) {
+            const img = new Image();
+            
+            img.onload = function() {
+                originalImage = img;
+                isImageLoaded = true;
+                displayOriginalImage();
+                showStatus('图片加载成功！正在自动优化...', 'success');
+                optimizeBtn.disabled = false;
+                downloadBtn.disabled = true;
+                
+                // 自动开始优化
+                setTimeout(() => {
+                    processImage();
+                }, 300);
+            };
+            
+            img.onerror = function() {
+                showStatus('图片加载失败，请重试', 'error');
+                isProcessingFile = false;
+            };
+            
+            img.src = src;
+        }
+        
+        // 显示原始图片
+        function displayOriginalImage() {
+            originalContainer.innerHTML = '';
+            const img = document.createElement('img');
+            img.src = originalImage.src;
+            img.alt = "原始文档图片";
+            img.style.maxWidth = "100%";
+            img.style.maxHeight = "100%";
+            originalContainer.appendChild(img);
+        }
+        
+        // 更新滑块值显示
+        function updateSliderValue(e) {
+            const slider = e.target;
+            const valueDisplay = document.getElementById(slider.id.replace('Slider', 'Value'));
+            
+            if (slider.id === 'contrastSlider') {
+                valueDisplay.textContent = slider.value + '%';
+            } else if (slider.id === 'brightnessSlider') {
+                const value = parseInt(slider.value);
+                valueDisplay.textContent = (value >= 0 ? '+' : '') + value;
+            } else {
+                valueDisplay.textContent = slider.value;
+            }
+        }
+        
+        // 应用预设
+        function applyPreset(preset) {
+            switch(preset) {
+                case 'light':
+                    brightnessSlider.value = 5;
+                    contrastSlider.value = 110;
+                    backgroundSlider.value = 20;
+                    sharpenSlider.value = 10;
+                    break;
+                    
+                case 'strong':
+                    brightnessSlider.value = 10;
+                    contrastSlider.value = 150;
+                    backgroundSlider.value = 70;
+                    sharpenSlider.value = 50;
+                    break;
+                    
+                case 'bw':
+                    brightnessSlider.value = 5;
+                    contrastSlider.value = 140;
+                    backgroundSlider.value = 60;
+                    sharpenSlider.value = 30;
+                    break;
+                    
+                default: // 'auto'
+                    brightnessSlider.value = 0;
+                    contrastSlider.value = 120;
+                    backgroundSlider.value = 30;
+                    sharpenSlider.value = 20;
+            }
+            
+            // 更新显示
+            updateSliderValue({target: brightnessSlider});
+            updateSliderValue({target: contrastSlider});
+            updateSliderValue({target: backgroundSlider});
+            updateSliderValue({target: sharpenSlider});
+        }
+        
+        // 重置滑块
+        function resetSliders() {
+            applyPreset(currentPreset);
+            if (isImageLoaded) {
+                processImage();
+            }
+        }
+        
+        // 处理图像
+        function processImage() {
+            if (!isImageLoaded) {
+                showStatus('请先上传图片', 'error');
+                return;
+            }
+            
+            showStatus('正在优化文档...', 'info');
+            
+            // 显示加载动画
+            optimizedContainer.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>正在优化文档...</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px; color: #666;">使用${getPresetName(currentPreset)}模式</p>
+                </div>
+            `;
+            
+            // 获取当前参数
+            const params = {
+                preset: currentPreset,
+                brightness: parseInt(brightnessSlider.value),
+                contrast: parseInt(contrastSlider.value),
+                background: parseInt(backgroundSlider.value),
+                sharpen: parseInt(sharpenSlider.value)
+            };
+            
+            // 使用setTimeout避免阻塞UI
+            setTimeout(() => {
+                try {
+                    const optimizedDataURL = enhancer.processImage(originalImage, params);
+                    
+                    // 显示优化后的图像
+                    optimizedImage = new Image();
+                    optimizedImage.onload = function() {
+                        optimizedContainer.innerHTML = '';
+                        optimizedContainer.appendChild(optimizedImage);
+                        
+                        // 更新质量指示器
+                        updateQualityIndicator(params);
+                        
+                        // 显示优化信息
+                        const optimizedSize = calculateImageSize(optimizedDataURL);
+                        const sizeRatio = (optimizedSize / originalFileSize * 100).toFixed(1);
+                        const sizeInfo = sizeRatio < 80 ? 
+                            `<br><span style="color: #10b981;">✓ 文件大小减少${(100 - sizeRatio).toFixed(1)}%</span>` :
+                            `<br><span style="color: #f59e0b;">文件大小相近，质量优先</span>`;
+                        
+                        showStatus(`文档优化完成！${sizeInfo}`, 'success');
+                        downloadBtn.disabled = false;
+                    };
+                    optimizedImage.onerror = function() {
+                        showStatus('优化图片显示失败，请重试', 'error');
+                    };
+                    optimizedImage.src = optimizedDataURL;
+                } catch (error) {
+                    console.error('图像处理错误:', error);
+                    showStatus('处理过程中出现错误，请尝试调整参数', 'error');
+                }
+            }, 100);
+        }
+        
+        // 获取预设名称
+        function getPresetName(preset) {
+            const names = {
+                'auto': '自动优化',
+                'light': '轻度优化',
+                'strong': '深度优化',
+                'bw': '黑白文档'
+            };
+            return names[preset] || '自动优化';
+        }
+        
+        // 计算Base64图片大小
+        function calculateImageSize(dataURL) {
+            if (!dataURL) return 0;
+            const base64 = dataURL.split(',')[1];
+            if (!base64) return 0;
+            return Math.floor(base64.length * 0.75);
+        }
+        
+        // 更新质量指示器
+        function updateQualityIndicator(params) {
+            // 简单评估优化效果
+            let qualityScore = 50; // 基础分
+            
+            // 根据参数调整分数
+            if (params.contrast > 130) qualityScore += 20;
+            if (params.background > 50) qualityScore += 15;
+            if (params.sharpen > 30) qualityScore += 10;
+            
+            // 根据预设调整
+            if (params.preset === 'strong') qualityScore += 20;
+            if (params.preset === 'bw') qualityScore += 15;
+            
+            // 更新指示器
+            let qualityText, qualityClass;
+            
+            if (qualityScore < 60) {
+                qualityText = '一般';
+                qualityClass = 'fair';
+            } else if (qualityScore < 80) {
+                qualityText = '良好';
+                qualityClass = 'good';
+            } else {
+                qualityText = '优秀';
+                qualityClass = 'excellent';
+            }
+            
+            qualityIndicator.textContent = qualityText;
+            qualityIndicator.className = 'quality-value ' + qualityClass;
+        }
+        
+        // 下载优化后的图片
+        function downloadImage() {
+            if (!optimizedImage) return;
+            
+            const link = document.createElement('a');
+            const timestamp = new Date().getTime();
+            const presetName = getPresetName(currentPreset);
+            link.download = `优化文档_${presetName}_${timestamp}.png`;
+            link.href = optimizedImage.src;
+            link.click();
+            
+            showStatus('文档下载开始', 'success');
+        }
+        
+        // 显示状态消息
+        function showStatus(message, type) {
+            statusMessage.innerHTML = message;
+            statusMessage.className = 'status ' + type;
+            statusMessage.style.display = 'block';
+            
+            // 自动清除消息
+            const clearTime = type === 'error' ? 6000 : 4000;
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, clearTime);
+        }
+        
+        // 初始化应用
+        document.addEventListener('DOMContentLoaded', function() {
+            initEventListeners();
+            showStatus('请上传扫描或拍照的文档图片开始优化', 'info');
+            
+            // 初始化预设
+            applyPreset('auto');
+        });
+    </script>
+	<script src="../../tongji.js"></script>
+</body>
+</html>
