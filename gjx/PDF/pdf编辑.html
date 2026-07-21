@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF编辑工具 - 在线PDF编辑与标注</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+    <script src="./js/download.js"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #7209b7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --warning: #ff9e00;
+            --danger: #dc3545;
+            --gray: #6c757d;
+            --border-radius: 12px;
+            --shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .app-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 968px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 10px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .action-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 12px 16px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .action-btn:hover {
+            background: rgba(67, 97, 238, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #2e8b57);
+        }
+        
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(67, 97, 238, 0.1);
+        }
+        
+        .editor-area {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .editor-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .editor-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .editor-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .upload-area {
+            border: 3px dashed #d1d8e0;
+            border-radius: var(--border-radius);
+            padding: 60px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(248, 249, 250, 0.7);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 80px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .upload-text {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+        
+        .upload-subtext {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .preview-area {
+            flex: 1;
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius);
+            background: white;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .preview-header {
+            padding: 15px;
+            background: var(--light);
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .preview-title {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .page-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .page-btn {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .page-btn:hover {
+            background: rgba(67, 97, 238, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .page-info {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .preview-content {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: auto;
+            background: #f8f9fa;
+            position: relative;
+        }
+        
+        .canvas-container {
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: white;
+            border: 1px solid #e9ecef;
+            max-width: 100%;
+            overflow: auto;
+        }
+        
+        #pdfCanvas {
+            display: block;
+        }
+        
+        .progress-section {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .result-section {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .error-message {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .info-message {
+            background: rgba(67, 97, 238, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            display: none;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            padding: 25px;
+        }
+        
+        .feature-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 45px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .feature-desc {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .tips {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(67, 97, 238, 0.05);
+            border-radius: var(--border-radius);
+        }
+        
+        .tips h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tips ul {
+            padding-left: 20px;
+        }
+        
+        .tips li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+        
+        .page-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .page-action-btn {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .page-action-btn:hover {
+            background: rgba(67, 97, 238, 0.05);
+            border-color: var(--primary);
+        }
+        
+        .tool-group {
+            margin-bottom: 25px;
+        }
+        
+        .tool-group-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .modal-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PDF编辑工具</h1>
+            <p class="subtitle">在线编辑PDF文档 - 删除、旋转、添加页面</p>
+        </header>
+        
+        <div class="feature-highlights">
+            <div class="feature">
+                <div class="feature-icon">🗑️</div>
+                <div class="feature-title">删除页面</div>
+                <div class="feature-desc">轻松删除不需要的PDF页面</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔄</div>
+                <div class="feature-title">旋转页面</div>
+                <div class="feature-desc">旋转PDF页面到合适的方向</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📄</div>
+                <div class="feature-title">添加页面</div>
+                <div class="feature-desc">在PDF中插入新的PDF或图片</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">隐私保护</div>
+                <div class="feature-desc">所有处理在浏览器中完成</div>
+            </div>
+        </div>
+        
+        <div class="app-container">
+            <section class="card tools-section">
+                <h2 class="section-title">
+                    <span>🛠️</span>
+                    <span>页面编辑</span>
+                </h2>
+                
+                <div class="action-buttons">
+                    <button class="action-btn" id="deletePageBtn">
+                        <span>🗑️</span>
+                        <span>删除当前页</span>
+                    </button>
+                    
+                    <button class="action-btn" id="addPageBtn">
+                        <span>📄</span>
+                        <span>添加新页面</span>
+                    </button>
+                    
+                    <button class="action-btn" id="addPageAfterBtn">
+                        <span>➕</span>
+                        <span>在当前页后添加</span>
+                    </button>
+                </div>
+                
+                <div class="tool-group">
+                    <div class="tool-group-title">
+                        <span>🔄</span>
+                        <span>旋转页面</span>
+                    </div>
+                    <div class="page-actions">
+                        <button class="page-action-btn" id="rotateLeftBtn">
+                            <span>↶</span>
+                            <span>向左旋转90°</span>
+                        </button>
+                        
+                        <button class="page-action-btn" id="rotateRightBtn">
+                            <span>↷</span>
+                            <span>向右旋转90°</span>
+                        </button>
+                        
+                        <button class="page-action-btn" id="rotate180Btn">
+                            <span>🔄</span>
+                            <span>旋转180°</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="btn btn-success" id="downloadBtn" disabled style="margin-top: 20px;">
+                    <span>⬇️</span>
+                    <span>下载编辑后的PDF</span>
+                </button>
+                
+                <button class="btn btn-outline" id="newDocumentBtn" style="margin-top: 10px;">
+                    <span>🆕</span>
+                    <span>新建文档</span>
+                </button>
+                
+                <div class="tips">
+                    <h3>
+                        <span>💡</span>
+                        <span>使用提示</span>
+                    </h3>
+                    <ul>
+                        <li>上传PDF后，使用页面控制按钮浏览文档</li>
+                        <li>删除页面：永久移除当前显示的页面</li>
+                        <li>旋转页面：将当前页面旋转指定角度</li>
+                        <li>添加页面：在文档末尾或指定位置插入新页面</li>
+                        <li>所有修改会实时应用，可随时下载结果</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="card editor-area">
+                <div class="editor-header">
+                    <div class="editor-title">PDF编辑器</div>
+                    <div class="editor-actions">
+                        <button class="btn" id="uploadFileBtn">
+                            <span>📁</span>
+                            <span>上传PDF</span>
+                        </button>
+                        <input type="file" id="fileInput" class="file-input" accept=".pdf">
+                    </div>
+                </div>
+                
+                <div class="editor-main">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📄</div>
+                        <p class="upload-text">拖放PDF文件到此处开始编辑</p>
+                        <p class="upload-subtext">或点击"上传PDF"按钮选择文件</p>
+                        <p class="upload-subtext">最大支持50MB的文件</p>
+                    </div>
+                    
+                    <div class="preview-area" id="previewArea">
+                        <div class="preview-header">
+                            <div class="preview-title" id="previewTitle">PDF预览</div>
+                            <div class="page-controls">
+                                <button class="page-btn" id="prevPage">上一页</button>
+                                <span class="page-info">第 <span id="currentPage">1</span> 页，共 <span id="totalPages">1</span> 页</span>
+                                <button class="page-btn" id="nextPage">下一页</button>
+                            </div>
+                        </div>
+                        <div class="preview-content">
+                            <div class="canvas-container">
+                                <canvas id="pdfCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section" id="progressSection">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">正在加载...</div>
+                    </div>
+                    
+                    <div class="error-message" id="errorMessage">
+                        <strong>处理过程中出现错误：</strong>
+                        <span id="errorText"></span>
+                    </div>
+                    
+                    <div class="info-message" id="infoMessage">
+                        <span id="infoText"></span>
+                    </div>
+                    
+                    <div class="result-section" id="resultSection">
+                        <div class="result-actions">
+                            <button class="btn btn-success" id="finalDownloadBtn">
+                                <span>⬇️</span>
+                                <span>下载编辑后的PDF</span>
+                            </button>
+                            <button class="btn btn-outline" id="editAnotherBtn">
+                                <span>🔄</span>
+                                <span>编辑其他文件</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p>© 2023 PDF编辑工具 | 使用pdf.js + jsPDF实现页面编辑功能</p>
+        </footer>
+    </div>
+
+    <!-- 添加页面模态框 -->
+    <div class="modal" id="addPageModal">
+        <div class="modal-content">
+            <h2 class="modal-title">添加页面</h2>
+            <p>选择要添加的内容类型：</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-primary" id="addPdfBtn">
+                    <span>📄</span>
+                    添加PDF文件
+                </button>
+                <button class="modal-btn modal-btn-secondary" id="addImageBtn">
+                    <span>🖼️</span>
+                    添加图片
+                </button>
+                <button class="modal-btn modal-btn-secondary" id="addBlankBtn">
+                    <span>📝</span>
+                    添加空白页
+                </button>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" id="cancelAddBtn">
+                    取消
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 隐藏的文件输入 -->
+    <input type="file" id="pdfFileInput" class="file-input" accept=".pdf" style="display: none;">
+    <input type="file" id="imageFileInput" class="file-input" accept="image/*" style="display: none;">
+
+    <script>
+        // 设置pdf.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = './js/pdf.worker.min.js';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取DOM元素
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const uploadFileBtn = document.getElementById('uploadFileBtn');
+            const previewArea = document.getElementById('previewArea');
+            const pdfCanvas = document.getElementById('pdfCanvas');
+            const prevPageBtn = document.getElementById('prevPage');
+            const nextPageBtn = document.getElementById('nextPage');
+            const currentPageSpan = document.getElementById('currentPage');
+            const totalPagesSpan = document.getElementById('totalPages');
+            const progressSection = document.getElementById('progressSection');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const resultSection = document.getElementById('resultSection');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const finalDownloadBtn = document.getElementById('finalDownloadBtn');
+            const newDocumentBtn = document.getElementById('newDocumentBtn');
+            const editAnotherBtn = document.getElementById('editAnotherBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const infoMessage = document.getElementById('infoMessage');
+            const infoText = document.getElementById('infoText');
+            
+            // 功能按钮
+            const deletePageBtn = document.getElementById('deletePageBtn');
+            const addPageBtn = document.getElementById('addPageBtn');
+            const addPageAfterBtn = document.getElementById('addPageAfterBtn');
+            const rotateLeftBtn = document.getElementById('rotateLeftBtn');
+            const rotateRightBtn = document.getElementById('rotateRightBtn');
+            const rotate180Btn = document.getElementById('rotate180Btn');
+            
+            // 模态框元素
+            const addPageModal = document.getElementById('addPageModal');
+            const addPdfBtn = document.getElementById('addPdfBtn');
+            const addImageBtn = document.getElementById('addImageBtn');
+            const addBlankBtn = document.getElementById('addBlankBtn');
+            const cancelAddBtn = document.getElementById('cancelAddBtn');
+            const pdfFileInput = document.getElementById('pdfFileInput');
+            const imageFileInput = document.getElementById('imageFileInput');
+            
+            // 状态变量 - 重新设计数据结构
+            let pdfJsDoc = null;
+            let currentPage = 1;
+            let pageList = []; // 存储页面信息的数组
+            let originalPdfData = null;
+            let currentRenderTask = null;
+            let addPagePosition = 'end'; // 'end' or 'after'
+            
+            // 页面对象结构
+            class PdfPage {
+                constructor(type, data, rotation = 0) {
+                    this.type = type; // 'original', 'blank', 'image', 'externalPdf'
+                    this.data = data; // 页面数据
+                    this.rotation = rotation; // 旋转角度
+                }
+            }
+            
+            // 点击上传文件按钮
+            uploadFileBtn.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            // 文件选择变化
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    handleFileSelection(e.target.files[0]);
+                }
+            });
+            
+            // 拖放功能
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                
+                if (e.dataTransfer.files.length > 0) {
+                    const file = e.dataTransfer.files[0];
+                    if (file.type === 'application/pdf') {
+                        handleFileSelection(file);
+                    } else {
+                        alert('请选择PDF文件');
+                    }
+                }
+            });
+            
+            // 处理文件选择
+            async function handleFileSelection(file) {
+                if (file.type !== 'application/pdf') {
+                    alert('请选择PDF文件');
+                    return;
+                }
+                
+                if (file.size > 50 * 1024 * 1024) {
+                    alert('文件大小不能超过50MB');
+                    return;
+                }
+                
+                progressSection.style.display = 'block';
+                updateProgress(10, '正在加载PDF文件...');
+                
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    originalPdfData = arrayBuffer;
+                    updateProgress(50, '正在解析PDF内容...');
+                    
+                    pdfJsDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    
+                    // 初始化页面列表
+                    pageList = [];
+                    for (let i = 0; i < pdfJsDoc.numPages; i++) {
+                        pageList.push(new PdfPage('original', i + 1, 0));
+                    }
+                    
+                    updateProgress(100, '加载完成！');
+                    
+                    setTimeout(() => {
+                        progressSection.style.display = 'none';
+                        uploadArea.style.display = 'none';
+                        previewArea.style.display = 'flex';
+                        downloadBtn.disabled = false;
+                        
+                        totalPagesSpan.textContent = pageList.length;
+                        renderPage(currentPage);
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error('加载PDF时出错:', error);
+                    showError('加载PDF时出现错误：' + error.message);
+                }
+            }
+            
+            // 渲染PDF页面
+            async function renderPage(pageNum) {
+                if (!pdfJsDoc || pageNum < 1 || pageNum > pageList.length) return;
+                
+                try {
+                    // 取消之前的渲染任务
+                    if (currentRenderTask) {
+                        currentRenderTask.cancel();
+                    }
+                    
+                    const pageInfo = pageList[pageNum - 1];
+                    
+                    if (pageInfo.type === 'blank') {
+                        // 空白页面处理
+                        renderBlankPage();
+                    } else if (pageInfo.type === 'image') {
+                        // 图片页面处理
+                        await renderImagePage(pageInfo.data);
+                    } else {
+                        // PDF页面处理
+                        await renderPdfPage(pageNum, pageInfo);
+                    }
+                    
+                    currentPageSpan.textContent = pageNum;
+                    totalPagesSpan.textContent = pageList.length;
+                    
+                    prevPageBtn.disabled = pageNum <= 1;
+                    nextPageBtn.disabled = pageNum >= pageList.length;
+                    deletePageBtn.disabled = pageList.length <= 1;
+                    
+                } catch (error) {
+                    if (error.name === 'RenderingCancelled') {
+                        return;
+                    }
+                    console.error('渲染页面时出错:', error);
+                    showError('渲染页面时出现错误：' + error.message);
+                }
+            }
+            
+            // 渲染PDF页面
+            async function renderPdfPage(pageNum, pageInfo) {
+                let page;
+                if (pageInfo.type === 'original') {
+                    page = await pdfJsDoc.getPage(pageInfo.data);
+                } else if (pageInfo.type === 'externalPdf') {
+                    page = await pageInfo.data.getPage(pageInfo.pageNumber);
+                }
+                //设置预览PDF的大小scale: 2.5
+                const rotation = pageInfo.rotation || 0;
+                const viewport = page.getViewport({ scale: 1.5, rotation: rotation });
+                
+                const canvas = pdfCanvas;
+                const context = canvas.getContext('2d');
+                
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+                
+                currentRenderTask = page.render(renderContext);
+                await currentRenderTask.promise;
+            }
+            
+            // 渲染空白页面
+            function renderBlankPage() {
+                const canvas = pdfCanvas;
+                const context = canvas.getContext('2d');
+                
+                canvas.width = 800;
+                canvas.height = 1000;
+                
+                context.fillStyle = 'white';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                
+                context.fillStyle = '#6c757d';
+                context.font = '24px Arial';
+                context.textAlign = 'center';
+                context.fillText('空白页面', canvas.width / 2, canvas.height / 2);
+            }
+            
+            // 渲染图片页面
+            async function renderImagePage(imageUrl) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = pdfCanvas;
+                        const context = canvas.getContext('2d');
+                        
+                        // 计算适合画布的尺寸
+                        const maxWidth = 800;
+                        const maxHeight = 1000;
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        if (width > maxWidth) {
+                            height = (maxWidth / width) * height;
+                            width = maxWidth;
+                        }
+                        
+                        if (height > maxHeight) {
+                            width = (maxHeight / height) * width;
+                            height = maxHeight;
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        context.fillStyle = 'white';
+                        context.fillRect(0, 0, canvas.width, canvas.height);
+                        context.drawImage(img, 0, 0, width, height);
+                        resolve();
+                    };
+                    img.src = imageUrl;
+                });
+            }
+            
+            // 上一页
+            prevPageBtn.addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderPage(currentPage);
+                }
+            });
+            
+            // 下一页
+            nextPageBtn.addEventListener('click', function() {
+                if (currentPage < pageList.length) {
+                    currentPage++;
+                    renderPage(currentPage);
+                }
+            });
+            
+            // 删除当前页面 - 完全修复的版本
+            deletePageBtn.addEventListener('click', function() {
+                if (!pdfJsDoc || pageList.length <= 1) {
+                    showInfo('无法删除最后一页');
+                    return;
+                }
+                
+                const pageIndex = currentPage - 1;
+                const pageToDelete = currentPage;
+                
+                console.log('删除前:', {
+                    当前页: currentPage,
+                    总页数: pageList.length,
+                    要删除的页: pageToDelete
+                });
+                
+                // 从页面列表中移除当前页面
+                pageList.splice(pageIndex, 1);
+                
+                // 调整当前页面号
+                if (currentPage > pageList.length) {
+                    currentPage = pageList.length;
+                }
+                
+                console.log('删除后:', {
+                    当前页: currentPage,
+                    总页数: pageList.length
+                });
+                
+                // 重新渲染页面
+                renderPage(currentPage);
+                showInfo(`第${pageToDelete}页已删除`);
+            });
+            
+            // 旋转页面功能
+            function rotatePage(degrees) {
+                if (!pdfJsDoc) {
+                    showInfo('请先上传PDF文件');
+                    return;
+                }
+                
+                const pageIndex = currentPage - 1;
+                pageList[pageIndex].rotation = (pageList[pageIndex].rotation + degrees) % 360;
+                renderPage(currentPage);
+                showInfo(`第${currentPage}页已旋转${degrees}度`);
+            }
+            
+            // 旋转按钮事件
+            rotateLeftBtn.addEventListener('click', () => rotatePage(-90));
+            rotateRightBtn.addEventListener('click', () => rotatePage(90));
+            rotate180Btn.addEventListener('click', () => rotatePage(180));
+            
+            // 添加新页面 - 打开模态框
+            addPageBtn.addEventListener('click', function() {
+                if (!pdfJsDoc) {
+                    showInfo('请先上传PDF文件');
+                    return;
+                }
+                addPagePosition = 'end';
+                addPageModal.style.display = 'flex';
+            });
+            
+            // 在当前页后添加页面
+            addPageAfterBtn.addEventListener('click', function() {
+                if (!pdfJsDoc) {
+                    showInfo('请先上传PDF文件');
+                    return;
+                }
+                addPagePosition = 'after';
+                addPageModal.style.display = 'flex';
+            });
+            
+            // 添加PDF文件
+            addPdfBtn.addEventListener('click', function() {
+                pdfFileInput.click();
+                addPageModal.style.display = 'none';
+            });
+            
+            // 添加图片
+            addImageBtn.addEventListener('click', function() {
+                imageFileInput.click();
+                addPageModal.style.display = 'none';
+            });
+            
+            // 添加空白页
+            addBlankBtn.addEventListener('click', function() {
+                addBlankPage();
+                addPageModal.style.display = 'none';
+            });
+            
+            // 取消添加
+            cancelAddBtn.addEventListener('click', function() {
+                addPageModal.style.display = 'none';
+            });
+            
+            // 处理PDF文件添加
+            pdfFileInput.addEventListener('change', async function(e) {
+                if (e.target.files.length > 0) {
+                    await handlePdfAddition(e.target.files[0]);
+                }
+            });
+            
+            // 处理图片文件添加
+            imageFileInput.addEventListener('change', async function(e) {
+                if (e.target.files.length > 0) {
+                    await handleImageAddition(e.target.files[0]);
+                }
+            });
+            
+            // 处理PDF文件添加
+            async function handlePdfAddition(file) {
+                if (file.type !== 'application/pdf') {
+                    alert('请选择PDF文件');
+                    return;
+                }
+                
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const additionalPdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    
+                    const insertIndex = addPagePosition === 'after' ? currentPage : pageList.length;
+                    
+                    // 添加新PDF的所有页面
+                    for (let i = 0; i < additionalPdf.numPages; i++) {
+                        const newPage = new PdfPage('externalPdf', additionalPdf, i + 1);
+                        pageList.splice(insertIndex + i, 0, newPage);
+                    }
+                    
+                    // 更新当前页面
+                    if (addPagePosition === 'after') {
+                        currentPage = insertIndex + additionalPdf.numPages;
+                    } else {
+                        currentPage = pageList.length;
+                    }
+                    
+                    renderPage(currentPage);
+                    showInfo(`已添加${additionalPdf.numPages}页PDF内容`);
+                    
+                } catch (error) {
+                    console.error('添加PDF时出错:', error);
+                    showError('添加PDF时出现错误：' + error.message);
+                }
+            }
+            
+            // 处理图片添加
+            async function handleImageAddition(file) {
+                if (!file.type.startsWith('image/')) {
+                    alert('请选择图片文件');
+                    return;
+                }
+                
+                try {
+                    const url = URL.createObjectURL(file);
+                    const newPage = new PdfPage('image', url, 0);
+                    
+                    const insertIndex = addPagePosition === 'after' ? currentPage : pageList.length;
+                    pageList.splice(insertIndex, 0, newPage);
+                    
+                    // 更新当前页面
+                    if (addPagePosition === 'after') {
+                        currentPage = insertIndex + 1;
+                    } else {
+                        currentPage = pageList.length;
+                    }
+                    
+                    renderPage(currentPage);
+                    showInfo('图片页面已添加');
+                    
+                } catch (error) {
+                    console.error('添加图片时出错:', error);
+                    showError('添加图片时出现错误：' + error.message);
+                }
+            }
+            
+            // 添加空白页
+            function addBlankPage() {
+                const newPage = new PdfPage('blank', null, 0);
+                const insertIndex = addPagePosition === 'after' ? currentPage : pageList.length;
+                pageList.splice(insertIndex, 0, newPage);
+                
+                // 更新当前页面
+                if (addPagePosition === 'after') {
+                    currentPage = insertIndex + 1;
+                } else {
+                    currentPage = pageList.length;
+                }
+                
+                renderPage(currentPage);
+                showInfo('空白页面已添加');
+            }
+            
+            // 下载编辑后的PDF
+            downloadBtn.addEventListener('click', async function() {
+                if (!pdfJsDoc) return;
+                
+                progressSection.style.display = 'block';
+                updateProgress(10, '正在生成编辑后的PDF...');
+                
+                try {
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF();
+                    
+                    updateProgress(30, '正在处理页面...');
+                    
+                    for (let i = 0; i < pageList.length; i++) {
+                        updateProgress(30 + (i / pageList.length) * 60, `正在处理第 ${i + 1}/${pageList.length} 页...`);
+                        
+                        const pageInfo = pageList[i];
+                        
+                        if (i > 0) {
+                            pdf.addPage();
+                        }
+                        
+                        if (pageInfo.type === 'blank') {
+                            // 空白页面
+                            continue;
+                        } else if (pageInfo.type === 'image') {
+                            // 图片页面
+                            const img = new Image();
+                            const url = pageInfo.data;
+                            
+                            await new Promise((resolve) => {
+                                img.onload = function() {
+                                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                                    const pdfHeight = pdf.internal.pageSize.getHeight();
+                                    
+                                    // 计算图片在PDF中的尺寸
+                                    const imgWidth = img.width;
+                                    const imgHeight = img.height;
+                                    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+                                    const width = imgWidth * ratio;
+                                    const height = imgHeight * ratio;
+                                    const x = (pdfWidth - width) / 2;
+                                    const y = (pdfHeight - height) / 2;
+                                    
+                                    pdf.addImage(img, 'JPEG', x, y, width, height);
+                                    resolve();
+                                };
+                                img.src = url;
+                            });
+                        } else {
+                            // PDF页面
+                            let page;
+                            if (pageInfo.type === 'original') {
+                                page = await pdfJsDoc.getPage(pageInfo.data);
+                            } else if (pageInfo.type === 'externalPdf') {
+                                page = await pageInfo.data.getPage(pageInfo.pageNumber);
+                            }
+                            
+                            const rotation = pageInfo.rotation || 0;
+                            const viewport = page.getViewport({ scale: 2.0, rotation: rotation });
+                            
+                            const canvas = document.createElement('canvas');
+                            const context = canvas.getContext('2d');
+                            canvas.width = viewport.width;
+                            canvas.height = viewport.height;
+                            
+                            await page.render({
+                                canvasContext: context,
+                                viewport: viewport
+                            }).promise;
+                            
+                            const imageData = canvas.toDataURL('image/jpeg', 0.8);
+                            const pdfWidth = pdf.internal.pageSize.getWidth();
+                            const pdfHeight = pdf.internal.pageSize.getHeight();
+                            pdf.addImage(imageData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                        }
+                    }
+                    
+                    updateProgress(95, '正在生成文件...');
+                    const pdfData = pdf.output('arraybuffer');
+                    updateProgress(100, '生成完成！');
+                    
+                    setTimeout(() => {
+                        progressSection.style.display = 'none';
+                        resultSection.style.display = 'block';
+                        window.editedPdfData = pdfData;
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error('生成PDF时出错:', error);
+                    showError('生成PDF时出现错误：' + error.message);
+                }
+            });
+            
+            // 最终下载按钮
+            finalDownloadBtn.addEventListener('click', function() {
+                if (!window.editedPdfData) return;
+                
+                const blob = new Blob([window.editedPdfData], { type: 'application/pdf' });
+                const downloadName = `edited_document_${new Date().getTime()}.pdf`;
+                download(blob, downloadName, "application/pdf");
+            });
+            
+            // 新建文档
+            newDocumentBtn.addEventListener('click', function() {
+                resetEditor();
+            });
+            
+            // 编辑其他文件
+            editAnotherBtn.addEventListener('click', function() {
+                resetEditor();
+            });
+            
+            // 重置编辑器状态
+            function resetEditor() {
+                if (currentRenderTask) {
+                    currentRenderTask.cancel();
+                }
+                
+                pdfJsDoc = null;
+                currentPage = 1;
+                pageList = [];
+                originalPdfData = null;
+                currentRenderTask = null;
+                
+                uploadArea.style.display = 'flex';
+                previewArea.style.display = 'none';
+                resultSection.style.display = 'none';
+                progressSection.style.display = 'none';
+                errorMessage.style.display = 'none';
+                infoMessage.style.display = 'none';
+                downloadBtn.disabled = true;
+                
+                const context = pdfCanvas.getContext('2d');
+                context.clearRect(0, 0, pdfCanvas.width, pdfCanvas.height);
+                
+                fileInput.value = '';
+                pdfFileInput.value = '';
+                imageFileInput.value = '';
+                window.editedPdfData = null;
+            }
+            
+            // 显示错误信息
+            function showError(message) {
+                errorText.textContent = message;
+                errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 5000);
+            }
+            
+            // 显示信息
+            function showInfo(message) {
+                infoText.textContent = message;
+                infoMessage.style.display = 'block';
+                setTimeout(() => {
+                    infoMessage.style.display = 'none';
+                }, 3000);
+            }
+            
+            // 更新进度条
+            function updateProgress(percent, text) {
+                progressFill.style.width = percent + '%';
+                progressText.textContent = text;
+            }
+        });
+    </script>
+</body>
+</html>
