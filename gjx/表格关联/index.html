@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>EXCEL在线表格关联系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.13.8/css/layui.min.css">
+    <style>
+    :root {
+        --primary-color: #4285f4;
+        --secondary-color: #34a853;
+        --light-bg: #f0f2f5;
+        --card-bg: #ffffff;
+        --text-color: #333333;
+        --border-radius: 12px;
+        --box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), 
+                     -8px -8px 15px rgba(255, 255, 255, 0.8);
+        --inset-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.1), 
+                       inset -3px -3px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--light-bg);
+        color: var(--text-color);
+        line-height: 1.6;
+        padding: 20px 0;
+    }
+
+    .layui-container {
+        max-width: 1200px;
+    }
+
+    .layui-card {
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        background-color: var(--card-bg);
+        margin-bottom: 20px;
+        border: none;
+    }
+
+    .layui-card-header {
+        border-bottom: none;
+        padding: 20px;
+        background: linear-gradient(135deg, var(--primary-color), #5c9eff);
+        color: white;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+    .layui-card-header h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .layui-card-body {
+        padding: 25px;
+    }
+
+    /* 步骤导航美化 */
+    #step-nav {
+        margin-bottom: 30px;
+        background-color: var(--card-bg);
+        padding: 15px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--inset-shadow);
+    }
+
+    .layui-steps .layui-steps-item {
+        padding: 10px 15px;
+        margin-right: 10px;
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+
+    .layui-steps .layui-steps-item.active {
+        background-color: rgba(66, 133, 244, 0.1);
+        box-shadow: var(--inset-shadow);
+        font-weight: 500;
+    }
+
+    .layui-steps .layui-steps-item:before {
+        display: none;
+    }
+
+    /* 步骤内容容器 */
+    .step-container {
+        display: none;
+        padding: 20px;
+        border-radius: var(--border-radius);
+        background-color: var(--card-bg);
+        box-shadow: var(--inset-shadow);
+        margin-top: 20px;
+    }
+
+    .active-step {
+        display: block;
+    }
+
+    /* 表格输入区域 - 响应式布局 */
+    .tables-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .table-input-section {
+        flex: 1;
+        min-width: 300px;
+        background-color: var(--card-bg);
+        padding: 20px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        transition: all 0.3s;
+    }
+
+    .table-input-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1), 
+                   -10px -10px 20px rgba(255, 255, 255, 0.8);
+    }
+
+    .table-input-section h2 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 18px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* 文件信息 */
+    .file-info {
+        margin-top: 10px;
+        font-size: 13px;
+        color: #666;
+        background-color: rgba(0, 0, 0, 0.03);
+        padding: 8px 12px;
+        border-radius: 6px;
+        display: inline-block;
+    }
+
+    /* 粘贴区域 */
+    .paste-area {
+        margin-top: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 5px;
+        background: var(--card-bg);
+        width: 100%;
+        height: 150px;
+        overflow: auto;
+        font-family: monospace;
+        resize: none;
+        line-height: 1.5;
+        border-radius: 8px;
+        box-shadow: var(--inset-shadow);
+        transition: all 0.3s;
+    }
+
+    .paste-area:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: inset 0 0 0 2px rgba(66, 133, 244, 0.2), 
+                   var(--inset-shadow);
+    }
+
+    .paste-hint {
+        font-size: 12px;
+        color: #666;
+        margin-top: 8px;
+    }
+
+    .tab-char-info {
+        color: #e53935;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+
+    /* 示例数据 */
+    .sample-data {
+        font-size: 12px;
+        color: #666;
+        background: rgba(0, 0, 0, 0.03);
+        padding: 5px;
+        margin: 10px 0;
+        border-radius: 6px;
+        width: 100%;
+        max-height: 100px;
+        overflow: auto;
+        white-space: pre;
+        font-family: monospace;
+        border-left: 3px solid var(--primary-color);
+    }
+
+    /* 预览表格 */
+    .preview-table {
+        margin-top: 15px;
+        font-size: 13px;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .preview-table table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .preview-table th, .preview-table td {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 6px 10px;
+        text-align: left;
+        white-space: nowrap;
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .preview-table th {
+        background-color: rgba(66, 133, 244, 0.1);
+        font-weight: 500;
+    }
+
+    /* 按钮美化 */
+    .layui-btn {
+        border-radius: 8px;
+        transition: all 0.3s;
+        box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1), 
+                   -3px -3px 6px rgba(255, 255, 255, 0.8);
+    }
+
+    .layui-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), 
+                   -5px -5px 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .layui-btn-primary {
+        background-color: var(--card-bg);
+    }
+
+    .layui-btn-normal {
+        background-color: var(--secondary-color);
+    }
+
+    /* 表单元素 */
+    .layui-form-label {
+        font-weight: 500;
+    }
+
+    .layui-form-item {
+        margin-bottom: 20px;
+    }
+
+    .layui-input, .layui-select, .layui-textarea {
+        border-radius: 8px;
+        box-shadow: var(--inset-shadow);
+    }
+
+    /* 结果预览 */
+    #resultPreview {
+        min-height: 200px;
+        max-height: 400px;
+        overflow: auto;
+        background-color: var(--card-bg);
+        padding: 15px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+        .tables-container {
+            flex-direction: column;
+        }
+        
+        .layui-steps {
+            flex-direction: column;
+        }
+        
+        .layui-steps .layui-steps-item {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+    }
+
+    /* 分割线美化 */
+    .divider {
+        height: 1px;
+        background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.1), transparent);
+        margin: 20px 0;
+        border: none;
+    }
+
+    /* 选项区域美化 */
+    .column-mapping, .output-columns, .join-mode, .field-processing {
+        margin-top: 25px;
+        padding: 15px;
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+
+    .deduplicate-option {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px dashed rgba(0, 0, 0, 0.1);
+    }
+
+    /* 单选/复选框美化 */
+    .layui-form-radio>i:hover, .layui-form-radioed>i {
+        color: var(--primary-color);
+    }
+
+    .layui-form-checkbox[lay-skin=primary]:hover i {
+        border-color: var(--primary-color);
+    }
+
+    .layui-form-checked[lay-skin=primary] i {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+</style>
+</head>
+<body>
+<div class="layui-container">
+    <div class="layui-card">
+        <div class="layui-card-header"><h1>📚️EXCEL在线表格关联系统📃</h1></div>
+        <div class="layui-card-body">
+            <!-- 步骤导航 -->
+             <ul class="layui-steps" id="step-nav">
+                <li class="layui-steps-item active">🏳️‍🌈1. 上传或复制表格文件：选择需要关联的2张表,表要有标题如姓名、性别等；</li>
+                <li class="layui-steps-item">🏳️‍🌈2. 设置关联字段：2个表格需要关联的字段，如A表身份证=B表身份证；</li>
+                <li class="layui-steps-item">🏳️‍🌈3. 选择输出字段：勾选2表需要输出的内容；</li>
+                <li class="layui-steps-item">🏳️‍🌈4. 导出匹配结果：下载已关联表的内容。</li>
+            </ul>
+            
+            <!-- 步骤1: 上传表格文件 -->
+<div id="step1" class="step-container active-step">
+    <div class="layui-form">
+        <div class="tables-container">
+            <!-- 表格A部分 -->
+            <div class="table-input-section">
+                <h2>📝 表格A</h2>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn" id="uploadA">
+                            <i class="layui-icon"></i>上传文件
+                        </button>
+                        <div class="file-info" id="fileInfoA">未上传</div>
+                    </div>
+                </div>
+                
+                <div class="layui-form-item">
+                    <label class="layui-form-label">或粘贴数据</label>
+                    <div class="layui-input-block">
+                        <textarea class="paste-area" id="pasteAreaA" placeholder="请从Excel复制数据后粘贴到这里"></textarea>
+                        <div class="paste-hint">提示：请从Excel中复制数据（包含表头）后直接粘贴到上方文本框
+                            <span id="tabInfoA" class="tab-char-info"></span>
+                        </div>
+                        <div class="sample-data">示例格式（含制表符分隔）：
+姓名    编号    性别    年龄    城市
+张永明  10114   男      24      厦门
+赵素琴  10120   女      28      乌鲁木齐</div>
+                        <button type="button" class="layui-btn layui-btn-primary" id="previewPasteA">预览数据</button>
+                        <button type="button" class="layui-btn" id="confirmPasteA">确认使用粘贴数据</button>
+                        <div id="previewA" class="preview-table"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 表格B部分 -->
+            <div class="table-input-section">
+                <h2>📝 表格B</h2>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn" id="uploadB">
+                            <i class="layui-icon"></i>上传文件
+                        </button>
+                        <div class="file-info" id="fileInfoB">未上传</div>
+                    </div>
+                </div>
+                
+                <div class="layui-form-item">
+                    <label class="layui-form-label">或粘贴数据</label>
+                    <div class="layui-input-block">
+                        <textarea class="paste-area" id="pasteAreaB" placeholder="请从Excel复制数据后粘贴到这里"></textarea>
+                        <div class="paste-hint">提示：请从Excel中复制数据（包含表头）后直接粘贴到上方文本框
+                            <span id="tabInfoB" class="tab-char-info"></span>
+                        </div>
+                        <div class="sample-data">示例格式（含制表符分隔）：
+编号    部门
+10113   行政部
+10114   财务部</div>
+                        <button type="button" class="layui-btn layui-btn-primary" id="previewPasteB">预览数据</button>
+                        <button type="button" class="layui-btn" id="confirmPasteB">确认使用粘贴数据</button>
+                        <div id="previewB" class="preview-table"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="layui-form-item" style="margin-top: 30px;">
+            <div class="layui-input-block" style="text-align: center;">
+                <button class="layui-btn layui-btn-primary" id="prevBtn1" disabled>上一步</button>
+                <button class="layui-btn" id="nextBtn1">下一步</button>
+            </div>
+        </div>
+    </div>
+</div>
+            
+            <!-- 步骤2: 设置关联字段 -->
+            <div id="step2" class="step-container">
+                <div class="layui-form">
+                    <div class="column-mapping">
+                        <h3>请设置关联字段</h3>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">表格A字段</label>
+                            <div class="layui-input-block">
+                                <select id="aJoinField" lay-verify="required">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">表格B字段</label>
+                            <div class="layui-input-block">
+                                <select id="bJoinField" lay-verify="required">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- 新增：关联字段处理选项 -->
+                        <div class="field-processing">
+                            <h3>关联字段处理</h3>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <input type="radio" name="trimMode" value="none" title="不去除空格" checked>
+                                    <input type="radio" name="trimMode" value="trim" title="去除首尾空格">
+                                </div>
+                            </div>
+                            <div class="paste-hint">提示：选择"去除首尾空格"可解决因数据前后空格导致的匹配问题（如"123 "和"123"将被视为相同值）</div>
+                        </div>
+                    </div>
+                    
+                    <div class="join-mode">
+                        <h3>请选择关联模式</h3>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="radio" name="joinMode" value="left" title="以A表为主" checked>
+                                <input type="radio" name="joinMode" value="right" title="以B表为主">
+                                <input type="radio" name="joinMode" value="inner" title="两表共有">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="deduplicate-option">
+                        <h3>请选择匹配方式</h3>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <input type="radio" name="deduplicate" value="true" title="去重（只匹配第一个）" checked>
+                                <input type="radio" name="deduplicate" value="false" title="不去重（匹配所有）">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" id="prevBtn2">上一步</button>
+                            <button class="layui-btn" id="nextBtn2">下一步</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 步骤3: 选择输出字段 -->
+            <div id="step3" class="step-container">
+                <div class="layui-form">
+                    <div class="output-columns">
+                        <h3>请选择需要输出的字段</h3>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">表格A字段</label>
+                            <div class="layui-input-block" id="aOutputFields">
+                                <!-- 动态生成复选框 -->
+                            </div>
+                        </div>
+                        
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">表格B字段</label>
+                            <div class="layui-input-block" id="bOutputFields">
+                                <!-- 动态生成复选框 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" id="prevBtn3">上一步</button>
+                            <button class="layui-btn" id="nextBtn3">下一步</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 步骤4: 导出结果 -->
+            <div id="step4" class="step-container">
+                <div class="layui-form">
+                    <h3>准备导出结果</h3>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">文件名</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="outputFilename" value="关联结果" class="layui-input">
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" id="prevBtn4">上一步</button>
+                            <button class="layui-btn layui-btn-normal" id="exportBtn">导出Excel</button>
+                            <button class="layui-btn layui-btn-primary" id="copyResultBtn">复制结果</button>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">结果预览</label>
+                        <div class="layui-input-block">
+                            <div id="resultPreview" style="min-height: 200px; max-height: 400px; overflow: auto;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入必要的JS库 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.13.8/layui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.mini.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver/dist/FileSaver.min.js"></script>
+
+<script>
+// 主程序
+layui.use(['upload', 'form', 'element', 'jquery', 'layer'], function(){
+    var upload = layui.upload;
+    var form = layui.form;
+    var element = layui.element;
+    var $ = layui.jquery;
+    var layer = layui.layer;
+    
+    // 存储表格数据
+    var tableA = null;
+    var tableB = null;
+    var tableAHeaders = [];
+    var tableBHeaders = [];
+    
+    // 当前步骤
+    var currentStep = 1;
+    
+    // 监听粘贴事件，检查制表符
+    $('#pasteAreaA, #pasteAreaB').on('input', function() {
+        var id = $(this).attr('id');
+        var tabInfoId = id === 'pasteAreaA' ? 'tabInfoA' : 'tabInfoB';
+        var content = $(this).val();
+        
+        // 检查是否包含制表符
+        if (content.indexOf('\t') === -1 && content.trim() !== '') {
+            $('#' + tabInfoId).text('检测到：粘贴内容中未包含制表符，请确保从Excel直接复制！');
+        } else {
+            $('#' + tabInfoId).text('');
+        }
+    });
+    
+    // 预览粘贴数据
+    $('#previewPasteA').click(function() {
+        previewPasteData('A');
+    });
+    
+    $('#previewPasteB').click(function() {
+        previewPasteData('B');
+    });
+    
+    // 确认使用粘贴数据
+    $('#confirmPasteA').click(function() {
+        processPasteData('A', true);
+    });
+    
+    $('#confirmPasteB').click(function() {
+        processPasteData('B', true);
+    });
+    
+    // 预览粘贴数据
+    function previewPasteData(tableType) {
+        processPasteData(tableType, false);
+    }
+    
+    // 处理粘贴数据
+    function processPasteData(tableType, confirm) {
+        var pasteArea = tableType === 'A' ? $('#pasteAreaA') : $('#pasteAreaB');
+        var fileInfo = tableType === 'A' ? $('#fileInfoA') : $('#fileInfoB');
+        var previewArea = tableType === 'A' ? $('#previewA') : $('#previewB');
+        var pasteText = pasteArea.val().trim();
+        
+        if(!pasteText) {
+            layer.msg('请先粘贴数据');
+            return;
+        }
+        
+        try {
+            // 解析行和列
+            const rows = pasteText.split('\n')
+                .map(row => row.replace(/\r/g, '')) // 移除可能的回车符
+                .filter(row => row.trim() !== ''); // 过滤空行
+            
+            // 验证是否包含制表符
+			/*
+            if (pasteText.indexOf('\t') === -1) {
+                layer.msg('粘贴内容格式不正确，请确保从Excel直接复制（需包含制表符分隔符）');
+                return;
+            }
+            */
+			
+            // 解析列数据并预览
+            const parsedRows = rows.map(row => {
+                return row.split('\t').map(cell => cell === '' ? '[空]' : cell);
+            });
+            
+            // 显示预览
+            if (parsedRows.length > 0) {
+                let html = '<table>';
+                
+                // 表头行（第一行）
+                html += '<tr>';
+                parsedRows[0].forEach((cell, i) => {
+                    html += `<th>列${i+1}: ${cell}</th>`;
+                });
+                html += '</tr>';
+                
+                // 数据行（最多显示5行）
+                const displayRows = Math.min(parsedRows.length - 1, 5);
+                for (let i = 1; i <= displayRows; i++) {
+                    html += '<tr>';
+                    parsedRows[i].forEach(cell => {
+                        html += `<td>${cell}</td>`;
+                    });
+                    html += '</tr>';
+                }
+                
+                // 显示总行数
+                if (parsedRows.length > 6) {
+                    html += `<tr><td colspan="${parsedRows[0].length}" style="text-align:center">... 共${parsedRows.length}行数据 ...</td></tr>`;
+                }
+                
+                html += '</table>';
+                previewArea.html(html);
+            }
+            
+            // 如果是确认操作，则保存数据
+            if (confirm) {
+                if (parsedRows.length === 0) {
+                    layer.msg('没有可确认的数据');
+                    return;
+                }
+                
+                // 提取表头和数据行
+                const headers = rows[0].split('\t');
+                const dataRows = rows.slice(1).map(row => row.split('\t'));
+                
+                // 保存数据
+                if (tableType === 'A') {
+                    tableAHeaders = headers;
+                    tableA = dataRows;
+                } else {
+                    tableBHeaders = headers;
+                    tableB = dataRows;
+                }
+                
+                // 显示解析结果
+                const colCount = headers.length;
+                const rowCount = dataRows.length;
+                fileInfo.text(`已粘贴数据 (表头: ${colCount}列, 数据: ${rowCount}行)`);
+                updateJoinFields();
+                layer.msg(`表格${tableType}数据已确认: ${colCount}列, ${rowCount}行`);
+            }
+            
+        } catch(e) {
+            layer.msg('解析数据失败: ' + e.message);
+            console.error('解析错误:', e);
+        }
+    }
+    
+    // 更新关联字段下拉选项
+    function updateJoinFields() {
+        var aJoinField = $('#aJoinField');
+        var bJoinField = $('#bJoinField');
+        
+        aJoinField.empty();
+        aJoinField.append('<option value="">请选择</option>');
+        tableAHeaders.forEach(function(header, index) {
+            aJoinField.append(`<option value="${index}">${header || `A列${index+1}`} (列${index+1})</option>`);
+        });
+        
+        bJoinField.empty();
+        bJoinField.append('<option value="">请选择</option>');
+        tableBHeaders.forEach(function(header, index) {
+            bJoinField.append(`<option value="${index}">${header || `B列${index+1}`} (列${index+1})</option>`);
+        });
+        
+        form.render('select');
+    }
+    
+    // 更新输出字段复选框
+    function updateOutputFields() {
+        var aOutputFields = $('#aOutputFields');
+        var bOutputFields = $('#bOutputFields');
+        
+        aOutputFields.empty();
+        tableAHeaders.forEach(function(header, index) {
+            aOutputFields.append(`<input type="checkbox" name="aOutput" value="${index}" title="${header || `A列${index+1}`} (列${index+1})" lay-skin="primary">`);
+        });
+        
+        bOutputFields.empty();
+        tableBHeaders.forEach(function(header, index) {
+            bOutputFields.append(`<input type="checkbox" name="bOutput" value="${index}" title="${header || `B列${index+1}`} (列${index+1})" lay-skin="primary">`);
+        });
+        
+        form.render('checkbox');
+    }
+    
+    // 步骤导航
+    function goToStep(step) {
+        // 验证当前步骤是否可以离开
+        if(step > currentStep) {
+            if(currentStep === 1 && (!tableA || !tableB)) {
+                layer.msg('请先上传或粘贴两个表格的数据');
+                return;
+            }
+            
+            if(currentStep === 2) {
+                var aJoinField = $('#aJoinField').val();
+                var bJoinField = $('#bJoinField').val();
+                
+                if(!aJoinField || !bJoinField) {
+                    layer.msg('请设置关联字段');
+                    return;
+                }
+            }
+            
+            if(currentStep === 3) {
+                var aChecked = $('input[name="aOutput"]:checked').length;
+                var bChecked = $('input[name="bOutput"]:checked').length;
+                
+                if(aChecked + bChecked === 0) {
+                    layer.msg('请至少选择一个输出字段');
+                    return;
+                }
+            }
+        }
+        
+        // 更新步骤导航
+        $('#step-nav .layui-steps-item').removeClass('active');
+        $('#step-nav .layui-steps-item').eq(step - 1).addClass('active');
+        
+        // 隐藏所有步骤内容
+        $('.step-container').removeClass('active-step');
+        
+        // 显示当前步骤内容
+        $('#step' + step).addClass('active-step');
+        
+        // 如果是步骤3，更新输出字段复选框
+        if(step === 3) {
+            updateOutputFields();
+        }
+        
+        currentStep = step;
+    }
+    
+    // 下一步按钮事件
+    $('#nextBtn1').click(function(){ goToStep(2); });
+    $('#nextBtn2').click(function(){ goToStep(3); });
+    $('#nextBtn3').click(function(){ goToStep(4); });
+    
+    // 上一步按钮事件
+    $('#prevBtn2').click(function(){ goToStep(1); });
+    $('#prevBtn3').click(function(){ goToStep(2); });
+    $('#prevBtn4').click(function(){ goToStep(3); });
+    
+    // 生成结果数据
+    function generateResult() {
+        // 获取关联字段
+        var aJoinIndex = parseInt($('#aJoinField').val());
+        var bJoinIndex = parseInt($('#bJoinField').val());
+        
+        // 获取关联字段处理方式
+        var trimMode = $('input[name="trimMode"]:checked').val();
+        
+        // 获取输出字段
+        var aOutputIndices = [];
+        $('input[name="aOutput"]:checked').each(function(){
+            aOutputIndices.push(parseInt($(this).val()));
+        });
+        
+        var bOutputIndices = [];
+        $('input[name="bOutput"]:checked').each(function(){
+            bOutputIndices.push(parseInt($(this).val()));
+        });
+        
+        // 获取关联模式
+        var joinMode = $('input[name="joinMode"]:checked').val();
+        
+        // 获取去重选项
+        var deduplicate = $('input[name="deduplicate"]:checked').val() === 'true';
+        
+        // 创建关联结果
+        var result = [];
+        
+        // 添加表头行
+        var headerRow = [];
+        aOutputIndices.forEach(function(index){
+            headerRow.push(tableAHeaders[index] || `A列${index+1}`);
+        });
+        bOutputIndices.forEach(function(index){
+            headerRow.push(tableBHeaders[index] || `B列${index+1}`);
+        });
+        result.push(headerRow);
+        
+        // 辅助函数：处理关联字段值（根据设置去除空格）
+        function processKey(value) {
+            if (value === undefined || value === null) return '';
+            // 转换为字符串处理
+            var strValue = String(value);
+            // 根据选择的模式处理空格
+            return trimMode === 'trim' ? strValue.trim() : strValue;
+        }
+        
+        // 创建表格B的映射（以关联字段为键）
+        var bMap = {};
+        tableB.forEach(function(row, rowIndex) {
+            var key = processKey(row[bJoinIndex]);
+            if(key) {
+                if(!bMap[key]) {
+                    bMap[key] = [];
+                }
+                bMap[key].push({
+                    row: row,
+                    originalKey: row[bJoinIndex] // 保存原始值用于提示
+                });
+            }
+        });
+        
+        // 创建表格A的映射（以关联字段为键）
+        var aMap = {};
+        tableA.forEach(function(row, rowIndex) {
+            var key = processKey(row[aJoinIndex]);
+            if(key) {
+                if(!aMap[key]) {
+                    aMap[key] = [];
+                }
+                aMap[key].push({
+                    row: row,
+                    originalKey: row[aJoinIndex] // 保存原始值用于提示
+                });
+            }
+        });
+        
+        // 根据关联模式处理数据
+        if(joinMode === 'left') {
+            // 以A表为主
+            tableA.forEach(function(aRow) {
+                var key = processKey(aRow[aJoinIndex]);
+                var bRows = key ? bMap[key] : null;
+                
+                if(bRows && bRows.length > 0) {
+                    if(deduplicate) {
+                        // 去重模式，只取第一个
+                        addResultRow(aRow, bRows[0].row);
+                    } else {
+                        // 不去重模式，取所有
+                        bRows.forEach(function(bItem) {
+                            addResultRow(aRow, bItem.row);
+                        });
+                    }
+                } else {
+                    addResultRow(aRow, []);
+                }
+            });
+        } else if(joinMode === 'right') {
+            // 以B表为主
+            tableB.forEach(function(bRow) {
+                var key = processKey(bRow[bJoinIndex]);
+                var aRows = key ? aMap[key] : null;
+                
+                if(aRows && aRows.length > 0) {
+                    if(deduplicate) {
+                        // 去重模式，只取第一个
+                        addResultRow(aRows[0].row, bRow);
+                    } else {
+                        // 不去重模式，取所有
+                        aRows.forEach(function(aItem) {
+                            addResultRow(aItem.row, bRow);
+                        });
+                    }
+                } else {
+                    addResultRow([], bRow);
+                }
+            });
+        } else {
+            // 两表共有（内连接）
+            tableA.forEach(function(aRow) {
+                var key = processKey(aRow[aJoinIndex]);
+                var bRows = key ? bMap[key] : null;
+                
+                if(bRows && bRows.length > 0) {
+                    if(deduplicate) {
+                        // 去重模式，只取第一个
+                        addResultRow(aRow, bRows[0].row);
+                    } else {
+                        // 不去重模式，取所有
+                        bRows.forEach(function(bItem) {
+                            addResultRow(aRow, bItem.row);
+                        });
+                    }
+                }
+            });
+        }
+        
+        // 添加结果行的辅助函数
+        function addResultRow(aRow, bRow) {
+            var resultRow = [];
+            // 添加表格A的字段
+            aOutputIndices.forEach(function(index){
+                resultRow.push(aRow[index] || '');
+            });
+            // 添加表格B的字段
+            bOutputIndices.forEach(function(index){
+                resultRow.push(bRow[index] || '');
+            });
+            result.push(resultRow);
+        }
+        
+        return result;
+    }
+    
+    // 导出按钮事件
+    $('#exportBtn').click(function(){
+        var result = generateResult();
+        
+        // 创建工作簿
+        var wb = XLSX.utils.book_new();
+        var ws = XLSX.utils.aoa_to_sheet(result);
+        
+        // 添加工作表到工作簿
+        XLSX.utils.book_append_sheet(wb, ws, "关联结果");
+        
+        // 导出Excel文件
+        var filename = $('#outputFilename').val() || '关联结果';
+        XLSX.writeFile(wb, filename + '.xlsx');
+        
+        // 更新结果预览
+        updateResultPreview(result);
+    });
+    
+    // 复制结果按钮事件
+    $('#copyResultBtn').click(function(){
+        var result = generateResult();
+        
+        // 将结果转换为制表符分隔的文本
+        var textToCopy = result.map(function(row){
+            return row.join('\t');
+        }).join('\n');
+        
+        // 创建临时textarea元素用于复制
+        var textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+        textarea.select();
+        
+        try {
+            var successful = document.execCommand('copy');
+            if(successful) {
+                layer.msg('结果已复制，请到EXCEL表黏贴。');
+            } else {
+                layer.msg('复制失败，请手动选择并复制');
+            }
+        } catch (err) {
+            layer.msg('复制失败，请手动选择并复制');
+        }
+        
+        document.body.removeChild(textarea);
+        
+        // 更新结果预览
+        updateResultPreview(result);
+    });
+    
+    // 更新结果预览
+    function updateResultPreview(result) {
+        var preview = $('#resultPreview');
+        preview.empty();
+        
+        if(result.length === 0) {
+            preview.html('<div class="layui-alert">暂无结果数据</div>');
+            return;
+        }
+        
+        // 创建表格显示结果
+        var table = $('<table class="layui-table"></table>');
+        var thead = $('<thead></thead>');
+        var tbody = $('<tbody></tbody>');
+        
+        // 添加表头
+        var headerRow = $('<tr></tr>');
+        result[0].forEach(function(cell){
+            headerRow.append('<th>' + cell + '</th>');
+        });
+        thead.append(headerRow);
+        
+        // 添加数据行（最多显示10行）
+        var displayRows = Math.min(result.length - 1, 10);
+        for(var i = 1; i <= displayRows; i++) {
+            var row = $('<tr></tr>');
+            result[i].forEach(function(cell){
+                row.append('<td>' + (cell || '') + '</td>');
+            });
+            tbody.append(row);
+        }
+        
+        // 如果数据太多，显示提示
+        if(result.length > 11) {
+            tbody.append(`<tr><td colspan="${result[0].length}" style="text-align: center; color: #999;">... 共${result.length-1}行数据，仅显示前10行 ...</td></tr>`);
+        }
+        
+        table.append(thead).append(tbody);
+        preview.append(table);
+    }
+    
+    // 上传表格A
+    upload.render({
+        elem: '#uploadA',
+        url: '', // 不上传到服务器
+        accept: 'file',
+        exts: 'xlsx|xls',
+        auto: false,
+        choose: function(obj){
+            var files = obj.pushFile();
+            obj.preview(function(index, file, result){
+                $('#fileInfoA').text(file.name);
+                
+                // 读取Excel文件
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var data = new Uint8Array(e.target.result);
+                    var workbook = XLSX.read(data, {type: 'array'});
+                    
+                    // 获取第一个工作表
+                    var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    
+                    // 转换为JSON
+                    tableA = XLSX.utils.sheet_to_json(firstSheet, {header: 1});
+                    
+                    // 获取表头
+                    if(tableA.length > 0) {
+                        tableAHeaders = tableA[0];
+                        tableA = tableA.slice(1); // 去掉表头行
+                        
+                        // 更新步骤2的下拉选项
+                        updateJoinFields();
+                    }
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+    });
+    
+    // 上传表格B
+    upload.render({
+        elem: '#uploadB',
+        url: '', // 不上传到服务器
+        accept: 'file',
+        exts: 'xlsx|xls',
+        auto: false,
+        choose: function(obj){
+            var files = obj.pushFile();
+            obj.preview(function(index, file, result){
+                $('#fileInfoB').text(file.name);
+                
+                // 读取Excel文件
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var data = new Uint8Array(e.target.result);
+                    var workbook = XLSX.read(data, {type: 'array'});
+                    
+                    // 获取第一个工作表
+                    var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    
+                    // 转换为JSON
+                    tableB = XLSX.utils.sheet_to_json(firstSheet, {header: 1});
+                    
+                    // 获取表头
+                    if(tableB.length > 0) {
+                        tableBHeaders = tableB[0];
+                        tableB = tableB.slice(1); // 去掉表头行
+                        
+                        // 更新步骤2的下拉选项
+                        updateJoinFields();
+                    }
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+    });
+});
+</script>
+<script>
+//IE游览器检测 
+function isIE() {
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf('MSIE ');
+    var trident = ua.indexOf('Trident/');
+ 
+    if (msie > 0 || trident > 0) {
+        // 如果是IE浏览器，返回true
+        return true;
+    }
+ 
+    // 不是IE浏览器，返回false
+    return false;
+}
+ 
+if (isIE()) {
+    alert('您正在使用IE浏览器，会导致系统无法正常工作，请更换谷歌或360游览器极速模式。');
+}
+</script>
+</body>
+</html>
