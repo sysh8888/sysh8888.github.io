@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML ↔ JSON 互转工具</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(145deg, #f2f7fc 0%, #e3eef9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            padding: 1.5rem;
+            margin: 0;
+        }
+        .container {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 44px;
+            box-shadow: 0 25px 60px rgba(0, 20, 40, 0.18), 0 8px 24px rgba(0, 0, 0, 0.05);
+            padding: 2rem 2rem 2.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        h1 {
+            font-weight: 600;
+            font-size: 2.2rem;
+            letter-spacing: -0.02em;
+            color: #0b2b3d;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 3px solid rgba(40, 130, 180, 0.2);
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #2e6a82;
+            margin-left: auto;
+            background: rgba(40, 130, 180, 0.08);
+            padding: 0.25rem 1.2rem;
+            border-radius: 60px;
+            letter-spacing: 0.4px;
+        }
+        .dual-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin-top: 1.4rem;
+        }
+        .panel {
+            flex: 1 1 280px;
+            min-width: 240px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 32px;
+            padding: 1.4rem 1.4rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 20px -8px rgba(0, 20, 30, 0.08);
+            display: flex;
+            flex-direction: column;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+        }
+        .panel-header h2 {
+            font-weight: 550;
+            font-size: 1.25rem;
+            color: #174257;
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .panel-header h2 span {
+            background: #1b5f78;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.1rem 0.9rem;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+        }
+        .tool-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: white;
+            border: none;
+            padding: 0.45rem 1.1rem;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #1a4052;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: 0.12s ease;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+        }
+        .btn-primary {
+            background: #1a5f7a;
+            color: white;
+            border: 1px solid #1a5f7a;
+            box-shadow: 0 4px 12px rgba(26, 95, 122, 0.20);
+        }
+        .btn-primary:hover {
+            background: #0f4b63;
+            transform: scale(0.97);
+        }
+        .btn-success {
+            background: #1f8b6b;
+            color: white;
+            border: 1px solid #1f8b6b;
+            box-shadow: 0 4px 12px rgba(31, 139, 107, 0.20);
+        }
+        .btn-success:hover {
+            background: #167258;
+            transform: scale(0.97);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #c6dae7;
+            color: #1e4b60;
+        }
+        .btn-outline:hover {
+            background: rgba(26, 95, 122, 0.06);
+            border-color: #1a5f7a;
+        }
+        .btn:active {
+            transform: scale(0.94);
+        }
+        .btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        .editor-box {
+            background: #fafdff;
+            border-radius: 22px;
+            padding: 0.2rem;
+            box-shadow: inset 0 1px 6px rgba(0,0,0,0.02), 0 6px 16px -8px rgba(0,20,30,0.10);
+            border: 1px solid rgba(255,255,255,0.7);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        textarea {
+            width: 100%;
+            min-height: 280px;
+            height: 42vh;
+            padding: 1.2rem 1.4rem;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            border: none;
+            resize: vertical;
+            background: transparent;
+            color: #17354a;
+            outline: none;
+            border-radius: 22px;
+            tab-size: 2;
+            white-space: pre-wrap;
+            word-break: break-word;
+            transition: 0.1s;
+            flex: 1;
+        }
+        textarea:focus {
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.10);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        textarea::placeholder {
+            color: #9bb7cc;
+            font-weight: 300;
+            font-family: 'Segoe UI', sans-serif;
+            opacity: 0.7;
+        }
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.6rem;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .badge {
+            background: rgba(26, 95, 122, 0.07);
+            padding: 0.15rem 1rem;
+            border-radius: 60px;
+            color: #1d5a70;
+            font-size: 0.75rem;
+            font-weight: 450;
+        }
+        .toast {
+            background: #1f657a;
+            color: white;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: 0.18s ease;
+            pointer-events: none;
+            background: #1f6d7e;
+            font-weight: 450;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem 2rem;
+            margin: 1.2rem 0 0.4rem;
+            padding: 0.6rem 0.8rem;
+            background: rgba(255,255,255,0.4);
+            border-radius: 80px;
+            backdrop-filter: blur(4px);
+        }
+        .action-bar .btn {
+            font-size: 0.9rem;
+            padding: 0.5rem 1.6rem;
+        }
+        .footer-hint {
+            margin-top: 1.2rem;
+            font-size: 0.75rem;
+            color: #5d859a;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            justify-content: center;
+            border-top: 1px solid rgba(0,0,0,0.03);
+            padding-top: 1rem;
+        }
+        .footer-hint kbd {
+            background: #e4eef6;
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #154257;
+            font-size: 0.7rem;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.8rem; }
+            h1 small { margin-left: 0; width: 100%; }
+            .action-bar { border-radius: 40px; flex-direction: column; gap: 8px; }
+            textarea { min-height: 200px; }
+            .panel { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        🔄 XML ⟷ JSON
+        <small>互转 · 格式化 · 复制</small>
+    </h1>
+
+    <div class="dual-panel">
+        <!-- 左侧 XML -->
+        <div class="panel">
+            <div class="panel-header">
+                <h2>📄 XML <span>源</span></h2>
+                <div class="tool-group">
+                    <button class="btn btn-outline" id="xmlFormatBtn" title="格式化 XML">✨</button>
+                    <button class="btn btn-outline" id="xmlClearBtn" title="清空">🗑️</button>
+                </div>
+            </div>
+            <div class="editor-box">
+                <textarea id="xmlArea" placeholder="&lt;root&gt;&lt;child&gt;value&lt;/child&gt;&lt;/root&gt;" spellcheck="false"></textarea>
+            </div>
+            <div class="status-row">
+                <span class="badge" id="xmlStats">节点: 0 · 行: 0</span>
+                <span class="toast" id="xmlToast">已格式化</span>
+            </div>
+        </div>
+
+        <!-- 右侧 JSON -->
+        <div class="panel">
+            <div class="panel-header">
+                <h2>📦 JSON <span>目标</span></h2>
+                <div class="tool-group">
+                    <button class="btn btn-outline" id="jsonFormatBtn" title="格式化 JSON">✨</button>
+                    <button class="btn btn-outline" id="jsonClearBtn" title="清空">🗑️</button>
+                </div>
+            </div>
+            <div class="editor-box">
+                <textarea id="jsonArea" placeholder='{"key": "value"}' spellcheck="false"></textarea>
+            </div>
+            <div class="status-row">
+                <span class="badge" id="jsonStats">键: 0 · 行: 0</span>
+                <span class="toast" id="jsonToast">已格式化</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 中央操作栏 -->
+    <div class="action-bar">
+        <button class="btn btn-primary" id="xmlToJsonBtn">⬇ XML → JSON</button>
+        <button class="btn btn-primary" id="jsonToXmlBtn">⬆ JSON → XML</button>
+        <button class="btn btn-success" id="copyResultBtn">📋 复制结果</button>
+        <button class="btn btn-outline" id="swapBtn">⇄ 交换</button>
+    </div>
+
+    <div class="footer-hint">
+        <span>⚡ 支持 属性 · CDATA · 注释 (转换时保留)</span>
+        <span><kbd>Ctrl+Enter</kbd> 转换 (焦点在输入框)</span>
+        <span><kbd>Ctrl+Shift+C</kbd> 复制结果</span>
+    </div>
+</div>
+<script>
+    (function() {
+        "use strict";
+
+        const xmlArea = document.getElementById('xmlArea');
+        const jsonArea = document.getElementById('jsonArea');
+        const xmlToJsonBtn = document.getElementById('xmlToJsonBtn');
+        const jsonToXmlBtn = document.getElementById('jsonToXmlBtn');
+        const copyResultBtn = document.getElementById('copyResultBtn');
+        const swapBtn = document.getElementById('swapBtn');
+        const xmlFormatBtn = document.getElementById('xmlFormatBtn');
+        const jsonFormatBtn = document.getElementById('jsonFormatBtn');
+        const xmlClearBtn = document.getElementById('xmlClearBtn');
+        const jsonClearBtn = document.getElementById('jsonClearBtn');
+        const xmlToast = document.getElementById('xmlToast');
+        const jsonToast = document.getElementById('jsonToast');
+        const xmlStats = document.getElementById('xmlStats');
+        const jsonStats = document.getElementById('jsonStats');
+
+        // ---------- 轻提示 ----------
+        function showToast(el, msg, duration = 1400) {
+            el.textContent = msg;
+            el.classList.add('show');
+            clearTimeout(el._timer);
+            el._timer = setTimeout(() => el.classList.remove('show'), duration);
+        }
+
+        // ---------- 统计更新 ----------
+        function updateStats(text, statsEl) {
+            const lines = text.split(/\n/).length;
+            const chars = text.length;
+            // 粗略统计
+            let extra = '';
+            if (statsEl === xmlStats) {
+                const nodes = (text.match(/<[^?][^>]*>/g) || []).length;
+                extra = `节点: ${nodes} · `;
+            } else if (statsEl === jsonStats) {
+                const keys = (text.match(/"[^"]*":/g) || []).length;
+                extra = `键: ${keys} · `;
+            }
+            statsEl.textContent = `${extra}行: ${lines} · 字符: ${chars}`;
+        }
+
+        // ---------- 核心转换 ----------
+        // 将 XML 转为 JSON (对象)
+        function xmlToJson(xmlStr) {
+            if (!xmlStr.trim()) return '{}';
+            try {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(xmlStr, 'text/xml');
+                const errorNode = doc.querySelector('parsererror');
+                if (errorNode) {
+                    throw new Error('XML 解析错误: ' + errorNode.textContent);
+                }
+                const obj = xmlToObj(doc.documentElement);
+                return JSON.stringify(obj, null, 2);
+            } catch (e) {
+                // 备用: 尝试手动简易转换
+                return fallbackXmlToJson(xmlStr);
+            }
+        }
+
+        // 递归 DOM 转 JS 对象 (支持属性, 文本, CDATA, 子元素)
+        function xmlToObj(node) {
+            const obj = {};
+            // 属性
+            if (node.attributes && node.attributes.length > 0) {
+                obj['@attributes'] = {};
+                for (let attr of node.attributes) {
+                    obj['@attributes'][attr.name] = attr.value;
+                }
+            }
+            // 子节点
+            let hasChild = false;
+            const children = node.childNodes;
+            const textNodes = [];
+            const childMap = {};
+
+            for (let child of children) {
+                if (child.nodeType === 1) { // element
+                    hasChild = true;
+                    const tag = child.tagName;
+                    const childObj = xmlToObj(child);
+                    if (childMap[tag]) {
+                        if (!Array.isArray(childMap[tag])) {
+                            childMap[tag] = [childMap[tag]];
+                        }
+                        childMap[tag].push(childObj);
+                    } else {
+                        childMap[tag] = childObj;
+                    }
+                } else if (child.nodeType === 3 || child.nodeType === 4) { // text or CDATA
+                    const val = child.textContent.trim();
+                    if (val) textNodes.push(val);
+                }
+            }
+
+            // 合并文本
+            let textContent = textNodes.join(' ').trim();
+            // 如果只有文本且没有子元素和属性，直接返回文本
+            if (!hasChild && Object.keys(obj).length === 0) {
+                return textContent || '';
+            }
+            // 如果有文本，放入 #text
+            if (textContent) {
+                obj['#text'] = textContent;
+            }
+            // 合并子元素
+            for (let key in childMap) {
+                obj[key] = childMap[key];
+            }
+            return obj;
+        }
+
+        // 备用简易转换 (针对简单结构)
+        function fallbackXmlToJson(xmlStr) {
+            // 简单粗暴: 用正则提取标签 (仅供演示)
+            try {
+                const cleaned = xmlStr.replace(/\s*\n\s*/g, '').replace(/>\s+</g, '><');
+                const result = {};
+                const tagRegex = /<([^>]+)>([^<]*)<\/\1>/g;
+                let match;
+                while ((match = tagRegex.exec(cleaned)) !== null) {
+                    const key = match[1];
+                    const value = match[2].trim();
+                    if (result[key] !== undefined) {
+                        if (!Array.isArray(result[key])) result[key] = [result[key]];
+                        result[key].push(value);
+                    } else {
+                        result[key] = value;
+                    }
+                }
+                return JSON.stringify(result, null, 2);
+            } catch (e) {
+                return '{ "error": "转换失败，请检查 XML 格式" }';
+            }
+        }
+
+        // ---------- JSON 转 XML ----------
+        function jsonToXml(jsonStr) {
+            if (!jsonStr.trim()) return '';
+            try {
+                const obj = JSON.parse(jsonStr);
+                const xml = objToXml(obj, 'root');
+                return xml;
+            } catch (e) {
+                return '<!-- JSON 解析错误: ' + e.message + ' -->';
+            }
+        }
+
+        function objToXml(obj, nodeName) {
+            if (obj === null || obj === undefined) return `<${nodeName}/>`;
+            if (typeof obj !== 'object') {
+                return `<${nodeName}>${escapeXml(String(obj))}</${nodeName}>`;
+            }
+            if (Array.isArray(obj)) {
+                return obj.map(item => objToXml(item, nodeName)).join('\n');
+            }
+            let xml = `<${nodeName}`;
+            let hasAttr = false;
+            let children = [];
+            let textContent = '';
+
+            for (let key in obj) {
+                if (key === '@attributes' && typeof obj[key] === 'object') {
+                    hasAttr = true;
+                    for (let attr in obj[key]) {
+                        xml += ` ${attr}="${escapeXml(String(obj[key][attr]))}"`;
+                    }
+                } else if (key === '#text') {
+                    textContent = escapeXml(String(obj[key]));
+                } else {
+                    // 子节点
+                    const val = obj[key];
+                    if (val !== undefined && val !== null) {
+                        if (Array.isArray(val)) {
+                            for (let item of val) {
+                                children.push(objToXml(item, key));
+                            }
+                        } else if (typeof val === 'object') {
+                            children.push(objToXml(val, key));
+                        } else {
+                            children.push(`<${key}>${escapeXml(String(val))}</${key}>`);
+                        }
+                    }
+                }
+            }
+            // 处理属性后闭合
+            if (children.length === 0 && textContent === '' && !hasAttr) {
+                // 检查是否仅包含属性
+                const onlyAttr = Object.keys(obj).every(k => k === '@attributes');
+                if (onlyAttr && hasAttr) {
+                    xml += '/>';
+                    return xml;
+                }
+            }
+            xml += '>';
+            if (textContent) {
+                xml += textContent;
+            }
+            if (children.length > 0) {
+                xml += '\n' + children.join('\n') + '\n';
+            }
+            xml += `</${nodeName}>`;
+            return xml;
+        }
+
+        function escapeXml(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                      .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+        }
+
+        // ---------- 格式化 JSON (美化) ----------
+        function formatJSON(str) {
+            try {
+                const obj = JSON.parse(str);
+                return JSON.stringify(obj, null, 2);
+            } catch (e) {
+                return str;
+            }
+        }
+
+        // ---------- 事件绑定 ----------
+        // XML → JSON
+        xmlToJsonBtn.addEventListener('click', function() {
+            const xml = xmlArea.value;
+            if (!xml.trim()) {
+                showToast(xmlToast, '⛔ XML 为空', 1200);
+                return;
+            }
+            const json = xmlToJson(xml);
+            jsonArea.value = json;
+            updateStats(json, jsonStats);
+            showToast(jsonToast, '✅ 转换完成', 1200);
+        });
+
+        // JSON → XML
+        jsonToXmlBtn.addEventListener('click', function() {
+            const json = jsonArea.value;
+            if (!json.trim()) {
+                showToast(jsonToast, '⛔ JSON 为空', 1200);
+                return;
+            }
+            const xml = jsonToXml(json);
+            xmlArea.value = xml;
+            updateStats(xml, xmlStats);
+            showToast(xmlToast, '✅ 转换完成', 1200);
+        });
+
+        // 复制结果 (优先复制右侧 JSON, 如果为空则复制左侧 XML)
+        copyResultBtn.addEventListener('click', function() {
+            const text = jsonArea.value.trim() || xmlArea.value.trim();
+            if (!text) {
+                showToast(jsonToast, '⛔ 没有内容可复制', 1200);
+                return;
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast(jsonToast, '✔ 已复制', 1400);
+                }).catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        });
+
+        function fallbackCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed'; ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                showToast(jsonToast, '✔ 已复制 (兼容)', 1400);
+            } catch (e) {
+                showToast(jsonToast, '❌ 复制失败', 1200);
+            }
+            document.body.removeChild(ta);
+        }
+
+        // 交换内容
+        swapBtn.addEventListener('click', function() {
+            const xmlVal = xmlArea.value;
+            const jsonVal = jsonArea.value;
+            xmlArea.value = jsonVal;
+            jsonArea.value = xmlVal;
+            updateStats(xmlArea.value, xmlStats);
+            updateStats(jsonArea.value, jsonStats);
+            showToast(xmlToast, '⇄ 已交换', 1000);
+        });
+
+        // 格式化 XML (仅美化)
+        xmlFormatBtn.addEventListener('click', function() {
+            const raw = xmlArea.value;
+            if (!raw.trim()) return;
+            // 简单缩进: 用 DOMParser 再序列化
+            try {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(raw, 'text/xml');
+                if (doc.querySelector('parsererror')) throw new Error('parse error');
+                const serializer = new XMLSerializer();
+                let formatted = serializer.serializeToString(doc);
+                formatted = formatted.replace(/>\s*</g, '>\n<');
+                const lines = formatted.split('\n').filter(l => l.trim());
+                let indent = 0;
+                const out = [];
+                const sp = '  ';
+                for (let line of lines) {
+                    line = line.trim();
+                    if (line.startsWith('</')) indent = Math.max(0, indent-1);
+                    out.push(sp.repeat(indent) + line);
+                    if (!line.startsWith('</') && !line.endsWith('/>') && !line.startsWith('<?') && !line.startsWith('<!--')) indent++;
+                }
+                xmlArea.value = out.join('\n');
+                updateStats(xmlArea.value, xmlStats);
+                showToast(xmlToast, '✨ 格式化完成', 1000);
+            } catch(e) {
+                showToast(xmlToast, '⚠️ 格式化失败', 1200);
+            }
+        });
+
+        // 格式化 JSON
+        jsonFormatBtn.addEventListener('click', function() {
+            const raw = jsonArea.value;
+            if (!raw.trim()) return;
+            const formatted = formatJSON(raw);
+            jsonArea.value = formatted;
+            updateStats(jsonArea.value, jsonStats);
+            showToast(jsonToast, '✨ 格式化完成', 1000);
+        });
+
+        // 清空
+        xmlClearBtn.addEventListener('click', function() {
+            xmlArea.value = '';
+            updateStats('', xmlStats);
+            showToast(xmlToast, '🗑️ 已清空', 800);
+        });
+        jsonClearBtn.addEventListener('click', function() {
+            jsonArea.value = '';
+            updateStats('', jsonStats);
+            showToast(jsonToast, '🗑️ 已清空', 800);
+        });
+
+        // 实时统计
+        xmlArea.addEventListener('input', function() { updateStats(this.value, xmlStats); });
+        jsonArea.addEventListener('input', function() { updateStats(this.value, jsonStats); });
+
+        // 快捷键: Ctrl+Enter 转换 (根据焦点)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                const active = document.activeElement;
+                if (active === xmlArea) {
+                    e.preventDefault();
+                    xmlToJsonBtn.click();
+                } else if (active === jsonArea) {
+                    e.preventDefault();
+                    jsonToXmlBtn.click();
+                }
+            }
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'c' || e.key === 'C')) {
+                e.preventDefault();
+                copyResultBtn.click();
+            }
+        });
+
+        // 初始化: 放入示例
+        const sampleXml = `<?xml version="1.0" encoding="UTF-8"?>
+<bookstore>
+  <book category="fiction">
+    <title lang="en">The Hobbit</title>
+    <author>J.R.R. Tolkien</author>
+    <price>12.99</price>
+    <stock>5</stock>
+  </book>
+  <book category="science">
+    <title lang="en">A Brief History of Time</title>
+    <author>Stephen Hawking</author>
+    <price>18.99</price>
+    <stock>0</stock>
+  </book>
+</bookstore>`;
+        xmlArea.value = sampleXml;
+        updateStats(sampleXml, xmlStats);
+        // 自动转换出 JSON 示例
+        const initJson = xmlToJson(sampleXml);
+        jsonArea.value = initJson;
+        updateStats(initJson, jsonStats);
+    })();
+</script>
+<script src="../../tongji.js"></script>
+</body>
+</html>
