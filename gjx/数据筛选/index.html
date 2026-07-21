@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据筛选工具</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .draggable {
+            cursor: move;
+            transition: all 0.2s ease;
+        }
+        
+        .draggable:hover {
+            transform: scale(1.05);
+        }
+        
+        .draggable.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+        
+        .drop-zone {
+            min-height: 60px;
+            border: 2px dashed #d1d5db;
+            transition: all 0.2s ease;
+        }
+        
+        .drop-zone.drag-over {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        
+        .header-chip {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 4px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            cursor: move;
+            user-select: none;
+            position: relative;
+            font-size: 14px;
+            font-weight: 500;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .header-chip.selected {
+            background: #3b82f6;
+            color: white;
+            border-color: #1d4ed8;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+        }
+        
+        .header-chip .remove-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 22px;
+            height: 22px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: bold;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 2px solid white;
+        }
+        
+        .header-chip.selected .remove-btn {
+            display: flex;
+        }
+        
+        .header-chip .remove-btn:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+        
+        .data-table {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- 顶部标题栏 -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <div class="h-8 w-8 text-cyan-600 mr-3 text-2xl">📋</div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">
+                            数据筛选工具
+                        </h1>
+                        <p class="text-sm text-gray-600">
+                            Excel数据重新组织和筛选工具
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-2xl">📊</span>
+                    <span class="text-sm text-gray-600" id="currentDate">
+                        今日: 
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              <!-- 文件导入区域 -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                📁 导入Excel文件
+            </h2>
+            <div class="flex items-center gap-4">
+                <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden">
+                <button onclick="document.getElementById('fileInput').click()" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                    📎 选择文件
+                </button>
+                <button id="generateSampleBtn" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                    📋 生成示例数据
+                </button>
+                <span id="fileName" class="text-sm text-gray-600">未选择文件</span>
+                <button id="clearBtn" class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition-colors" style="display: none;">
+                    🗑️ 清空数据
+                </button>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">
+                支持 .xlsx、.xls、.csv 格式文件
+            </p>
+        </div>
+
+        <!-- 工作表选择区域 -->
+        <div id="worksheetSelector" class="bg-white rounded-lg shadow-md p-6 mb-6" style="display: none;">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                📊 选择工作表
+            </h2>
+            <div class="flex items-center gap-4">
+                <label class="text-sm font-medium text-gray-700">工作表：</label>
+                <select id="worksheetSelect" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <!-- 工作表选项将在这里显示 -->
+                </select>
+                <button id="parseWorksheetBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                    ✓ 解析选中工作表
+                </button>
+                <button id="cancelWorksheetBtn" class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                    ✗ 取消
+                </button>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">
+                该Excel文件包含多个工作表，请选择要处理的工作表
+            </p>
+        </div>
+
+        <!-- 表头行选择区域 -->
+        <div id="headerRowSelector" class="bg-white rounded-lg shadow-md p-6 mb-6" style="display: none;">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                📐 选择表头所在行
+            </h2>
+            <div class="flex items-center gap-4">
+                <label class="text-sm font-medium text-gray-700">表头行：</label>
+                <select id="headerRowSelect" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <!-- 行选项将在这里显示 -->
+                </select>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">
+                请选择哪一行作为表头，默认为第一行
+            </p>
+        </div>
+
+        <!-- 原始表头区域 -->
+        <div id="originalHeadersSection" class="bg-white rounded-lg shadow-md p-6 mb-6" style="display: none;">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                📋 原始表头（拖动到下方选择区域）
+            </h2>
+            <div id="originalHeaders" class="min-h-16 p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
+                <!-- 原始表头将在这里显示 -->
+            </div>
+        </div>
+
+        <!-- 筛选表头区域 -->
+        <div id="selectedHeadersSection" class="bg-white rounded-lg shadow-md p-6 mb-6" style="display: none;">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">
+                    ✅ 已选择的表头（可拖动排序）
+                </h2>
+                <div class="flex gap-2">
+                    <button id="clearSelectedBtn" class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                        🗑️ 清空选择
+                    </button>
+                    <button id="generatePreviewBtn" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                        👁️ 生成预览
+                    </button>
+                </div>
+            </div>
+            <div id="selectedHeaders" class="drop-zone min-h-16 p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
+                <p class="text-gray-500 text-center">将上方的表头拖动到这里进行筛选</p>
+            </div>
+        </div>
+
+        <!-- 数据预览区域 -->
+        <div id="previewSection" class="bg-white rounded-lg shadow-md p-6 mb-6" style="display: none;">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">
+                    📊 数据预览
+                </h2>
+                <div class="flex gap-2">
+                    <button id="exportBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                        📤 导出Excel
+                    </button>
+                </div>
+            </div>
+            <div class="data-table">
+                <table id="previewTable" class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <!-- 表头将在这里显示 -->
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <!-- 数据将在这里显示 -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="dataStats" class="mt-4 text-sm text-gray-600">
+                <!-- 数据统计信息 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <p class="text-center text-sm text-gray-500">
+                © 2025 数据筛选工具. 独立版本
+            </p>
+        </div>
+    </footer>
+
+    <!-- 隐藏的文件读取区域 -->
+    <input type="file" id="hiddenFileInput" style="display: none;" accept=".xlsx,.xls,.csv">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.mini.min.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/data-filter.js"></script>
+    <script>
+        // 设置当前日期
+        document.getElementById('currentDate').textContent = '今日: ' + new Date().toLocaleDateString('zh-CN');
+    </script>
+</body>
+</html>
