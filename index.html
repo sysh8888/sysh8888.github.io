@@ -388,6 +388,17 @@
     // 1. 数据：分类 + 站点（name, link, category, icon）
     // ============================================================
     const NAV_DATA = [
+	// --- 办公 ---
+	{ name:"EXCEL转JSON", desc:"表格和JSON互转", category: "办公",link:"./gjx/csv和json互转/index.html", icon:"📊" },
+	{ name:"EXCEL表格关联", desc:"2张表格关联", category: "办公",link:"./gjx/表格关联/index.html", icon:"📃" },
+	{ name:"EXCEL数据筛选", desc:"表格数据筛选", category: "办公",link:"./gjx/数据筛选/index.html", icon:"📋" },
+	{ name:"EXCEL表格合并", desc:"表格合并", category: "办公",link:"./gjx/EXCEL表格合并/index.html", icon:"📊" },
+	{ name:"XLS列汇总至行", desc:"表格列汇总至行", category: "办公",link:"./gjx/表格汇总合并/index.html", icon:"📈" },
+	{ name:"XLS身份证提取", desc:"身份证信息提取", category: "办公",link:"./gjx/身份证信息提取/index.html", icon:"🔢" },
+	{ name:"PDF编辑", desc:"离线版PDF编辑", category: "办公",link:"./gjx/PDF/pdf编辑.html", icon:"📄" },
+	{ name:"PDF合并", desc:"离线版PDF合并", category: "办公",link:"./gjx/PDF/pdf合并.html", icon:"📄" },
+	{ name:"PDF压缩", desc:"离线版PDF压缩", category: "办公",link:"./gjx/PDF/pdf压缩.html", icon:"📙" },
+	{ name:"PDF大全", desc:"PDF24工具", category: "办公",link:"https://tools.pdf24.org/zh/", icon:"📙" },
       // --- 开发 ---
       { name:"GitHub", desc:"代码托管", category: "开发",link:"https://github.com", icon:"💻" }, { name:"Gitee", desc:"国内托管", category: "开发",link:"https://gitee.com", icon:"🏠" },
       { name:"GitLab", desc:"自建仓库", category: "开发",link:"https://gitlab.com", icon:"🦊" }, { name:"Stack Overflow", desc:"技术问答", category: "开发",link:"https://stackoverflow.com", icon:"🟧" },
@@ -758,6 +769,6 @@
     console.log(`🧰 7080网已启动 | 收录 ${NAV_DATA.length} 个站点`);
   })();
 </script>
-<script src="./js/tongji.js"></script>
+<script src="./tongji.js"></script>
 </body>
 </html>
