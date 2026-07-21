@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CSV 转 XML 在线工具</title>
+    <!-- 引入 layui.css -->
+<link href="//unpkg.com/layui@2.13.8/dist/css/layui.css" rel="stylesheet">
+    <style>
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .code-area {
+            width: 100%;
+            min-height: 300px;
+            font-family: monospace;
+        }
+        .result-area {
+            margin-top: 20px;
+        }
+        .instructions {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+        .custom-node {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="layui-card">
+        <div class="layui-card-header">CSV 转 XML 在线工具</div>
+        <div class="layui-card-body">
+            <div class="instructions">
+                <p>1. 在下方输入 CSV 内容或上传 CSV 文件</p>
+                <p>2. (可选)自定义 XML 根节点和行节点名称</p>
+                <p>3. 点击"转换"按钮生成 XML 格式</p>
+                <p>4. 可以下载或复制生成的 XML 结果</p>
+            </div>
+            
+            <div class="custom-node">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">根节点名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="rootNode" class="layui-input" value="root" placeholder="默认为root">
+                    </div>
+                    <label class="layui-form-label">行节点名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="rowNode" class="layui-input" value="row" placeholder="默认为row">
+                    </div>
+					
+                </div>
+            </div>
+		
+		<div class="custom-node">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分隔符</label>
+        <div class="layui-input-inline">
+            <select id="delimiter" class="layui-input">
+                <option value=",">逗号 (,)</option>
+                <option value=";">分号 (;)</option>
+                <option value="\t">制表符 (\t)</option>
+                <option value=" ">空格 ( )</option>
+                <option value="|">竖线 (|)</option>
+            </select>
+        </div><span>选择分隔符,CSV表格为"逗号"分隔，excel表的XLS或XLSX用"制表符"分隔。</span>
+    </div>
+</div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">CSV 内容</label>
+                <div class="layui-input-block">
+                    <textarea id="csvInput" class="code-area" placeholder="请输入CSV或EXCEL内容...">album, year, US_peak_chart_post
+The White Stripes, 1999, 1
+De Stijl, 2000, 1
+White Blood Cells, 20.01, 61
+Elephant, 2003, 6</textarea>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" id="convertBtn">转换</button>
+                    <button class="layui-btn layui-btn-primary" id="uploadBtn">
+                        <i class="layui-icon"></i> 上传CSV文件
+                    </button>
+                    <input type="file" id="fileInput" style="display: none;" accept=".csv,.txt">
+                </div>
+            </div>
+            
+            <div class="result-area">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">XML 结果</label>
+                    <div class="layui-input-block">
+                        <textarea id="xmlOutput" class="code-area" readonly></textarea>
+                    </div>
+                </div>
+                
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal" id="downloadBtn">下载XML</button>
+                        <button class="layui-btn" id="copyBtn">复制结果</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入 layui.js -->
+<script src="//unpkg.com/layui@2.13.8/dist/layui.js"></script>
+<script>
+layui.use(['layer', 'jquery'], function(){
+    var layer = layui.layer;
+    var $ = layui.jquery;
+    
+    // 上传CSV文件
+    $('#uploadBtn').click(function(){
+        $('#fileInput').click();
+    });
+    
+    $('#fileInput').change(function(e){
+        var file = e.target.files[0];
+        if (!file) return;
+        
+        var validTypes = ["text/csv", "text/plain"];
+        if (!validTypes.includes(file.type) && !file.name.match(/\.(csv|txt)$/i)) {
+            layer.msg('请选择CSV或文本文件', {icon: 2});
+            return;
+        }
+        
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#csvInput').val(e.target.result);
+        };
+        reader.readAsText(file);
+    });
+    
+    // 转换按钮
+    $('#convertBtn').click(function(){
+        var csvText = $('#csvInput').val().trim();
+        if (!csvText) {
+            layer.msg('请输入CSV内容', {icon: 2});
+            return;
+        }
+        
+        var rootNode = $('#rootNode').val().trim() || 'root';
+        var rowNode = $('#rowNode').val().trim() || 'row';
+        
+        try {
+            var xmlResult = csvToXml(csvText, rootNode, rowNode);
+            $('#xmlOutput').val(xmlResult);
+            layer.msg('转换成功', {icon: 1});
+        } catch (e) {
+            layer.msg('转换失败: ' + e.message, {icon: 2});
+            console.error(e);
+        }
+    });
+    
+// 复制按钮
+$('#copyBtn').click(function(){
+    var xmlOutput = $('#xmlOutput').val();
+    if (!xmlOutput) {
+        layer.msg('没有可复制的内容', {icon: 2});
+        return;
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(xmlOutput).then(function() {
+            layer.msg('复制成功', {icon: 1});
+        }, function() {
+            layer.msg('复制失败', {icon: 2});
+        });
+    } else {
+        var textarea = document.createElement('textarea');
+        textarea.style.position = 'fixed';
+        textarea.style.top = '0';
+        textarea.style.left = '0';
+        textarea.style.opacity = '0';
+        textarea.value = xmlOutput;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            layer.msg('复制成功', {icon: 1});
+        } catch (err) {
+            layer.msg('复制失败，请手动复制', {icon: 2});
+        } finally {
+            document.body.removeChild(textarea);
+        }
+    }
+});
+    
+    // 下载按钮
+    $('#downloadBtn').click(function(){
+        var xmlOutput = $('#xmlOutput').val();
+        if (!xmlOutput) {
+            layer.msg('没有可下载的内容', {icon: 2});
+            return;
+        }
+        
+        var blob = new Blob([xmlOutput], {type: 'text/xml'});
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'converted.xml';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+    
+    // CSV转XML核心函数
+function csvToXml(csvText, rootNode, rowNode) {
+    // 获取用户选择的分隔符（处理 \t 转义）
+    var delimiter = $('#delimiter').val();
+    if (delimiter === '\\t') {
+        delimiter = '\t'; // 将 "\t" 转换为实际的制表符
+    }
+    
+    // 分割CSV行
+    var lines = csvText.split(/\r?\n/).filter(line => line.trim() !== '');
+    if (lines.length === 0) {
+        throw new Error("CSV内容为空");
+    }
+    
+    // 解析标题行
+    var headers = parseCsvLine(lines[0], delimiter);
+    if (headers.length === 0) {
+        throw new Error("CSV标题行无效");
+    }
+    
+    // 创建XML文档
+    var xmlDoc = document.implementation.createDocument(null, null, null);
+    var rootElement = xmlDoc.createElement(rootNode);
+    xmlDoc.appendChild(rootElement);
+    
+    // 处理数据行
+    for (var i = 1; i < lines.length; i++) {
+        var values = parseCsvLine(lines[i], delimiter);
+        if (values.length === 0) continue;
+        
+        var rowElement = xmlDoc.createElement(rowNode);
+        
+        // 确保值与标题数量匹配
+        for (var j = 0; j < headers.length; j++) {
+            var header = headers[j].trim();
+            var value = j < values.length ? values[j].trim() : '';
+            
+            var fieldElement = xmlDoc.createElement(header);
+            fieldElement.textContent = value;
+            rowElement.appendChild(fieldElement);
+        }
+        
+        rootElement.appendChild(rowElement);
+    }
+    
+    // 转换为格式化的XML字符串
+    var xmlString = '<?xml version="1.0" encoding="UTF-8" ?>\n';
+    xmlString += formatXml(rootElement);
+    return xmlString;
+}
+    
+    // 解析CSV行，处理带引号和逗号的值
+function parseCsvLine(line, delimiter = ',') {
+    var values = [];
+    var current = '';
+    var inQuotes = false;
+    
+    // 将分隔符转义为正则表达式
+    var regex = new RegExp(`[${escapeRegExp(delimiter)}]`);
+    
+    for (var i = 0; i < line.length; i++) {
+        var c = line[i];
+        
+        if (c === '"') {
+            // 处理转义引号
+            if (inQuotes && i + 1 < line.length && line[i + 1] === '"') {
+                current += '"';
+                i++;
+            } else {
+                inQuotes = !inQuotes;
+            }
+        } else if (regex.test(c) && !inQuotes) {
+            values.push(current);
+            current = '';
+        } else {
+            current += c;
+        }
+    }
+    
+    values.push(current);
+    return values.map(v => v.trim());
+}
+
+// 辅助函数：转义正则表达式特殊字符
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+    
+    // 格式化XML元素为字符串
+    function formatXml(node, indent = '') {
+        var xmlString = '';
+        var hasChildren = node.childNodes.length > 0;
+        var isTextNode = node.childNodes.length === 1 && node.childNodes[0].nodeType === 3;
+        
+        xmlString += indent + '<' + node.nodeName;
+        
+        // 处理属性（本例中不需要）
+        if (node.attributes && node.attributes.length > 0) {
+            for (var i = 0; i < node.attributes.length; i++) {
+                var attr = node.attributes[i];
+                xmlString += ' ' + attr.name + '="' + attr.value + '"';
+            }
+        }
+        
+        if (hasChildren) {
+            if (isTextNode) {
+                // 只有文本内容
+                xmlString += '>' + node.textContent + '</' + node.nodeName + '>\n';
+            } else {
+                // 有子元素
+                xmlString += '>\n';
+                for (var i = 0; i < node.childNodes.length; i++) {
+                    var child = node.childNodes[i];
+                    if (child.nodeType === 1) { // 元素节点
+                        xmlString += formatXml(child, indent + '    ');
+                    }
+                }
+                xmlString += indent + '</' + node.nodeName + '>\n';
+            }
+        } else {
+            xmlString += '/>\n';
+        }
+        
+        return xmlString;
+    }
+});
+</script>
+<script src="../../tongji.js"></script>
+</body>
+</html>
