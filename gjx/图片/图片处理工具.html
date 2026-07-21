@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片处理工具</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; display: flex; flex-direction: column; }
+  .app-header { background: linear-gradient(135deg, #16213e, #0f3460); padding: 14px 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 20px rgba(0,0,0,.4); }
+  .app-header h1 { font-size: 20px; background: linear-gradient(90deg,#e94560,#f5a623); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .app-header .subtitle { font-size: 12px; color: #8899aa; -webkit-text-fill-color: #8899aa; }
+
+  .toolbar { background: #16213e; padding: 6px 16px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; border-bottom: 1px solid #0f3460; min-height: 44px; }
+  .toolbar .group { display: flex; gap: 3px; align-items: center; padding: 0 8px; border-right: 1px solid #0f3460; }
+  .toolbar .group:last-child { border-right: none; }
+  .toolbar .group-label { font-size: 11px; color: #8899aa; margin-right: 4px; white-space: nowrap; }
+
+  .filter-bar { background: #16213e; padding: 6px 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; border-bottom: 1px solid #0f3460; }
+  .filter-bar .slider-group { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #aac; }
+  .filter-bar .slider-group label { min-width: 36px; }
+  .filter-bar .slider-group input[type="range"] { width: 80px; accent-color: #e94560; }
+  .filter-bar .slider-group .val { display: inline-block; min-width: 28px; text-align: center; font-size: 11px; color: #e94560; }
+
+  .btn { display: inline-flex; align-items: center; gap: 3px; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 500; transition: all .2s; white-space: nowrap; }
+  .btn-primary { background: #e94560; color: #fff; }
+  .btn-primary:hover { background: #d63851; transform: translateY(-1px); }
+  .btn-secondary { background: #0f3460; color: #aac; } .btn-secondary:hover { background: #1a4a7a; color: #fff; }
+  .btn-accent { background: #533483; color: #cca; } .btn-accent:hover { background: #6a44a0; color: #fff; }
+  .btn-success { background: #2ecc71; color: #fff; } .btn-success:hover { background: #27ae60; transform: translateY(-1px); }
+  .btn-warn { background: #f39c12; color: #fff; } .btn-warn:hover { background: #e67e22; }
+  .btn-danger { background: #e74c3c; color: #fff; } .btn-danger:hover { background: #c0392b; }
+  .btn-outline { background: transparent; border: 1px solid #0f3460; color: #aac; } .btn-outline:hover { background: #0f3460; color: #fff; }
+  .btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+  input[type="number"] { width: 56px; padding: 3px 6px; background: #0d0d1a; border: 1px solid #0f3460; border-radius: 4px; color: #eee; font-size: 12px; }
+  input[type="color"] { width: 26px; height: 24px; border: 1px solid #0f3460; border-radius: 3px; background: transparent; cursor: pointer; }
+
+  .main-area { display: flex; flex: 1; overflow: hidden; }
+
+  .canvas-wrap { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: auto; background: #0d0d1a; padding: 20px; }
+  .canvas-wrap.drag-over { background: #1a1a3e; }
+  .canvas-wrap .placeholder { text-align: center; color: #556; }
+  .canvas-wrap .placeholder svg { width: 70px; height: 70px; fill: #334; margin-bottom: 12px; }
+  .canvas-wrap .placeholder p { font-size: 15px; margin: 3px 0; }
+  .canvas-wrap .placeholder .hint { font-size: 12px; color: #667; }
+
+  #editorCanvas { max-width: 100%; max-height: 70vh; box-shadow: 0 4px 40px rgba(0,0,0,.6); border-radius: 4px; display: none; }
+
+  .side-panel { width: 260px; background: #16213e; padding: 12px; overflow-y: auto; border-left: 1px solid #0f3460; display: none; font-size: 13px; }
+  .side-panel h3 { font-size: 13px; color: #e94560; margin: 10px 0 6px; } .side-panel h3:first-child { margin-top: 0; }
+  .side-panel .info-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #0f3460; }
+  .side-panel .info-row span:first-child { color: #8899aa; }
+  .side-panel .preset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; } .side-panel .preset-grid button { font-size: 11px; padding: 4px 6px; }
+
+  .crop-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; }
+  .crop-box { position: absolute; border: 2px dashed #e94560; background: rgba(233,69,96,.08); pointer-events: auto; cursor: move; }
+  .crop-box .handles { position: absolute; inset: -5px; }
+  .crop-box .handle { position: absolute; width: 10px; height: 10px; background: #e94560; border-radius: 50%; }
+  .crop-box .handle.nw { top: -5px; left: -5px; cursor: nw-resize; } .crop-box .handle.ne { top: -5px; right: -5px; cursor: ne-resize; }
+  .crop-box .handle.sw { bottom: -5px; left: -5px; cursor: sw-resize; } .crop-box .handle.se { bottom: -5px; right: -5px; cursor: se-resize; }
+  .crop-box .handle.n { top: -5px; left: 50%; margin-left: -5px; cursor: n-resize; } .crop-box .handle.s { bottom: -5px; left: 50%; margin-left: -5px; cursor: s-resize; }
+  .crop-box .handle.e { right: -5px; top: 50%; margin-top: -5px; cursor: e-resize; } .crop-box .handle.w { left: -5px; top: 50%; margin-top: -5px; cursor: w-resize; }
+
+
+  .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #2d2d44; color: #eee; padding: 10px 24px; border-radius: 8px; font-size: 14px; box-shadow: 0 4px 20px rgba(0,0,0,.5); z-index: 999; opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 1000; display: none; align-items: center; justify-content: center; }
+  .modal-overlay.active { display: flex; }
+  .modal-box { background: #1a1a2e; border: 1px solid #0f3460; border-radius: 12px; padding: 20px; min-width: 320px; max-width: 90vw; }
+  .modal-box h3 { font-size: 16px; margin-bottom: 14px; color: #e94560; }
+  .modal-box label { display: block; font-size: 13px; color: #aac; margin: 8px 0 3px; }
+  .modal-box input[type="number"], .modal-box input[type="text"], .modal-box select { width: 100%; padding: 7px 10px; border: 1px solid #0f3460; border-radius: 5px; background: #0d0d1a; color: #eee; font-size: 13px; }
+  .modal-box select { cursor: pointer; } .modal-box select option { background: #1a1a2e; color: #eee; }
+  .modal-box .modal-btns { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+  .modal-box .row { display: flex; gap: 8px; align-items: center; }
+  .modal-box input[type="range"] { flex: 1; accent-color: #e94560; }
+
+  ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: #0d0d1a; } ::-webkit-scrollbar-thumb { background: #0f3460; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <h1>🖼️ 图片处理工具</h1>
+  <span class="subtitle">纯浏览器端 · 无需上传 · v6.16</span>
+</div>
+
+<div class="toolbar">
+  <div class="group">
+    <button class="btn btn-primary" onclick="loadImage()">📂 打开</button>
+    <button class="btn btn-outline" onclick="undo()" id="btnUndo" disabled>↩ 撤销</button>
+    <button class="btn btn-outline" onclick="redo()" id="btnRedo" disabled>↪ 重做</button>
+    <button class="btn btn-success" onclick="saveImage()" id="btnSave" disabled>💾 下载</button>
+    <button class="btn btn-danger" onclick="resetAll()" id="btnReset" disabled>↩ 重置</button>
+  </div>
+  <div class="group">
+    <span class="group-label">翻转</span>
+    <button class="btn btn-secondary" onclick="flipH()" id="btnFlipH" disabled>↔ 水平</button>
+    <button class="btn btn-secondary" onclick="flipV()" id="btnFlipV" disabled>↕ 垂直</button>
+  </div>
+  <div class="group">
+    <span class="group-label">旋转</span>
+    <button class="btn btn-secondary" onclick="rotateCW()" id="btnRotateCW" disabled>↻ 90°</button>
+    <button class="btn btn-secondary" onclick="rotateCCW()" id="btnRotateCCW" disabled>↺ 90°</button>
+    <button class="btn btn-outline" onclick="rotateCustom()" id="btnRotateCustom" disabled>°</button>
+  </div>
+  <div class="group">
+    <span class="group-label">裁剪缩放</span>
+    <button class="btn btn-secondary" onclick="startCrop()" id="btnCrop" disabled>✂ 裁</button>
+    <button class="btn btn-outline" onclick="applyCrop()" id="btnApplyCrop" style="display:none;">✅</button>
+    <button class="btn btn-outline" onclick="cancelCrop()" id="btnCancelCrop" style="display:none;">❌</button>
+    <button class="btn btn-outline" onclick="resizeImage()" id="btnResize" disabled>🔍 尺寸</button>
+    <button class="btn btn-outline" onclick="zoomAction('+')" id="btnZoomIn" disabled>＋</button>
+    <button class="btn btn-outline" onclick="zoomAction('-')" id="btnZoomOut" disabled>－</button>
+  </div>
+  <div class="group">
+    <span class="group-label">特效</span>
+    <button class="btn btn-accent" onclick="applyBlur()" id="btnBlur" disabled>🌫 模糊</button>
+    <button class="btn btn-accent" onclick="applySharpen()" id="btnSharpen" disabled>✨ 锐化</button>
+    <button class="btn btn-accent" onclick="applyRoundCorner()" id="btnRound" disabled>⭕ 圆角</button>
+  </div>
+  <div class="group">
+    <span class="group-label">滤镜</span>
+    <button class="btn btn-outline" onclick="applyGrayscale()" id="tbGray" disabled>⬛ 黑白</button>
+    <button class="btn btn-outline" onclick="applySepia()" id="tbSepia" disabled>🟫 复古</button>
+    <button class="btn btn-outline" onclick="applySketch()" id="tbSketch" disabled>✏ 素描</button>
+    <button class="btn btn-outline" onclick="applyJapanese()" id="tbJapanese" disabled>🎐 日系</button>
+    <button class="btn btn-outline" onclick="applyLomo()" id="tbLomo" disabled>📷 LOMO</button>
+    <button class="btn btn-outline" onclick="applyOldPhoto()" id="tbOldPhoto" disabled>📜 怀旧</button>
+  </div>
+  <div class="group">
+    <button class="btn btn-warn" onclick="addBorder()" id="btnBorder" disabled>⬜ 边框</button>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <div class="slider-group">
+    <label>亮度</label>
+    <input type="range" id="fBrightness" min="0" max="200" value="100" oninput="onSliderChange('brightness',this.value)" disabled>
+    <span class="val" id="vBrightness">100%</span>
+  </div>
+  <div class="slider-group">
+    <label>对比度</label>
+    <input type="range" id="fContrast" min="0" max="200" value="100" oninput="onSliderChange('contrast',this.value)" disabled>
+    <span class="val" id="vContrast">100%</span>
+  </div>
+  <div class="slider-group">
+    <label>饱和度</label>
+    <input type="range" id="fSaturation" min="0" max="200" value="100" oninput="onSliderChange('saturation',this.value)" disabled>
+    <span class="val" id="vSaturation">100%</span>
+  </div>
+  <div class="slider-group">
+    <label>色调</label>
+    <input type="range" id="fHue" min="-180" max="180" value="0" oninput="onSliderChange('hue',this.value)" disabled>
+    <span class="val" id="vHue">0°</span>
+  </div>
+  <div class="slider-group">
+    <button class="btn btn-outline" style="font-size:11px;padding:3px 8px;" onclick="applyAdjustments()" id="btnApplyAdj" disabled>✅ 应用调整</button>
+    <button class="btn btn-outline" style="font-size:11px;padding:3px 8px;" onclick="resetSliders()" id="btnResetSliders" disabled>↩</button>
+  </div>
+</div>
+
+<div class="main-area">
+  <div class="canvas-wrap" id="canvasWrap">
+    <div class="placeholder" id="placeholder">
+      <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+      <p>拖拽图片到此处 或 点击「打开」</p>
+      <p class="hint">支持 JPG / PNG / WebP / BMP</p>
+    </div>
+    <div class="crop-overlay" id="cropOverlay">
+      <div class="crop-box" id="cropBox">
+        <div class="handles">
+          <div class="handle nw"></div><div class="handle n"></div><div class="handle ne"></div>
+          <div class="handle w"></div><div class="handle e"></div>
+          <div class="handle sw"></div><div class="handle s"></div><div class="handle se"></div>
+        </div>
+      </div>
+    </div>
+    <canvas id="editorCanvas"></canvas>
+  </div>
+
+  <div class="side-panel" id="sidePanel">
+    <h3>📋 图片信息</h3>
+    <div class="info-row"><span>文件名</span><span id="infoName">-</span></div>
+    <div class="info-row"><span>原始尺寸</span><span id="infoOrig">-</span></div>
+    <div class="info-row"><span>当前尺寸</span><span id="infoCurr">-</span></div>
+    <div class="info-row"><span>文件大小</span><span id="infoSize">-</span></div>
+    <div class="info-row"><span>类型</span><span id="infoType">-</span></div>
+
+    <h3>🎨 快速滤镜</h3>
+    <div class="preset-grid">
+      <button class="btn btn-outline" id="btnGray" onclick="applyGrayscale()">灰度</button>
+      <button class="btn btn-outline" id="btnSepia" onclick="applySepia()">复古</button>
+      <button class="btn btn-outline" id="btnInvert" onclick="applyInvert()">反色</button>
+      <button class="btn btn-outline" id="btnVintage" onclick="applyVintage()">怀旧</button>
+      <button class="btn btn-outline" id="btnCool" onclick="applyCool()">冷色</button>
+      <button class="btn btn-outline" id="btnWarm" onclick="applyWarm()">暖色</button>
+      <button class="btn btn-outline" id="btnSketch" onclick="applySketch()">素描</button>
+      <button class="btn btn-outline" id="btnEmboss" onclick="applyEmboss()">浮雕</button>
+      <button class="btn btn-outline" id="btnOldPhoto" onclick="applyOldPhoto()">老照片</button>
+      <button class="btn btn-outline" id="btnLomo" onclick="applyLomo()">LOMO</button>
+      <button class="btn btn-outline" id="btnJapanese" onclick="applyJapanese()">日系</button>
+      <button class="btn btn-outline" id="btnDreamy" onclick="applyDreamy()">梦幻</button>
+      <button class="btn btn-outline" id="btnVignette" onclick="applyVignette()">暗角</button>
+      <button class="btn btn-outline" id="btnGrain" onclick="applyFilmGrain()">噪点</button>
+    </div>
+
+    <h3>🕓 操作历史</h3>
+    <div id="historyList" style="font-size:12px;color:#667;"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <h3 id="modalTitle">设置</h3>
+    <div id="modalBody"></div>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary" onclick="confirmModal()">确定</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== 状态管理 =====
+const state = {
+  sourceImage: null,
+  displayCanvas: null,
+  fileName: '', origWidth: 0, origHeight: 0, fileSize: 0, mimeType: '',
+  cropMode: false,
+  undoStack: [],      // 撤销栈
+  redoStack: [],      // 重做栈
+  history: [],        // 操作描述列表
+  sliderLive: false,
+};
+
+let modalCallback = null;
+
+const $ = id => document.getElementById(id);
+const canvas = $('editorCanvas');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
+const placeholder = $('placeholder');
+const cropOverlay = $('cropOverlay');
+const cropBox = $('cropBox');
+const wrap = $('canvasWrap');
+
+// 为浮雕和LOMO按钮添加JS级别的点击监听（兜底方案，确保一定可点击）
+(function initFallback() {
+  const embossBtn = document.getElementById('btnEmboss');
+  const lomoBtn = document.getElementById('btnLomo');
+  if (embossBtn) { embossBtn.removeAttribute('disabled'); embossBtn.addEventListener('click', applyEmboss); }
+  if (lomoBtn) { lomoBtn.removeAttribute('disabled'); lomoBtn.addEventListener('click', applyLomo); }
+})();
+
+// ===== 全部启用按钮 =====
+function enableButtons(en) {
+  // 自动查找页面上所有 disabled 按钮并启用/禁用
+  document.querySelectorAll('.toolbar button,.filter-bar button,#sidePanel button').forEach(btn => {
+    if (btn.id && btn.id.startsWith('btnApplyCrop')) return; // 裁剪确认按钮特殊处理
+    if (btn.id && btn.id.startsWith('btnCancelCrop')) return;
+    btn.disabled = !en;
+  });
+  $('fBrightness').disabled = !en;
+  $('fContrast').disabled = !en;
+  $('fSaturation').disabled = !en;
+  $('fHue').disabled = !en;
+  $('btnApplyAdj').disabled = !en;
+  $('btnResetSliders').disabled = !en;
+}
+
+function updateUndoRedoBtns() {
+  $('btnUndo').disabled = state.undoStack.length === 0;
+  $('btnRedo').disabled = state.redoStack.length === 0;
+}
+
+// ===== 文件加载 =====
+function loadImage() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*';
+  input.onchange = e => { const f = e.target.files[0]; if (f) loadFile(f); };
+  input.click();
+}
+
+function loadFromClipboard() {
+  if (!navigator.clipboard) { showToast('不支持剪贴板'); return; }
+  navigator.clipboard.read().then(items => {
+    for (const item of items) {
+      for (const type of item.types) {
+        if (type.startsWith('image/')) {
+          item.getType(type).then(blob => {
+            const file = new File([blob], 'clipboard.png', { type: type });
+            loadFile(file);
+          });
+          return;
+        }
+      }
+    }
+    showToast('剪贴板中无图片');
+  }).catch(() => showToast('无法读取剪贴板'));
+}
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      state.sourceImage = img;
+      state.fileName = file.name; state.origWidth = img.naturalWidth;
+      state.origHeight = img.naturalHeight; state.fileSize = file.size;
+      state.mimeType = file.type || 'image/png';
+      state.undoStack = []; state.redoStack = []; state.history = [];
+      initDisplay(); updateInfo();
+      enableButtons(true); resetSliders(false);
+      showToast('图片加载成功');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+wrap.addEventListener('dragover', e => { e.preventDefault(); wrap.classList.add('drag-over'); });
+wrap.addEventListener('dragleave', () => wrap.classList.remove('drag-over'));
+wrap.addEventListener('drop', e => {
+  e.preventDefault(); wrap.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) loadFile(file);
+  else showToast('请拖入图片文件');
+});
+
+// Ctrl+V 粘贴图片
+document.addEventListener('paste', e => {
+  const items = e.clipboardData?.items;
+  if (!items) return;
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      const blob = item.getAsFile();
+      if (blob) { loadFile(blob); break; }
+    }
+  }
+});
+
+// ===== 初始化显示 =====
+function initDisplay() {
+  const img = state.sourceImage;
+  canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+  ctx.drawImage(img, 0, 0);
+  state.displayCanvas = cloneCanvas(canvas);
+  placeholder.style.display = 'none'; canvas.style.display = 'block';
+  $('sidePanel').style.display = 'block';
+  updateHistoryPanel(); updateUndoRedoBtns();
+  $('cropOverlay').style.display = 'none'; state.cropMode = false;
+}
+
+// ===== 画布工具 =====
+function cloneCanvas(source) { const c = document.createElement('canvas'); c.width = source.width; c.height = source.height; c.getContext('2d').drawImage(source, 0, 0); return c; }
+
+function renderDisplay() {
+  const src = state.displayCanvas;
+  canvas.width = src.width; canvas.height = src.height;
+  ctx.drawImage(src, 0, 0); updateInfo();
+}
+
+function commit(opName, newCanvas) {
+  state.undoStack.push({ desc: opName, canvas: cloneCanvas(state.displayCanvas) });
+  state.redoStack = [];
+  state.history.push(opName);
+  state.displayCanvas = newCanvas;
+  cancelCrop(); renderDisplay(); updateUndoRedoBtns(); updateHistoryPanel();
+}
+
+// ===== Undo / Redo =====
+function undo() {
+  if (state.undoStack.length === 0) return;
+  const entry = state.undoStack.pop();
+  state.redoStack.push({ desc: entry.desc, canvas: cloneCanvas(state.displayCanvas) });
+  state.displayCanvas = entry.canvas;
+  state.history.splice(state.history.lastIndexOf(entry.desc), 1);
+  cancelCrop(); renderDisplay(); updateUndoRedoBtns(); updateHistoryPanel();
+  resetSliders(false);
+  showToast('已撤销：' + entry.desc);
+}
+
+function redo() {
+  if (state.redoStack.length === 0) return;
+  const entry = state.redoStack.pop();
+  state.undoStack.push({ desc: entry.desc, canvas: cloneCanvas(state.displayCanvas) });
+  state.history.push(entry.desc);
+  state.displayCanvas = entry.canvas;
+  cancelCrop(); renderDisplay(); updateUndoRedoBtns(); updateHistoryPanel();
+  showToast('已重做：' + entry.desc);
+}
+
+// ===== 信息面板 =====
+function updateInfo() {
+  if (!state.displayCanvas) return;
+  $('infoName').textContent = state.fileName || '-';
+  $('infoOrig').textContent = `${state.origWidth} × ${state.origHeight}`;
+  $('infoCurr').textContent = `${state.displayCanvas.width} × ${state.displayCanvas.height}`;
+  $('infoSize').textContent = formatSize(state.fileSize);
+  $('infoType').textContent = state.mimeType || '-';
+}
+function formatSize(b) { if (!b) return '-'; if (b<1024) return b+' B'; if (b<1024*1024) return (b/1024).toFixed(1)+' KB'; return (b/1024/1024).toFixed(1)+' MB'; }
+function updateHistoryPanel() {
+  const el = $('historyList');
+  if (state.history.length === 0) { el.textContent = '暂无操作'; return; }
+  el.innerHTML = state.history.slice(-15).map((h,i) => `<div style="padding:1px 0;color:#aac;">${state.history.length - state.history.slice(-15).length + i + 1}. ${h}</div>`).join('');
+}
+
+// ===== 翻转 =====
+function flipH() { flip(true, false); }
+function flipV() { flip(false, true); }
+function flip(h, v) {
+  const name = (h?'水平':'') + (h&&v?'+':'') + (v?'垂直':'') + '翻转';
+  const src = state.displayCanvas;
+  const tmp = document.createElement('canvas'); tmp.width = src.width; tmp.height = src.height;
+  const tc = tmp.getContext('2d');
+  tc.translate(h ? src.width : 0, v ? src.height : 0);
+  tc.scale(h ? -1 : 1, v ? -1 : 1);
+  tc.drawImage(src, 0, 0);
+  commit(name, tmp);
+  showToast(name + '完成');
+}
+
+// ===== 旋转 =====
+function rotateCW() { rotateBy(90); }
+function rotateCCW() { rotateBy(-90); }
+function rotateCustom() {
+  const angle = prompt('输入旋转角度（度）：', '45');
+  if (angle === null) return;
+  const deg = parseFloat(angle);
+  if (isNaN(deg)) { showToast('无效角度'); return; }
+  rotateBy(deg);
+}
+function rotateBy(deg) {
+  const src = state.displayCanvas;
+  const rad = deg * Math.PI / 180;
+  const sin = Math.abs(Math.sin(rad)), cos = Math.abs(Math.cos(rad));
+  const w = Math.round(src.width * cos + src.height * sin);
+  const h = Math.round(src.width * sin + src.height * cos);
+  const tmp = document.createElement('canvas'); tmp.width = w; tmp.height = h;
+  const tc = tmp.getContext('2d');
+  tc.translate(w/2, h/2); tc.rotate(rad);
+  tc.drawImage(src, -src.width/2, -src.height/2);
+  commit(`旋转${deg}°`, tmp);
+  showToast(`旋转 ${deg}°`);
+}
+
+// ===== 缩放 =====
+function zoomAction(dir) {
+  const c = state.displayCanvas;
+  const factor = dir === '+' ? 1.25 : 0.8;
+  const newW = Math.round(c.width * factor);
+  const newH = Math.round(c.height * factor);
+  const tmp = document.createElement('canvas'); tmp.width = newW; tmp.height = newH;
+  const tc = tmp.getContext('2d'); tc.imageSmoothingQuality = 'high';
+  tc.drawImage(c, 0, 0, newW, newH);
+  commit(dir === '+' ? '放大' : '缩小', tmp);
+  showToast(`尺寸 ${newW} × ${newH}`);
+}
+
+function resizeImage() {
+  const c = state.displayCanvas;
+  $('modalTitle').textContent = '调整尺寸';
+  $('modalBody').innerHTML = `
+    <label>宽度 (px)</label><input type="number" id="mw" min="1" value="${c.width}">
+    <label>高度 (px)</label><input type="number" id="mh" min="1" value="${c.height}">
+    <label style="cursor:pointer;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="mKeep" checked style="accent-color:#e94560;"> 锁定宽高比</label>
+  `;
+  modalCallback = () => {
+    const w = parseInt($('mw').value), h = parseInt($('mh').value);
+    if (!w||!h||w<1||h<1) { showToast('无效尺寸'); return; }
+    const tmp = document.createElement('canvas'); tmp.width = w; tmp.height = h;
+    const tc = tmp.getContext('2d'); tc.imageSmoothingQuality = 'high';
+    tc.drawImage(state.displayCanvas, 0, 0, w, h);
+    closeModal(); commit('调整尺寸', tmp);
+    showToast(`尺寸 ${w} × ${h}`);
+  };
+  $('modalOverlay').classList.add('active');
+  setTimeout(() => { $('mw').focus(); $('mw').select(); }, 50);
+  $('mw').oninput = () => { if ($('mKeep').checked) $('mh').value = Math.round($('mw').value * state.displayCanvas.height / state.displayCanvas.width); };
+  $('mh').oninput = () => { if ($('mKeep').checked) $('mw').value = Math.round($('mh').value * state.displayCanvas.width / state.displayCanvas.height); };
+}
+
+function closeModal() { $('modalOverlay').classList.remove('active'); modalCallback = null; }
+function confirmModal() { if (modalCallback) modalCallback(); }
+
+// ===== 裁剪 =====
+let cropDragging = false, cropResizing = false, cropResizeDir = '';
+
+function startCrop() {
+  if (!state.displayCanvas || state.cropMode) return;
+  state.cropMode = true;
+  $('btnCrop').style.display='none'; $('btnApplyCrop').style.display=''; $('btnCancelCrop').style.display='';
+  cropOverlay.style.display = 'block'; adjustCropOverlay();
+  const rect = canvas.getBoundingClientRect();
+  const bw = rect.width * 0.7, bh = rect.height * 0.7;
+  setCropBox((rect.width-bw)/2, (rect.height-bh)/2, bw, bh);
+}
+function adjustCropOverlay() {
+  const cr = canvas.getBoundingClientRect();
+  cropOverlay.style.width = cr.width+'px'; cropOverlay.style.height = cr.height+'px';
+  cropOverlay.style.top = (cr.top - wrap.getBoundingClientRect().top + wrap.scrollTop)+'px';
+  cropOverlay.style.left = (cr.left - wrap.getBoundingClientRect().left + wrap.scrollLeft)+'px';
+}
+function setCropBox(x,y,w,h) { cropBox.style.left=x+'px'; cropBox.style.top=y+'px'; cropBox.style.width=w+'px'; cropBox.style.height=h+'px'; }
+function applyCrop() {
+  if (!state.cropMode) return;
+  const rect = canvas.getBoundingClientRect();
+  const sx = (cropBox.getBoundingClientRect().left - rect.left) * canvas.width / rect.width;
+  const sy = (cropBox.getBoundingClientRect().top - rect.top) * canvas.height / rect.height;
+  const sw = cropBox.getBoundingClientRect().width * canvas.width / rect.width;
+  const sh = cropBox.getBoundingClientRect().height * canvas.height / rect.height;
+  if (sw<2||sh<2) { showToast('裁剪区域太小'); return; }
+  const tmp = document.createElement('canvas'); tmp.width=Math.round(sw); tmp.height=Math.round(sh);
+  tmp.getContext('2d').drawImage(state.displayCanvas, Math.round(sx), Math.round(sy), Math.round(sw), Math.round(sh), 0,0, Math.round(sw), Math.round(sh));
+  cancelCrop(); commit('裁剪', tmp);
+  showToast(`裁剪完成 ${Math.round(sw)} × ${Math.round(sh)}`);
+}
+function cancelCrop() {
+  state.cropMode = false;
+  $('btnCrop').style.display=''; $('btnApplyCrop').style.display='none'; $('btnCancelCrop').style.display='none';
+  cropOverlay.style.display = 'none';
+}
+
+cropBox.addEventListener('mousedown', e => {
+  if (!state.cropMode) return;
+  const t = e.target;
+  if (t.classList.contains('handle')) { cropResizing = true; cropResizeDir = [...t.classList].find(c => ['nw','ne','sw','se','n','s','e','w'].includes(c)); e.preventDefault(); return; }
+  if (t === cropBox || t.classList.contains('handles')) { cropDragging = true; e.preventDefault(); }
+});
+document.addEventListener('mousemove', e => {
+  if (!state.cropMode) return;
+  const cr = canvas.getBoundingClientRect();
+  const relX = e.clientX - cr.left, relY = e.clientY - cr.top;
+  if (cropDragging) {
+    let l = Math.max(0, Math.min(parseFloat(cropBox.style.left) + (e.movementX || 0), cr.width - parseFloat(cropBox.style.width)));
+    let t = Math.max(0, Math.min(parseFloat(cropBox.style.top) + (e.movementY || 0), cr.height - parseFloat(cropBox.style.height)));
+    cropBox.style.left = l+'px'; cropBox.style.top = t+'px';
+    return;
+  }
+  if (cropResizing) {
+    let b = { l: parseFloat(cropBox.style.left), t: parseFloat(cropBox.style.top), r: parseFloat(cropBox.style.left)+parseFloat(cropBox.style.width), b: parseFloat(cropBox.style.top)+parseFloat(cropBox.style.height) };
+    const d = cropResizeDir;
+    if (d.includes('e')) b.r = Math.min(relX, cr.width); if (d.includes('w')) b.l = Math.max(relX, 0);
+    if (d.includes('s')) b.b = Math.min(relY, cr.height); if (d.includes('n')) b.t = Math.max(relY, 0);
+    if (b.r - b.l < 20 || b.b - b.t < 20) return;
+    cropBox.style.left = b.l+'px'; cropBox.style.top = b.t+'px'; cropBox.style.width = (b.r-b.l)+'px'; cropBox.style.height = (b.b-b.t)+'px';
+    return;
+  }
+  const br = cropBox.getBoundingClientRect(); const m = 8;
+  let cur = 'move';
+  if (Math.abs(e.clientX-br.left)<m && Math.abs(e.clientY-br.top)<m) cur='nw-resize';
+  else if (Math.abs(e.clientX-br.right)<m && Math.abs(e.clientY-br.top)<m) cur='ne-resize';
+  else if (Math.abs(e.clientX-br.left)<m && Math.abs(e.clientY-br.bottom)<m) cur='sw-resize';
+  else if (Math.abs(e.clientX-br.right)<m && Math.abs(e.clientY-br.bottom)<m) cur='se-resize';
+  else if (Math.abs(e.clientX-br.left)<m && e.clientY>br.top+m && e.clientY<br.bottom-m) cur='w-resize';
+  else if (Math.abs(e.clientX-br.right)<m && e.clientY>br.top+m && e.clientY<br.bottom-m) cur='e-resize';
+  else if (Math.abs(e.clientY-br.top)<m && e.clientX>br.left+m && e.clientX<br.right-m) cur='n-resize';
+  else if (Math.abs(e.clientY-br.bottom)<m && e.clientX>br.left+m && e.clientX<br.right-m) cur='s-resize';
+  cropBox.style.cursor = cur;
+});
+document.addEventListener('mouseup', () => { cropDragging = false; cropResizing = false; });
+
+// ===== 滤镜：像素级操作 =====
+function getImageData() {
+  if (!state.displayCanvas) { showToast('请先打开一张图片'); return null; }
+  const c = state.displayCanvas;
+  return c.getContext('2d').getImageData(0, 0, c.width, c.height);
+}
+function setImageData(id) {
+  const c = cloneCanvas(state.displayCanvas);
+  c.getContext('2d').putImageData(id, 0, 0);
+  return c;
+}
+
+function applyGrayscale() {
+  const id = getImageData(); if (!id) return; const d = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const gray = d[i]*0.299 + d[i+1]*0.587 + d[i+2]*0.114;
+    d[i]=d[i+1]=d[i+2]=gray;
+  }
+  commit('灰度', setImageData(id)); showToast('灰度滤镜已应用');
+}
+function applySepia() {
+  const id = getImageData(); if (!id) return; const d = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const r=d[i], g=d[i+1], b=d[i+2];
+    d[i]=Math.min(255, r*0.393+g*0.769+b*0.189);
+    d[i+1]=Math.min(255, r*0.349+g*0.686+b*0.168);
+    d[i+2]=Math.min(255, r*0.272+g*0.534+b*0.131);
+  }
+  commit('复古', setImageData(id)); showToast('复古滤镜已应用');
+}
+function applyInvert() {
+  const id = getImageData(); if (!id) return; const d = id.data;
+  for (let i = 0; i < d.length; i += 4) { d[i]=255-d[i]; d[i+1]=255-d[i+1]; d[i+2]=255-d[i+2]; }
+  commit('反色', setImageData(id)); showToast('反色滤镜已应用');
+}
+function applyVintage() {
+  const id = getImageData(); if (!id) return; const d = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    d[i]=Math.min(255, d[i]*1.1); d[i+1]=Math.min(255, d[i+1]*0.95); d[i+2]=Math.min(255, d[i+2]*0.8);
+  }
+  commit('怀旧', setImageData(id)); showToast('怀旧滤镜已应用');
+}
+function applyCool() {
+  const id = getImageData(); if (!id) return; const d = id.data;
+  for (let i = 0; i < d.length; i += 4) { d[i]=Math.max(0,d[i]-20); d[i+2]=Math.min(255,d[i+2]+30); }
+  commit('冷色', setImageData(id)); showToast('冷色滤镜已应用');
+}
+function applyWarm() {
+  const id = getImageData(); if (!id) return; const d = id.data;
+  for (let i = 0; i < d.length; i += 4) { d[i]=Math.min(255,d[i]+30); d[i+1]=Math.min(255,d[i+1]+10); d[i+2]=Math.max(0,d[i+2]-20); }
+  commit('暖色', setImageData(id)); showToast('暖色滤镜已应用');
+}
+
+// ===== 素描 =====
+function applySketch() {
+  const id = getImageData(); if (!id) return; const d = id.data; const w = state.displayCanvas.width, h = state.displayCanvas.height;
+  const gray = new Uint8Array(w * h);
+  for (let i = 0, j = 0; i < d.length; i += 4, j++) {
+    gray[j] = d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114;
+  }
+  // Sobel 边缘检测
+  for (let y = 1; y < h - 1; y++) {
+    for (let x = 1; x < w - 1; x++) {
+      const idx = (y * w + x) * 4;
+      const gx = -gray[(y-1)*w+x-1] + gray[(y-1)*w+x+1] - 2*gray[y*w+x-1] + 2*gray[y*w+x+1] - gray[(y+1)*w+x-1] + gray[(y+1)*w+x+1];
+      const gy = -gray[(y-1)*w+x-1] - 2*gray[(y-1)*w+x] - gray[(y-1)*w+x+1] + gray[(y+1)*w+x-1] + 2*gray[(y+1)*w+x] + gray[(y+1)*w+x+1];
+      let edge = 255 - Math.min(255, Math.sqrt(gx * gx + gy * gy));
+      edge = Math.min(255, edge + 30); // 适度提亮
+      d[idx] = d[idx + 1] = d[idx + 2] = edge;
+    }
+  }
+  commit('素描', setImageData(id)); showToast('素描滤镜已应用');
+}
+
+// ===== 浮雕 =====
+function applyEmboss() {
+  console.log('applyEmboss called');
+  if (!state.displayCanvas) { showToast('请先打开图片'); return; }
+  try {
+    const id = getImageData(); const d = id.data; const w = state.displayCanvas.width, h = state.displayCanvas.height;
+  const copy = new Uint8ClampedArray(d);
+  for (let y = 1; y < h - 1; y++) {
+    for (let x = 1; x < w - 1; x++) {
+      const idx = (y * w + x) * 4;
+      for (let ch = 0; ch < 3; ch++) {
+        const val = -copy[((y-1)*w+(x-1))*4+ch] - copy[((y-1)*w+x)*4+ch]
+                    + copy[((y+1)*w+x)*4+ch] + copy[((y+1)*w+(x+1))*4+ch];
+        d[idx + ch] = Math.min(255, Math.max(0, val + 128));
+      }
+    }
+  }
+  commit('浮雕', setImageData(id)); showToast('浮雕滤镜已应用');
+  } catch(e) { console.error('applyEmboss error:', e); showToast('浮雕处理出错'); }
+}
+
+// ===== 老照片 =====
+function applyOldPhoto() {
+  const id = getImageData(); if (!id) return; const d = id.data; const w = state.displayCanvas.width, h = state.displayCanvas.height;
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i], g = d[i + 1], b = d[i + 2];
+    // 复古棕褐色调
+    d[i] = Math.min(255, r * 0.393 + g * 0.769 + b * 0.189);
+    d[i + 1] = Math.min(255, r * 0.349 + g * 0.686 + b * 0.168);
+    d[i + 2] = Math.min(255, r * 0.272 + g * 0.534 + b * 0.131);
+  }
+  // 添加噪点
+  // const d2 = setImageData(id).getContext('2d').getImageData(0,0,w,h).data;
+  const d2 = new Uint8ClampedArray(d);
+  for (let i = 0; i < d2.length; i += 4) {
+    const noise = (Math.random() - 0.5) * 40;
+    d2[i] = Math.min(255, Math.max(0, d2[i] + noise));
+    d2[i + 1] = Math.min(255, Math.max(0, d2[i + 1] + noise));
+    d2[i + 2] = Math.min(255, Math.max(0, d2[i + 2] + noise));
+  }
+  // 暗角
+  const cx = w / 2, cy = h / 2, maxDist = Math.sqrt(cx * cx + cy * cy);
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const idx = (y * w + x) * 4;
+      const dist = Math.sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy));
+      const vignette = Math.max(0.3, 1 - (dist / maxDist) * 0.8);
+      d2[idx] = Math.round(d2[idx] * vignette);
+      d2[idx + 1] = Math.round(d2[idx + 1] * vignette);
+      d2[idx + 2] = Math.round(d2[idx + 2] * vignette);
+    }
+  }
+  id.data.set(d2);
+  commit('老照片', setImageData(id)); showToast('老照片滤镜已应用');
+}
+
+// ===== LOMO =====
+function applyLomo() {
+  console.log('applyLomo called');
+  if (!state.displayCanvas) { showToast('请先打开图片'); return; }
+  try {
+    const w = state.displayCanvas.width, h = state.displayCanvas.height;
+    const id = getImageData(); const d = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    let r = (d[i] - 128) * 1.25 + 128;
+    let g = (d[i + 1] - 128) * 1.2 + 128;
+    let b = (d[i + 2] - 128) * 1.1 + 128;
+    g = Math.min(255, g + 15);
+    b = Math.max(0, b - 10);
+    d[i] = Math.round(r); d[i + 1] = Math.round(g); d[i + 2] = Math.round(b);
+  }
+  // 暗角（直接在数据上操作）
+  const cx = w / 2, cy = h / 2, maxDist = Math.sqrt(cx * cx + cy * cy);
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const idx = (y * w + x) * 4;
+      const dist = Math.sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy));
+      const v = Math.max(0.2, 1 - (dist / maxDist) * 0.75);
+      d[idx] = Math.round(d[idx] * v);
+      d[idx + 1] = Math.round(d[idx + 1] * v);
+      d[idx + 2] = Math.round(d[idx + 2] * v);
+    }
+  }
+  commit('LOMO', setImageData(id)); showToast('LOMO滤镜已应用');
+  } catch(e) { console.error('applyLomo error:', e); showToast('LOMO处理出错'); }
+}
+
+// ===== 日系 =====
+function applyJapanese() {
+  const id = getImageData(); if (!id) return; const d = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    // 降低对比度，提亮，偏蓝
+    d[i] = Math.min(255, d[i] * 1.15);
+    d[i + 1] = Math.min(255, d[i + 1] * 1.1);
+    d[i + 2] = Math.min(255, d[i + 2] * 1.08 + 15);
+    // 降低饱和度
+    const gray = d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114;
+    d[i] = Math.round(gray + (d[i] - gray) * 0.7);
+    d[i + 1] = Math.round(gray + (d[i + 1] - gray) * 0.7);
+    d[i + 2] = Math.round(gray + (d[i + 2] - gray) * 0.7);
+  }
+  commit('日系', setImageData(id)); showToast('日系滤镜已应用');
+}
+
+// ===== 梦幻柔光 =====
+function applyDreamy() {
+  if (!state.displayCanvas) { showToast('请先打开图片'); return; }
+  const w = state.displayCanvas.width, h = state.displayCanvas.height;
+  // 叠加一层模糊后的图实现柔光
+  const blurCanvas = document.createElement('canvas'); blurCanvas.width = w; blurCanvas.height = h;
+  const bc = blurCanvas.getContext('2d');
+  // 缩小后模糊
+  const s = 0.25; const sw = Math.round(w * s), sh = Math.round(h * s);
+  const small = document.createElement('canvas'); small.width = sw; small.height = sh;
+  small.getContext('2d').drawImage(state.displayCanvas, 0, 0, sw, sh);
+  bc.filter = 'blur(6px)'; bc.drawImage(small, 0, 0, w, h);
+  bc.filter = 'none';
+  const result = document.createElement('canvas'); result.width = w; result.height = h;
+  const rc = result.getContext('2d');
+  rc.globalAlpha = 0.55; rc.drawImage(blurCanvas, 0, 0);
+  rc.globalAlpha = 0.8; rc.drawImage(state.displayCanvas, 0, 0);
+  rc.globalAlpha = 1;
+  commit('梦幻', result); showToast('梦幻滤镜已应用');
+}
+
+// ===== 暗角 =====
+function applyVignette() {
+  if (!state.displayCanvas) { showToast('请先打开图片'); return; }
+  const w = state.displayCanvas.width, h = state.displayCanvas.height;
+  const result = document.createElement('canvas'); result.width = w; result.height = h;
+  const rc = result.getContext('2d');
+  rc.drawImage(state.displayCanvas, 0, 0);
+  const radial = rc.createRadialGradient(w / 2, h / 2, Math.max(w, h) * 0.35, w / 2, h / 2, Math.max(w, h) * 0.75);
+  radial.addColorStop(0, 'rgba(0,0,0,0)');
+  radial.addColorStop(1, 'rgba(0,0,0,0.7)');
+  rc.fillStyle = radial; rc.fillRect(0, 0, w, h);
+  commit('暗角', result); showToast('暗角效果已应用');
+}
+
+// ===== 胶片噪点 =====
+function applyFilmGrain() {
+  const id = getImageData(); if (!id) return; const d = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const noise = (Math.random() - 0.5) * 35;
+    d[i] = Math.min(255, Math.max(0, d[i] + noise));
+    d[i + 1] = Math.min(255, Math.max(0, d[i + 1] + noise));
+    d[i + 2] = Math.min(255, Math.max(0, d[i + 2] + noise));
+  }
+  commit('胶片噪点', setImageData(id)); showToast('胶片噪点已添加');
+}
+
+// ===== 亮度/对比度/饱和度/色调滑块 =====
+function onSliderChange(type, val) {
+  $(`v${type.charAt(0).toUpperCase()+type.slice(1)}`).textContent = type === 'hue' ? val+'°' : val+'%';
+}
+function resetSliders(showToastMsg = true) {
+  $('fBrightness').value = 100; $('vBrightness').textContent = '100%';
+  $('fContrast').value = 100; $('vContrast').textContent = '100%';
+  $('fSaturation').value = 100; $('vSaturation').textContent = '100%';
+  $('fHue').value = 0; $('vHue').textContent = '0°';
+  if (showToastMsg) showToast('滑块已重置');
+}
+function applyAdjustments() {
+  const brightness = parseInt($('fBrightness').value) / 100;
+  const contrast = parseInt($('fContrast').value) / 100;
+  const saturation = parseInt($('fSaturation').value) / 100;
+  const hue = parseInt($('fHue').value);
+
+  const id = getImageData(); const d = id.data;
+
+  for (let i = 0; i < d.length; i += 4) {
+    let r = d[i], g = d[i+1], b = d[i+2];
+
+    // 色调旋转
+    if (hue !== 0) {
+      const hsv = rgbToHsl(r, g, b);
+      hsv[0] = (hsv[0] + hue / 360) % 1;
+      if (hsv[0] < 0) hsv[0] += 1;
+      [r, g, b] = hslToRgb(hsv[0], hsv[1], hsv[2]);
+    }
+
+    // 亮度
+    r *= brightness; g *= brightness; b *= brightness;
+
+    // 对比度
+    r = (r - 128) * contrast + 128;
+    g = (g - 128) * contrast + 128;
+    b = (b - 128) * contrast + 128;
+
+    // 饱和度
+    const gray = r * 0.299 + g * 0.587 + b * 0.114;
+    r = gray + (r - gray) * saturation;
+    g = gray + (g - gray) * saturation;
+    b = gray + (b - gray) * saturation;
+
+    d[i] = Math.min(255, Math.max(0, Math.round(r)));
+    d[i+1] = Math.min(255, Math.max(0, Math.round(g)));
+    d[i+2] = Math.min(255, Math.max(0, Math.round(b)));
+  }
+
+  commit('调整亮度/对比度/饱和度', setImageData(id));
+  showToast('色彩调整已应用');
+}
+
+function rgbToHsl(r, g, b) {
+  r/=255; g/=255; b/=255;
+  const max=Math.max(r,g,b), min=Math.min(r,g,b);
+  let h=0, s=0, l=(max+min)/2;
+  if(max!==min){
+    const d=max-min; s=l>.5?d/(2-max-min):d/(max+min);
+    switch(max){ case r: h=((g-b)/d+(g<b?6:0))/6; break; case g: h=((b-r)/d+2)/6; break; case b: h=((r-g)/d+4)/6; break; }
+  }
+  return [h,s,l];
+}
+function hslToRgb(h, s, l) {
+  const hue2rgb = (p,q,t) => { if(t<0)t+=1; if(t>1)t-=1; if(t<1/6)return p+(q-p)*6*t; if(t<1/2)return q; if(t<2/3)return p+(q-p)*(2/3-t)*6; return p; };
+  let r,g,b;
+  if(s===0){ r=g=b=l; } else { const q=l<.5?l*(1+s):l+s-l*s, p=2*l-q; r=hue2rgb(p,q,h+1/3); g=hue2rgb(p,q,h); b=hue2rgb(p,q,h-1/3); }
+  return [Math.round(r*255), Math.round(g*255), Math.round(b*255)];
+}
+
+// ===== 模糊 =====
+function applyBlur() {
+  $('modalTitle').textContent = '高斯模糊';
+  $('modalBody').innerHTML = `<label>模糊强度</label><input type="range" id="mBlur" min="1" max="20" value="5" oninput="$('vBlur').textContent=this.value"><span class="val" id="vBlur" style="color:#e94560;">5</span> px`;
+  modalCallback = () => {
+    const radius = parseInt($('mBlur').value);
+    applyBoxBlur(radius, '模糊');
+    closeModal();
+  };
+  $('modalOverlay').classList.add('active');
+}
+function applyBoxBlur(radius, name) {
+  const w = state.displayCanvas.width, h = state.displayCanvas.height;
+  // 为了性能，对较大图片缩小后再模糊
+  const MAX_BLUR_SIZE = 1200;
+  let scale = 1;
+  if (Math.max(w, h) > MAX_BLUR_SIZE) {
+    scale = MAX_BLUR_SIZE / Math.max(w, h);
+  }
+  const sw = Math.round(w * scale), sh = Math.round(h * scale);
+  const tmp = document.createElement('canvas'); tmp.width = sw; tmp.height = sh;
+  const tc = tmp.getContext('2d');
+  tc.drawImage(state.displayCanvas, 0, 0, sw, sh);
+  const id = tc.getImageData(0, 0, sw, sh);
+
+  const scaledRadius = Math.max(1, Math.round(radius * scale));
+  const data = id.data;
+  const copy = new Uint8ClampedArray(data);
+
+  const boxSize = scaledRadius * 2 + 1;
+  const boxArea = boxSize * boxSize;
+
+  for (let y = 0; y < sh; y++) {
+    for (let x = 0; x < sw; x++) {
+      let r = 0, g = 0, b = 0, a = 0, count = 0;
+      for (let dy = -scaledRadius; dy <= scaledRadius; dy++) {
+        for (let dx = -scaledRadius; dx <= scaledRadius; dx++) {
+          const nx = x + dx, ny = y + dy;
+          if (nx < 0 || nx >= sw || ny < 0 || ny >= sh) continue;
+          const idx = (ny * sw + nx) * 4;
+          r += copy[idx]; g += copy[idx + 1]; b += copy[idx + 2]; a += copy[idx + 3];
+          count++;
+        }
+      }
+      const idx = (y * sw + x) * 4;
+      data[idx] = r / count; data[idx + 1] = g / count;
+      data[idx + 2] = b / count; data[idx + 3] = a / count;
+    }
+  }
+
+  tc.putImageData(id, 0, 0);
+  const result = document.createElement('canvas'); result.width = w; result.height = h;
+  const rc = result.getContext('2d'); rc.imageSmoothingQuality = 'high';
+  rc.drawImage(tmp, 0, 0, w, h);
+  commit(name, result);
+  showToast(`${name} 完成 (半径: ${radius}px)`);
+}
+
+// ===== 锐化 =====
+function applySharpen() {
+  $('modalTitle').textContent = '锐化';
+  $('modalBody').innerHTML = `<label>锐化强度</label><input type="range" id="mSharp" min="1" max="10" value="3" oninput="$('vSharp').textContent=this.value"><span class="val" id="vSharp" style="color:#e94560;">3</span>`;
+  modalCallback = () => {
+    const strength = parseInt($('mSharp').value) / 10;
+    const id = getImageData(); const d = id.data; const w = state.displayCanvas.width, h = state.displayCanvas.height;
+    const copy = new Uint8ClampedArray(d);
+    // 拉普拉斯锐化核
+    const kernel = [0, -1, 0, -1, 4, -1, 0, -1, 0];
+    for (let y = 1; y < h - 1; y++) {
+      for (let x = 1; x < w - 1; x++) {
+        const idx = (y * w + x) * 4;
+        for (let ch = 0; ch < 3; ch++) {
+          let edge = 0;
+          for (let ky = -1; ky <= 1; ky++)
+            for (let kx = -1; kx <= 1; kx++)
+              edge += copy[((y + ky) * w + (x + kx)) * 4 + ch] * kernel[(ky + 1) * 3 + (kx + 1)];
+          d[idx + ch] = Math.min(255, Math.max(0, copy[idx + ch] + edge * strength));
+        }
+      }
+    }
+    commit('锐化', setImageData(id)); closeModal();
+    showToast('锐化完成');
+  };
+  $('modalOverlay').classList.add('active');
+}
+
+// ===== 圆角 =====
+function applyRoundCorner() {
+  $('modalTitle').textContent = '圆角';
+  $('modalBody').innerHTML = `<label>圆角半径</label><input type="range" id="mRound" min="5" max="200" value="40" oninput="$('vRound').textContent=this.value"><span class="val" id="vRound" style="color:#e94560;">40</span> px`;
+  modalCallback = () => {
+    const r = parseInt($('mRound').value);
+    const w = state.displayCanvas.width, h = state.displayCanvas.height;
+    const tmp = document.createElement('canvas'); tmp.width = w; tmp.height = h;
+    const tc = tmp.getContext('2d');
+    tc.beginPath();
+    tc.moveTo(r, 0); tc.lineTo(w - r, 0); tc.arcTo(w, 0, w, r, r);
+    tc.lineTo(w, h - r); tc.arcTo(w, h, w - r, h, r);
+    tc.lineTo(r, h); tc.arcTo(0, h, 0, h - r, r);
+    tc.lineTo(0, r); tc.arcTo(0, 0, r, 0, r);
+    tc.closePath(); tc.clip();
+    tc.drawImage(state.displayCanvas, 0, 0);
+    commit('圆角', tmp); closeModal();
+    showToast(`圆角完成 (半径: ${r}px)`);
+  };
+  $('modalOverlay').classList.add('active');
+}
+
+// ===== 边框 =====
+function addBorder() {
+  $('modalTitle').textContent = '添加边框';
+  $('modalBody').innerHTML = `
+    <label>边框宽度</label><input type="range" id="mBordW" min="1" max="60" value="8" oninput="$('vBordW').textContent=this.value+'px'"><span class="val" id="vBordW">8px</span>
+    <label>边框颜色</label><input type="color" id="mBordColor" value="#e94560" style="width:60px;">
+    <label>边框样式</label>
+    <select id="mBordStyle">
+      <option value="solid">实线</option><option value="double">双线</option><option value="rounded">圆角边框</option>
+      <option value="shadow">阴影边框</option>
+    </select>
+  `;
+  modalCallback = () => {
+    const bw = parseInt($('mBordW').value);
+    const color = $('mBordColor').value;
+    const style = $('mBordStyle').value;
+    const sw = state.displayCanvas.width, sh = state.displayCanvas.height;
+    const pad = bw * 2;
+    const w = sw + pad, h = sh + pad;
+    const tmp = document.createElement('canvas'); tmp.width = w; tmp.height = h;
+    const tc = tmp.getContext('2d');
+
+    if (style === 'double') {
+      const b2 = Math.max(2, Math.round(bw / 3));
+      tc.fillStyle = color;
+      tc.fillRect(0, 0, w, b2); tc.fillRect(0, h - b2, w, b2);
+      tc.fillRect(0, 0, b2, h); tc.fillRect(w - b2, 0, b2, h);
+      tc.fillRect(bw, bw, w - bw*2, b2); tc.fillRect(bw, h - bw - b2, w - bw*2, b2);
+      tc.fillRect(bw, bw, b2, h - bw*2); tc.fillRect(w - bw - b2, bw, b2, h - bw*2);
+      tc.drawImage(state.displayCanvas, bw, bw);
+    } else if (style === 'rounded') {
+      const r = Math.min(bw * 3, 80);
+      tc.fillStyle = color;
+      tc.beginPath(); tc.moveTo(r, 0); tc.lineTo(w - r, 0); tc.arcTo(w, 0, w, r, r);
+      tc.lineTo(w, h - r); tc.arcTo(w, h, w - r, h, r);
+      tc.lineTo(r, h); tc.arcTo(0, h, 0, h - r, r);
+      tc.lineTo(0, r); tc.arcTo(0, 0, r, 0, r); tc.closePath(); tc.fill();
+      tc.save(); tc.beginPath(); tc.moveTo(r + bw, bw); tc.lineTo(w - r - bw, bw);
+      tc.arcTo(w - bw, bw, w - bw, r + bw, r);
+      tc.lineTo(w - bw, h - r - bw); tc.arcTo(w - bw, h - bw, w - r - bw, h - bw, r);
+      tc.lineTo(r + bw, h - bw); tc.arcTo(bw, h - bw, bw, h - r - bw, r);
+      tc.lineTo(bw, r + bw); tc.arcTo(bw, bw, r + bw, bw, r); tc.closePath(); tc.clip();
+      tc.drawImage(state.displayCanvas, bw, bw); tc.restore();
+      return;
+    } else if (style === 'shadow') {
+      tmp.width = sw + bw*4; tmp.height = sh + bw*4;
+      // 重新画
+      const tc2 = tmp.getContext('2d');
+      tc2.shadowColor = color; tc2.shadowBlur = bw * 2;
+      tc2.shadowOffsetX = 0; tc2.shadowOffsetY = 0;
+      tc2.drawImage(state.displayCanvas, bw*2, bw*2);
+      commit('边框', tmp); closeModal(); showToast('阴影边框已添加'); return;
+    } else {
+      // solid
+      tc.fillStyle = color;
+      tc.fillRect(0, 0, w, h);
+      tc.drawImage(state.displayCanvas, bw, bw);
+    }
+    commit('边框', tmp); closeModal(); showToast('边框已添加');
+  };
+  $('modalOverlay').classList.add('active');
+}
+
+// ===== 保存下载 =====
+function saveImage() {
+  if (!state.displayCanvas) return;
+  showSaveDialog();
+}
+
+function showSaveDialog() {
+  $('modalTitle').textContent = '保存图片';
+  $('modalBody').innerHTML = `
+    <label>文件名</label><input type="text" id="mSaveName" value="${(state.fileName||'image').replace(/\.[^.]+$/, '')}_edited">
+    <label>格式</label>
+    <select id="mSaveFmt" onchange="updateSaveExt()">
+      <option value="image/png" ${state.mimeType==='image/png'?'selected':''}>PNG (无损)</option>
+      <option value="image/jpeg" ${state.mimeType==='image/jpeg'?'selected':''}>JPEG (压缩)</option>
+      <option value="image/webp">WebP (高压缩)</option>
+    </select>
+    <label>质量 (JPEG/WebP)</label>
+    <input type="range" id="mSaveQ" min="10" max="100" value="92" oninput="$('vSaveQ').textContent=this.value+'%'"><span class="val" id="vSaveQ">92%</span>
+    <div id="saveExt" style="font-size:12px;color:#667;margin-top:6px;"></div>
+  `;
+  updateSaveExt();
+  modalCallback = () => {
+    const fmt = $('mSaveFmt').value;
+    const quality = parseInt($('mSaveQ').value) / 100;
+    const name = $('mSaveName').value;
+    const ext = fmt === 'image/png' ? 'png' : fmt === 'image/jpeg' ? 'jpg' : 'webp';
+    const link = document.createElement('a');
+    link.download = `${name}.${ext}`;
+    link.href = state.displayCanvas.toDataURL(fmt, quality);
+    link.click();
+    closeModal();
+    showToast(`已保存为 ${name}.${ext}`);
+  };
+  $('modalOverlay').classList.add('active');
+}
+function updateSaveExt() {
+  const fmt = $('mSaveFmt')?.value; const el = $('saveExt');
+  if (!el) return;
+  const ext = fmt === 'image/png' ? 'png' : fmt === 'image/jpeg' ? 'jpg' : 'webp';
+  el.textContent = `文件后缀: .${ext}`;
+  $('mSaveQ').disabled = fmt === 'image/png';
+}
+
+// ===== 重置 =====
+function resetAll() {
+  if (!state.sourceImage) return;
+  commit('重置', cloneCanvas(initCanvasFromSource()));
+}
+
+function initCanvasFromSource() {
+  const c = document.createElement('canvas'); c.width = state.origWidth; c.height = state.origHeight;
+  c.getContext('2d').drawImage(state.sourceImage, 0, 0);
+  return c;
+}
+
+// ===== Toast =====
+let toastTimer;
+function showToast(msg) {
+  const el = $('toast'); el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+window.addEventListener('resize', () => { if (state.cropMode) adjustCropOverlay(); });
+</script>
+<script src="../../tongji.js"></script>
+</body>
+</html>
