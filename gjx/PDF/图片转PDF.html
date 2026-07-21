@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>图片转PDF</title>
+    <link rel="stylesheet" href="https://unpkg.com/layui@2.13.8/dist/css/layui.css">
+    <script src="https://unpkg.com/layui@2.13.8/dist/layui.js"></script>
+    <script src="https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div class="layui-container" style="margin-top: 20px;">
+    <div class="layui-row">
+	    <h1>在线图片转PDF文件</h1>
+    <blockquote class="layui-elem-quote">
+        <p>说明 <code>：</code> 可以上传图片文件转PDF。页面方向可以设置PDF的纸张方，宽度比例可以设置图片的缩放比例，设置100为不缩放</p>
+    </blockquote>
+        <div class="layui-col-md8">
+            <!-- 上传区域 -->
+            <div class="layui-upload">
+                <button type="button" class="layui-btn layui-btn-normal" id="selectFiles">
+                    <i class="layui-icon">&#xe67c;</i>选择图片
+                </button>
+                <button type="button" class="layui-btn" id="startConvert">
+                    <i class="layui-icon">&#xe605;</i>生成PDF
+                </button>
+                <div class="layui-form-item" style="margin-top: 10px;">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">页面方向</label>
+                        <div class="layui-input-block">
+                            <select id="pageOrientation" class="layui-select">
+                                <option value="p">纵向</option>
+                                <option value="l">横向</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">宽度比例</label>
+                        <div class="layui-input-block">
+                            <input type="number" value="80" class="layui-input" id="widthPercent" min="1" max="100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 图片预览 -->
+            <div id="previewArea" class="layui-fluid" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+layui.use(['upload', 'layer'], function(){
+    const upload = layui.upload;
+    const layer = layui.layer;
+    const $ = layui.$;
+    
+    let imageFiles = [];
+    const pdfWidthMap = {  // A4尺寸（单位：mm）
+        p: { width: 210, height: 297 },
+        l: { width: 297, height: 210 }
+    };
+
+    // 初始化上传组件
+    upload.render({
+        elem: '#selectFiles',
+        url: '/upload/',
+        accept: 'image',
+        multiple: true,
+        auto: false,
+        choose: function(obj){
+            obj.preview(function(index, file, data){
+                // 添加文件到列表
+                imageFiles.push(file);
+                // 显示预览
+                $('#previewArea').append(`
+                    <div class="layui-col-md2" data-index="${imageFiles.length-1}">
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                                <img src="${data}" style="max-width:100%; height:100px;">
+                                <button class="layui-btn layui-btn-xs layui-btn-danger delete-btn" 
+                                        style="position:absolute; top:0; right:0;">×</button>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+        }
+    });
+
+    // 删除图片
+    $(document).on('click', '.delete-btn', function(){
+        const index = $(this).parents('.layui-col-md2').data('index');
+        imageFiles.splice(index, 1);
+        $(this).parents('.layui-col-md2').remove();
+    });
+
+    // 生成PDF
+    $('#startConvert').click(async function(){
+        if(imageFiles.length === 0){
+            layer.msg('请先选择图片');
+            return;
+        }
+
+        const orientation = $('#pageOrientation').val();
+        const widthPercent = $('#widthPercent').val() / 100;
+        const { width: pageWidth, height: pageHeight } = pdfWidthMap[orientation];
+        
+        const doc = new jspdf.jsPDF({
+            orientation: orientation === 'l' ? 'landscape' : 'portrait',
+            unit: 'mm',
+            format: 'a4'
+        });
+
+        try {
+            for(let i = 0; i < imageFiles.length; i++) {
+                const file = imageFiles[i];
+                const img = await loadImage(file);
+                
+                // 计算图片尺寸
+                const imgWidth = pageWidth * widthPercent;
+                const imgHeight = (img.naturalHeight / img.naturalWidth) * imgWidth;
+                
+                // 添加新页（第一页除外）
+                if(i > 0) doc.addPage();
+                
+                // 将图片添加到PDF
+                doc.addImage(img, 'JPEG', 
+                    (pageWidth - imgWidth)/2,  // 水平居中
+                    (pageHeight - imgHeight)/2, // 垂直居中
+                    imgWidth, 
+                    imgHeight
+                );
+            }
+            
+            doc.save('converted.pdf');
+            layer.msg('转换成功');
+        } catch (error) {
+            layer.msg('转换失败: ' + error.message);
+        }
+    });
+
+    // 加载图片
+    function loadImage(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+});
+</script>
+
+<style>
+.layui-card {
+    margin: 5px;
+    position: relative;
+}
+.delete-btn {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    padding: 0;
+}
+</style>
+<script src="../../tongji.js"></script>
+</body>
+</html>
