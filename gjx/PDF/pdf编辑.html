@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF编辑工具 - 在线PDF编辑与标注</title>
-    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.5.136/build/pdf.min.mjs"></script>
-    <script src="https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+    <script src="./js/pdf.min.mjs"></script>
+    <script src="./js/jspdf.umd.min.js"></script>
     <script src="./js/download.js"></script>
     <style>
         :root {
@@ -771,7 +771,7 @@
 
     <script>
         // 设置pdf.js worker
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.5.136/build/pdf.worker.min.mjs';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = './js/pdf.worker.min.mjs';
         
         document.addEventListener('DOMContentLoaded', function() {
             // 获取DOM元素
