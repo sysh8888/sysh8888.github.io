@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>XML 转 CSV 在线工具 (自动识别节点)</title>
+    <link href="//unpkg.com/layui@2.13.8/dist/css/layui.css" rel="stylesheet">
+    <style>
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .code-area {
+            width: 100%;
+            min-height: 300px;
+            font-family: monospace;
+        }
+        .result-area {
+            margin-top: 20px;
+        }
+        .instructions {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+        .options {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f2f2f2;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="layui-card">
+        <div class="layui-card-header">XML 转 CSV 在线工具 (自动识别节点)</div>
+        <div class="layui-card-body">
+            <div class="instructions">
+                <p>1. 在下方输入 XML 内容或上传 XML 文件</p>
+                <p>2. (可选)设置转换选项</p>
+                <p>3. 点击"转换"按钮生成 CSV 格式</p>
+                <p>4. 可以下载或复制生成的 CSV 结果</p>
+            </div>
+            
+            <div class="options">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据节点路径</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="dataPath" class="layui-input" placeholder="留空自动识别 (如: root/row)">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">指定数据节点的XPath路径</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">编码</label>
+                    <div class="layui-input-inline">
+                        <select id="encoding" class="layui-input">
+                            <option value="UTF-8" selected>UTF-8</option>
+                            <option value="GBK">GBK</option>
+                            <option value="ISO-8859-1">ISO-8859-1</option>
+                        </select>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">输出CSV编码</div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <span>包含标题行</span><input type="checkbox" name="includeHeader" id="includeHeader" checked title="包含标题行">
+                         <span>所有值加引号</span><input type="checkbox" name="quoteAll" id="quoteAll" title="所有值加引号">
+                        <span>修剪值两端空格</span><input type="checkbox" name="trimValues" id="trimValues" checked title="修剪值两端空格">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">XML 内容</label>
+                <div class="layui-input-block">
+                    <textarea id="xmlInput" class="code-area" placeholder="请输入XML内容..."><?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <row>
+        <album>The White Stripes</album>
+        <year>1999</year>
+        <US_peak_chart_post>1</US_peak_chart_post>
+    </row>
+    <row>
+        <album>De Stijl</album>
+        <year>2000</year>
+        <US_peak_chart_post>1</US_peak_chart_post>
+    </row>
+    <row>
+        <album>White Blood Cells</album>
+        <year>20.01</year>
+        <US_peak_chart_post>61</US_peak_chart_post>
+    </row>
+    <row>
+        <album>Elephant</album>
+        <year>2003</year>
+        <US_peak_chart_post>6</US_peak_chart_post>
+    </row>
+</root></textarea>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" id="convertBtn">转换</button>
+                    <button class="layui-btn layui-btn-primary" id="uploadBtn">
+                        <i class="layui-icon"></i> 上传XML文件
+                    </button>
+                    <input type="file" id="fileInput" style="display: none;" accept=".xml">
+                    <button class="layui-btn layui-btn-normal" id="analyzeBtn">分析结构</button>
+                </div>
+            </div>
+            
+            <div class="result-area">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">CSV 结果</label>
+                    <div class="layui-input-block">
+                        <textarea id="csvOutput" class="code-area" readonly></textarea>
+                    </div>
+                </div>
+                
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal" id="downloadBtn">下载CSV</button>
+                        <button class="layui-btn" id="copyBtn">复制结果</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="//unpkg.com/layui@2.13.8/dist/layui.js"></script>
+<script>
+layui.use(['layer', 'jquery'], function(){
+    var layer = layui.layer;
+    var $ = layui.jquery;
+    
+    // 上传XML文件
+    $('#uploadBtn').click(function(){
+        $('#fileInput').click();
+    });
+    
+    $('#fileInput').change(function(e){
+        var file = e.target.files[0];
+        if (!file) return;
+        
+        if (file.type !== "text/xml" && !file.name.endsWith('.xml')) {
+            layer.msg('请选择XML文件', {icon: 2});
+            return;
+        }
+        
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#xmlInput').val(e.target.result);
+        };
+        reader.readAsText(file);
+    });
+    
+    // 分析XML结构
+    $('#analyzeBtn').click(function(){
+        var xmlText = $('#xmlInput').val().trim();
+        if (!xmlText) {
+            layer.msg('请输入XML内容', {icon: 2});
+            return;
+        }
+        
+        try {
+            var result = analyzeXmlStructure(xmlText);
+            layer.open({
+                type: 1,
+                title: 'XML结构分析结果',
+                area: ['600px', '400px'],
+                content: '<div style="padding:15px;"><pre>' + JSON.stringify(result, null, 2) + '</pre>' +
+                         '<p class="layui-word-aux">建议数据节点路径: ' + (result.suggestedPath || '未识别') + '</p></div>'
+            });
+        } catch (e) {
+            layer.msg('分析失败: ' + e.message, {icon: 2});
+            console.error(e);
+        }
+    });
+    
+    // 转换按钮
+    $('#convertBtn').click(function(){
+        var xmlText = $('#xmlInput').val().trim();
+        if (!xmlText) {
+            layer.msg('请输入XML内容', {icon: 2});
+            return;
+        }
+        
+        var options = {
+            dataPath: $('#dataPath').val().trim(),
+            encoding: $('#encoding').val(),
+            includeHeader: $('#includeHeader').is(':checked'),
+            quoteAll: $('#quoteAll').is(':checked'),
+            trimValues: $('#trimValues').is(':checked')
+        };
+        
+        try {
+            var csvResult = xmlToCsv(xmlText, options);
+            $('#csvOutput').val(csvResult);
+            layer.msg('转换成功', {icon: 1});
+        } catch (e) {
+            layer.msg('转换失败: ' + e.message, {icon: 2});
+            console.error(e);
+        }
+    });
+    
+    // 复制按钮
+    $('#copyBtn').click(function(){
+    var csvOutput = $('#csvOutput').val();
+    if (!csvOutput) {
+        layer.msg('没有可复制的内容', {icon: 2});
+        return;
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(csvOutput).then(function() {
+            layer.msg('复制成功', {icon: 1});
+        }, function() {
+            layer.msg('复制失败', {icon: 2});
+        });
+    } else {
+        var textarea = document.createElement('textarea');
+        textarea.style.position = 'fixed';
+        textarea.style.top = '0';
+        textarea.style.left = '0';
+        textarea.style.opacity = '0';
+        textarea.value = csvOutput;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand('copy');
+            layer.msg('复制成功', {icon: 1});
+        } catch (err) {
+            layer.msg('复制失败，请手动复制', {icon: 2});
+        } finally {
+            document.body.removeChild(textarea);
+        }
+    }
+});
+    
+    // 下载按钮
+    $('#downloadBtn').click(function(){
+        var csvOutput = $('#csvOutput').val();
+        if (!csvOutput) {
+            layer.msg('没有可下载的内容', {icon: 2});
+            return;
+        }
+        
+        var encoding = $('#encoding').val();
+        var blob = new Blob([csvOutput], {type: 'text/csv;charset=' + encoding});
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'converted.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+    
+    // 分析XML结构
+    function analyzeXmlStructure(xmlText) {
+        // 解析XML
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        
+        // 检查解析错误
+        var parserError = xmlDoc.getElementsByTagName("parsererror");
+        if (parserError.length > 0) {
+            throw new Error("XML解析错误: " + parserError[0].textContent);
+        }
+        
+        var result = {
+            rootElement: xmlDoc.documentElement.nodeName,
+            suggestedPath: null,
+            sampleDataNodes: [],
+            fieldNames: new Set()
+        };
+        
+        // 查找可能的数据节点
+        function findDataNodes(node, path) {
+            if (!node) return;
+            
+            var currentPath = path ? path + '/' + node.nodeName : node.nodeName;
+            
+            // 如果节点有子元素且不是混合内容，可能是数据节点
+            if (node.childElementCount > 0 && 
+                !Array.from(node.childNodes).some(n => n.nodeType === 3 && n.textContent.trim().length > 0)) {
+                
+                // 检查子节点是否都是元素节点
+                var allElements = Array.from(node.childNodes).every(n => n.nodeType === 1);
+                if (allElements) {
+                    var sampleFields = {};
+                    Array.from(node.childNodes).forEach(child => {
+                        if (child.nodeType === 1) {
+                            sampleFields[child.nodeName] = child.textContent;
+                            result.fieldNames.add(child.nodeName);
+                        }
+                    });
+                    
+                    result.sampleDataNodes.push({
+                        path: currentPath,
+                        fields: sampleFields
+                    });
+                    
+                    // 如果还没有建议路径，且这个节点有多个同级节点，建议这个路径
+                    if (!result.suggestedPath && node.parentNode.getElementsByTagName(node.nodeName).length > 1) {
+                        result.suggestedPath = currentPath;
+                    }
+                }
+            }
+            
+            // 递归检查子节点
+            Array.from(node.children).forEach(child => {
+                findDataNodes(child, currentPath);
+            });
+        }
+        
+        findDataNodes(xmlDoc.documentElement, '');
+        
+        // 如果没有建议路径，但找到了一些数据节点，使用第一个
+        if (!result.suggestedPath && result.sampleDataNodes.length > 0) {
+            result.suggestedPath = result.sampleDataNodes[0].path;
+        }
+        
+        return result;
+    }
+    
+    // XML转CSV核心函数
+    function xmlToCsv(xmlText, options) {
+        options = options || {};
+        
+        // 解析XML
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        
+        // 检查解析错误
+        var parserError = xmlDoc.getElementsByTagName("parsererror");
+        if (parserError.length > 0) {
+            throw new Error("XML解析错误: " + parserError[0].textContent);
+        }
+        
+        // 获取数据节点
+        var dataNodes = [];
+        if (options.dataPath) {
+            // 使用指定的XPath路径
+            try {
+                var nodes = document.evaluate(options.dataPath, xmlDoc, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+                for (var i = 0; i < nodes.snapshotLength; i++) {
+                    dataNodes.push(nodes.snapshotItem(i));
+                }
+            } catch (e) {
+                throw new Error("XPath路径无效: " + e.message);
+            }
+        } else {
+            // 自动识别数据节点 - 查找重复结构的节点
+            var allElements = xmlDoc.getElementsByTagName('*');
+            var elementCounts = {};
+            
+            // 统计每个元素的出现次数
+            for (var i = 0; i < allElements.length; i++) {
+                var name = allElements[i].nodeName;
+                elementCounts[name] = (elementCounts[name] || 0) + 1;
+            }
+            
+            // 找出出现多次的元素作为候选
+            var candidateNames = Object.keys(elementCounts).filter(name => elementCounts[name] > 1);
+            
+            // 检查候选元素的子节点是否都是元素节点
+            for (var i = 0; i < candidateNames.length; i++) {
+                var candidates = xmlDoc.getElementsByTagName(candidateNames[i]);
+                if (candidates.length > 0) {
+                    var firstCandidate = candidates[0];
+                    var hasValidChildren = firstCandidate.childElementCount > 0 && 
+                                          Array.from(firstCandidate.childNodes).every(n => n.nodeType === 1);
+                    
+                    if (hasValidChildren) {
+                        dataNodes = Array.from(candidates);
+                        break;
+                    }
+                }
+            }
+            
+            // 如果没有找到，使用根节点的直接子节点
+            if (dataNodes.length === 0) {
+                var rootChildren = Array.from(xmlDoc.documentElement.children);
+                if (rootChildren.length > 0) {
+                    dataNodes = rootChildren;
+                } else {
+                    throw new Error("无法自动识别数据节点，请手动指定数据节点路径");
+                }
+            }
+        }
+        
+        if (dataNodes.length === 0) {
+            throw new Error("没有找到有效的数据节点");
+        }
+        
+        // 收集所有字段名
+        var fieldNames = new Set();
+        dataNodes.forEach(node => {
+            Array.from(node.children).forEach(child => {
+                fieldNames.add(child.nodeName);
+            });
+        });
+        
+        if (fieldNames.size === 0) {
+            throw new Error("数据节点中没有找到有效的字段");
+        }
+        
+        var fieldNamesArray = Array.from(fieldNames);
+        
+        // 构建CSV内容
+        var csvLines = [];
+        
+        // 添加标题行
+        if (options.includeHeader !== false) {
+            csvLines.push(fieldNamesArray.join(","));
+        }
+        
+        // 添加数据行
+        dataNodes.forEach(node => {
+            var csvValues = [];
+            
+            fieldNamesArray.forEach(fieldName => {
+                var element = node.getElementsByTagName(fieldName)[0];
+                var value = element ? element.textContent : "";
+                
+                if (options.trimValues !== false) {
+                    value = value.trim();
+                }
+                
+                // 处理值中的逗号和引号
+                if (options.quoteAll || value.includes('"') || value.includes(',')) {
+                    value = '"' + value.replace(/"/g, '""') + '"';
+                }
+                
+                csvValues.push(value);
+            });
+            
+            csvLines.push(csvValues.join(","));
+        });
+        
+        return csvLines.join("\n");
+    }
+});
+</script>
+<script src="../../tongji.js"></script>
+</body>
+</html>
