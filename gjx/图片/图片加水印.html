@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线图片加水印 · 实时预览</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: #f5f7fb;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 6px 12px rgba(0,0,0,0.05);
+            padding: 28px 30px 40px;
+            transition: all 0.2s;
+        }
+        h1 {
+            font-weight: 600;
+            font-size: 28px;
+            margin-top: 0;
+            margin-bottom: 24px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.3px;
+        }
+        h1 small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #64748b;
+            margin-left: 8px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        @media (max-width: 860px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        /* 左：控制区 */
+        .controls {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 22px 24px 28px;
+            border: 1px solid #e9edf2;
+        }
+        .control-group {
+            margin-bottom: 22px;
+        }
+        .control-group label {
+            display: block;
+            font-weight: 500;
+            font-size: 14px;
+            color: #1e293b;
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+        .control-group .hint {
+            font-size: 13px;
+            color: #64748b;
+            margin-left: 6px;
+            font-weight: 400;
+        }
+        .file-upload-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .file-upload-wrapper input[type="file"] {
+            flex: 1;
+            padding: 10px 8px;
+            background: white;
+            border: 1px solid #d1d9e6;
+            border-radius: 60px;
+            font-size: 14px;
+            color: #1e293b;
+            cursor: pointer;
+        }
+        .file-upload-wrapper input[type="file"]::file-selector-button {
+            background: #eef2f6;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #1e293b;
+            margin-right: 12px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .file-upload-wrapper input[type="file"]::file-selector-button:hover {
+            background: #dce2ec;
+        }
+        .input-text, .input-color, .input-range, .input-number {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d1d9e6;
+            border-radius: 40px;
+            font-size: 15px;
+            background: white;
+            transition: 0.15s;
+        }
+        .input-text:focus, .input-number:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+        .input-color {
+            padding: 4px 8px;
+            height: 48px;
+            cursor: pointer;
+        }
+        .range-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .range-row input[type="range"] {
+            flex: 1;
+            accent-color: #3b82f6;
+            height: 6px;
+        }
+        .range-value {
+            min-width: 44px;
+            font-weight: 500;
+            color: #0f172a;
+            background: white;
+            padding: 4px 8px;
+            border-radius: 30px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+        .inline-group {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .inline-group .control-group {
+            flex: 1;
+            min-width: 100px;
+            margin-bottom: 0;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: white;
+            border: 1px solid #d1d9e6;
+            padding: 12px 26px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 15px;
+            color: #1e293b;
+            cursor: pointer;
+            transition: 0.15s;
+            flex: 1;
+            min-width: 120px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: #1e293b;
+            border: 1px solid #1e293b;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #0f172a;
+            border-color: #0f172a;
+        }
+        .btn-success {
+            background: #0b8a4b;
+            border: 1px solid #0b8a4b;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #0a6f3d;
+            border-color: #0a6f3d;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #d1d9e6;
+        }
+        .btn-outline:hover {
+            background: #f1f4f9;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        /* 右：预览 */
+        .preview-wrapper {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 22px 24px 28px;
+            border: 1px solid #e9edf2;
+            display: flex;
+            flex-direction: column;
+        }
+        .preview-area {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 360px;
+            border: 1px dashed #d1d9e6;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 18px;
+            transition: background 0.1s;
+        }
+        .preview-area canvas {
+            max-width: 100%;
+            max-height: 480px;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .placeholder-text {
+            color: #94a3b8;
+            font-size: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+        .preview-info {
+            font-size: 14px;
+            color: #475569;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background: #eef2f6;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            color: #1e293b;
+        }
+        footer {
+            margin-top: 22px;
+            color: #94a3b8;
+            font-size: 13px;
+            text-align: center;
+            border-top: 1px solid #ecf1f7;
+            padding-top: 18px;
+        }
+        .watermark-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e4b8a;
+            padding: 0 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .angle-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .angle-group input[type="number"] {
+            width: 90px;
+            padding: 8px 10px;
+            border: 1px solid #d1d9e6;
+            border-radius: 40px;
+            font-size: 15px;
+            background: white;
+        }
+        .angle-group span {
+            color: #475569;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>
+        🖼️ 图片水印工具
+        <small>实时 · 可保存</small>
+    </h1>
+    <div class="grid-2">
+        <!-- 左：控制面板 -->
+        <div class="controls">
+            <!-- 上传 -->
+            <div class="control-group">
+                <label>📤 上传图片</label>
+                <div class="file-upload-wrapper">
+                    <input type="file" id="imageUpload" accept="image/*">
+                </div>
+            </div>
+            <!-- 水印文字 -->
+            <div class="control-group">
+                <label>✏️ 水印文字</label>
+                <input type="text" id="watermarkText" class="input-text" value="© 我的水印" placeholder="输入水印文字">
+            </div>
+            <!-- 颜色 + 字号 并排 -->
+            <div class="inline-group">
+                <div class="control-group">
+                    <label>🎨 颜色</label>
+                    <input type="color" id="watermarkColor" class="input-color" value="#3b82f6">
+                </div>
+                <div class="control-group">
+                    <label>🔤 字号 <span class="hint">(px)</span></label>
+                    <input type="number" id="fontSize" class="input-number" value="40" min="12" max="120" step="2">
+                </div>
+            </div>
+            <!-- 透明度 -->
+            <div class="control-group">
+                <label>🌀 透明度</label>
+                <div class="range-row">
+                    <input type="range" id="opacityRange" min="0" max="1" step="0.01" value="0.45">
+                    <span class="range-value" id="opacityValue">0.45</span>
+                </div>
+            </div>
+            <!-- 间隔 (密度) -->
+            <div class="control-group">
+                <label>📐 间隔 <span class="hint">(平铺间距)</span></label>
+                <div class="range-row">
+                    <input type="range" id="spacingRange" min="30" max="300" step="2" value="120">
+                    <span class="range-value" id="spacingValue">120</span>
+                </div>
+            </div>
+            <!-- 倾斜角度 -->
+            <div class="control-group">
+                <label>↗️ 倾斜角度 <span class="hint">(度, -90 ~ 90)</span></label>
+                <div class="angle-group">
+                    <input type="number" id="angleInput" value="0" min="-90" max="90" step="1">
+                    <span>°</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="applyBtn">🔄 应用水印</button>
+                <button class="btn btn-success" id="saveBtn">💾 保存图片</button>
+                <button class="btn btn-outline" id="resetBtn">↩️ 重置</button>
+            </div>
+            <div style="margin-top: 18px; font-size: 14px; color: #475569; background: #eef2f6; padding: 8px 16px; border-radius: 40px; display: inline-block;">
+                ⚡ 实时预览 (调整参数自动更新)
+            </div>
+        </div>
+
+        <!-- 右：预览区 -->
+        <div class="preview-wrapper">
+            <div class="preview-area" id="previewArea">
+                <canvas id="previewCanvas" width="800" height="500"></canvas>
+                <div class="placeholder-text" id="placeholderText">⬆️ 上传图片后预览水印</div>
+            </div>
+            <div class="preview-info">
+                <span>🖼️ <span id="imageInfo">未加载图片</span></span>
+                <span class="badge" id="watermarkStatus">水印: 待应用</span>
+            </div>
+        </div>
+    </div>
+    <footer>
+        ⚙️ 调节参数即可实时预览 · 点击「保存图片」下载带水印的 PNG
+    </footer>
+</div>
+<script>
+    (function() {
+        // DOM 元素
+        const uploadInput = document.getElementById('imageUpload');
+        const textInput = document.getElementById('watermarkText');
+        const colorInput = document.getElementById('watermarkColor');
+        const fontSizeInput = document.getElementById('fontSize');
+        const opacityRange = document.getElementById('opacityRange');
+        const opacityValue = document.getElementById('opacityValue');
+        const spacingRange = document.getElementById('spacingRange');
+        const spacingValue = document.getElementById('spacingValue');
+        const angleInput = document.getElementById('angleInput');
+        const canvas = document.getElementById('previewCanvas');
+        const ctx = canvas.getContext('2d');
+        const placeholder = document.getElementById('placeholderText');
+        const imageInfo = document.getElementById('imageInfo');
+        const watermarkStatus = document.getElementById('watermarkStatus');
+
+        const applyBtn = document.getElementById('applyBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // 状态
+        let originalImage = null;          // 原始图片 (Image 对象)
+        let imageLoaded = false;
+        let currentWatermarkParams = {
+            text: '© 我的水印',
+            color: '#3b82f6',
+            fontSize: 40,
+            opacity: 0.45,
+            spacing: 120,
+            angle: 0,
+        };
+
+        // ---------- 辅助 ----------
+        function updateOpacityDisplay() {
+            opacityValue.textContent = parseFloat(opacityRange.value).toFixed(2);
+        }
+        function updateSpacingDisplay() {
+            spacingValue.textContent = spacingRange.value;
+        }
+
+        // 从控件读取参数
+        function readParamsFromUI() {
+            let angle = parseFloat(angleInput.value);
+            if (isNaN(angle)) angle = 0;
+            angle = Math.min(90, Math.max(-90, angle));
+            return {
+                text: textInput.value || '水印',
+                color: colorInput.value,
+                fontSize: parseInt(fontSizeInput.value, 10) || 40,
+                opacity: parseFloat(opacityRange.value) || 0.5,
+                spacing: parseInt(spacingRange.value, 10) || 120,
+                angle: angle,
+            };
+        }
+
+        // 绘制水印 (平铺 + 倾斜)
+        function drawWatermarkOnCanvas(img, params) {
+            if (!img) return false;
+            const imgWidth = img.naturalWidth || img.width;
+            const imgHeight = img.naturalHeight || img.height;
+            canvas.width = imgWidth;
+            canvas.height = imgHeight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
+
+            const text = params.text || '水印';
+            const color = params.color || '#3b82f6';
+            const fontSize = Math.min(params.fontSize || 40, Math.max(12, params.fontSize || 40));
+            const opacity = Math.min(1, Math.max(0, params.opacity || 0.45));
+            const spacing = Math.max(30, params.spacing || 120);
+            const angleDeg = params.angle || 0;
+            const angleRad = angleDeg * Math.PI / 180;
+
+            ctx.font = `${fontSize}px "PingFang SC", "Microsoft YaHei", system-ui, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.globalAlpha = opacity;
+            ctx.fillStyle = color;
+
+            // 测量文字宽高 (用于间距修正)
+            const metrics = ctx.measureText(text);
+            const textWidth = metrics.width || fontSize * 0.6;
+            const textHeight = fontSize * 1.2; // 近似高度
+
+            // 有效步长：考虑角度后的包围盒，使平铺均匀
+            // 简单起见，使用固定步长 = spacing + 对角线长度的一半
+            const diag = Math.sqrt(textWidth * textWidth + textHeight * textHeight);
+            const effectiveStep = Math.max(spacing, diag * 0.8 + 12);
+
+            // 计算行列数，覆盖整个画布
+            const cols = Math.ceil(canvas.width / effectiveStep) + 4;
+            const rows = Math.ceil(canvas.height / effectiveStep) + 4;
+            // 偏移使平铺居中
+            const offsetX = (canvas.width - (cols-1) * effectiveStep) / 2;
+            const offsetY = (canvas.height - (rows-1) * effectiveStep) / 2;
+
+            // 保存上下文 (用于旋转)
+            ctx.save();
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const x = offsetX + c * effectiveStep;
+                    const y = offsetY + r * effectiveStep;
+                    // 只绘制在画布范围内的文字 (加上余量)
+                    if (x > -diag && x < canvas.width + diag && y > -diag && y < canvas.height + diag) {
+                        ctx.save();
+                        ctx.translate(x, y);
+                        ctx.rotate(angleRad);
+                        ctx.fillText(text, 0, 0);
+                        ctx.restore();
+                    }
+                }
+            }
+            ctx.restore();
+
+            ctx.globalAlpha = 1.0;
+            return true;
+        }
+
+        // 更新预览 (使用当前UI参数)
+        function updatePreview() {
+            if (!originalImage || !imageLoaded) {
+                canvas.style.display = 'none';
+                placeholder.style.display = 'block';
+                imageInfo.textContent = '未加载图片';
+                watermarkStatus.textContent = '水印: 无图片';
+                return;
+            }
+
+            canvas.style.display = 'block';
+            placeholder.style.display = 'none';
+
+            const params = readParamsFromUI();
+            currentWatermarkParams = { ...params };
+            const success = drawWatermarkOnCanvas(originalImage, params);
+            if (success) {
+                imageInfo.textContent = `${originalImage.naturalWidth || originalImage.width} × ${originalImage.naturalHeight || originalImage.height}`;
+                watermarkStatus.textContent = `水印: “${params.text}” 已应用 (角度 ${params.angle}°)`;
+            } else {
+                watermarkStatus.textContent = '水印: 绘制失败';
+            }
+        }
+
+        // 重置到默认状态 (不清除图片)
+        function resetToDefaults() {
+            textInput.value = '© 我的水印';
+            colorInput.value = '#3b82f6';
+            fontSizeInput.value = 40;
+            opacityRange.value = '0.45';
+            updateOpacityDisplay();
+            spacingRange.value = '120';
+            updateSpacingDisplay();
+            angleInput.value = '0';
+            if (imageLoaded && originalImage) {
+                updatePreview();
+            } else {
+                canvas.style.display = 'none';
+                placeholder.style.display = 'block';
+                imageInfo.textContent = '未加载图片';
+                watermarkStatus.textContent = '水印: 待应用';
+            }
+        }
+
+        // 加载图片
+        function loadImage(file) {
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    originalImage = img;
+                    imageLoaded = true;
+                    updatePreview();
+                };
+                img.onerror = () => {
+                    alert('图片加载失败，请尝试其他文件');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 保存图片
+        function saveImage() {
+            if (!imageLoaded || !originalImage) {
+                alert('请先上传图片');
+                return;
+            }
+            const params = readParamsFromUI();
+            drawWatermarkOnCanvas(originalImage, params);
+            const link = document.createElement('a');
+            link.download = `watermarked_${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // ---------- 事件绑定 ----------
+        uploadInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                loadImage(file);
+            }
+        });
+
+        // 实时更新: 所有参数变化都重新绘制
+        const realtimeParams = [textInput, colorInput, fontSizeInput, opacityRange, spacingRange, angleInput];
+        realtimeParams.forEach(el => {
+            el.addEventListener('input', () => {
+                if (el === opacityRange) updateOpacityDisplay();
+                if (el === spacingRange) updateSpacingDisplay();
+                if (imageLoaded && originalImage) {
+                    updatePreview();
+                }
+            });
+            el.addEventListener('change', () => {
+                if (imageLoaded && originalImage) {
+                    updatePreview();
+                }
+            });
+        });
+
+        // 手动应用按钮
+        applyBtn.addEventListener('click', () => {
+            if (!imageLoaded || !originalImage) {
+                alert('请先上传图片');
+                return;
+            }
+            updatePreview();
+        });
+
+        saveBtn.addEventListener('click', saveImage);
+        resetBtn.addEventListener('click', resetToDefaults);
+
+        // 初始化
+        canvas.style.display = 'none';
+        placeholder.style.display = 'block';
+        updateOpacityDisplay();
+        updateSpacingDisplay();
+        watermarkStatus.textContent = '水印: 待上传图片';
+        imageInfo.textContent = '未加载图片';
+    })();
+</script>
+<script src="../../tongji.js"></script>
+</body>
+</html>
