@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>批量身份证信息提取工具</title>
+    <!-- 引入 SheetJS 用于导出 Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.mini.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; max-width: 900px; margin: 30px auto; padding: 20px; }
+        .container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 20px; }
+        
+        /* 效果示例样式 */
+        .demo-box { display: flex; gap: 20px; margin-bottom: 25px; background: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px dashed #bdc3c7; }
+        .demo-col { flex: 1; }
+        .demo-col h4 { margin: 0 0 10px 0; color: #7f8c8d; font-size: 14px; }
+        .demo-content { font-family: monospace; font-size: 13px; background: #fff; padding: 10px; border: 1px solid #e0e0e0; border-radius: 4px; white-space: pre-wrap; line-height: 1.6; }
+        .arrow { display: flex; align-items: center; font-size: 24px; color: #3498db; }
+
+        .controls { display: flex; gap: 20px; margin-bottom: 15px; align-items: center; flex-wrap: wrap; }
+        .controls label { font-weight: bold; }
+        .controls input[type="date"] { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        textarea { width: 100%; height: 150px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: monospace; }
+        .btn-group { margin-top: 15px; display: flex; gap: 10px; }
+        button { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: background 0.3s; }
+        #generateBtn { background-color: #3498db; color: white; }
+        #generateBtn:hover { background-color: #2980b9; }
+        #exportBtn { background-color: #2ecc71; color: white; }
+        #exportBtn:hover { background-color: #27ae60; }
+        #exportBtn:disabled { background-color: #95a5a6; cursor: not-allowed; }
+        #exampleBtn { background-color: #f39c12; color: white; }
+        #exampleBtn:hover { background-color: #d35400; }
+        table { width: 100%; border-collapse: collapse; margin-top: 25px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #2c3e50; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        .note { font-size: 12px; color: #7f8c8d; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📇 批量身份证信息提取工具</h1>
+    
+    <!-- 效果示例区域 -->
+    <div class="demo-box">
+        <div class="demo-col">
+            <h4>📥 原格式（支持从Excel直接复制整列）</h4>
+            <div class="demo-content">张三  110101199003072315
+李四  330102198512154526
+王五  44018320000101123X</div>
+        </div>
+        <div class="arrow">➡️</div>
+        <div class="demo-col">
+            <h4>📤 提取后格式（支持导出XLS）</h4>
+            <div class="demo-content">110101199003072315 | 1990-03-07 | 男 | 36
+330102198512154526 | 1985-12-15 | 女 | 40
+44018320000101123X | 2000-01-01 | 男 | 26</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <label for="ageDate">年龄计算截止日期：</label>
+        <input type="date" id="ageDate">
+    </div>
+    <div class="note">默认为今天，您可以手动修改以计算特定时间点的年龄。</div>
+
+    <textarea id="idInput" placeholder="请在此处粘贴身份证号码（支持从Excel或文本中直接复制整列粘贴）..."></textarea>
+    
+    <div class="btn-group">
+        <button id="exampleBtn">📝 填入使用案例</button>
+        <button id="generateBtn">⚙️ 生成预览</button>
+        <button id="exportBtn" disabled>📥 导出全部为 XLS 表格</button>
+    </div>
+
+    <div id="previewArea">
+        <h3>数据预览（前 10 条）</h3>
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>身份证号码</th>
+                    <th>出生日期 (YYYY-MM-DD)</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 结果将在这里生成 -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // 初始化日期为今天
+    document.getElementById('ageDate').valueAsDate = new Date();
+
+    // 使用案例数据
+    const exampleData = `姓名\t身份证号码
+张三\t110101199003072315
+李四\t330102198512154526
+王五\t44018320000101123X
+赵六\t320106197808080012
+孙七\t510107199205203344
+周八\t120101198001010021
+吴九\t31010119950505003X
+郑十\t410101198808080045
+刘一\t510101199303030056
+陈二\t610101198707070067
+林三\t710101199101010078
+黄四\t810101198909090089`;
+
+    // 填入案例
+    document.getElementById('exampleBtn').addEventListener('click', () => {
+        document.getElementById('idInput').value = exampleData;
+    });
+
+    let fullResultData = []; // 存储完整结果用于导出
+
+    // 核心提取逻辑
+    document.getElementById('generateBtn').addEventListener('click', () => {
+        const input = document.getElementById('idInput').value;
+        const ageBaseDate = new Date(document.getElementById('ageDate').value);
+        const tbody = document.querySelector('#resultTable tbody');
+        tbody.innerHTML = ''; // 清空旧数据
+        fullResultData = [];
+
+        // 正则匹配18位身份证号（最后一位可能是X）
+        const idRegex = /[1-9]\d{5}(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])\d{3}[\dXx]/g;
+        const matches = input.match(idRegex);
+
+        if (!matches) {
+            alert('未找到有效的18位身份证号码！');
+            return;
+        }
+
+        // 第一步：处理所有匹配的身份证，填充 fullResultData
+        matches.forEach((id) => {
+            const birthStr = id.substring(6, 14);
+            // 格式化为 YYYY-MM-DD
+            const formattedBirth = `${birthStr.substring(0, 4)}-${birthStr.substring(4, 6)}-${birthStr.substring(6, 8)}`;
+            const birthDate = new Date(formattedBirth);
+            
+            // 提取性别 (第17位，奇数男，偶数女)
+            const genderCode = parseInt(id.charAt(16));
+            const gender = genderCode % 2 === 0 ? '女' : '男';
+
+            // 计算年龄
+            let age = ageBaseDate.getFullYear() - birthDate.getFullYear();
+            const monthDiff = ageBaseDate.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && ageBaseDate.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            // 存入完整数据
+            fullResultData.push({
+                "身份证号码": id,
+                "出生日期": formattedBirth,
+                "性别": gender,
+                "年龄": age
+            });
+        });
+
+        // 第二步：只渲染前10条到预览表格
+        const previewData = fullResultData.slice(0, 10);
+        previewData.forEach(item => {
+            const row = `<tr><td>${item["身份证号码"]}</td><td>${item["出生日期"]}</td><td>${item["性别"]}</td><td>${item["年龄"]}</td></tr>`;
+            tbody.innerHTML += row;
+        });
+
+        document.getElementById('exportBtn').disabled = false;
+        alert(`成功识别到 ${matches.length} 条身份证信息，已展示前10条预览。`);
+    });
+
+    // 导出 Excel 功能
+    document.getElementById('exportBtn').addEventListener('click', () => {
+        if (fullResultData.length === 0) return;
+
+        // 创建工作簿
+        const ws = XLSX.utils.json_to_sheet(fullResultData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "身份证信息");
+
+        // 导出文件
+        XLSX.writeFile(wb, "身份证提取结果.xlsx");
+    });
+</script>
+
+</body>
+</html>
