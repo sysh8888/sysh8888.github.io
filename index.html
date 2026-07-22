@@ -353,7 +353,6 @@
       <span class="engine-tab " data-url="https://www.baidu.com/s?wd=">百度</span>
       <span class="engine-tab" data-url="https://www.bing.com/search?q=">必应</span>
       <span class="engine-tab" data-url="https://search.douban.com/subject_search?search_text=">豆瓣</span>
-      <span class="engine-tab" data-url="https://www.google.com/search?q=">Google</span>
       <span class="engine-tab" data-url="https://www.zhihu.com/search?type=content&q=">知乎</span>
     </div>
     <div class="search-box">
@@ -389,6 +388,8 @@
     // ============================================================
     const NAV_DATA = [
 	// --- 办公 ---
+	{ name:"工作便签", desc:"离线便签", category: "办公",link:"./gjx/工作便笺/index.html", icon:"📝" },
+	{ name:"月工作计划", desc:"每月工作计划", category: "办公",link:"./gjx/每月工作计划/index.html", icon:"📝" },
 	{ name:"EXCEL转JSON", desc:"表格和JSON互转", category: "办公",link:"./gjx/csv和json互转/index.html", icon:"📊" },
 	{ name:"EXCEL表格关联", desc:"2张表格关联", category: "办公",link:"./gjx/表格关联/index.html", icon:"📃" },
 	{ name:"EXCEL数据筛选", desc:"表格数据筛选", category: "办公",link:"./gjx/数据筛选/index.html", icon:"📋" },
@@ -410,7 +411,7 @@
 	{ name:"表格转XML", desc:"离线版CSV转xml", category: "办公",link:"./gjx/XML/CSV转XML.html", icon:"📄" },
 	{ name:"XML转表格", desc:"离线版xml转csv", category: "办公",link:"./gjx/XML/xml转CVS.html", icon:"📄" },
 	{ name:"XML格式化", desc:"离线版", category: "办公",link:"./gjx/XML/xml格式化.html", icon:"📄" },
-	{ name:"XML-JSON互转", desc:"离线版", category: "办公",link:"./gjx/XML/XML与JSON互转.html", icon:"📄" },
+	{ name:"XML互JSON", desc:"XML与JSON互转", category: "办公",link:"./gjx/XML/XML与JSON互转.html", icon:"📄" },
       // --- 开发 ---
       { name:"GitHub", desc:"代码托管", category: "开发",link:"https://github.com", icon:"💻" }, { name:"Gitee", desc:"国内托管", category: "开发",link:"https://gitee.com", icon:"🏠" },
       { name:"GitLab", desc:"自建仓库", category: "开发",link:"https://gitlab.com", icon:"🦊" }, { name:"Stack Overflow", desc:"技术问答", category: "开发",link:"https://stackoverflow.com", icon:"🟧" },
