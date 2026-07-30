@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能行拆分 · 灵活选择列</title>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: #f0f4f9;
+            margin: 0;
+            min-height: 100vh;
+            padding: 24px;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            padding: 32px 30px;
+            margin-bottom: 24px;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .card-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0b1e33;
+            margin: 0;
+        }
+        .card-header .badge-version {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .subtitle {
+            color: #4a5b6e;
+            padding: 12px 18px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+        .upload-area {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            background: #f9fcff;
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 20px 24px;
+            transition: 0.2s;
+        }
+        .upload-area:hover {
+            border-color: #3b82f6;
+            background: #f5faff;
+        }
+        .file-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #1e293b;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.15s;
+            border: none;
+        }
+        .file-label:hover {
+            background: #0f172a;
+            transform: scale(1.02);
+        }
+        .file-label input {
+            display: none;
+        }
+        .file-status {
+            color: #1e3a5f;
+            font-size: 0.95rem;
+            background: white;
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 1px solid #dce3ed;
+            flex: 1;
+            min-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .btn {
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.15s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+        }
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background: #0b8a4c;
+            color: white;
+            box-shadow: 0 4px 12px rgba(11,138,76,0.3);
+        }
+        .btn-success:hover {
+            background: #0a7a42;
+            transform: translateY(-2px);
+        }
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+        .btn-outline {
+            background: transparent;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
+        }
+        .btn-outline:hover {
+            background: #f1f5f9;
+        }
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.85rem;
+        }
+        .config-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 20px 0 16px 0;
+            padding: 20px;
+            background: #fafcff;
+            border-radius: 16px;
+            border: 1px solid #e5edf5;
+        }
+        @media (max-width: 768px) {
+            .config-area {
+                grid-template-columns: 1fr;
+            }
+        }
+        .config-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .config-group label {
+            font-weight: 600;
+            color: #1e3a5f;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .config-group .hint-text {
+            font-weight: 400;
+            color: #6f7f94;
+            font-size: 0.8rem;
+        }
+        .checkbox-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            padding: 8px 0;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            background: white;
+            padding: 4px 12px 4px 8px;
+            border-radius: 30px;
+            border: 1px solid #e2e8f0;
+            transition: 0.15s;
+            cursor: pointer;
+        }
+        .checkbox-item:hover {
+            border-color: #94a3b8;
+            background: #f8fafc;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+            cursor: pointer;
+        }
+        .checkbox-item.checked {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        .checkbox-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .checkbox-item.disabled input {
+            cursor: not-allowed;
+        }
+        .column-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .col-tag {
+            background: white;
+            border: 1px solid #dce3ed;
+            border-radius: 20px;
+            padding: 2px 12px;
+            font-size: 0.8rem;
+            color: #1e3a5f;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .col-tag:hover {
+            border-color: #3b82f6;
+            background: #f0f7ff;
+        }
+        .col-tag.active {
+            border-color: #3b82f6;
+            background: #dbeafe;
+            font-weight: 500;
+        }
+        .col-tag .remove {
+            color: #94a3b8;
+            font-weight: 300;
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+        .col-tag .remove:hover {
+            color: #dc2626;
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 16px 0 12px 0;
+        }
+        .toolbar-left {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .stat {
+            color: #2c3f5a;
+            font-size: 0.9rem;
+            background: #f0f5fe;
+            padding: 6px 18px;
+            border-radius: 30px;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid #e9edf4;
+            background: white;
+            margin-top: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 500px;
+        }
+        th {
+            background: #f1f6fd;
+            color: #1e3a5f;
+            font-weight: 600;
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid #dce3ed;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #ecf1f7;
+            vertical-align: middle;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .row-num {
+            color: #5f738c;
+            font-size: 0.8rem;
+            text-align: center;
+            background: #fafcff;
+            width: 40px;
+        }
+        .empty-state {
+            padding: 60px 20px;
+            text-align: center;
+            color: #6f7f94;
+        }
+        .empty-state span {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            opacity: 0.4;
+        }
+        .footer-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .hint {
+            font-size: 0.85rem;
+            color: #4b637c;
+            margin-top: 12px;
+            padding: 10px 16px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border-left: 3px solid #94a3b8;
+        }
+        .badge-col {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            border-radius: 12px;
+            padding: 0 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .flash-message {
+            padding: 10px 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .flash-message.show {
+            display: block;
+        }
+        .flash-message.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+        .flash-message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+        .flash-message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        .preview-badge {
+            font-size: 0.7rem;
+            background: #e2e8f0;
+            padding: 2px 10px;
+            border-radius: 20px;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>📊 EXCEL智能行拆分</h1>
+            <span class="badge-version">灵活选择列</span>
+        </div>
+        <div class="subtitle">
+            🎯 上传 XLSX 后，自由选择「固定列」（保持不变的列）和「拆分列」（每列拆成一行）。
+            例如：姓名、证件、手机为固定列；维护人1、维护人2 为拆分列。
+        </div>
+
+        <!-- Flash 消息 -->
+        <div id="flashMessage" class="flash-message"></div>
+
+        <!-- 上传区域 -->
+        <div class="upload-area">
+            <label class="file-label">
+                📂 选择 XLSX
+                <input type="file" id="fileInput" accept=".xlsx,.xls">
+            </label>
+            <span class="file-status" id="fileStatus">未选择文件</span>
+            <button class="btn btn-primary btn-sm" id="loadSampleBtn">📄 加载示例</button>
+            <button class="btn btn-outline btn-sm" id="clearDataBtn">🗑️ 清空</button>
+        </div>
+
+        <!-- 列选择配置区 -->
+        <div id="configArea" class="config-area" style="display: none;">
+            <div class="config-group">
+                <label>
+                    📌 固定列 <span class="hint-text">（这些列的值保持不变）</span>
+                </label>
+                <div id="fixedColsContainer" class="checkbox-grid">
+                    <span style="color: #94a3b8; font-size: 0.85rem;">请先上传数据</span>
+                </div>
+                <div style="margin-top: 6px; display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="btn btn-outline btn-sm" id="selectAllFixed">全选</button>
+                    <button class="btn btn-outline btn-sm" id="deselectAllFixed">取消全选</button>
+                </div>
+            </div>
+            <div class="config-group">
+                <label>
+                    🔀 拆分列 <span class="hint-text">（每列拆成单独一行）</span>
+                </label>
+                <div id="splitColsContainer" class="checkbox-grid">
+                    <span style="color: #94a3b8; font-size: 0.85rem;">请先上传数据</span>
+                </div>
+                <div style="margin-top: 6px; display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="btn btn-outline btn-sm" id="selectAllSplit">全选</button>
+                    <button class="btn btn-outline btn-sm" id="deselectAllSplit">取消全选</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作工具栏 -->
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <button class="btn btn-primary" id="splitBtn">🔀 执行拆分</button>
+                <button class="btn btn-success" id="exportBtn">⬇️ 导出 XLSX</button>
+            </div>
+            <div>
+                <span class="stat" id="rowCounter">行数: 0</span>
+                <span class="stat" id="colCounter" style="margin-left: 8px;">列数: 0</span>
+            </div>
+        </div>
+
+        <!-- 表格展示 -->
+        <div class="table-wrapper">
+            <table id="dataTable">
+                <thead id="tableHead">
+                    <tr>
+                        <th style="width: 40px;">#</th>
+                        <th colspan="4" style="text-align: center; color: #6f7f94;">暂无数据</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr><td colspan="5" class="empty-state"><span>📭</span>请上传 XLSX 文件或加载示例</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="hint">
+            💡 <strong>使用说明：</strong> 上传文件后，在「固定列」中选择需要保留的列（如姓名、证件、手机），在「拆分列」中选择需要拆分成多行的列（如维护人1、维护人2）。
+            每行数据会根据拆分列的数量生成多行，固定列的值保持不变。
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- 全局状态 ----------
+        let rawData = [];           // 原始二维数组 [header, ...rows]
+        let headers = [];           // 列名数组
+        let fixedCols = new Set();  // 固定列索引
+        let splitCols = new Set();  // 拆分列索引
+        let splitResult = [];       // 拆分后的行数据 [{colName: value, ...}]
+        let currentFileName = '拆分后数据';
+
+        // DOM 引用
+        const fileInput = document.getElementById('fileInput');
+        const fileStatus = document.getElementById('fileStatus');
+        const configArea = document.getElementById('configArea');
+        const fixedColsContainer = document.getElementById('fixedColsContainer');
+        const splitColsContainer = document.getElementById('splitColsContainer');
+        const tableHead = document.getElementById('tableHead');
+        const tableBody = document.getElementById('tableBody');
+        const rowCounter = document.getElementById('rowCounter');
+        const colCounter = document.getElementById('colCounter');
+        const flashMessage = document.getElementById('flashMessage');
+
+        const loadSampleBtn = document.getElementById('loadSampleBtn');
+        const clearDataBtn = document.getElementById('clearDataBtn');
+        const splitBtn = document.getElementById('splitBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const selectAllFixed = document.getElementById('selectAllFixed');
+        const deselectAllFixed = document.getElementById('deselectAllFixed');
+        const selectAllSplit = document.getElementById('selectAllSplit');
+        const deselectAllSplit = document.getElementById('deselectAllSplit');
+
+        // ---------- 工具函数 ----------
+        function showFlash(message, type = 'info') {
+            flashMessage.textContent = message;
+            flashMessage.className = `flash-message show ${type}`;
+            setTimeout(() => {
+                flashMessage.className = 'flash-message';
+            }, 5000);
+        }
+
+        function updateStats(data) {
+            if (!data || data.length === 0) {
+                rowCounter.textContent = '行数: 0';
+                colCounter.textContent = '列数: 0';
+                return;
+            }
+            rowCounter.textContent = `行数: ${data.length}`;
+            if (data.length > 0) {
+                colCounter.textContent = `列数: ${Object.keys(data[0]).length}`;
+            } else {
+                colCounter.textContent = '列数: 0';
+            }
+        }
+
+        // 渲染表格 (接收数组对象)
+        function renderTable(data) {
+            if (!data || data.length === 0) {
+                tableHead.innerHTML = `<tr><th style="width:40px;">#</th><th colspan="4" style="text-align:center;color:#6f7f94;">暂无数据</th></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="5" class="empty-state"><span>📭</span>暂无数据</td></tr>`;
+                updateStats([]);
+                return;
+            }
+
+            const keys = Object.keys(data[0]);
+            // 构建表头
+            let headerHtml = `<tr><th style="width:40px;">#</th>`;
+            keys.forEach(key => {
+                headerHtml += `<th>${escapeHtml(key)}</th>`;
+            });
+            headerHtml += `</tr>`;
+            tableHead.innerHTML = headerHtml;
+
+            // 构建表体
+            let bodyHtml = '';
+            data.forEach((row, idx) => {
+                bodyHtml += `<tr><td class="row-num">${idx + 1}</td>`;
+                keys.forEach(key => {
+                    const val = row[key] !== undefined && row[key] !== null ? String(row[key]) : '';
+                    bodyHtml += `<td>${escapeHtml(val)}</td>`;
+                });
+                bodyHtml += `</tr>`;
+            });
+            tableBody.innerHTML = bodyHtml;
+            updateStats(data);
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // 从二维数组解析并更新列选择器
+        function updateColumnSelectors(dataArray) {
+            if (!dataArray || dataArray.length < 1) {
+                fixedColsContainer.innerHTML = `<span style="color:#94a3b8;font-size:0.85rem;">无数据</span>`;
+                splitColsContainer.innerHTML = `<span style="color:#94a3b8;font-size:0.85rem;">无数据</span>`;
+                configArea.style.display = 'none';
+                return;
+            }
+
+            const headerRow = dataArray[0];
+            headers = headerRow.map(h => String(h).trim());
+
+            // 重置选择
+            fixedCols.clear();
+            splitCols.clear();
+
+            // 渲染固定列
+            let fixedHtml = '';
+            headers.forEach((h, idx) => {
+                const checked = fixedCols.has(idx) ? 'checked' : '';
+                fixedHtml += `
+                    <label class="checkbox-item" data-idx="${idx}">
+                        <input type="checkbox" class="fixed-checkbox" data-idx="${idx}" ${checked}>
+                        ${escapeHtml(h)}
+                    </label>
+                `;
+            });
+            fixedColsContainer.innerHTML = fixedHtml;
+
+            // 渲染拆分列
+            let splitHtml = '';
+            headers.forEach((h, idx) => {
+                const checked = splitCols.has(idx) ? 'checked' : '';
+                splitHtml += `
+                    <label class="checkbox-item" data-idx="${idx}">
+                        <input type="checkbox" class="split-checkbox" data-idx="${idx}" ${checked}>
+                        ${escapeHtml(h)}
+                    </label>
+                `;
+            });
+            splitColsContainer.innerHTML = splitHtml;
+
+            // 绑定事件
+            document.querySelectorAll('.fixed-checkbox').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    const idx = parseInt(this.dataset.idx);
+                    if (this.checked) {
+                        fixedCols.add(idx);
+                        // 如果同一列在拆分列中，自动取消
+                        if (splitCols.has(idx)) {
+                            splitCols.delete(idx);
+                            document.querySelector(`.split-checkbox[data-idx="${idx}"]`).checked = false;
+                        }
+                    } else {
+                        fixedCols.delete(idx);
+                    }
+                    updateCheckboxStyles();
+                });
+            });
+
+            document.querySelectorAll('.split-checkbox').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    const idx = parseInt(this.dataset.idx);
+                    if (this.checked) {
+                        splitCols.add(idx);
+                        // 如果同一列在固定列中，自动取消
+                        if (fixedCols.has(idx)) {
+                            fixedCols.delete(idx);
+                            document.querySelector(`.fixed-checkbox[data-idx="${idx}"]`).checked = false;
+                        }
+                    } else {
+                        splitCols.delete(idx);
+                    }
+                    updateCheckboxStyles();
+                });
+            });
+
+            // 默认：前3列作为固定列，其余作为拆分列（智能猜测）
+            // 但如果列数少于3，则第一列为固定，其余拆分
+            if (headers.length > 0) {
+                // 清空默认
+                fixedCols.clear();
+                splitCols.clear();
+                // 默认: 如果列数 >= 3，前3列为固定；否则第一列为固定
+                const fixedCount = Math.min(headers.length, 3);
+                for (let i = 0; i < fixedCount; i++) {
+                    fixedCols.add(i);
+                }
+                for (let i = fixedCount; i < headers.length; i++) {
+                    splitCols.add(i);
+                }
+                // 更新复选框状态
+                document.querySelectorAll('.fixed-checkbox').forEach(cb => {
+                    const idx = parseInt(cb.dataset.idx);
+                    cb.checked = fixedCols.has(idx);
+                });
+                document.querySelectorAll('.split-checkbox').forEach(cb => {
+                    const idx = parseInt(cb.dataset.idx);
+                    cb.checked = splitCols.has(idx);
+                });
+                updateCheckboxStyles();
+            }
+
+            configArea.style.display = 'grid';
+        }
+
+        function updateCheckboxStyles() {
+            document.querySelectorAll('.checkbox-item').forEach(item => {
+                const cb = item.querySelector('input[type="checkbox"]');
+                if (cb && cb.checked) {
+                    item.classList.add('checked');
+                } else {
+                    item.classList.remove('checked');
+                }
+            });
+        }
+
+        // 执行拆分逻辑
+        function performSplit() {
+            if (!rawData || rawData.length < 2) {
+                showFlash('请先上传数据', 'error');
+                return;
+            }
+
+            if (fixedCols.size === 0) {
+                showFlash('请至少选择一列作为固定列', 'error');
+                return;
+            }
+
+            if (splitCols.size === 0) {
+                showFlash('请至少选择一列作为拆分列', 'error');
+                return;
+            }
+
+            const dataRows = rawData.slice(1); // 跳过表头
+            const result = [];
+
+            dataRows.forEach(row => {
+                // 提取固定列的值
+                const fixedRow = {};
+                let hasData = false;
+                fixedCols.forEach(idx => {
+                    const colName = headers[idx] || `列${idx+1}`;
+                    const val = row[idx] !== undefined && row[idx] !== null ? String(row[idx]).trim() : '';
+                    fixedRow[colName] = val;
+                    if (val) hasData = true;
+                });
+
+                // 如果固定列完全没有数据，跳过
+                if (!hasData) return;
+
+                // 对每个拆分列生成一行
+                let hasAnySplit = false;
+                splitCols.forEach(idx => {
+                    const colName = headers[idx] || `列${idx+1}`;
+                    const val = row[idx] !== undefined && row[idx] !== null ? String(row[idx]).trim() : '';
+                    // 即使值为空，也生成一行（保持数据完整性）
+                    const newRow = { ...fixedRow };
+                    newRow['_拆分来源'] = colName;
+                    newRow['_值'] = val;
+                    // 将拆分列的值作为单独字段，同时也保留原始列名
+                    newRow[colName] = val;
+                    result.push(newRow);
+                    if (val) hasAnySplit = true;
+                });
+
+                // 如果拆分列全为空，但固定列有数据，仍然生成一行（用第一列拆分列作为占位）
+                if (!hasAnySplit && splitCols.size > 0) {
+                    const firstSplitIdx = Array.from(splitCols)[0];
+                    const colName = headers[firstSplitIdx] || `列${firstSplitIdx+1}`;
+                    const newRow = { ...fixedRow };
+                    newRow['_拆分来源'] = colName;
+                    newRow['_值'] = '';
+                    newRow[colName] = '';
+                    result.push(newRow);
+                }
+            });
+
+            if (result.length === 0) {
+                showFlash('拆分后无数据，请检查数据内容', 'error');
+                return;
+            }
+
+            splitResult = result;
+            renderTable(result);
+            showFlash(`✅ 拆分成功！共生成 ${result.length} 行数据`, 'success');
+        }
+
+        // 从文件读取
+        function loadFromFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const json = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: '' });
+                    
+                    if (!json || json.length < 1) {
+                        showFlash('文件为空或格式不正确', 'error');
+                        return;
+                    }
+
+                    rawData = json;
+                    currentFileName = file.name.replace(/\.[^.]+$/, '') + '_拆分后';
+                    fileStatus.textContent = file.name;
+
+                    // 更新列选择器
+                    updateColumnSelectors(rawData);
+
+                    // 自动执行拆分
+                    performSplit();
+
+                    showFlash(`📄 已加载文件: ${file.name}，共 ${rawData.length - 1} 行数据`, 'info');
+                } catch (err) {
+                    console.error(err);
+                    showFlash('读取文件失败: ' + err.message, 'error');
+                }
+            };
+            reader.onerror = function() {
+                showFlash('读取文件失败', 'error');
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // 加载示例数据
+        function loadSampleData() {
+            const sampleData = [
+                ['姓名', '证件', '手机', '维护人1', '维护人2', '备注'],
+                ['张三', '110101199001011234', '13800138001', '王经理', '李主管', '测试'],
+                ['李四', '110101199002021235', '13800138002', '赵总监', '', ''],
+                ['王五', '110101199003031236', '13800138003', '', '钱组长', ''],
+                ['赵六', '110101199004041237', '13800138004', '孙主任', '周副主任', '重要'],
+            ];
+            rawData = sampleData;
+            currentFileName = '示例数据_拆分后';
+            fileStatus.textContent = '示例数据 (已加载)';
+            updateColumnSelectors(rawData);
+            performSplit();
+            showFlash('📄 已加载示例数据', 'info');
+        }
+
+        // 清空数据
+        function clearAllData() {
+            rawData = [];
+            headers = [];
+            fixedCols.clear();
+            splitCols.clear();
+            splitResult = [];
+            fileStatus.textContent = '未选择文件';
+            configArea.style.display = 'none';
+            renderTable([]);
+            showFlash('已清空所有数据', 'info');
+        }
+
+        // 导出 XLSX
+        function exportToXLSX() {
+            if (!splitResult || splitResult.length === 0) {
+                showFlash('没有数据可导出，请先加载并拆分数据', 'error');
+                return;
+            }
+
+            try {
+                // 准备导出数据：移除内部字段 _拆分来源, _值
+                const exportData = splitResult.map(row => {
+                    const newRow = {};
+                    Object.keys(row).forEach(key => {
+                        if (key !== '_拆分来源' && key !== '_值') {
+                            newRow[key] = row[key];
+                        }
+                    });
+                    return newRow;
+                });
+
+                const ws = XLSX.utils.json_to_sheet(exportData);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, '拆分结果');
+                XLSX.writeFile(wb, `${currentFileName}.xlsx`);
+                showFlash(`✅ 导出成功: ${currentFileName}.xlsx`, 'success');
+            } catch (err) {
+                console.error(err);
+                showFlash('导出失败: ' + err.message, 'error');
+            }
+        }
+
+        // ---------- 事件绑定 ----------
+        fileInput.addEventListener('change', function(e) {
+            if (this.files && this.files.length > 0) {
+                loadFromFile(this.files[0]);
+            }
+            this.value = '';
+        });
+
+        loadSampleBtn.addEventListener('click', loadSampleData);
+        clearDataBtn.addEventListener('click', clearAllData);
+        splitBtn.addEventListener('click', performSplit);
+        exportBtn.addEventListener('click', exportToXLSX);
+
+        selectAllFixed.addEventListener('click', function() {
+            document.querySelectorAll('.fixed-checkbox').forEach(cb => {
+                cb.checked = true;
+                const idx = parseInt(cb.dataset.idx);
+                fixedCols.add(idx);
+                if (splitCols.has(idx)) {
+                    splitCols.delete(idx);
+                    document.querySelector(`.split-checkbox[data-idx="${idx}"]`).checked = false;
+                }
+            });
+            updateCheckboxStyles();
+        });
+
+        deselectAllFixed.addEventListener('click', function() {
+            document.querySelectorAll('.fixed-checkbox').forEach(cb => {
+                cb.checked = false;
+                const idx = parseInt(cb.dataset.idx);
+                fixedCols.delete(idx);
+            });
+            updateCheckboxStyles();
+        });
+
+        selectAllSplit.addEventListener('click', function() {
+            document.querySelectorAll('.split-checkbox').forEach(cb => {
+                cb.checked = true;
+                const idx = parseInt(cb.dataset.idx);
+                splitCols.add(idx);
+                if (fixedCols.has(idx)) {
+                    fixedCols.delete(idx);
+                    document.querySelector(`.fixed-checkbox[data-idx="${idx}"]`).checked = false;
+                }
+            });
+            updateCheckboxStyles();
+        });
+
+        deselectAllSplit.addEventListener('click', function() {
+            document.querySelectorAll('.split-checkbox').forEach(cb => {
+                cb.checked = false;
+                const idx = parseInt(cb.dataset.idx);
+                splitCols.delete(idx);
+            });
+            updateCheckboxStyles();
+        });
+
+        // 初始化空状态
+        renderTable([]);
+        configArea.style.display = 'none';
+        showFlash('💡 请上传 XLSX 文件或点击「加载示例」开始', 'info');
+    })();
+</script>
+<script src="../../tongji.js"></script>
+</body>
+</html>
