@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>在线打字练习 · 自动滚动</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #f0f4f8; font-family: 'Segoe UI', Roboto, sans-serif; display: flex; justify-content: center; padding: 20px; }
+        #app { max-width: 1200px; width: 100%; background: #ffffff; border-radius: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.06); padding: 24px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eef2f6; padding-bottom: 16px; flex-wrap: wrap; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area span { font-size: 28px; font-weight: 700; color: #1e3a8a; }
+        .nav-links { display: flex; gap: 10px; flex-wrap: wrap; }
+        .nav-links a { background: #f1f5f9; padding: 6px 16px; border-radius: 40px; text-decoration: none; color: #1e293b; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .nav-links a:hover { background: #e2e8f0; }
+        .main-panel { display: flex; gap: 28px; margin-top: 24px; flex-wrap: wrap; }
+        #left { flex: 0 0 230px; background: #f8fafc; border-radius: 20px; padding: 20px 16px; }
+        #right { flex: 1; min-width: 400px; display: flex; flex-direction: column; }
+        .info-item { margin-bottom: 18px; }
+        .info-label { font-size: 13px; color: #64748b; letter-spacing: 0.5px; }
+        .info-value { font-size: 20px; font-weight: 600; color: #0f172a; word-break: break-all; }
+        #hz { font-size: 28px; font-weight: 700; padding: 8px 0; border-bottom: 2px dashed #d1d9e6; margin-bottom: 12px; }
+        #wubi, #pinyin { background: #eef2f6; padding: 6px 14px; border-radius: 40px; font-family: 'Courier New', monospace; font-size: 18px; margin: 6px 0; display: inline-block; }
+        #backs { background: #e2e8f0; padding: 6px 14px; border-radius: 40px; display: inline-block; }
+        .restart-btn { background: #1e3a8a; color: white; border: none; padding: 10px 0; border-radius: 40px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 10px; transition: 0.2s; }
+        .restart-btn:hover { background: #2563eb; }
+        #info-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; background: #f1f5f9; padding: 10px 24px; border-radius: 60px; margin-bottom: 20px; }
+        #info-bar > div { display: flex; align-items: baseline; gap: 4px; }
+        .info-num { font-weight: 700; color: #0f172a; }
+        #types { background: #1e3a8a; color: white; padding: 2px 18px; border-radius: 40px; font-size: 14px; margin-left: auto; }
+        #dzbox { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 20px; 
+            border: 1px solid #e9edf2;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 400px;
+            max-height: 600px;
+        }
+        /* 字符列表 - 固定高度 + 滚动 */
+        .char-list-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 4px 4px 8px 4px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #eef2f6;
+            min-height: 120px;
+            max-height: 400px;
+            scroll-behavior: smooth;
+        }
+        .char-list-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+        .char-list-wrapper::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        .char-list-wrapper::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .char-list-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .char-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 8px;
+            padding: 4px 0;
+        }
+        .char-item { 
+            font-size: 24px; 
+            font-weight: 500; 
+            padding: 2px 4px; 
+            border-radius: 6px; 
+            transition: 0.1s;
+            flex-shrink: 0;
+        }
+        .char-item.correct { color: #16a34a; background: #dcfce7; }
+        .char-item.wrong { color: #dc2626; background: #fee2e2; }
+        .char-item.pending { color: #94a3b8; }
+        .char-item.current { 
+            text-decoration: underline; 
+            text-decoration-color: #2563eb; 
+            text-underline-offset: 6px;
+            background: #eff6ff;
+            border-radius: 6px;
+            padding: 2px 6px;
+        }
+        .input-row { 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+            flex-wrap: wrap;
+            padding: 8px 0 4px 0;
+            flex-shrink: 0;
+        }
+        .input-row label { font-weight: 500; color: #334155; }
+        .input-row input[type="text"] {
+            border: none; border-bottom: 3px solid #cbd5e1; background: transparent;
+            font-size: 26px; width: 180px; padding: 4px 8px; outline: none;
+            font-weight: 500; letter-spacing: 2px; transition: 0.2s;
+        }
+        .input-row input[type="text"]:focus { border-bottom-color: #2563eb; }
+        .input-row .input-preview { 
+            font-size: 26px; 
+            font-weight: 500; 
+            color: #0f172a; 
+            min-width: 50px; 
+            padding: 4px 8px; 
+            background: #f8fafc; 
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .hint-text { font-size: 14px; color: #94a3b8; }
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #94a3b8;
+            padding: 4px 0;
+            flex-shrink: 0;
+        }
+        .progress-bar .progress-fill {
+            flex: 1;
+            height: 4px;
+            background: #eef2f6;
+            border-radius: 4px;
+            margin: 0 12px;
+            overflow: hidden;
+        }
+        .progress-bar .progress-fill .fill {
+            height: 100%;
+            background: #2563eb;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .custom-area { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .custom-area button { background: #0f172a; color: white; border: none; padding: 8px 24px; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .custom-area button:hover { background: #1e293b; }
+        .custom-area .btn-secondary { background: #64748b; }
+        #footer { margin-top: 30px; text-align: center; color: #94a3b8; font-size: 14px; border-top: 1px solid #e9edf2; padding-top: 20px; }
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 999; justify-content: center; align-items: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: white; border-radius: 24px; padding: 30px; max-width: 520px; width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .modal-box h3 { margin-bottom: 8px; }
+        .modal-box p { color: #64748b; font-size: 14px; margin-bottom: 14px; }
+        .modal-box textarea { width: 100%; height: 140px; padding: 12px; border-radius: 12px; border: 1px solid #d1d9e6; font-size: 15px; resize: vertical; font-family: inherit; }
+        .modal-box textarea:focus { outline: 2px solid #1e3a8a; border-color: transparent; }
+        .modal-box .modal-actions { display: flex; gap: 12px; margin-top: 18px; justify-content: flex-end; }
+        .modal-box .modal-actions button { padding: 10px 28px; border-radius: 40px; border: none; font-weight: 600; cursor: pointer; font-size: 14px; }
+        .modal-box .modal-actions .btn-primary { background: #1e3a8a; color: white; }
+        .modal-box .modal-actions .btn-primary:hover { background: #2563eb; }
+        .modal-box .modal-actions .btn-secondary { background: #e2e8f0; color: #1e293b; }
+        .modal-box .modal-actions .btn-secondary:hover { background: #cbd5e1; }
+        kbd { background: #eef2f6; padding: 2px 8px; border-radius: 4px; font-size: 13px; }
+        .wubi-hint { font-size: 13px; color: #64748b; margin-left: 8px; }
+        /* 完成状态 */
+        .char-item.done-correct { color: #16a34a; background: #dcfce7; opacity: 0.7; }
+        .char-item.done-wrong { color: #dc2626; background: #fee2e2; opacity: 0.7; }
+    </style>
+	<script type="text/javascript" src="./wubi.js"></script>
+<script type="text/javascript" src="./pinying.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="header">
+        <div class="logo-area"><span>⌨️ 五笔打字练习</span></div>
+        <div class="nav-links">
+            <a href="./zigen.html"target="_blank">字根练习</a>
+			<a href="./youxi.html"target="_blank">小蜜蜂</a>
+			<a href="./chuanpiao.html" target="_blank">传票练习</a>
+            <a id="customNavBtn">📝 自定义文章</a>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <div id="left">
+            <div id="hz" class="info-value">准备</div>
+            <div class="info-item"><span class="info-label">五笔编码</span><div id="wubi" class="info-value">—</div></div>
+            <div class="info-item"><span class="info-label">拼音编码</span><div id="pinyin" class="info-value">—</div></div>
+            <div class="info-item"><span class="info-label">退格次数</span><div id="backs" class="info-value">0</div></div>
+            <div class="info-item"><span style="display:flex;align-items:center;gap:6px;"><span style="font-size:20px;">👤</span> 小小柜员</span><span style="color:#64748b;font-size:14px;display:block;">正在练习...</span></div>
+            <button class="restart-btn" id="restartBtn">⟳ 重新开始</button>
+        </div>
+
+        <div id="right">
+            <div id="info-bar">
+                <div><span class="info-label">时间</span><span id="times" class="info-num">00:00</span></div>
+                <div><span class="info-label">速度</span><span id="sudu" class="info-num">0</span> Kpm</div>
+                <div><span class="info-label">成绩</span><span id="chengji" class="info-num">0</span> 字/分</div>
+                <div><span class="info-label">正确率</span><span id="zqlu" class="info-num">0%</span></div>
+                <div id="types">中文打字</div>
+            </div>
+
+            <div id="dzbox">
+                <!-- 字符列表 - 带滚动 -->
+                <div class="char-list-wrapper" id="charListWrapper">
+                    <div id="charGrid" class="char-grid"></div>
+                </div>
+                
+                <!-- 进度条 -->
+                <div class="progress-bar">
+                    <span id="progressText">进度 0 / 0</span>
+                    <div class="progress-fill">
+                        <div class="fill" id="progressFill" style="width:0%"></div>
+                    </div>
+                    <span id="percentText">0%</span>
+                </div>
+
+                <!-- 输入行 -->
+                <div class="input-row">
+                    <label for="charInput">输入</label>
+                    <input type="text" id="charInput" placeholder="直接输入" autocomplete="off" />
+                    <span class="input-preview" id="typedPreview"></span>
+                    <span class="hint-text">输入法选词后<strong>自动判断</strong>，<kbd>Backspace</kbd> 删除重打</span>
+                </div>
+                <input type="hidden" id="fullCharStore" value="" />
+            </div>
+
+            <div class="custom-area">
+                <span style="font-size:14px; color:#64748b;">当前文章：<span id="currentArticleName">默认</span></span>
+                <button id="applyCustomBtn" style="background:#0f172a;">📋 应用自定义</button>
+                <button id="resetDefaultBtn" class="btn-secondary">↺ 恢复默认</button>
+            </div>
+        </div>
+    </div>
+    <div id="footer"><p>使用中文输入法正常选词，选词后自动判断正误 · 滚动查看所有字符</p></div>
+</div>
+
+<!-- 自定义文章弹窗 -->
+<div class="modal-overlay" id="customModal">
+    <div class="modal-box">
+        <h3>📝 自定义文章</h3>
+        <p>粘贴您想练习的文字（至少1个汉字）</p>
+        <textarea id="modalCustomText" placeholder="例如：我爱北京天安门，天安门上太阳升。"></textarea>
+        <div class="modal-actions">
+            <button class="btn-secondary" id="modalCancelBtn">取消</button>
+            <button class="btn-primary" id="modalConfirmBtn">确认应用</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ======================== 模拟 wubi.js / pinying.js ===========================
+
+
+// ============================= 主逻辑 ========================================
+(function() {
+    const charGrid = document.getElementById('charGrid');
+    const charListWrapper = document.getElementById('charListWrapper');
+    const charInput = document.getElementById('charInput');
+    const typedPreview = document.getElementById('typedPreview');
+    const progressHint = document.getElementById('progressText');
+    const progressFill = document.getElementById('progressFill');
+    const percentText = document.getElementById('percentText');
+    const hzDisplay = document.getElementById('hz');
+    const wubiDisplay = document.getElementById('wubi');
+    const pinyinDisplay = document.getElementById('pinyin');
+    const backsDisplay = document.getElementById('backs');
+    const timesDisplay = document.getElementById('times');
+    const suduDisplay = document.getElementById('sudu');
+    const chengjiDisplay = document.getElementById('chengji');
+    const zqluDisplay = document.getElementById('zqlu');
+    const fullCharStore = document.getElementById('fullCharStore');
+    const currentArticleName = document.getElementById('currentArticleName');
+
+    const restartBtn = document.getElementById('restartBtn');
+    const applyCustomBtn = document.getElementById('applyCustomBtn');
+    const resetDefaultBtn = document.getElementById('resetDefaultBtn');
+    const customNavBtn = document.getElementById('customNavBtn');
+
+    // 弹窗
+    const modal = document.getElementById('customModal');
+    const modalText = document.getElementById('modalCustomText');
+    const modalConfirm = document.getElementById('modalConfirmBtn');
+    const modalCancel = document.getElementById('modalCancelBtn');
+
+    // ---------- 状态 ----------
+    let charArray = [];
+    let typedHistory = [];
+    let currentIndex = 0;
+    let backspaceCount = 0;
+    let startTime = null;
+    let timerInterval = null;
+    let isFinished = false;
+    let totalCorrect = 0;
+    let totalWrong = 0;
+    let isProcessing = false;
+    let lastProcessedChar = '';
+    let lastProcessedTime = 0;
+
+    const DEFAULT_TEXT = "雁克婚是钓穿恨第一小费届经帝把轩生命用字登记生活支行类是会找信高层运送实弱水林是高兴卢无目渺小中间澡一民过纲要真实铁搂全款姨放松劝顾中主出责欠妥市载为这计窗玉胸方妇营虽然工男共有斩虫友下齐好沙发权利经半习给方法虽所答秋我孙肖细龙因仇原发化季发民砒客大喝胃中氯蕴寂肝吕标庆检宝品轴男地注意明利益也约";
+
+    // ---------- 辅助 ----------
+    function formatTime(seconds) {
+        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const s = String(Math.floor(seconds % 60)).padStart(2, '0');
+        return `${m}:${s}`;
+    }
+
+    function updateLeftInfo() {
+        if (currentIndex < charArray.length && !isFinished) {
+            const ch = charArray[currentIndex];
+            hzDisplay.textContent = ch;
+            wubiDisplay.textContent = wbcode(ch) || '—';
+            pinyinDisplay.textContent = pycode(ch) || '—';
+        } else if (isFinished) {
+            hzDisplay.textContent = '🎉 完成';
+            wubiDisplay.textContent = '—';
+            pinyinDisplay.textContent = '—';
+        } else {
+            hzDisplay.textContent = '—';
+            wubiDisplay.textContent = '—';
+            pinyinDisplay.textContent = '—';
+        }
+        backsDisplay.textContent = backspaceCount + ' 次';
+    }
+
+    // ★★★ 核心：渲染 + 自动滚动 ★★★
+    function renderGrid() {
+        let html = '';
+        const total = charArray.length;
+        
+        for (let i = 0; i < total; i++) {
+            const ch = charArray[i];
+            let cls = 'char-item pending';
+            if (i < typedHistory.length) {
+                cls = (typedHistory[i] === ch) ? 'char-item correct' : 'char-item wrong';
+            } else if (i === currentIndex && !isFinished) {
+                cls = 'char-item current pending';
+            }
+            html += `<span class="${cls}" data-index="${i}">${ch}</span>`;
+        }
+        charGrid.innerHTML = html;
+
+        // 更新进度
+        const done = typedHistory.length;
+        const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+        progressHint.textContent = `进度 ${done} / ${total}`;
+        progressFill.style.width = pct + '%';
+        percentText.textContent = pct + '%';
+
+        // ★★★ 自动滚动：让当前字符可见 ★★★
+        if (!isFinished && currentIndex < total) {
+            // 找到当前字符元素
+            const items = charGrid.querySelectorAll('.char-item');
+            if (items[currentIndex]) {
+                // 计算元素相对于滚动容器的位置
+                const wrapperRect = charListWrapper.getBoundingClientRect();
+                const itemRect = items[currentIndex].getBoundingClientRect();
+                
+                // 如果当前字符在可视区域之外，滚动到可见位置
+                if (itemRect.top < wrapperRect.top || itemRect.bottom > wrapperRect.bottom) {
+                    items[currentIndex].scrollIntoView({
+                        block: 'center',
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        } else if (isFinished) {
+            // 完成时滚动到顶部
+            charListWrapper.scrollTop = 0;
+        }
+    }
+
+    function updateStats() {
+        if (!startTime) {
+            timesDisplay.textContent = '00:00';
+            suduDisplay.textContent = '0';
+            chengjiDisplay.textContent = '0';
+            zqluDisplay.textContent = '0%';
+            return;
+        }
+        const elapsed = (Date.now() - startTime) / 1000;
+        timesDisplay.textContent = formatTime(elapsed);
+        const totalTyped = typedHistory.length;
+        if (totalTyped === 0 || elapsed < 1) {
+            suduDisplay.textContent = '0';
+            chengjiDisplay.textContent = '0';
+            zqluDisplay.textContent = '0%';
+            return;
+        }
+        const minutes = elapsed / 60;
+        const speed = Math.round(totalTyped / minutes);
+        suduDisplay.textContent = speed;
+        const correctCount = typedHistory.filter((ch, idx) => ch === charArray[idx]).length;
+        const cj = Math.round(correctCount / minutes);
+        chengjiDisplay.textContent = cj;
+        const rate = totalTyped > 0 ? Math.round((correctCount / totalTyped) * 100) : 0;
+        zqluDisplay.textContent = rate + '%';
+        totalCorrect = correctCount;
+        totalWrong = totalTyped - correctCount;
+    }
+
+    function startTimer() {
+        if (!startTime) {
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                if (!isFinished) updateStats();
+                else updateStats();
+            }, 500);
+        }
+    }
+
+    function stopTimer() {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+    }
+
+    // ---------- 核心: 处理输入 ----------
+    function processChar(typedChar) {
+        if (isProcessing) return false;
+        if (isFinished) return false;
+        if (currentIndex >= charArray.length) return false;
+        if (!typedChar || typedChar.length === 0) return false;
+        if (!/[\u4e00-\u9fa5]/.test(typedChar)) return false;
+
+        const now = Date.now();
+        if (typedChar === lastProcessedChar && (now - lastProcessedTime) < 150) {
+            return false;
+        }
+
+        isProcessing = true;
+        startTimer();
+
+        typedHistory.push(typedChar);
+        currentIndex++;
+
+        renderGrid();
+        updateLeftInfo();
+        updateStats();
+
+        if (currentIndex >= charArray.length) {
+            isFinished = true;
+            stopTimer();
+            updateStats();
+            renderGrid();
+            updateLeftInfo();
+            progressHint.textContent = `🎉 完成！正确 ${totalCorrect} 错误 ${totalWrong}`;
+        } else {
+            updateLeftInfo();
+        }
+
+        lastProcessedChar = typedChar;
+        lastProcessedTime = now;
+        isProcessing = false;
+        return true;
+    }
+
+    // ---------- 处理输入事件 ----------
+    function handleInputEvent(e) {
+        if (isProcessing) return;
+        if (isFinished) {
+            charInput.value = '';
+            typedPreview.textContent = '';
+            return;
+        }
+        if (currentIndex >= charArray.length) return;
+
+        const raw = charInput.value;
+        if (raw.length === 0) {
+            typedPreview.textContent = '';
+            return;
+        }
+
+        typedPreview.textContent = raw;
+
+        const chineseChars = raw.match(/[\u4e00-\u9fa5]/g);
+        if (chineseChars && chineseChars.length > 0) {
+            const typedChar = chineseChars[chineseChars.length - 1];
+            const now = Date.now();
+            if (typedChar === lastProcessedChar && (now - lastProcessedTime) < 200) {
+                charInput.value = '';
+                typedPreview.textContent = '';
+                return;
+            }
+            if (processChar(typedChar)) {
+                charInput.value = '';
+                typedPreview.textContent = '';
+            }
+        }
+    }
+
+    function handleKeydown(e) {
+        const key = e.key;
+        
+        if (key === 'Backspace') {
+            if (isFinished) {
+                e.preventDefault();
+                return;
+            }
+            if (charInput.value.length > 0) {
+                charInput.value = '';
+                typedPreview.textContent = '';
+                e.preventDefault();
+                return;
+            }
+            if (typedHistory.length === 0) return;
+            typedHistory.pop();
+            currentIndex--;
+            backspaceCount++;
+            renderGrid();
+            updateLeftInfo();
+            updateStats();
+            backsDisplay.textContent = backspaceCount + ' 次';
+            e.preventDefault();
+            return;
+        }
+
+        if (key === 'Enter') {
+            e.preventDefault();
+            const inputValue = charInput.value;
+            if (inputValue.length === 0) return;
+            const chars = inputValue.replace(/[^\u4e00-\u9fa5]/g, '');
+            if (chars.length > 0) {
+                const typedChar = chars[chars.length - 1];
+                if (processChar(typedChar)) {
+                    charInput.value = '';
+                    typedPreview.textContent = '';
+                }
+            }
+        }
+    }
+
+    // ---------- 重置游戏 ----------
+    function resetGame(newText, name = '自定义') {
+        stopTimer();
+        startTime = null;
+        isFinished = false;
+        backspaceCount = 0;
+        typedHistory = [];
+        currentIndex = 0;
+        totalCorrect = 0;
+        totalWrong = 0;
+        charInput.value = '';
+        typedPreview.textContent = '';
+        isProcessing = false;
+        lastProcessedChar = '';
+        lastProcessedTime = 0;
+
+        if (newText) {
+            const filtered = newText.replace(/[^\u4e00-\u9fa5]/g, '');
+            if (filtered.length === 0) {
+                alert('自定义文章至少包含一个汉字，使用默认');
+                charArray = DEFAULT_TEXT.split('');
+                currentArticleName.textContent = '默认';
+            } else {
+                charArray = filtered.split('');
+                currentArticleName.textContent = name;
+            }
+        } else {
+            charArray = DEFAULT_TEXT.split('');
+            currentArticleName.textContent = '默认';
+        }
+        fullCharStore.value = charArray.join('');
+
+        renderGrid();
+        updateLeftInfo();
+        updateStats();
+        backsDisplay.textContent = '0 次';
+        charInput.focus();
+    }
+
+    // ---------- 弹窗 ----------
+    function openModal() {
+        charInput.blur();
+        modal.classList.add('active');
+        modalText.value = '';
+        setTimeout(() => modalText.focus(), 100);
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        setTimeout(() => charInput.focus(), 100);
+    }
+
+    function applyModalCustom() {
+        const raw = modalText.value.trim();
+        if (!raw) {
+            alert('请粘贴自定义文章');
+            return;
+        }
+        closeModal();
+        resetGame(raw, '自定义');
+    }
+
+    // ---------- 事件绑定 ----------
+    charInput.addEventListener('input', handleInputEvent);
+    charInput.addEventListener('keydown', handleKeydown);
+
+    customNavBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+    });
+
+    applyCustomBtn.addEventListener('click', openModal);
+    resetDefaultBtn.addEventListener('click', function() {
+        resetGame(DEFAULT_TEXT);
+        currentArticleName.textContent = '默认';
+    });
+
+    restartBtn.addEventListener('click', function() {
+        const currentText = charArray.join('');
+        if (currentText === DEFAULT_TEXT) {
+            resetGame(DEFAULT_TEXT);
+            currentArticleName.textContent = '默认';
+        } else {
+            resetGame(currentText, currentArticleName.textContent);
+        }
+    });
+
+    modalConfirm.addEventListener('click', applyModalCustom);
+    modalCancel.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && modal.classList.contains('active')) {
+            e.preventDefault();
+            applyModalCustom();
+        }
+    });
+
+    // 点击容器聚焦输入
+    document.addEventListener('click', function() {
+        if (!isFinished && !modal.classList.contains('active')) {
+            charInput.focus();
+        }
+    });
+
+    // 初始化
+    resetGame(DEFAULT_TEXT);
+    currentArticleName.textContent = '默认';
+    
+    console.log('✅ 打字练习已启动，自动滚动功能已启用');
+})();
+</script>
+<script src="../../tongji.js"></script>
+</body>
+</html>
