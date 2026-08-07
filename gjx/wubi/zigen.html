@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>五笔练习 </title>
+<meta name="keywords" content="五笔打字,在线五笔打字,五笔打字练习" />
+<meta name="description" content="在线五笔打字练习软件提供五笔字根练习、一级简码、二级简码、三级简码、键面汉字和词组练习，从简入深，是目前最好的在线打字练习软件，让五笔打字员短期内运指如飞成为真正的打字高手！" />
+<link rel="stylesheet" type="text/css" href="./style.css">
+<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body>
+<header>
+<nav>
+	<ul>
+		<li><a href="./index.html" target="_blank">首页打字</a></li>
+        <li><a href="./zigen.html" target="_blank">字根练习</a></li>
+		<li><a href="./youxi.html" target="_blank">小蜜蜂</a></li>
+		<li><a href="./chuanpiao.html" target="_blank">传票练习</a></li>
+	</ul>
+</nav>
+</header>
+
+
+<div id="wbwk">
+	<div id="wbbiao">
+		<div id="line1">
+			<div id="qq"></div>
+			<div id="ww"></div>
+			<div id="ee"></div>
+			<div id="rr"></div>
+			<div id="tt"></div>
+			<div id="yy"></div>
+			<div id="uu"></div>
+			<div id="ii"></div>
+			<div id="oo"></div>
+			<div id="pp"></div>
+		</div>
+		<div id="line2">
+			<div id="aa"></div>
+			<div id="ss"></div>
+			<div id="dd"></div>
+			<div id="ff"></div>
+			<div id="gg"></div>
+			<div id="hh"></div>
+			<div id="jj"></div>
+			<div id="kk"></div>
+			<div id="ll"></div>
+			<div id="fh"></div>
+		</div>
+		<div id="line3">
+			<div id="zz"></div>
+			<div id="xx"></div>
+			<div id="cc"></div>
+			<div id="vv"></div>
+			<div id="bb"></div>
+			<div id="nn"></div>
+			<div id="mm"></div>
+			<div id="dh"></div>
+			<div id="jh"></div>
+			<div id="sg"></div>
+		</div>
+	</div>
+	
+	<div id="wbmenu">     
+		<div id="wbmul">
+			<div id="zglx" onClick="clearyc()">字根练习</div>
+			<div id="yiji" onClick="clearyc()">一级简码</div>
+			<div id="erji" onClick="clearyc()">二级简码</div>
+			<div id="jmhz" onClick="clearyc()">键名汉字</div>
+		</div>
+		<div id="wbmuc">
+			<div id="wbshow"></div>
+				<div id="wbipif"></div>
+				<div id="wbinput">
+					请输入字母：<input id="putinfo" maxlength="4" value="">
+				</div>
+			
+					
+		</div>
+		<div id="wbmur">
+			<div id="jmlx" onClick="clearyc()">键面汉字</div>
+			<div id="qmlx" onClick="clearyc()">全码练习</div>
+			<div id="czlx" onClick="clearyc()">词组练习</div>
+			<div id="yqzg" onClick="clearyc()">隐显字根</div>
+		</div>
+	</div>
+</div>
+<script src="./4.js"></script>
+<script>
+	window.addEventListener("load",loaddoc);//加载默认字根练习模式
+	document.getElementById("putinfo").addEventListener("keyup",keyups);//监听输入
+	document.getElementById("zglx").addEventListener("click",loaddoc);//监听点击切换字根练习模式
+	document.getElementById("yiji").addEventListener("click",yijidoc);//监听点击切换一级简码模式
+	document.getElementById("erji").addEventListener("click",erjidoc);//监听点击切换二级简码模式
+	document.getElementById("jmhz").addEventListener("click",jianming);//监听点击切换键名汉字模式
+	document.getElementById("jmlx").addEventListener("click",jianmeng);//监听点击切换键面汉字模式
+	document.getElementById("qmlx").addEventListener("click",quanma);//监听点击切换全码练习模式
+	document.getElementById("czlx").addEventListener("click",cizhulx);//监听点击切换词组练习模式
+	document.getElementById("yqzg").addEventListener("click",yqzglx);//隐显字根
+	
+	var sh_c,fh_c,vl_c;//定义模式，字根编码，输入编码 三个全局变量；
+	var youch;//是否有错提示未改
+	var yqzg = 1;//是否隐藏了字根表图
+	function loaddoc(){//字根练习模式
+		var asiima = String.fromCharCode(97 + Math.floor(Math.random() * 25));//随机+取整函数，再用转换函数转换出字母,由于Z是122，所以用25就不会出现122
+		//var randomLetter = (asiima == 122)?asiima-1:asiima;//122是z键，五笔不用，所以成立122-1，不成立则是本身；排除Z键
+
+		var zgqc = wubizg[asiima].split("");//将每个键的字根转换成数组
+		var zgqd = Math.floor(Math.random()*zgqc.length);//随机生成一个数字，数字少于这个键的字根数
+
+		document.getElementById("wbshow").innerHTML = zgqc[zgqd];
+
+		document.getElementById("wbipif").innerHTML = "当前模式：字根练习";
+		sh_c = "字根练习";
+		fh_c = asiima;//字根的杩
+	}
+	function yijidoc(){//一级简码练习模式
+		var asiima = String.fromCharCode(97 + Math.floor(Math.random() * 25));//随机+取整函数，再用转换函数转换出字母,由于Z是122，所以用25就不会出现122
+		//var randomLetter = (asiima == 122)?asiima-1:asiima;//122是z键，五笔不用，所以成立122-1，不成立则是本身；排除Z键
+
+		var yijihz = yijicode[asiima];//取出字母对应的一级简码汉字
+		
+
+		document.getElementById("wbshow").innerHTML = yijihz;
+
+		document.getElementById("wbipif").innerHTML = "当前模式：一级简码";
+		sh_c = "一级简码";
+		fh_c = asiima;//一级简码编码的码
+	}
+	function erjidoc(){//二级简码练习模式
+		var asiima = String.fromCharCode(97 + Math.floor(Math.random() * 25));//随机+取整函数，再用转换函数转换出字母,由于Z是122，所以用25就不会出现122
+		//var randomLetter = (asiima == 122)?asiima-1:asiima;//122是z键，五笔不用，所以成立122-1，不成立则是本身；排除Z键
+
+		var erjihz = erjicode[asiima+asiima];//取出字母对应的二级简码汉字
+
+		document.getElementById("wbshow").innerHTML = erjihz;
+
+		document.getElementById("wbipif").innerHTML = "当前模式：二级简码";
+		sh_c = "二级简码";
+		fh_c = asiima+asiima;//二级简码的2个编码
+	}
+	
+	function jianming(){//键名汉字练习模式
+		var cvb = Object.entries(jmingcode);//转换成数组对
+		var	num = Math.floor(Math.random()*cvb.length);//随机数字
+		var keys =cvb[num][0];//键名
+		var bimas =cvb[num][1];//键值
+		document.getElementById("wbshow").innerHTML = keys;
+
+		document.getElementById("wbipif").innerHTML = "当前模式：键名汉字";
+		sh_c = "键名汉字";
+		fh_c = bimas;//键名汉字的4个编码
+		}	
+	
+	function jianmeng(){//键面汉字练习模式
+		var cvb = Object.entries(jmengcode);//转换成数组对
+		var	num = Math.floor(Math.random()*cvb.length);//随机数字
+		var keys =cvb[num][0];//键名
+		var bimas =cvb[num][1];//键值
+		document.getElementById("wbshow").innerHTML = keys;
+
+		document.getElementById("wbipif").innerHTML = "当前模式：键面汉字";
+		sh_c = "键面汉字";
+		fh_c = bimas;//键名汉字的编码
+		}	
+	
+	function quanma(){//全码练习模式
+		var cvb = Object.entries(qmcode);//转换成数组对
+		var	num = Math.floor(Math.random()*cvb.length);//随机数字
+		var keys =cvb[num][0];//键名
+		var bimas =cvb[num][1];//键值
+		document.getElementById("wbshow").innerHTML = keys;
+
+		document.getElementById("wbipif").innerHTML = "当前模式：全码练习";
+		sh_c = "全码练习";
+		fh_c = bimas;//键名汉字的编码
+		}	
+	
+	function cizhulx(){//词组练习模式
+		var cvb = Object.entries(czcode);//转换成数组对
+		var	num = Math.floor(Math.random()*cvb.length);//随机数字
+		var keys =cvb[num][0];//键名
+		var bimas =cvb[num][1];//键值
+		document.getElementById("wbshow").innerHTML = keys;
+
+		document.getElementById("wbipif").innerHTML = "当前模式：词组练习";
+		sh_c = "词组练习";
+		fh_c = bimas;//键名汉字的编码
+		}
+	
+	
+	function keyups(){//监听输入，判断对错
+		//var idids = (fh_c.length > 1) ?fh_c:fh_c+fh_c;
+		vl_c = document.getElementById("putinfo").value;//输入框的数据
+		if(vl_c.length == fh_c.length){//判断输入长度是否一样
+			var logsum = fh_c.split("");//编码转数组
+			var lnm = 0;
+				if(vl_c == fh_c){//判断开始
+					youch = 0;//全对就清空有错提示
+					while(lnm<logsum.length){
+						var idids = logsum[lnm]+logsum[lnm];
+						document.getElementById(idids).style.border = "#00B0B9 solid 3px";
+						document.getElementById(idids).style.backgroundColor = "";
+						lnm++;
+					}
+					
+					document.getElementById("wbipif").style.color = "#FFFFFF";
+					
+					
+					document.getElementById("putinfo").value = "";
+ 
+							switch (sh_c) {//判断练习模式调用函数
+								  case "字根练习":
+									loaddoc();
+									break;
+								case "一级简码":
+									yijidoc()
+									break;
+								case "二级简码":
+									erjidoc()
+									break;
+								case "键名汉字":
+									jianming()
+									break;
+								case "键面汉字":
+									jianmeng()
+									break;
+								case "全码练习":
+									quanma()
+									break;
+								case "词组练习":
+									cizhulx()
+									break;		
+							}
+					document.getElementById("wbipif").innerHTML = "对了，真棒！！请继续~~";
+				}
+				else{
+					youch = fh_c;//有错就将错的编码存入
+					while(lnm<logsum.length){
+						
+						var idids = logsum[lnm]+logsum[lnm];
+						document.getElementById(idids).style.border = "#FF0000 solid 3px";
+					    document.getElementById(idids).style.backgroundColor = "rgba(255, 0, 0, 0.3)";
+						lnm++;
+					}
+					document.getElementById(idids).style.border = "#FF0000 solid 3px";
+					document.getElementById(idids).style.backgroundColor = "rgba(255, 0, 0, 0.3)";
+					document.getElementById("wbipif").innerHTML = "错了！错了！！提示: "+fh_c;
+					document.getElementById("wbipif").style.color = "#FF0000";
+					document.getElementById("putinfo").value = "";
+				}
+			
+		}
+	}
+
+		function clearyc(){
+			if(youch){
+				var logsum = youch.split("");//编码转数组
+				var lnm = 0;
+				while(lnm<logsum.length){
+									var idids = logsum[lnm]+logsum[lnm];
+									document.getElementById(idids).style.border = "#00B0B9 solid 3px";
+									document.getElementById(idids).style.backgroundColor = "";
+									lnm++;
+								}
+
+								document.getElementById("wbipif").style.color = "#FFFFFF";
+
+
+								document.getElementById("putinfo").value = "";
+			}
+
+		}
+		function yqzglx(){
+			if(yqzg){
+				document.getElementById("wbbiao").style.backgroundImage = "url('./images/nb.png')";
+				yqzg=0;
+			}
+			else{
+				document.getElementById("wbbiao").style.backgroundImage = "url('./images/wb.png')";
+				yqzg=1;
+				
+				
+			}
+
+		}
+</script>
+
+
+<script src="../../tongji.js"></script>
+</body>
+</html>

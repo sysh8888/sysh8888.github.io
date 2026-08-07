@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打字小蜜蜂 · 可调密度速度</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        body {
+            background: #0b0e1a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 16px;
+        }
+        .game-wrapper {
+            background: #141b2b;
+            border-radius: 40px;
+            padding: 24px 28px 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.06);
+            max-width: 860px;
+            width: 100%;
+            border: 1px solid #2a3650;
+        }
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            color: #b9c8e6;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+        }
+        .game-header .title {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f7d875, #f5b342);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        .game-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 15px;
+            background: #1f2940;
+            padding: 6px 18px;
+            border-radius: 60px;
+            border: 1px solid #31405e;
+        }
+        .game-stats span {
+            font-weight: 600;
+            color: #e8edf5;
+        }
+        .game-stats .stat-label {
+            color: #8899bb;
+            font-weight: 400;
+            margin-right: 2px;
+        }
+        .game-stats .highlight {
+            color: #f7d875;
+        }
+        .canvas-container {
+            position: relative;
+            background: #0f1625;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 2px solid #25324a;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+        }
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: transparent;
+            cursor: default;
+            touch-action: none;
+        }
+        .controls-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 16px;
+            margin-top: 16px;
+            align-items: center;
+        }
+        .input-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 180px;
+        }
+        .input-area label {
+            color: #aabbdd;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        #charInput {
+            background: #1c253b;
+            border: 2px solid #31415e;
+            border-radius: 60px;
+            padding: 10px 18px;
+            font-size: 22px;
+            color: #f0f4ff;
+            outline: none;
+            width: 100%;
+            max-width: 180px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            transition: 0.2s;
+        }
+        #charInput:focus {
+            border-color: #f7d875;
+            box-shadow: 0 0 0 3px rgba(247, 216, 117, 0.2);
+        }
+        #charInput::placeholder {
+            color: #4a5a7a;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #25324a;
+            border: none;
+            color: #d0ddf5;
+            padding: 8px 18px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1px solid #3a4b6a;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn:hover {
+            background: #31486a;
+            color: white;
+            border-color: #5a7aaa;
+            transform: scale(1.02);
+        }
+        .btn-primary {
+            background: #f5b342;
+            border-color: #f5b342;
+            color: #0b0e1a;
+        }
+        .btn-primary:hover {
+            background: #f7c55a;
+            border-color: #f7c55a;
+            color: #0b0e1a;
+        }
+        .slider-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 16px;
+            background: #1a2338;
+            padding: 8px 16px;
+            border-radius: 60px;
+            border: 1px solid #2a3650;
+        }
+        .slider-group label {
+            color: #8899bb;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .slider-group input[type="range"] {
+            width: 90px;
+            height: 4px;
+            -webkit-appearance: none;
+            background: #31405e;
+            border-radius: 4px;
+            outline: none;
+            transition: 0.2s;
+        }
+        .slider-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #f7d875;
+            cursor: pointer;
+            border: 2px solid #0b0e1a;
+        }
+        .slider-group input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #f7d875;
+            cursor: pointer;
+            border: 2px solid #0b0e1a;
+        }
+        .slider-value {
+            color: #f0f4ff;
+            font-weight: 600;
+            min-width: 32px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .custom-area {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 14px;
+            border-top: 1px solid #25324a;
+        }
+        .custom-area span {
+            color: #7a8aaa;
+            font-size: 13px;
+        }
+        .custom-area .article-name {
+            color: #d0ddf5;
+            font-weight: 500;
+            max-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: #1a2338;
+            border-radius: 28px;
+            padding: 28px 32px;
+            max-width: 480px;
+            width: 92%;
+            border: 1px solid #3a4b6a;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+        }
+        .modal-box h3 {
+            color: #f0f4ff;
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+        .modal-box p {
+            color: #8899bb;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        .modal-box textarea {
+            width: 100%;
+            height: 140px;
+            padding: 14px;
+            border-radius: 16px;
+            background: #0f1625;
+            border: 1px solid #31405e;
+            color: #e8edf5;
+            font-size: 15px;
+            resize: vertical;
+            font-family: inherit;
+            outline: none;
+        }
+        .modal-box textarea:focus {
+            border-color: #f7d875;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 18px;
+        }
+        .modal-actions .btn {
+            padding: 10px 28px;
+            font-size: 15px;
+        }
+        .game-over-msg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 40px;
+            border-radius: 60px;
+            border: 2px solid #f7d875;
+            pointer-events: none;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            display: none;
+            z-index: 10;
+        }
+        .game-over-msg.show {
+            display: block;
+        }
+        .game-over-msg small {
+            display: block;
+            font-size: 16px;
+            font-weight: 400;
+            color: #b9c8e6;
+            margin-top: 6px;
+        }
+        @media (max-width: 700px) {
+            .game-wrapper { padding: 16px; }
+            .game-stats { font-size: 13px; gap: 12px; padding: 4px 14px; }
+            #charInput { max-width: 120px; font-size: 20px; }
+            .slider-group input[type="range"] { width: 70px; }
+            .slider-group { padding: 6px 12px; }
+            .btn { font-size: 13px; padding: 6px 14px; }
+        }
+    </style>
+	<script type="text/javascript" src="./wubi.js"></script>
+<script type="text/javascript" src="./pinying.js"></script>
+</head>
+<body>
+    <div class="game-wrapper">
+        <!-- 头部 -->
+        <div class="game-header">
+            <div class="title">🐝 打字小蜜蜂</div>
+            <div class="game-stats">
+                <div><span class="stat-label">得分</span><span id="scoreDisplay" class="highlight">0</span></div>
+                <div><span class="stat-label">掉落</span><span id="missDisplay">0</span></div>
+                <div><span class="stat-label">速度</span><span id="speedDisplay">1.0</span>x</div>
+            </div>
+        </div>
+
+        <!-- Canvas -->
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="760" height="480"></canvas>
+            <div class="game-over-msg" id="gameOverMsg">
+                🎯 游戏结束
+                <small id="finalScoreMsg">得分 0</small>
+            </div>
+        </div>
+
+        <!-- 控制区：输入 + 滑块 + 按钮 -->
+        <div class="controls-row">
+            <div class="input-area">
+                <label for="charInput">输入</label>
+                <input type="text" id="charInput" placeholder="打字..." autocomplete="off" />
+            </div>
+
+            <!-- 滑块组 -->
+            <div class="slider-group">
+                <label>🐝 密度
+                    <input type="range" id="densitySlider" min="1" max="10" value="5" step="1">
+                    <span class="slider-value" id="densityValue">5</span>
+                </label>
+                <label>⚡ 速度
+                    <input type="range" id="speedSlider" min="1" max="10" value="4" step="1">
+                    <span class="slider-value" id="speedValue">4</span>
+                </label>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" id="restartBtn">⟳ 重开</button>
+                <button class="btn" id="customBtn">📝 自定义</button>
+            </div>
+        </div>
+
+        <!-- 文章信息 -->
+        <div class="custom-area">
+            <span>📖 当前文章：</span>
+            <span class="article-name" id="articleName">默认短文</span>
+            <button class="btn" id="resetDefaultBtn" style="margin-left:auto;">↺ 恢复默认</button>
+        </div>
+    </div>
+
+    <!-- 自定义弹窗 -->
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-box">
+            <h3>📝 自定义文章</h3>
+            <p>粘贴您想练习的文字（至少5个汉字）</p>
+            <textarea id="modalText" placeholder="例如：我爱北京天安门 天安门上太阳升 伟大领袖毛主席 指引我们向前进"></textarea>
+            <div class="modal-actions">
+                <button class="btn" id="modalCancelBtn">取消</button>
+                <button class="btn btn-primary" id="modalConfirmBtn">✅ 应用</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  1. 模拟 wubi / pinying (保留)
+        // ============================================================
+      
+
+        // ============================================================
+        //  2. 游戏核心 (带密度/速度调节)
+        // ============================================================
+        (function() {
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            const charInput = document.getElementById('charInput');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const missDisplay = document.getElementById('missDisplay');
+            const speedDisplay = document.getElementById('speedDisplay');
+            const articleName = document.getElementById('articleName');
+            const gameOverMsg = document.getElementById('gameOverMsg');
+            const finalScoreMsg = document.getElementById('finalScoreMsg');
+
+            // 滑块
+            const densitySlider = document.getElementById('densitySlider');
+            const speedSlider = document.getElementById('speedSlider');
+            const densityValue = document.getElementById('densityValue');
+            const speedValue = document.getElementById('speedValue');
+
+            // 按钮
+            const restartBtn = document.getElementById('restartBtn');
+            const customBtn = document.getElementById('customBtn');
+            const resetDefaultBtn = document.getElementById('resetDefaultBtn');
+
+            // 弹窗
+            const modal = document.getElementById('customModal');
+            const modalText = document.getElementById('modalText');
+            const modalConfirm = document.getElementById('modalConfirmBtn');
+            const modalCancel = document.getElementById('modalCancelBtn');
+
+            // ---------- 游戏配置 (基准值) ----------
+            const BASE_FALL_SPEED = 0.7;          // 基础下落速度 (px/frame)
+            const BASE_SPAWN_INTERVAL = 30;        // 基础生成间隔 (frames)
+            const MAX_CHARS = 45;
+            const BOTTOM_Y = 440;
+
+            // ---------- 状态 ----------
+            let chars = [];
+            let score = 0;
+            let miss = 0;
+            let gameOver = false;
+            let frameCount = 0;
+            let spawnCounter = 0;
+            let speedMultiplier = 1.0;
+            let animId = null;
+
+            // 用户调节参数 (映射到滑块值 1~10)
+            let userDensity = 5;   // 1~10, 影响生成间隔
+            let userSpeed = 4;     // 1~10, 影响下落速度
+
+            // 文章数据
+            let wordPool = [];
+            let currentArticleName = '默认短文';
+            const DEFAULT_ARTICLE = '一了是我不的人在来们这有他个上中大为和国地要出以时年对生能会发可学实于过之动下现面天么也方好开还成没多而子后自立小经己家同去用走分把起看从进着部如现当';
+
+            // ---------- 计算实际参数 ----------
+            function getSpawnInterval() {
+                // density: 1→间隔大(稀疏) , 10→间隔小(密集)
+                // 映射: 密度1 → 间隔 55, 密度10 → 间隔 12
+                const minInterval = 10;
+                const maxInterval = 55;
+                const t = (userDensity - 1) / 9;  // 0~1
+                const interval = maxInterval - t * (maxInterval - minInterval);
+                return Math.round(interval / speedMultiplier);
+            }
+
+            function getFallSpeed() {
+                // userSpeed: 1→慢, 10→快
+                // 映射: 速度1 → 0.4, 速度10 → 2.2
+                const minSpeed = 0.4;
+                const maxSpeed = 2.2;
+                const t = (userSpeed - 1) / 9;
+                return minSpeed + t * (maxSpeed - minSpeed);
+            }
+
+            // ---------- 辅助 ----------
+            function getRandomChar() {
+                if (wordPool.length === 0) return '学';
+                return wordPool[Math.floor(Math.random() * wordPool.length)];
+            }
+
+            function resetGame(keepArticle = true) {
+                if (animId) {
+                    cancelAnimationFrame(animId);
+                    animId = null;
+                }
+                chars = [];
+                score = 0;
+                miss = 0;
+                gameOver = false;
+                frameCount = 0;
+                spawnCounter = 0;
+                speedMultiplier = 1.0;
+                gameOverMsg.classList.remove('show');
+                charInput.value = '';
+                charInput.disabled = false;
+                charInput.focus();
+                updateDisplay();
+                if (!animId) {
+                    animId = requestAnimationFrame(gameLoop);
+                }
+            }
+
+            function updateDisplay() {
+                scoreDisplay.textContent = score;
+                missDisplay.textContent = miss;
+                speedDisplay.textContent = speedMultiplier.toFixed(1);
+            }
+
+            // ---------- 生成字符 ----------
+            function spawnChar() {
+                if (gameOver) return;
+                if (chars.length >= MAX_CHARS) return;
+                const ch = getRandomChar();
+                const x = 30 + Math.random() * (canvas.width - 60);
+                const y = -20;
+                const speed = getFallSpeed() * (0.85 + Math.random() * 0.3) * speedMultiplier;
+                chars.push({ char: ch, x, y, speed });
+            }
+
+            // ---------- 游戏循环 ----------
+            function gameLoop() {
+                if (gameOver) {
+                    animId = null;
+                    return;
+                }
+
+                frameCount++;
+                const spawnInterval = getSpawnInterval();
+                if (frameCount % spawnInterval === 0) {
+                    spawnChar();
+                    // 密度高时偶尔额外生成
+                    if (userDensity >= 7 && Math.random() < 0.25 && chars.length < MAX_CHARS - 2) {
+                        spawnChar();
+                    }
+                }
+
+                // 更新位置 & 检测底部
+                for (let i = chars.length - 1; i >= 0; i--) {
+                    const c = chars[i];
+                    c.y += c.speed;
+                    if (c.y > BOTTOM_Y) {
+                        miss++;
+                        chars.splice(i, 1);
+                        speedMultiplier = Math.min(2.5, speedMultiplier + 0.02);
+                        updateDisplay();
+                        if (miss >= 20) {
+                            endGame();
+                            return;
+                        }
+                    }
+                }
+
+                drawCanvas();
+                updateDisplay();
+                animId = requestAnimationFrame(gameLoop);
+            }
+
+            // ---------- 绘制 ----------
+            function drawCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // 装饰网格
+                ctx.strokeStyle = '#1a2338';
+                ctx.lineWidth = 1;
+                for (let i = 0; i < canvas.width; i += 40) {
+                    ctx.beginPath();
+                    ctx.moveTo(i, 0);
+                    ctx.lineTo(i, canvas.height);
+                    ctx.stroke();
+                }
+                for (let i = 0; i < canvas.height; i += 40) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, i);
+                    ctx.lineTo(canvas.width, i);
+                    ctx.stroke();
+                }
+
+                // 底部危险线
+                ctx.beginPath();
+                ctx.moveTo(0, BOTTOM_Y);
+                ctx.lineTo(canvas.width, BOTTOM_Y);
+                ctx.strokeStyle = '#c44545';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 10]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // 绘制字符
+                for (const c of chars) {
+                    const x = c.x;
+                    const y = c.y;
+                    // 发光
+                    const gradient = ctx.createRadialGradient(x, y, 2, x, y, 26);
+                    gradient.addColorStop(0, 'rgba(247, 216, 117, 0.25)');
+                    gradient.addColorStop(1, 'rgba(247, 216, 117, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 26, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.shadowColor = '#f7d875';
+                    ctx.shadowBlur = 18;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 20, 0, Math.PI * 2);
+                    ctx.fillStyle = '#1f2940';
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+
+                    ctx.strokeStyle = '#f7d875';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 20, 0, Math.PI * 2);
+                    ctx.stroke();
+
+                    // 小蜜蜂装饰
+                    ctx.fillStyle = '#f5b342';
+                    ctx.beginPath();
+                    ctx.arc(x - 6, y - 4, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#f5b342';
+                    ctx.beginPath();
+                    ctx.arc(x + 6, y - 4, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#0b0e1a';
+                    ctx.beginPath();
+                    ctx.arc(x - 8, y - 6, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(x + 4, y - 6, 2, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.shadowBlur = 0;
+                    ctx.font = 'bold 32px "Segoe UI", "PingFang SC", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = '#f0f4ff';
+                    ctx.fillText(c.char, x, y + 2);
+                    ctx.strokeStyle = '#0f1625';
+                    ctx.lineWidth = 3;
+                    ctx.strokeText(c.char, x, y + 2);
+                    ctx.fillStyle = '#f0f4ff';
+                    ctx.fillText(c.char, x, y + 2);
+                }
+
+                ctx.font = '12px monospace';
+                ctx.fillStyle = '#4a5a7a';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText(`🐝 ${chars.length} / ${MAX_CHARS}`, 12, canvas.height - 10);
+            }
+
+            // ---------- 结束 ----------
+            function endGame() {
+                if (gameOver) return;
+                gameOver = true;
+                if (animId) {
+                    cancelAnimationFrame(animId);
+                    animId = null;
+                }
+                charInput.disabled = true;
+                gameOverMsg.classList.add('show');
+                finalScoreMsg.textContent = `得分 ${score}  |  失误 ${miss}`;
+                drawCanvas();
+            }
+
+            // ---------- 输入处理 ----------
+            function handleCharInput() {
+                if (gameOver) return;
+                const raw = charInput.value;
+                if (raw.length === 0) return;
+                const typed = raw[raw.length - 1];
+                if (!/[\u4e00-\u9fa5]/.test(typed)) return;
+
+                let foundIndex = -1;
+                for (let i = chars.length - 1; i >= 0; i--) {
+                    if (chars[i].char === typed) {
+                        foundIndex = i;
+                        break;
+                    }
+                }
+
+                if (foundIndex !== -1) {
+                    chars.splice(foundIndex, 1);
+                    score++;
+                    speedMultiplier = Math.min(2.5, speedMultiplier + 0.015);
+                    updateDisplay();
+                    charInput.value = '';
+                } else {
+                    charInput.value = '';
+                    speedMultiplier = Math.min(2.5, speedMultiplier + 0.005);
+                    updateDisplay();
+                }
+            }
+
+            // ---------- 文章管理 ----------
+            function loadArticle(text, name = '自定义') {
+                const filtered = text.replace(/[^\u4e00-\u9fa5]/g, '');
+                if (filtered.length < 5) {
+                    alert('文章至少需要5个汉字，使用默认文章');
+                    return false;
+                }
+                wordPool = filtered.split('');
+                currentArticleName = name;
+                articleName.textContent = name;
+                resetGame();
+                return true;
+            }
+
+            function loadDefaultArticle() {
+                wordPool = DEFAULT_ARTICLE.split('');
+                currentArticleName = '默认短文';
+                articleName.textContent = '默认短文';
+                resetGame();
+            }
+
+            // ---------- 弹窗 ----------
+            function openModal() {
+                charInput.blur();
+                modal.classList.add('active');
+                modalText.value = '';
+                setTimeout(() => modalText.focus(), 120);
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+                setTimeout(() => charInput.focus(), 100);
+            }
+
+            function applyCustom() {
+                const raw = modalText.value.trim();
+                if (!raw) {
+                    alert('请粘贴自定义文章');
+                    return;
+                }
+                closeModal();
+                loadArticle(raw, '自定义');
+            }
+
+            // ---------- 滑块事件 ----------
+            densitySlider.addEventListener('input', function() {
+                userDensity = parseInt(this.value);
+                densityValue.textContent = userDensity;
+            });
+
+            speedSlider.addEventListener('input', function() {
+                userSpeed = parseInt(this.value);
+                speedValue.textContent = userSpeed;
+            });
+
+            // ---------- 事件绑定 ----------
+            charInput.addEventListener('input', handleCharInput);
+            charInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleCharInput();
+                }
+                if (e.key === 'Backspace' && charInput.value.length === 0) {
+                    // 允许删除
+                }
+            });
+
+            restartBtn.addEventListener('click', function() {
+                resetGame();
+                charInput.focus();
+            });
+
+            customBtn.addEventListener('click', openModal);
+            resetDefaultBtn.addEventListener('click', function() {
+                if (confirm('恢复默认文章并重新开始？')) {
+                    loadDefaultArticle();
+                }
+            });
+
+            modalConfirm.addEventListener('click', applyCustom);
+            modalCancel.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeModal();
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && modal.classList.contains('active')) {
+                    e.preventDefault();
+                    applyCustom();
+                }
+            });
+
+            // ---------- 初始化 ----------
+            loadDefaultArticle();
+
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden && !gameOver) {
+                    charInput.focus();
+                }
+            });
+
+            canvas.addEventListener('click', function() {
+                if (!gameOver) charInput.focus();
+            });
+
+            function resizeCanvas() {
+                const container = canvas.parentElement;
+                const w = container.clientWidth;
+                const ratio = 480 / 760;
+                canvas.style.width = w + 'px';
+                canvas.style.height = (w * ratio) + 'px';
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            console.log('🐝 打字小蜜蜂已启动！ 拖动滑块调节密度和速度。');
+        })();
+    </script>
+	<script src="../../tongji.js"></script>
+</body>
+</html>

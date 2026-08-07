@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>传票练习考试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e9fff;
+            --primary-dark: #0d8de9;
+            --success: #52c41a;
+            --danger: #f5222d;
+            --warning: #faad14;
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --text-secondary: #666666;
+            --border: #e8e8e8;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        /* 顶部导航 */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 11px;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+
+        .settings-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s;
+        }
+
+        .settings-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-50%) rotate(30deg);
+        }
+
+        /* 主容器 - 加宽 */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-title {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-title::before {
+            content: "";
+            display: inline-block;
+            width: 3px;
+            height: 14px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* 计时器 */
+        .timer-display {
+            font-size: 38px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--danger);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 2px;
+            font-family: "SF Mono", Monaco, monospace;
+            line-height: 1.2;
+        }
+
+        .timer-display.warning {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        /* 按钮 */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.35);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(82, 196, 26, 0.35);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 信息网格 - 缩小 */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 8px 4px;
+            text-align: center;
+        }
+
+        .info-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .info-value.success { color: var(--success); }
+        .info-value.danger { color: var(--danger); }
+        .info-value.primary { color: var(--primary); }
+
+        /* 题目显示 */
+        .question-area {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .question-main {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .question-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* 输入框 */
+        .input-area {
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s;
+            outline: none;
+            font-variant-numeric: tabular-nums;
+            -webkit-appearance: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 159, 255, 0.15);
+        }
+
+        .input-field::placeholder {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        /* 进度条 */
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: #e8e8e8;
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* 答案提示区域 */
+        .hint-area {
+            background: #fffbe6;
+            border: 1px dashed #ffd666;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .hint-area.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hint-label {
+            font-size: 11px;
+            color: #ad6800;
+            margin-bottom: 4px;
+        }
+
+        .hint-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #d48806;
+            font-family: "SF Mono", Monaco, monospace;
+            letter-spacing: 2px;
+        }
+
+        .hint-sub {
+            font-size: 11px;
+            color: #d48806;
+            margin-top: 2px;
+        }
+
+        /* 提示开关 */
+        .hint-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+            padding: 6px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .hint-toggle-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .3s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .switch input:checked + .slider {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .switch input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* 设置弹窗 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            max-height: 85vh;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: #f5f5f5;
+        }
+
+        /* 设置项 */
+        .setting-item {
+            margin-bottom: 20px;
+        }
+
+        .setting-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: var(--text);
+        }
+
+        .setting-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .setting-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .setting-input:focus {
+            border-color: var(--primary);
+        }
+
+        textarea.setting-input {
+            min-height: 120px;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .radio-item {
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .radio-item input {
+            display: none;
+        }
+
+        .radio-item label {
+            display: block;
+            padding: 10px;
+            text-align: center;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .radio-item input:checked + label {
+            border-color: var(--primary);
+            background: rgba(30, 159, 255, 0.05);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* 题库预览 */
+        .preview-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 13px;
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .preview-box .preview-line {
+            padding: 2px 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        /* 结果弹窗 */
+        .result-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .result-overlay.show {
+            display: flex;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .result-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        .result-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .result-stat-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .result-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .result-stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 提示消息 */
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 3000;
+            opacity: 0;
+            transition: all 0.3s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: repeat(3, 1fr); }
+            .info-item.full-width { grid-column: 1 / -1; }
+            .timer-display { font-size: 32px; }
+            .header h1 { font-size: 16px; }
+        }
+
+        @media (max-width: 480px) {
+            .info-grid { grid-template-columns: repeat(3, 1fr); }
+            .info-value { font-size: 14px; }
+            .timer-display { font-size: 28px; }
+            .question-main { font-size: 18px; }
+            .input-field { font-size: 18px; }
+            .container { padding: 8px; }
+            .card { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📋 传票练习考试</h1>
+        <div class="subtitle">银行传票翻打技能训练系统</div>
+        <button class="settings-btn" onclick="openSettings()" title="设置">⚙️</button>
+    </div>
+
+    <div class="container">
+        <!-- 计时卡片 -->
+        <div class="card">
+            <div class="card-title">考试计时</div>
+            <div class="timer-display" id="timer">05:00</div>
+            <div class="btn-group">
+                <button class="btn btn-primary" id="btnStart" onclick="startExam()">🚀 开始考试</button>
+                <button class="btn btn-danger" onclick="resetExam()">🔄 重新开始</button>
+            </div>
+        </div>
+
+        <!-- 考试信息 - 缩小 -->
+        <div class="card">
+            <div class="card-title">考试信息</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">当前题号</div>
+                    <div class="info-value primary" id="bianhao">0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">正确</div>
+                    <div class="info-value success" id="dui">0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">错误</div>
+                    <div class="info-value danger" id="cuo">0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">正确率</div>
+                    <div class="info-value" id="lv">0%</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">总计</div>
+                    <div class="info-value" id="zongji">0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">进度</div>
+                    <div class="info-value" id="jindu">0/20</div>
+                </div>
+                <div class="info-item full-width">
+                    <div class="info-label">当前范围</div>
+                    <div class="info-value" style="font-size:13px;" id="fanwei">暂无</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 题目区域 -->
+        <div class="card">
+            <div class="card-title">当前题目</div>
+            <div class="question-area" id="questionArea">
+                <div class="question-main" id="yema">请输入题号开始考试</div>
+                <div class="question-sub" id="xuhao">点击上方"开始考试"按钮</div>
+            </div>
+
+            <!-- 答案提示区域 -->
+            <div class="hint-area" id="hintArea">
+                <div class="hint-label">💡 提示模式 - 正确答案</div>
+                <div class="hint-value" id="hintValue">-</div>
+                <div class="hint-sub" id="hintSub">请对照传票输入上方数字</div>
+            </div>
+
+            <!-- 提示开关 -->
+            <div class="hint-toggle">
+                <span class="hint-toggle-label">🔔 答案提示</span>
+                <label class="switch">
+                    <input type="checkbox" id="hintSwitch" onchange="toggleHint()">
+                    <span class="slider"></span>
+                </label>
+                <span class="hint-toggle-label" id="hintStatus">关闭</span>
+            </div>
+        </div>
+
+        <!-- 输入区域 -->
+        <div class="card">
+            <div class="card-title">答题输入</div>
+            <div class="input-area">
+                <input type="tel" class="input-field" id="hth" placeholder="请点击开始考试" 
+                       readonly onkeydown="handleKeyDown(event)" oninput="handleInput(event)">
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="progressText">等待开始...</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 传票练习系统@温州市珠算协会A | 数据本地存储，刷新不丢失</p>
+        <p>当前题库: <span id="tiCount">0</span> 页 × 5 行 | 出题规则: <span id="ruleName">随机</span></p>
+    </div>
+
+    <!-- 设置弹窗 -->
+    <div class="modal-overlay" id="settingsModal" onclick="closeSettingsOnOverlay(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title">⚙️ 系统设置</div>
+                <button class="modal-close" onclick="closeSettings()">&times;</button>
+            </div>
+
+            <!-- 题库导入 -->
+            <div class="setting-item">
+                <label class="setting-label">📚 传票题库导入</label>
+                <div class="setting-desc">每行5个数字，用逗号或空格分隔。支持多行导入，默认99页。</div>
+                <textarea class="setting-input" id="tiInput" placeholder="例如：
+20146,2476,6839,103259,3548672
+1694,87623,98763,3861427,764358
+..."></textarea>
+                <div class="btn-group" style="margin-top:10px;">
+                    <button class="btn btn-primary" onclick="importTi()">💾 导入并保存</button>
+                    <button class="btn btn-secondary" onclick="resetDefaultTi()">↩️ 恢复默认</button>
+                </div>
+                <div class="preview-box" id="tiPreview"></div>
+            </div>
+
+            <!-- 出题规则 -->
+            <div class="setting-item">
+                <label class="setting-label">🎲 出题规则设置</label>
+                <div class="setting-desc">选择出题方式：随机生成或自定义固定题号</div>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" name="ruleType" id="ruleRandom" value="random" checked>
+                        <label for="ruleRandom">🎲 随机</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" name="ruleType" id="ruleCustom" value="custom">
+                        <label for="ruleCustom">📝 自定义</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 自定义规则 -->
+            <div class="setting-item" id="customRuleBox" style="display:none;">
+                <label class="setting-label">自定义题号配置</label>
+                <div class="setting-desc">每行输入：页码,行号（共10题，每题20页）</div>
+                <textarea class="setting-input" id="confInput" placeholder="例如：
+10,3
+25,1
+..."></textarea>
+                <div style="margin-top:8px;">
+                    <button class="btn btn-primary" style="width:100%;" onclick="saveConf()">💾 保存配置</button>
+                </div>
+            </div>
+
+            <!-- 考试时间 -->
+            <div class="setting-item">
+                <label class="setting-label">⏱️ 考试时长（分钟）</label>
+                <div class="setting-desc">默认5分钟</div>
+                <input type="number" class="setting-input" id="examTime" value="5" min="1" max="60">
+            </div>
+
+            <div class="btn-group" style="margin-top:20px;">
+                <button class="btn btn-danger" onclick="clearAllData()">🗑️ 清除所有数据</button>
+                <button class="btn btn-success" onclick="closeSettings()">✅ 完成</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结果弹窗 -->
+    <div class="result-overlay" id="resultModal">
+        <div class="result-card">
+            <div class="result-icon" id="resultIcon">🏆</div>
+            <div class="result-title" id="resultTitle">考试结束</div>
+            <div class="result-stats">
+                <div class="result-stat-item">
+                    <div class="result-stat-value success" id="resultDui">0</div>
+                    <div class="result-stat-label">正确</div>
+                </div>
+                <div class="result-stat-item">
+                    <div class="result-stat-value danger" id="resultCuo">0</div>
+                    <div class="result-stat-label">错误</div>
+                </div>
+                <div class="result-stat-item">
+                    <div class="result-stat-value primary" id="resultLv">0%</div>
+                    <div class="result-stat-label">正确率</div>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width:100%;" onclick="closeResult()">知道了</button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+<script>
+// ==================== 默认数据 ====================
+const DEFAULT_TI = [
+    [20146,2476,6839,103259,3548672],[1694,87623,98763,3861427,764358],[764980,302584,7836159,2380,87962],[3125874,9564027,569702,86123,9436],[4260357,5308649,476029,42936,6459],[513790,6049,2053786,6492,19870],[6357,419523,16297,928374,4035691],[85903,71850,3102,5462809,246075],[1648,803197,6051734,1859640,32681],[289137,3261589,3216,21594,819502],[70549,6801,520794,7108,7025631],[9628170,94715,84925,361547,1204],[560328,587134,25148,8075,5329761],[4152983,21079,780394,67510,1948],[40571,4273,9065142,5019687,204387],[3289,8052671,1384,470193,98703],[60928,3419806,415803,9365827,7910],[2316,63251,67489,234785,8526097],[974152,9047,5302148,10563,345218],[8403576,568293,7501,7409,10534],[14062,7642,3896,259013,3546278],[9416,82376,96738,4816732,738654],[697840,435028,7318659,8320,92786],[4873215,5709642,256907,16832,6394],[2540637,6854039,490726,34926,5946],[751093,9640,8073265,6429,89170],[3756,243915,67129,948732,4315609],[50398,18570,3201,2695804,206745],[1486,319078,1365470,4510689,32816],[937812,8156392,3126,59421,950128],[40597,1806,942507,1807,7126350],[6907821,45719,59482,357461,1024],[238056,518347,45128,8057,5397261],[8529413,20791,780943,67105,8914],[74501,7243,2914056,9158670,437208],[3982,6012785,3481,790413,80973],[92086,3986401,154308,2875369,9701],[1263,12356,89476,438275,2876590],[579421,9704,3812054,51603,185243],[6053784,893625,5701,7940,54031],[12604,2647,6398,952301,5843276],[4916,73826,87963,7284163,756348],[608479,520438,9753816,2830,87926],[7452318,9067524,296507,18623,4639],[2604753,4538690,740962,34962,9546],[510937,6904,5206873,6249,18790],[3765,134259,17269,473928,3106459],[85930,81507,3012,9065284,567042],[4816,309781,6147503,5649018,21386],[127398,2183659,3621,25491,895012],[95704,8016,450792,7810,6053127],[7069821,45197,95284,163457,4210],[206538,753481,21458,8507,7152963],[5428193,17209,847309,65170,1849],[15047,4327,5490126,9086517,380724],[8923,8751602,1843,419703,97038],[69802,6180394,348051,3956278,1907],[3261,31625,69748,784352,6709852],[954712,9074,4583201,56031,283514],[4075368,235968,7015,4709,41305],[16240,7462,8396,590312,4326587],[4619,68327,96783,3427681,847356],[847096,230458,6739815,2038,68927],[5471823,5629074,206957,18263,3649],[7640532,4853609,420769,63942,9564],[973105,9046,3756028,9624,78109],[6573,194532,17692,824937,1596034],[39058,71805,3210,5089264,467502],[4681,893170,7430651,4590186,81236],[273198,6528391,6213,29541,210958],[57409,1608,970542,1078,6157230],[1762890,49751,58429,743651,4012],[803256,314875,81245,8570,3162597],[9215348,90721,304879,67051,1489],[74105,7342,2951460,5706918,480723],[3892,2156078,4831,314709,93870],[26908,6431809,385014,8592637,9091],[2136,53612,64978,238745,2890675],[574921,4970,5431802,15036,583412],[4753608,396852,7510,7490,41053],[10624,6247,8693,501923,7256834],[4196,87362,37986,6347812,875643],[840769,245083,1986537,8203,68792],[3581274,7609425,520796,13682,9643],[5074623,3968504,409267,94236,4596],[710539,9460,6837025,2649,18709],[6375,492351,96712,498723,3169054],[98530,18075,2031,5069842,542670],[1468,893701,7516403,6140598,23816],[237981,5921836,3162,91452,812059],[49570,6018,504279,7081,7350126],[8670291,74591,82945,316457,4201],[568302,385417,45218,8705,6953712],[3459128,27190,938074,15670,1894],[75041,4732,1502469,9678105,342708],[9238,8275061,8314,437910,90873],[68092,9683104,314058,2893756,9017],[1623,16325,69874,728534,7906258],[417295,7940,5402381,50163,814325],[5634807,392586,7150,9407,45031]
+];
+
+// ==================== 状态变量 ====================
+let ti = [];
+let conf = [];
+let dui = 0, cuo = 0, xuhao = 0, yema = 0, hang = 0;
+let jishu = 0, qie = 0;
+let timer = null;
+let maxtime = 5 * 60;
+let examTime = 5;
+let ruleType = 'random';
+let hintEnabled = false;  // 答案提示开关
+
+// ==================== 本地存储 ====================
+function loadFromStorage() {
+    try {
+        const savedTi = localStorage.getItem('chuanpiao_ti');
+        const savedConf = localStorage.getItem('chuanpiao_conf');
+        const savedRule = localStorage.getItem('chuanpiao_rule');
+        const savedTime = localStorage.getItem('chuanpiao_time');
+        const savedHint = localStorage.getItem('chuanpiao_hint');
+
+        if (savedTi) {
+            ti = JSON.parse(savedTi);
+        } else {
+            ti = JSON.parse(JSON.stringify(DEFAULT_TI));
+        }
+
+        if (savedConf) {
+            conf = JSON.parse(savedConf);
+        } else {
+            generateRandomConf();
+        }
+
+        if (savedRule) {
+            ruleType = savedRule;
+            document.querySelector(`input[name="ruleType"][value="${ruleType}"]`).checked = true;
+        }
+
+        if (savedTime) {
+            examTime = parseInt(savedTime);
+            document.getElementById('examTime').value = examTime;
+        }
+
+        if (savedHint) {
+            hintEnabled = savedHint === 'true';
+            document.getElementById('hintSwitch').checked = hintEnabled;
+            document.getElementById('hintStatus').textContent = hintEnabled ? '开启' : '关闭';
+        }
+
+        updatePreview();
+        updateFooter();
+    } catch(e) {
+        ti = JSON.parse(JSON.stringify(DEFAULT_TI));
+        generateRandomConf();
+    }
+}
+
+function saveTi() {
+    localStorage.setItem('chuanpiao_ti', JSON.stringify(ti));
+}
+
+function saveConf() {
+    if (ruleType === 'custom') {
+        const input = document.getElementById('confInput').value.trim();
+        if (!input) {
+            showToast('请输入自定义配置');
+            return;
+        }
+        const lines = input.split('\n').filter(l => l.trim());
+        const newConf = [];
+        for (let line of lines) {
+            const parts = line.split(/[,，\s]+/).map(s => parseInt(s.trim())).filter(s => !isNaN(s));
+            if (parts.length >= 2) {
+                newConf.push([parts[0], parts[1]]);
+            }
+        }
+        if (newConf.length === 0) {
+            showToast('配置格式错误');
+            return;
+        }
+        conf = newConf;
+        while (conf.length < 10) {
+            conf.push([...conf[conf.length % newConf.length]]);
+        }
+        conf = conf.slice(0, 10);
+    } else {
+        generateRandomConf();
+    }
+    localStorage.setItem('chuanpiao_conf', JSON.stringify(conf));
+    localStorage.setItem('chuanpiao_rule', ruleType);
+    showToast('配置已保存');
+    updatePreview();
+    updateFooter();
+}
+
+function generateRandomConf() {
+    conf = []; 
+	if (ti.length>40){var ksye=ti.length-20;}else{var ksye=ti.length;} //开始的页码,防止80页以上开始
+    for (let i = 0; i < 10; i++) {
+        conf.push([
+            parseInt((Math.random() * ksye) + 1),//开始的页码
+            parseInt((Math.random() * 5) + 1)         //行数
+        ]);
+    }
+}
+
+function saveTime() {
+    examTime = parseInt(document.getElementById('examTime').value) || 5;
+    localStorage.setItem('chuanpiao_time', examTime);
+}
+
+// ==================== 提示开关 ====================
+function toggleHint() {
+    hintEnabled = document.getElementById('hintSwitch').checked;
+    document.getElementById('hintStatus').textContent = hintEnabled ? '开启' : '关闭';
+    localStorage.setItem('chuanpiao_hint', hintEnabled);
+    updateHintDisplay();
+}
+
+function updateHintDisplay() {
+    const hintArea = document.getElementById('hintArea');
+    if (!hintEnabled || qie !== 1) {
+        hintArea.classList.remove('show');
+        return;
+    }
+
+    const yema1 = yema - 1;
+    const hang1 = hang - 1;
+    if (yema1 >= 0 && yema1 < ti.length && hang1 >= 0 && hang1 < 5) {
+        const answer = ti[yema1][hang1];
+        document.getElementById('hintValue').textContent = answer;
+        document.getElementById('hintSub').textContent = `第 ${yema} 页，第 ${hang} 行`;
+        hintArea.classList.add('show');
+    }
+}
+
+// ==================== 导入功能 ====================
+function importTi() {
+    const input = document.getElementById('tiInput').value.trim();
+    if (!input) {
+        showToast('请输入题库内容');
+        return;
+    }
+
+    const lines = input.split('\n');
+    const newTi = [];
+
+    for (let line of lines) {
+        line = line.trim();
+        if (!line) continue;
+        const parts = line.split(/[,，\s]+/).map(s => {
+            const n = parseInt(s.trim());
+            return isNaN(n) ? null : n;
+        }).filter(n => n !== null);
+
+        if (parts.length === 5) {
+            newTi.push(parts);
+        }
+    }
+
+    if (newTi.length === 0) {
+        showToast('未识别到有效数据，请确保每行5个数字');
+        return;
+    }
+
+    ti = newTi;
+    saveTi();
+
+    if (ruleType === 'random') {
+        generateRandomConf();
+        localStorage.setItem('chuanpiao_conf', JSON.stringify(conf));
+    }
+
+    showToast(`成功导入 ${ti.length} 页题库`);
+    updatePreview();
+    updateFooter();
+}
+
+function resetDefaultTi() {
+    if (!confirm('确定恢复默认题库吗？当前自定义题库将丢失。')) return;
+    ti = JSON.parse(JSON.stringify(DEFAULT_TI));
+    saveTi();
+    generateRandomConf();
+    localStorage.setItem('chuanpiao_conf', JSON.stringify(conf));
+    document.getElementById('tiInput').value = '';
+    showToast('已恢复默认题库');
+    updatePreview();
+    updateFooter();
+}
+
+function updatePreview() {
+    const preview = document.getElementById('tiPreview');
+    let html = `<div style="color:#999;margin-bottom:4px;">共 ${ti.length} 页，每页5行</div>`;
+    const showCount = Math.min(ti.length, 5);
+    for (let i = 0; i < showCount; i++) {
+        html += `<div class="preview-line">第${i+1}页: ${ti[i].join(', ')}</div>`;
+    }
+    if (ti.length > 5) {
+        html += `<div class="preview-line" style="color:#999;">... 还有 ${ti.length - 5} 页</div>`;
+    }
+    preview.innerHTML = html;
+
+    if (conf.length > 0) {
+        document.getElementById('confInput').value = conf.map(c => c.join(',')).join('\n');
+    }
+}
+
+function updateFooter() {
+    document.getElementById('tiCount').textContent = ti.length;
+    document.getElementById('ruleName').textContent = ruleType === 'random' ? '随机' : '自定义';
+}
+
+// ==================== 设置弹窗 ====================
+function openSettings() {
+    document.getElementById('settingsModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSettings() {
+    saveTime();
+    document.getElementById('settingsModal').classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+function closeSettingsOnOverlay(e) {
+    if (e.target === e.currentTarget) {
+        closeSettings();
+    }
+}
+
+document.querySelectorAll('input[name="ruleType"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        ruleType = this.value;
+        document.getElementById('customRuleBox').style.display = 
+            ruleType === 'custom' ? 'block' : 'none';
+    });
+});
+
+function clearAllData() {
+    if (!confirm('确定清除所有本地数据吗？包括自定义题库和配置。')) return;
+    localStorage.removeItem('chuanpiao_ti');
+    localStorage.removeItem('chuanpiao_conf');
+    localStorage.removeItem('chuanpiao_rule');
+    localStorage.removeItem('chuanpiao_time');
+    localStorage.removeItem('chuanpiao_hint');
+    ti = JSON.parse(JSON.stringify(DEFAULT_TI));
+    generateRandomConf();
+    ruleType = 'random';
+    examTime = 5;
+    hintEnabled = false;
+    document.getElementById('examTime').value = 5;
+    document.querySelector('input[name="ruleType"][value="random"]').checked = true;
+    document.getElementById('customRuleBox').style.display = 'none';
+    document.getElementById('tiInput').value = '';
+    document.getElementById('hintSwitch').checked = false;
+    document.getElementById('hintStatus').textContent = '关闭';
+    showToast('所有数据已清除');
+    updatePreview();
+    updateFooter();
+}
+
+// ==================== 考试逻辑 ====================
+function startExam() {
+    if (qie !== 0) return;
+
+    dui = 0; cuo = 0; xuhao = 0; yema = 0; hang = 0;
+    jishu = 0; qie = 0;
+
+    if (ruleType === 'random') {
+        generateRandomConf();
+        localStorage.setItem('chuanpiao_conf', JSON.stringify(conf));
+    }
+
+    maxtime = examTime * 60;
+    updateTimerDisplay();
+    timer = setInterval(countDown, 1000);
+
+    const hth = document.getElementById('hth');
+    hth.readOnly = false;
+    hth.placeholder = '请输入题号 (1-10)';
+    hth.focus();
+
+    document.getElementById('btnStart').disabled = true;
+    document.getElementById('yema').textContent = '请输入题号';
+    document.getElementById('xuhao').textContent = '输入 1-10 开始答题';
+
+    updateStats();
+    updateProgress();
+}
+
+function countDown() {
+    if (maxtime > 0) {
+        maxtime--;
+        updateTimerDisplay();
+        if (maxtime <= 30) {
+            document.getElementById('timer').classList.add('warning');
+        }
+    } else {
+        endExam();
+    }
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(maxtime / 60);
+    const seconds = maxtime % 60;
+    document.getElementById('timer').textContent = 
+        String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+}
+
+function endExam() {
+    clearInterval(timer);
+    qie = 3;
+    document.getElementById('hth').readOnly = true;
+    document.getElementById('hth').placeholder = '考试已结束';
+    document.getElementById('xuhao').textContent = '时间到，考试结束';
+    document.getElementById('yema').textContent = '考试结束';
+    document.getElementById('timer').classList.remove('warning');
+    document.getElementById('hintArea').classList.remove('show');
+
+    document.getElementById('resultDui').textContent = dui;
+    document.getElementById('resultCuo').textContent = cuo;
+    const lv = (dui + cuo > 0) ? ((dui / (dui + cuo)) * 100).toFixed(1) : 0;
+    document.getElementById('resultLv').textContent = lv + '%';
+    document.getElementById('resultModal').classList.add('show');
+}
+
+function closeResult() {
+    document.getElementById('resultModal').classList.remove('show');
+}
+
+function resetExam() {
+    clearInterval(timer);
+    qie = 0; jishu = 0; dui = 0; cuo = 0; xuhao = 0;
+    maxtime = examTime * 60;
+    document.getElementById('timer').textContent = String(examTime).padStart(2, '0') + ':00';
+    document.getElementById('timer').classList.remove('warning');
+    document.getElementById('hth').readOnly = true;
+    document.getElementById('hth').value = '';
+    document.getElementById('hth').placeholder = '请点击开始考试';
+    document.getElementById('btnStart').disabled = false;
+    document.getElementById('yema').textContent = '请输入题号开始考试';
+    document.getElementById('xuhao').textContent = '点击上方"开始考试"按钮';
+    document.getElementById('fanwei').textContent = '暂无';
+    document.getElementById('hintArea').classList.remove('show');
+    updateStats();
+    updateProgress();
+}
+
+// ==================== 答题处理 ====================
+function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const val = document.getElementById('hth').value.trim();
+        if (val) {
+            dosome(val);
+        }
+    }
+}
+
+function handleInput(e) {
+    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+}
+
+function dosome(zhi) {
+    const hth = document.getElementById('hth');
+    hth.value = '';
+
+    if (qie === 1) {
+        jishu++;
+        if (jishu < 21) {
+            dosome1(zhi, yema, hang);
+            yema++;
+            document.getElementById('yema').textContent = '第' + yema + '页，第' + hang + '行';
+            updateProgress();
+            updateHintDisplay();
+        } else {
+            qie = 0;
+            jishu = 0;
+            document.getElementById('yema').textContent = '请输入题号';
+            document.getElementById('xuhao').textContent = '请输入题号 (1-10)';
+            document.getElementById('hth').placeholder = '请输入题号 (1-10)';
+            document.getElementById('hintArea').classList.remove('show');
+            updateProgress();
+        }
+        if (jishu === 20) {
+            document.getElementById('yema').textContent = '请输入题号';
+            document.getElementById('xuhao').textContent = '请输入题号 (1-10)';
+            document.getElementById('hth').placeholder = '请输入题号 (1-10)';
+            document.getElementById('hintArea').classList.remove('show');
+        }
+    }
+
+    if (qie === 0) {
+        const i = parseInt(zhi) - 1;
+        document.getElementById('xuhao').textContent = '请输入题号';
+        if (i === xuhao && i >= 0 && i < 10) {
+            xuhao++;
+            qie = 1;
+            document.getElementById('bianhao').textContent = xuhao;
+            document.getElementById('xuhao').textContent = '请输入传票数字';
+
+            const cfg = conf[xuhao - 1];
+            if (!cfg) {
+                showToast('配置错误');
+                return;
+            }
+            yema = cfg[0];
+            hang = cfg[1];
+            const yemahou = Number(yema) + 20;
+            document.getElementById('fanwei').innerText = 
+                '第' + yema + '张到' + yemahou + '张第' + hang + '行';
+            document.getElementById('yema').innerText = '第' + yema + '页，第' + hang + '行';
+            document.getElementById('hth').placeholder = '请输入第' + yema + '页第' + hang + '行数字';
+            updateProgress();
+            updateHintDisplay();
+        } else if (i !== xuhao) {
+            showToast('题号错误，当前应为第 ' + (xuhao + 1) + ' 题');
+        }
+    }
+}
+
+function dosome1(zhi, yema, hang) {
+    const yema1 = yema - 1;
+    const hang1 = hang - 1;
+
+    if (yema1 < 0 || yema1 >= ti.length || hang1 < 0 || hang1 >= 5) {
+        cuo++;
+    } else {
+        const answer = ti[yema1][hang1];
+        if (parseInt(zhi) === answer) {
+            dui++;
+        } else {
+            cuo++;
+        }
+    }
+
+    updateStats();
+}
+
+function updateStats() {
+    const zongji = dui + cuo;
+    const zhengque = zongji > 0 ? (dui / zongji) : 0;
+    document.getElementById('dui').textContent = dui;
+    document.getElementById('cuo').textContent = cuo;
+    document.getElementById('zongji').textContent = zongji;
+    document.getElementById('lv').textContent = (zhengque * 100).toFixed(1) + '%';
+}
+
+function updateProgress() {
+    let current = 0, total = 20;
+    if (qie === 0) {
+        current = 0;
+        document.getElementById('progressText').textContent = '等待开始第' + (xuhao + 1) + '题...';
+    } else {
+        current = jishu;
+        document.getElementById('progressText').textContent = 
+            '第 ' + xuhao + ' 题：已答 ' + jishu + ' / 20';
+    }
+    const pct = (current / total) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('jindu').textContent = current + '/' + total;
+}
+
+// ==================== 工具函数 ====================
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 2000);
+}
+
+// ==================== 初始化 ====================
+window.onload = function() {
+    loadFromStorage();
+    document.getElementById('timer').textContent = String(examTime).padStart(2, '0') + ':00';
+};
+</script>
+
+<script src="../../tongji.js"></script>
+</body>
+</html>
