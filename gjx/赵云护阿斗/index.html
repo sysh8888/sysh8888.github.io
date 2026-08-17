@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="creative-medium" content="mini-game">
+    <title>赵云护阿斗 - 三国塔防</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-root">
+        <!-- 顶部状态栏 -->
+        <div id="top-bar" class="hidden">
+            <div class="stat-item">
+                <span class="stat-label">关卡</span>
+                <span class="stat-value" id="level-display">1</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">波次</span>
+                <span class="stat-value" id="wave-display">0 / 6</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">金币</span>
+                <span class="stat-value" id="gold-display">150</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">阿斗血量</span>
+                <div class="health-bar-wrap">
+                    <div class="health-bar" id="health-bar"></div>
+                    <span class="health-text" id="health-text">100/100</span>
+                </div>
+            </div>
+            <button id="pause-btn" class="small-btn">暂停</button>
+        </div>
+
+        <!-- 游戏画布区域 -->
+        <div id="canvas-wrap">
+            <canvas id="game-canvas" width="960" height="480"></canvas>
+
+            <!-- 开始界面 -->
+            <div id="start-screen" class="overlay">
+                <div class="panel ancient-panel">
+                    <h1 class="game-title">赵云护阿斗</h1>
+                    <h2 class="game-subtitle">长坂坡七进七出</h2>
+                    <div class="story-text">
+                        建安十三年，曹操大军南下，刘备败走。<br>
+                        赵云单枪匹马，七进七出长坂坡，<br>
+                        只为护幼主阿斗周全。<br>
+                        <br>
+                        今将军可愿助子龙一臂之力？
+                    </div>
+                    <button class="big-btn start-btn" id="start-btn">出征迎敌</button>
+                    <div class="high-score">最高纪录：第 <span id="best-level">0</span> 关</div>
+                </div>
+            </div>
+
+            <!-- 过关界面 -->
+            <div id="win-screen" class="overlay hidden">
+                <div class="panel ancient-panel">
+                    <h2 class="panel-title-big">守护成功</h2>
+                    <div class="result-text">
+                        第 <span id="win-level">1</span> 关已告捷！<br>
+                        幼主安然无恙。<br>
+                        然而曹操大军仍在逼近……
+                    </div>
+                    <div class="reward-text">
+                        获得奖励金币：<span id="win-bonus">50</span>
+                    </div>
+                    <button class="big-btn" id="next-level-btn">继续迎战</button>
+                </div>
+            </div>
+
+            <!-- 失败界面 -->
+            <div id="lose-screen" class="overlay hidden">
+                <div class="panel ancient-panel">
+                    <h2 class="panel-title-big lose-title">幼主遭劫</h2>
+                    <div class="result-text">
+                        阿斗被曹军掳走……<br>
+                        将军已奋战至第 <span id="lose-level">1</span> 关。<br>
+                        长坂坡的风，仍在呼啸。
+                    </div>
+                    <div class="reward-text">
+                        本局击杀：<span id="lose-kills">0</span> 名敌将
+                    </div>
+                    <button class="big-btn" id="restart-btn">再战长坂坡</button>
+                </div>
+            </div>
+
+            <!-- 暂停界面 -->
+            <div id="pause-screen" class="overlay hidden">
+                <div class="panel ancient-panel">
+                    <h2 class="panel-title-big">暂停</h2>
+                    <button class="big-btn" id="resume-btn">继续战斗</button>
+                    <button class="small-btn-secondary" id="quit-btn">退出游戏</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部兵种面板（独立区域，不遮挡画布） -->
+        <div id="unit-panel" class="hidden">
+            <div class="panel-title">武将招募</div>
+            <div class="unit-slots" id="unit-slots"></div>
+            <button id="refresh-btn" class="refresh-btn">
+                <span>刷新</span>
+                <span class="refresh-cost" id="refresh-cost">20金</span>
+            </button>
+            <div class="panel-hint">点选武将，再点击草地即可部署</div>
+        </div>
+    </div>
+
+    <script src="js/map.js"></script>
+    <script src="js/units.js"></script>
+    <script src="js/enemies.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+	<script src="../../tongji.js"></script>
+</body>
+</html>
