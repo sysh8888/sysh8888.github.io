@@ -1,0 +1,438 @@
+/* ============ 基础重置 ============ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #1a1210;
+    font-family: "SimSun", "STSong", "Songti SC", serif;
+    color: #e8dcc4;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#game-root {
+    display: flex;
+    flex-direction: column;
+    width: 960px;
+    background: #2a1f18;
+    border: 2px solid #5a3a22;
+    box-shadow: 0 0 60px rgba(139, 0, 0, 0.4);
+}
+
+/* ============ 顶部状态栏 ============ */
+#top-bar {
+    height: 48px;
+    background: linear-gradient(180deg, #3a2418 0%, #2a1810 100%);
+    border-bottom: 2px solid #6b4423;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.stat-label {
+    font-size: 10px;
+    color: #a08060;
+    letter-spacing: 2px;
+}
+
+.stat-value {
+    font-size: 17px;
+    font-weight: bold;
+    color: #f0d890;
+    text-shadow: 0 0 8px rgba(240, 200, 100, 0.4);
+    font-family: "KaiTi", "STKaiti", serif;
+}
+
+.health-bar-wrap {
+    position: relative;
+    width: 140px;
+    height: 20px;
+    background: #1a0a0a;
+    border: 1px solid #8b4513;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.health-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(180deg, #d43030 0%, #8b1a1a 100%);
+    transition: width 0.3s ease;
+}
+
+.health-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: 11px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    font-weight: bold;
+}
+
+.small-btn {
+    margin-left: auto;
+    padding: 5px 16px;
+    background: linear-gradient(180deg, #6b4423 0%, #4a2e18 100%);
+    color: #e8dcc4;
+    border: 1px solid #8b5a2b;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: "KaiTi", "STKaiti", serif;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.small-btn:hover {
+    background: linear-gradient(180deg, #8b5a2b 0%, #6b4423 100%);
+    color: #f0d890;
+}
+
+.small-btn-secondary {
+    padding: 8px 24px;
+    background: transparent;
+    color: #a08060;
+    border: 1px solid #5a3a22;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: "KaiTi", "STKaiti", serif;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.small-btn-secondary:hover {
+    color: #e8dcc4;
+    border-color: #8b5a2b;
+}
+
+/* ============ 画布区域 ============ */
+#canvas-wrap {
+    position: relative;
+    width: 960px;
+    height: 480px;
+    flex-shrink: 0;
+}
+
+#game-canvas {
+    display: block;
+    width: 960px;
+    height: 480px;
+    cursor: crosshair;
+    touch-action: none;
+}
+
+/* ============ 覆盖层 / 界面 ============ */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(20, 10, 5, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(3px);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.ancient-panel {
+    background: linear-gradient(180deg, #3a2418 0%, #2a1810 100%);
+    border: 3px solid #8b5a2b;
+    padding: 30px 40px;
+    text-align: center;
+    position: relative;
+    max-width: 440px;
+    box-shadow: 0 0 40px rgba(139, 90, 43, 0.3), inset 0 0 60px rgba(0,0,0,0.3);
+}
+
+.ancient-panel::before,
+.ancient-panel::after {
+    content: '';
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 2px solid #c08040;
+}
+
+.ancient-panel::before {
+    top: -2px;
+    left: -2px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.ancient-panel::after {
+    bottom: -2px;
+    right: -2px;
+    border-left: none;
+    border-top: none;
+}
+
+.game-title {
+    font-size: 40px;
+    color: #f0d890;
+    font-family: "KaiTi", "STKaiti", serif;
+    letter-spacing: 12px;
+    text-shadow: 0 0 20px rgba(240, 200, 100, 0.5), 2px 2px 4px rgba(0,0,0,0.8);
+    margin-bottom: 4px;
+    padding-left: 12px;
+}
+
+.game-subtitle {
+    font-size: 17px;
+    color: #c08040;
+    font-family: "KaiTi", "STKaiti", serif;
+    letter-spacing: 6px;
+    font-weight: normal;
+    margin-bottom: 16px;
+    padding-left: 6px;
+}
+
+.story-text {
+    font-size: 13px;
+    color: #c8b890;
+    line-height: 2;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    font-family: "SimSun", "STSong", serif;
+}
+
+.result-text {
+    font-size: 15px;
+    color: #c8b890;
+    line-height: 2;
+    margin-bottom: 14px;
+    font-family: "KaiTi", "STKaiti", serif;
+}
+
+.reward-text {
+    font-size: 14px;
+    color: #ffd700;
+    margin-bottom: 18px;
+    font-family: "KaiTi", "STKaiti", serif;
+}
+
+.panel-title-big {
+    font-size: 32px;
+    color: #f0d890;
+    font-family: "KaiTi", "STKaiti", serif;
+    letter-spacing: 8px;
+    margin-bottom: 18px;
+    text-shadow: 0 0 16px rgba(240, 200, 100, 0.5);
+    padding-left: 8px;
+}
+
+.lose-title {
+    color: #d43030;
+    text-shadow: 0 0 16px rgba(212, 48, 48, 0.5);
+}
+
+.big-btn {
+    padding: 10px 36px;
+    background: linear-gradient(180deg, #8b1a1a 0%, #5a0a0a 100%);
+    color: #f0d890;
+    border: 2px solid #b03030;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: "KaiTi", "STKaiti", serif;
+    font-size: 17px;
+    letter-spacing: 4px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(139, 26, 26, 0.4);
+    padding-left: 40px;
+}
+
+.big-btn:hover {
+    background: linear-gradient(180deg, #b03030 0%, #8b1a1a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(176, 48, 48, 0.6);
+}
+
+.big-btn:active {
+    transform: translateY(0);
+}
+
+.high-score {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #a08060;
+    letter-spacing: 2px;
+}
+
+.high-score span {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+/* ============ 底部兵种面板（独立区域，不遮挡画布） ============ */
+#unit-panel {
+    height: 110px;
+    background: linear-gradient(0deg, #2a1810 0%, #3a2418 100%);
+    border-top: 2px solid #6b4423;
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    gap: 14px;
+    flex-shrink: 0;
+}
+
+.panel-title {
+    writing-mode: vertical-rl;
+    font-size: 13px;
+    color: #f0d890;
+    letter-spacing: 3px;
+    font-family: "KaiTi", "STKaiti", serif;
+    font-weight: bold;
+    text-shadow: 0 0 6px rgba(240, 200, 100, 0.3);
+    border-right: 1px solid #5a3a22;
+    padding-right: 8px;
+    height: 80%;
+    display: flex;
+    align-items: center;
+}
+
+.unit-slots {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.unit-card {
+    width: 90px;
+    height: 86px;
+    background: linear-gradient(180deg, #3a2818 0%, #2a1a10 100%);
+    border: 2px solid #6b4423;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 4px;
+    transition: all 0.2s;
+}
+
+.unit-card:hover {
+    border-color: #c08040;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(200, 120, 40, 0.4);
+}
+
+.unit-card.selected {
+    border-color: #f0d890;
+    box-shadow: 0 0 16px rgba(240, 216, 144, 0.6);
+    transform: translateY(-3px);
+    background: linear-gradient(180deg, #4a3020 0%, #3a2010 100%);
+}
+
+.unit-card.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.unit-card.disabled:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: #6b4423;
+}
+
+.unit-icon {
+    font-size: 26px;
+    margin-bottom: 2px;
+    line-height: 1;
+}
+
+.unit-name {
+    font-size: 13px;
+    color: #f0d890;
+    font-family: "KaiTi", "STKaiti", serif;
+    font-weight: bold;
+}
+
+.unit-cost {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 11px;
+    color: #ffd700;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.unit-type-tag {
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    font-size: 9px;
+    color: #a08060;
+}
+
+.refresh-btn {
+    width: 68px;
+    height: 86px;
+    background: linear-gradient(180deg, #5a3020 0%, #3a1810 100%);
+    border: 2px solid #8b4513;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #e8dcc4;
+    font-family: "KaiTi", "STKaiti", serif;
+    font-size: 14px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.refresh-btn:hover {
+    border-color: #c08040;
+    color: #f0d890;
+}
+
+.refresh-cost {
+    font-size: 11px;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.panel-hint {
+    font-size: 11px;
+    color: #6a5a40;
+    writing-mode: vertical-rl;
+    letter-spacing: 1px;
+    padding-left: 8px;
+    border-left: 1px solid #3a2a18;
+    height: 70%;
+    display: flex;
+    align-items: center;
+}
